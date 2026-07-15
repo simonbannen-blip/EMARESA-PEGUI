@@ -30,6 +30,12 @@ ver regla de sincronización en `CLAUDE.md`.
 - Regla establecida: siempre `git pull` al iniciar sesión y siempre
   commit+push al terminar cambios, ya que el usuario usa este repo como
   espejo de su carpeta local (ver `CLAUDE.md`).
+- Se creó el PR #1 (`claude/claude-code-install-57wk1g` → `main`) con el
+  mapeo de Zoho + `CLAUDE.md`/`memory.md`, y se **mergeó a `main`**.
+- Regla ampliada a pedido del usuario: nunca revisa nada en GitHub, así
+  que a partir de ahora el flujo es 100% automático — PR y merge a `main`
+  inmediatos en cada ciclo de cambios, sin pedir aprobación, más registro
+  en `memory.md` de cada cambio. Detalle completo en `CLAUDE.md`.
 
 ## Pendientes / próximos pasos
 

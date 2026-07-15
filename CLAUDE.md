@@ -4,18 +4,29 @@ Repositorio usado como **espejo de trabajo** para la configuración y manejo
 de pipeline de Zoho CRM (org Emaresa). No es un proyecto de software con
 build/tests — es un repo de configuración/documentación versionada.
 
-## Regla de sincronización (siempre aplicar)
+## Regla de sincronización y auto-merge (siempre aplicar)
 
-- **Al empezar cualquier sesión**: hacer `git pull origin <rama-actual>`
-  (o `git fetch` + rebase/merge) antes de tocar nada, para partir siempre
-  del último estado guardado.
-- **Al terminar cualquier cambio**: commitear y pushear automáticamente a
-  la rama de trabajo, sin esperar a que el usuario lo pida explícitamente.
-  El usuario usa este repo como espejo de una carpeta local — si un cambio
-  no queda pusheado, se considera perdido.
-- No dejar trabajo sin commitear al cerrar una tarea. Preferir commits
-  pequeños y descriptivos sobre uno grande al final.
-- Rama de trabajo activa: `claude/claude-code-install-57wk1g`.
+El usuario **nunca** revisa nada en GitHub manualmente. Todo el flujo debe
+ser 100% automático, de punta a punta:
+
+1. **Al empezar cualquier sesión**: `git pull`/`git fetch origin main`
+   antes de tocar nada, para partir siempre del último estado guardado
+   en `main`.
+2. **Al terminar cualquier cambio**: commitear con mensaje descriptivo,
+   pushear la rama de trabajo, abrir PR hacia `main`, y **mergearlo de
+   inmediato** (sin esperar aprobación ni pedir permiso) — el usuario ya
+   dio autorización permanente para esto.
+3. **Registrar en `memory.md`** cada cambio hecho en la sesión (qué se
+   hizo y por qué) como parte del mismo ciclo, antes o junto con el merge.
+4. Después de mergear, si sigue habiendo trabajo en la sesión, reiniciar
+   la rama de trabajo desde el `main` actualizado
+   (`git fetch origin main && git checkout -B <rama> origin/main`) para
+   que la siguiente tanda de cambios parta limpia.
+5. No dejar trabajo sin commitear, pushear ni mergear al cerrar una tarea.
+   El usuario usa este repo como espejo de una carpeta local — si un
+   cambio no queda en `main`, se considera perdido.
+6. Rama de trabajo activa: `claude/claude-code-install-57wk1g` (se
+   reinicia desde `main` después de cada merge, ver punto 4).
 
 ## Estructura
 
