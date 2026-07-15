@@ -28,6 +28,25 @@ ser 100% automático, de punta a punta:
 6. Rama de trabajo activa: `claude/claude-code-install-57wk1g` (se
    reinicia desde `main` después de cada merge, ver punto 4).
 
+## Cómo trabajar con el usuario (Simón, CRM Specialist Zoho, Emaresa)
+
+- **No es perfil técnico.** No mostrar jerga de git/dev ni explicar pasos
+  técnicos salvo que pregunte — ir directo a la acción y a los resultados
+  en términos de negocio ("cambié tal cosa", no "hice un rebase").
+- **Cambios en este repo (git/GitHub)**: 100% automáticos, ver regla de
+  arriba — nunca pedir aprobación para commitear/pushear/mergear.
+- **Cambios en el Zoho CRM real (en vivo)**: son de otro riesgo — regla
+  distinta. Siempre **proponer primero** (dejar el cambio documentado en
+  `zoho/config/` o `zoho/pipeline/`) y esperar su OK explícito antes de
+  aplicarlo con las tools MCP de Zoho (crear campos, tocar layouts,
+  actualizar/borrar registros, etc.). El auto-merge del punto anterior
+  aplica al repo, no a acciones sobre el CRM en producción.
+- **Datos**: no hay restricción particular sobre qué guardar en el repo
+  (es privado y de uso interno) — no hace falta anonimizar ni evitar
+  guardar datos reales del CRM.
+- **Modo de trabajo**: sesiones sueltas, a demanda — no configurar rutinas
+  programadas (triggers) salvo que las pida explícitamente.
+
 ## Estructura
 
 ```

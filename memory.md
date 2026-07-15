@@ -36,6 +36,21 @@ ver regla de sincronización en `CLAUDE.md`.
   que a partir de ahora el flujo es 100% automático — PR y merge a `main`
   inmediatos en cada ciclo de cambios, sin pedir aprobación, más registro
   en `memory.md` de cada cambio. Detalle completo en `CLAUDE.md`.
+- Pedido de instalar el plugin `obra/superpowers`: **no se pudo** desde
+  esta sesión remota — ese marketplace se instala con `/plugin marketplace
+  add` en una sesión local de la CLI de Claude Code, comando no disponible
+  acá. Se le explicó cómo hacerlo él mismo en su terminal.
+- Se relevaron preferencias de trabajo del usuario (Simón, CRM Specialist
+  Zoho en Emaresa, recién aprendiendo) y quedaron fijadas en `CLAUDE.md`:
+  - Cambios en este repo (git/GitHub): 100% automáticos, sin aprobación.
+  - Cambios en el **Zoho CRM real** (crear campos, tocar layouts,
+    actualizar/borrar registros): siempre proponer primero en
+    `zoho/config/` o `zoho/pipeline/` y esperar su OK antes de aplicar.
+  - Preferencia por comunicación no técnica: evitar jerga de git/dev,
+    ir directo a la acción y resultados en términos de negocio.
+  - Sin restricciones sobre qué datos guardar en el repo (uso interno).
+  - Modo de trabajo: sesiones sueltas a demanda, sin rutinas programadas
+    por defecto.
 
 ## Pendientes / próximos pasos
 
