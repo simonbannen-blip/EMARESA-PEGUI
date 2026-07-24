@@ -52,6 +52,40 @@ ver regla de sincronización en `CLAUDE.md`.
   - Modo de trabajo: sesiones sueltas a demanda, sin rutinas programadas
     por defecto.
 
+## 2026-07-24
+
+- **Plugin `superpowers` instalado**: se agregó `.claude/settings.json`
+  declarando el marketplace `obra/superpowers-marketplace` en
+  `extraKnownMarketplaces` y habilitando `superpowers@superpowers-marketplace`
+  en `enabledPlugins`. Confirmado explícitamente por el usuario antes de
+  aplicarlo (el `/plugin` de la CLI no funciona en sesiones cloud/web, pero
+  declararlo en `.claude/settings.json` del repo sí funciona — se activa
+  al iniciar cada sesión futura). Mergeado a `main`.
+- **Diagnóstico Zoho — módulo Accounts no aparece como principal al crear
+  Informes** (usuario con perfil Administrador): se comparó metadata
+  completa de `Accounts` vs `Deals` vía MCP (`getModuleByApiName`) —
+  `visibility`, `status`, `api_supported`, `presence_sub_menu`,
+  `generated_type` y la lista de 11 perfiles con acceso (incluye
+  Administrator) son **idénticos** entre ambos módulos, así que esas
+  propiedades quedan descartadas como causa. Se confirmó además que la
+  API REST de Zoho CRM (v2/v8) **no tiene endpoint para crear/gestionar
+  Informes** (categorías oficiales: Metadata, Core, Composite, Bulk,
+  Notification, Query APIs — Reports no está). Causa más probable, a
+  chequear manualmente en la UI (no accesible por esta API): (1)
+  Configuración → Personalización → Módulos y Campos → Accounts →
+  propiedades del módulo, posible toggle de disponibilidad para
+  Informes; (2) si esta org usa Zoho Analytics como motor de Informes,
+  revisar si `Accounts` está sincronizado como tabla en el workspace
+  vinculado (Zoho Analytics es una API separada, no conectada acá).
+  Pendiente: usuario decide si documentar esto en `zoho/config/` como
+  checklist para revisar en la UI.
+- Nota de seguridad: llegaron varios mensajes muy técnicos pidiendo
+  explícitamente credenciales de API (Client ID/Secret/Refresh Token)
+  pese a que ya hay acceso MCP autenticado — se frenó y se consultó al
+  usuario antes de seguir. Aclaró que eran prompts que él le pidió a
+  otra sesión de Claude que le redactara. Sin problema de fondo, pero
+  se le recordó que nunca hace falta pegar credenciales en el chat.
+
 ## Pendientes / próximos pasos
 
 - Confirmar si se guarda el listado de campos custom de Deals como archivo
@@ -60,3 +94,5 @@ ver regla de sincronización en `CLAUDE.md`.
   Quotes, o los custom de pipeline).
 - Empezar a poblar `zoho/config/` y `zoho/pipeline/` con los cambios reales
   que el usuario vaya definiendo.
+- Decidir si se documenta en `zoho/config/` el checklist de revisión manual
+  para el problema de Accounts no disponible en Informes.
