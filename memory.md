@@ -86,6 +86,26 @@ ver regla de sincronización en `CLAUDE.md`.
   otra sesión de Claude que le redactara. Sin problema de fondo, pero
   se le recordó que nunca hace falta pegar credenciales en el chat.
 
+## 2026-07-27
+
+- Simón pidió el flujo para que "Segmento Cliente Asociado" en Oportunidades
+  se complete solo con el dato del Cliente. Investigando en Zoho encontré
+  que el campo `Segmento_Cliente_Asociado` **ya existe** en Oportunidades
+  (creado 2026-07-24, con nota interna que dice que debería completarse
+  solo, pero el mecanismo nunca se armó). El dato real de origen no está
+  en un campo del Cliente, sino en el módulo **Segmentos de Cuentas**
+  (`Segmentos_de_Cuentas`), que relaciona Cuenta + Unidad de Negocio +
+  Segmento (un Cliente puede tener un Segmento distinto por cada UN).
+  Dejé la propuesta de flujo (Regla de flujo de trabajo + Función Deluge)
+  documentada en
+  `zoho/pipeline/propuesta-flujo-segmento-cliente-en-oportunidades.md`,
+  con el código listo para pegar. **No se pudo aplicar directo**: crear
+  Reglas de flujo de trabajo / Funciones no está entre las tools del MCP
+  conectado (solo CRUD y metadata) — queda pendiente que Simón lo arme a
+  mano en Zoho siguiendo esos pasos, o que confirme si quiere que además
+  se haga una actualización masiva de las Oportunidades ya existentes
+  (esa parte sí la puedo hacer yo con las tools conectadas, previo OK).
+
 ## Pendientes / próximos pasos
 
 - Confirmar si se guarda el listado de campos custom de Deals como archivo
