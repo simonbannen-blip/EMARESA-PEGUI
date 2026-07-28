@@ -106,6 +106,28 @@ ver regla de sincronización en `CLAUDE.md`.
   se haga una actualización masiva de las Oportunidades ya existentes
   (esa parte sí la puedo hacer yo con las tools conectadas, previo OK).
 
+## 2026-07-28
+
+- Simón pidió replicar en **Oportunidades** el recuadro de "Motivo de
+  Pérdida" que hoy existe en **Cotizaciones** al marcar una cotización
+  como perdida. Revisé el módulo `Quotes` y encontré el mecanismo: 3
+  campos custom (`Motivo_de_P_rdida`, `Motivo_de_P_rdida_Secundario`,
+  `Comentario_del_Motivo_de_P_rdida`, todos con `blueprint_supported =
+  true`) que un **Blueprint** sobre la fase de Cotización exige como
+  obligatorios al transicionar a "Cerrada Perdida" — eso es lo que
+  dispara el recuadro. En Oportunidades el campo **Fase** ya tiene la
+  opción "Cerrada Perdida" y también soporta Blueprint, así que falta:
+  (1) crear los 3 campos equivalentes (mismas opciones que Cotizaciones,
+  para poder comparar motivos entre ambos negocios) y (2) armar/extender
+  un Blueprint en Oportunidades que los pida en esa transición. Dejé la
+  propuesta completa (campos + picklists + pasos de Blueprint) en
+  `zoho/pipeline/propuesta-flujo-motivo-perdida-en-oportunidades.md`.
+  **No se pudo aplicar directo**: crear/editar Blueprints no está entre
+  las tools del MCP conectado (igual que pasó con la propuesta de
+  Segmento Cliente); la creación de los 3 campos sí la puedo hacer yo
+  con las tools conectadas, pero es cambio en el Zoho CRM real así que
+  queda esperando el OK explícito de Simón antes de crearlos.
+
 ## Pendientes / próximos pasos
 
 - Confirmar si se guarda el listado de campos custom de Deals como archivo
