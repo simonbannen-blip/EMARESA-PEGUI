@@ -128,6 +128,40 @@ ver regla de sincronización en `CLAUDE.md`.
   con las tools conectadas, pero es cambio en el Zoho CRM real así que
   queda esperando el OK explícito de Simón antes de crearlos.
 
+## 2026-07-29
+
+- Simón armó en el **Sandbox** el flujo de Motivo de Pérdida en
+  Oportunidades siguiendo la guía de
+  `zoho/pipeline/propuesta-flujo-motivo-perdida-en-oportunidades.md`:
+  - Creó los 3 campos en Oportunidades (Motivo de Pérdida, Motivo de
+    Pérdida Secundario, Comentario del Motivo de Pérdida).
+  - Agregó 2 opciones nuevas al Motivo de Pérdida principal: **Desierto**
+    y **Recotizado** (pendiente confirmar si también van en el
+    Secundario, ver pendientes).
+  - En el Plan de acción (Blueprint) de Oportunidades, que ya existía
+    con estados Creada → Necesita Análisis → Cotización Enviada →
+    Negociación → Cerrada Ganada / Cerrada Perdida / Declinada, configuró
+    la transición **"Perder Oportunidad"** (Negociación → Cerrada
+    Perdida) para exigir los 3 campos: Motivo de Pérdida y Motivo de
+    Pérdida Secundario como **Obligatorio**, Comentario como
+    **Opcional**. Con esto el recuadro ya funciona igual que en
+    Cotizaciones.
+  - Extra pedido en la misma sesión: que el botón "Ganar Oportunidad"
+    esté disponible desde cualquier fase (no solo desde Negociación),
+    pero **solo para la UN Ferretek** — sin tocar el comportamiento de
+    las demás UN. Se armó con dos transiciones en paralelo:
+    - **"Ganar Oportunidad Ferretek"** (nueva): Transición común
+      (todos los estados), criterio `UN es Ferretek`, destino Cerrada
+      Ganada.
+    - **"Ganar Oportunidad"** (la original, desde Negociación): se le
+      agregó el criterio `UN no está Ferretek`, para que no se
+      duplique el botón en Negociación para Ferretek.
+  - Nota aparte: el Plan de acción tiene un aviso de "bucle" al publicar,
+    causado por la transición preexistente **"Declinar Oportunidad"**
+    (marcada como común/todos los estados) — no lo generamos nosotros,
+    es de diseño previo del Blueprint. Se está guardando con "Guardar de
+    todos modos" sin problema (Sandbox).
+
 ## Pendientes / próximos pasos
 
 - Confirmar si se guarda el listado de campos custom de Deals como archivo
@@ -138,3 +172,13 @@ ver regla de sincronización en `CLAUDE.md`.
   que el usuario vaya definiendo.
 - Decidir si se documenta en `zoho/config/` el checklist de revisión manual
   para el problema de Accounts no disponible en Informes.
+- Motivo de Pérdida en Oportunidades (Sandbox): falta confirmar si
+  "Desierto" y "Recotizado" van también en el Motivo de Pérdida
+  Secundario, y armar la **dependencia entre picklists** (que al elegir
+  el Motivo de Pérdida principal, el Secundario solo muestre las
+  opciones asociadas a ese motivo) — pendiente el mapeo final de qué
+  opción secundaria corresponde a cada motivo primario.
+- Falta probar de punta a punta en el Sandbox el flujo completo (Perder
+  Oportunidad + los dos botones de Ganar Oportunidad con la condición de
+  UN Ferretek) y, cuando esté validado, desplegarlo a Producción (ver
+  guía de Sandbox → Producción ya documentada).
