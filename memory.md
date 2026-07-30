@@ -162,6 +162,37 @@ ver regla de sincronización en `CLAUDE.md`.
     es de diseño previo del Blueprint. Se está guardando con "Guardar de
     todos modos" sin problema (Sandbox).
 
+## 2026-07-30
+
+- Simón armó en el **Sandbox**, en el Plan de acción **"SB Gestión de
+  Cotizaciones"** (módulo Cotizaciones), una transición nueva **"Ganada
+  por B2b"**, para poder marcar una cotización como ganada **sin que se
+  dispare el envío al ERP**. Contexto encontrado revisando la cronología
+  de una cotización real: la transición existente **"Confirmar la
+  Cotización"** (origen "Direc. de Despacho validada" → destino "Cerrada
+  Ganada") llama en su pestaña **DESPUÉS** a la función **"SB Crear Orden
+  de Venta"**, que es la que genera la Orden de Venta / integra con el
+  ERP.
+  - La transición nueva **"Ganada por B2b"** se armó con el mismo origen
+    y destino, copiando de "Confirmar la Cotización":
+    - **ANTES**: mismos 5 propietarios (Propietario del registro, KAM,
+      Asistente de Ventas, IyF - Asistentes de Ventas, Const -
+      Asistentes de...), y criterios `Revisión Realizada ES
+      Seleccionado` **Y** `UN ES Construcción` (a pedido de Simón, esta
+      transición es exclusiva para la UN **Construcción** — no se copió
+      la exclusión de Rental/Inamar Izaje de la original, se reemplazó
+      por la condición positiva de Construcción).
+    - **DURANTE**: mismos 2 campos — Orden de Compra (Obligatorio), HES
+      (Opcional).
+    - **DESPUÉS**: a propósito **sin** la función "SB Crear Orden de
+      Venta" — queda vacía esa sección, que es la diferencia clave.
+  - A pedido explícito, **no se tocó** la transición original "Confirmar
+    la Cotización" — Construcción va a ver **los dos botones
+    disponibles** ("Confirmar la Cotización" normal + "Ganada por B2b")
+    en la fase "Direc. de Despacho validada", para elegir según el caso.
+    El resto de las UN sigue viendo solo "Confirmar la Cotización", como
+    hasta ahora.
+
 ## Pendientes / próximos pasos
 
 - Confirmar si se guarda el listado de campos custom de Deals como archivo
@@ -182,3 +213,7 @@ ver regla de sincronización en `CLAUDE.md`.
   Oportunidad + los dos botones de Ganar Oportunidad con la condición de
   UN Ferretek) y, cuando esté validado, desplegarlo a Producción (ver
   guía de Sandbox → Producción ya documentada).
+- Falta probar en el Sandbox que "Ganada por B2b" en Cotizaciones
+  efectivamente marca la cotización como Cerrada Ganada **sin** llamar a
+  "SB Crear Orden de Venta" (revisar la cronología del registro de
+  prueba), y desplegar a Producción cuando esté validado.
