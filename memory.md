@@ -217,3 +217,43 @@ ver regla de sincronización en `CLAUDE.md`.
   efectivamente marca la cotización como Cerrada Ganada **sin** llamar a
   "SB Crear Orden de Venta" (revisar la cronología del registro de
   prueba), y desplegar a Producción cuando esté validado.
+- Falta armar y probar en el Sandbox el campo "Estado de Sucursal" (VI/BL)
+  con sincronización bidireccional al ERP (ver detalle abajo, 2026-08-03).
+
+## 2026-08-03
+
+- Simón pidió un campo en **Sucursales** que indique **VI (Vigente)** o
+  **BL (Bloqueada)**, con sincronización **bidireccional** con el ERP: el
+  ERP manda el estado a Zoho (Sucursales como receptor) y, si se edita a
+  mano en el CRM, el cambio también viaja de vuelta al ERP. Pidió
+  explícitamente que **no** lo cree yo directo, sino que le explique cómo
+  armarlo y probarlo él mismo primero en el Sandbox.
+  - Revisé los 8 campos personalizados actuales de `Sucursales`: no existe
+    ningún campo de estado/vigencia todavía. `Código de Sucursal`
+    (`C_digo_de_Sucursal`) es la llave natural para que la integración
+    haga *upsert* sin duplicar sucursales. Los campos `ID_Creator` /
+    `Respuesta_Creator` sugieren que la sincronización con el ERP hoy
+    pasa (o pasó) por **Zoho Creator** como intermediario, no por una
+    conexión directa ERP↔CRM — no lo pude confirmar del todo desde acá
+    (Creator no está en el alcance de las herramientas conectadas, solo
+    CRM), queda pendiente que Simón lo confirme con quien administra esa
+    integración.
+  - Dejé la propuesta completa en
+    `zoho/config/propuesta-campo-estado-sucursal-vi-bl.md`: campo
+    `Estado de Sucursal` (picklist, Vigente (VI) / Bloqueada (BL)), más
+    guía paso a paso Sandbox → Producción para ambas direcciones:
+    - **ERP → Zoho**: no se configura en el CRM, solo hay que pasarle el
+      `api_name` del campo y los valores esperados a quien mantiene la
+      integración.
+    - **Zoho → ERP**: Regla de flujo de trabajo (Workflow Rule) sobre
+      Sucursales, disparada al editar el campo, con Webhook o Función
+      (Deluge) hacia el ERP — mismo mecanismo que ya usa esta org para
+      mandar Órdenes de Venta al ERP desde Cotizaciones. Punto crítico
+      documentado: agregar el criterio `Modificado por` **no es** el
+      usuario/API de la integración del ERP, para evitar un bucle
+      infinito entre ambos sistemas.
+  - **No se aplicó nada en el Zoho real**: ni el campo ni la regla de
+    flujo de trabajo — a pedido explícito, queda 100% en manos de Simón
+    armarlo y probarlo en el Sandbox primero, siguiendo la guía. Si
+    después quiere que yo cree el campo directo en el ambiente conectado,
+    tiene que confirmarlo (regla de `CLAUDE.md`).
