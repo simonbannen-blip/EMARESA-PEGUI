@@ -288,3 +288,29 @@ ver regla de sincronización en `CLAUDE.md`.
   de que no recalcula retroactivo en Cotizaciones ya existentes) en
   `zoho/config/propuesta-columna-porcentaje-descuento-articulos-presupuestados.md`.
 - **Siguiente paso**: Simón va a pasar el campo de Sandbox a Producción.
+
+## 2026-08-04 (2)
+
+- Simón pidió editar una regla en "el Creator" para que se pueda elegir
+  **Efectivo y Crédito Simple** juntos cuando la Línea de Crédito del
+  cliente sea Crédito Simple, ejemplo Inamar Izaje.
+- Revisé Inamar Izaje en el CRM: tiene una Línea de Crédito (UN Emaresa)
+  con `Condición de Pago` = **CREDITO SIMPLE**, LC Ventas $88.000.000, LC
+  Rental $30.000.000. Ese campo (mismo en Cotizaciones) es de **una sola
+  opción**, con valores: Contado, Crédito Simple, Vale Vista, EFECTIVO O
+  VALE VISTA, DEPOSITO A PLAZO ENDOSABLE, TRANSFERENCIA — no existe una
+  opción "Efectivo" a secas.
+- No encontré en el CRM (módulos Línea de Crédito Cliente, Cotizaciones,
+  Formas_de_Pago) ninguna regla/dependencia que controle qué formas de
+  pago se pueden elegir según la Línea de Crédito. Si la regla está en
+  **Zoho Creator** (como dijo Simón), sigue sin estar al alcance del MCP
+  conectado a esta sesión (misma limitación que con la sincronización de
+  Sucursales).
+- Dejé la propuesta en
+  `zoho/config/propuesta-regla-efectivo-credito-simple.md` con lo
+  encontrado y **2 preguntas pendientes** para poder avanzar: (1) si la
+  regla está en Zoho Creator o en algún punto del CRM que todavía no
+  ubiqué, y (2) si "Efectivo" es el valor existente `EFECTIVO O VALE
+  VISTA` o una opción nueva a crear. Le pregunté directo pero no
+  respondió todavía — queda esperando su respuesta para poder escribir la
+  propuesta concreta.
