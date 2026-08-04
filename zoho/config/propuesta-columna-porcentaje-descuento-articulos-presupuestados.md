@@ -50,6 +50,16 @@ equivalente en % del campo "Descuento". No sirve para lo que se pide acá.
 
 ## Estado
 
-Pendiente de aprobación de Simón para aplicar en el CRM real (crear el
-campo `% Descuento` en `Quoted_Items` y agregarlo al layout de la
-Cotización).
+- **2026-08-04 — Hecho en Sandbox por Simón.** Creó el campo `% Descuento`
+  (fórmula, tipo Decimal, 2 posiciones decimales) en el subformulario
+  "Artículos presupuestados" dentro del layout de Cotizaciones, con la
+  fórmula `Descuento / Importe * 100`. Probado en Sandbox: la columna
+  nueva calcula solo el % (ej. 70.200 / 1.404.000 → 5, 36.720 / 367.200 →
+  10), sin que nadie lo tipee a mano. **Funciona correctamente.**
+- **Pendiente:** pasar el campo de Sandbox a Producción (falta el OK
+  explícito de Simón para aplicarlo en el ambiente real, o que lo migre
+  él mismo con la herramienta de Zoho de Sandbox → Producción).
+- Nota: por ser un campo de fórmula, no se recalcula solo en Cotizaciones
+  ya existentes — solo en líneas nuevas de acá en adelante (para las
+  viejas habría que seleccionarlas y actualizarlas manualmente si se
+  quisiera).

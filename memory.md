@@ -278,6 +278,13 @@ ver regla de sincronización en `CLAUDE.md`.
   agregar un campo nuevo de solo lectura `% Descuento` (fórmula =
   Descuento / Importe * 100) en `Quoted_Items`, para que quede como
   columna fija en la grilla sin que nadie la calcule ni la tipee.
-- **No se aplicó nada en el Zoho real todavía** — queda pendiente el OK
-  de Simón para crear el campo y agregarlo al layout de la Cotización
-  (regla de `CLAUDE.md`).
+- **Hecho en Sandbox por Simón**: creó el campo `% Descuento` (fórmula,
+  tipo Decimal, 2 decimales, `Descuento / Importe * 100`) en el
+  subformulario "Artículos presupuestados" del layout de Cotizaciones.
+  Probado: la columna calcula sola el % a partir del Descuento y el
+  Importe de cada línea (ej. 5% y 10% en dos líneas de prueba),
+  sin que nadie lo tipee a mano. Funciona correctamente.
+- Detalle completo (incluye la fórmula insertada paso a paso y el aviso
+  de que no recalcula retroactivo en Cotizaciones ya existentes) en
+  `zoho/config/propuesta-columna-porcentaje-descuento-articulos-presupuestados.md`.
+- **Siguiente paso**: Simón va a pasar el campo de Sandbox a Producción.
