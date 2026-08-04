@@ -289,6 +289,34 @@ ver regla de sincronización en `CLAUDE.md`.
   `zoho/config/propuesta-columna-porcentaje-descuento-articulos-presupuestados.md`.
 - **Siguiente paso**: Simón va a pasar el campo de Sandbox a Producción.
 
+## 2026-08-04 (3)
+
+- Simón hizo una prueba de carga de Descuentos por UN y detectó que
+  **Fecha Desde / Fecha Hasta quedan vacías** en el CRM (ej. registro
+  `IDLISTA-171`, motosierra STIHL MS 182 para CHILEMAT SPA., canal
+  ferretero), aunque el Excel de origen (`Prueba_Descuentos_Terra.xlsx`,
+  hoja "MAESTRO DESCUENTOS") sí trae esas fechas cargadas correctamente
+  (03-08-2026 a 03-08-2030).
+- Confirmé contra el CRM (`searchRecords` en `Descuentos_por_UN`) que el
+  registro quedó con `Fecha_Desde` y `Fecha_Hasta` realmente en null (no
+  es un problema de visualización) — el resto de los campos (Cliente,
+  SKU, UN, Canal, Nro Descuento, % Descuento) sí se cargaron bien.
+- **Causa más probable**: en el Excel esas dos columnas están en formato
+  Mes-Día-Año (ej. `08-03-26` = 3 de agosto 2026), pero al importar en
+  Zoho, en el paso de "mapeo de columnas" del asistente de importación
+  hay que indicarle a Zoho ese mismo formato (mes/día/año). Si en ese
+  paso quedó sin mapear la columna, o se dejó el formato día/mes/año
+  (el habitual en Chile), Zoho no logra interpretar la fecha y la deja
+  vacía en vez de dar error (los campos fecha no son obligatorios, así
+  que el registro se crea igual, solo que sin esas dos fechas).
+- **Recomendación dada a Simón**: revisar el historial de importación
+  (Configuración → Administración de Datos → Importar → el job en
+  cuestión → ver registros con errores/omitidos) para confirmar el
+  motivo exacto, y volver a importar asegurándose de mapear ambas
+  columnas al formato mes/día/año. Como prevención, sugerí a futuro
+  guardar esas columnas en el Excel como texto sin ambigüedad
+  (AAAA-MM-DD) antes de importar.
+
 ## 2026-08-04 (2)
 
 - Simón pidió editar una regla en "el Creator" para que se pueda elegir
