@@ -257,3 +257,27 @@ ver regla de sincronización en `CLAUDE.md`.
     armarlo y probarlo en el Sandbox primero, siguiendo la guía. Si
     después quiere que yo cree el campo directo en el ambiente conectado,
     tiene que confirmarlo (regla de `CLAUDE.md`).
+
+## 2026-08-04
+
+- Simón preguntó si se puede ver el % de descuento (no solo el monto en
+  $) en la grilla "Artículos presupuestados" de las Cotizaciones, porque
+  los vendedores están calculando el % a mano y eso es justo lo que se
+  quiere evitar.
+- Reviso el módulo `Quoted_Items` (Artículos presupuestados): el campo
+  `Descuento` es un campo estándar de Zoho que ya acepta escribir
+  directamente un % (ej. `20%`) y Zoho calcula solo el monto — y al pasar
+  el mouse sobre el ícono ⓘ muestra el % usado. O sea, ya existe una
+  forma de no calcular a mano, solo que el % no queda visible como
+  columna fija (hay que pasar el mouse).
+- El campo `% Desc Adicional` que ya está en esa grilla es otra cosa (un
+  descuento adicional aparte), no sirve para mostrar el % del descuento
+  principal.
+- Dejé la propuesta en
+  `zoho/config/propuesta-columna-porcentaje-descuento-articulos-presupuestados.md`:
+  agregar un campo nuevo de solo lectura `% Descuento` (fórmula =
+  Descuento / Importe * 100) en `Quoted_Items`, para que quede como
+  columna fija en la grilla sin que nadie la calcule ni la tipee.
+- **No se aplicó nada en el Zoho real todavía** — queda pendiente el OK
+  de Simón para crear el campo y agregarlo al layout de la Cotización
+  (regla de `CLAUDE.md`).
