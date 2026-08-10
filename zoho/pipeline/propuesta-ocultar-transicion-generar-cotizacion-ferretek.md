@@ -1,6 +1,7 @@
 # Propuesta: ocultar la transición "Generar Cotización" para UN Ferretek
 
-## Estado: PROPUESTO — pendiente de que lo armes en Zoho (ver limitación abajo)
+## Estado: PROPUESTO — nombre de transición confirmado por Simón (captura del
+Blueprint), pendiente de que lo arme en Zoho (ver limitación abajo)
 
 ## Qué se pidió
 
@@ -23,12 +24,16 @@ Creada → Necesita Análisis → Cotización Enviada → Negociación
 
 La transición que corresponde a "generar cotización" es la que lleva de
 **Necesita Análisis** a **Cotización Enviada** (el paso donde se genera la
-Cotización asociada a la Oportunidad). No tengo acceso desde acá para leer
-el nombre exacto que le pusiste a esa transición en el Blueprint — armar o
-leer Blueprints no está entre las herramientas conectadas a esta sesión
-(mismo límite que en los cambios anteriores de Motivo de Pérdida y Ganar
-Oportunidad). Confirmame si el nombre no es literalmente "Generar
-Cotización" para ajustar esta guía.
+Cotización asociada a la Oportunidad). Simón confirmó con una captura del
+Blueprint que se llama literalmente **"Generar Cotización"**.
+
+En esa misma captura se ve que la transición **ya tiene un criterio
+configurado hoy** (aparece marcada con el ícono azul de criterio, igual que
+"Ganar Oportunidad", "Perder Oportunidad", etc.) — no se pudo leer desde
+acá cuál es ese criterio existente, porque leer/editar Blueprints no está
+entre las herramientas conectadas a esta sesión. Importante: al agregar el
+criterio de Ferretek hay que **sumarlo con Y (AND) al que ya está**, no
+reemplazarlo — ver paso 4 de Sandbox abajo.
 
 ## Cómo ocultarla solo para Ferretek
 
@@ -65,8 +70,11 @@ el botón exactamente igual que hoy.
    Cotización"** (la que va de "Necesita Análisis" a "Cotización
    Enviada").
 4. Entrá a esa transición → sección de **Criterios** (la misma pantalla
-   donde agregaste `UN no está Ferretek` en "Ganar Oportunidad").
-5. Agregá el criterio: **UN no está en Ferretek**.
+   donde agregaste `UN no está Ferretek` en "Ganar Oportunidad"). Vas a
+   ver que ya tiene un criterio armado — **no lo borres**.
+5. Agregá el criterio nuevo combinado con **Y (AND)** junto al que ya
+   existe: **UN no está en Ferretek**. El resultado final tiene que quedar
+   como "(criterio existente) Y (UN no está en Ferretek)".
 6. Guardá y publicá el Blueprint ("Guardar de todos modos" si aparece el
    aviso de bucle que ya conocés — es el mismo de siempre, no lo generamos
    nosotros).
@@ -94,8 +102,8 @@ arriba, igual que las veces anteriores.
 
 ## Próximo paso
 
-- Confirmame el nombre exacto de la transición si no es "Generar
-  Cotización", y si Ferretek necesita o no una forma alternativa de
-  avanzar de fase sin ese botón.
+- Nombre de la transición ya confirmado ("Generar Cotización"). Falta
+  confirmar si Ferretek necesita o no una forma alternativa de avanzar de
+  fase sin ese botón.
 - Cuando lo armes (en Sandbox o directo en Productivo), avisame para
   dejarlo marcado como aplicado acá y en `memory.md`.
