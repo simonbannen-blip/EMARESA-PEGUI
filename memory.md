@@ -379,3 +379,26 @@ ver regla de sincronización en `CLAUDE.md`.
   - Queda pendiente que Simón confirme si Ferretek necesita una forma
     alternativa de avanzar de fase sin el botón "Generar Cotización", y
     que lo arme en Zoho siguiendo la guía.
+
+## 2026-08-10 (2)
+
+- Simón pidió un botón en el módulo **Cotizaciones** que abra directo **el
+  Cotizador** (la app de Zoho Creator que ya se usa para armar/calcular
+  cotizaciones).
+- Revisé Cotizaciones: el campo `ID_Creator` (texto) está cargado en las
+  cotizaciones recientes con un ID numérico de otra organización interna
+  (ej. `4389062000010888092`), distinto al ID de la Cotización en el CRM
+  — confirma que cada Cotización ya está enlazada 1 a 1 con un registro
+  puntual del Cotizador. Esto permite armar el botón para que abra
+  **directo esa cotización** en el Cotizador (usando `ID_Creator`), no la
+  app en blanco.
+- Dejé la propuesta completa en
+  `zoho/config/propuesta-boton-abrir-cotizador-creator.md`, con guía
+  paso a paso Sandbox → Producción para crear el Botón personalizado
+  (tipo "Abrir URL").
+  **No se pudo aplicar directo, ni con OK**: crear Botones personalizados
+  no está entre las herramientas conectadas al MCP de Zoho CRM (mismo
+  límite que Reglas de flujo/Blueprints) — Simón tiene que armarlo a
+  mano. Además falta un dato suyo para tener la URL final: la URL del
+  Cotizador (y si admite abrir un registro puntual por parámetro).
+  Queda pendiente que la pase para cerrar la propuesta.
