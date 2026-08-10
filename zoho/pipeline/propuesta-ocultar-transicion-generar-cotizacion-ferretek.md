@@ -1,7 +1,8 @@
 # Propuesta: ocultar la transición "Generar Cotización" para UN Ferretek
 
-## Estado: PROPUESTO — nombre de transición confirmado por Simón (captura del
-Blueprint), pendiente de que lo arme en Zoho (ver limitación abajo)
+## Estado: PROPUESTO — nombre y fase de origen de la transición confirmados
+por Simón (captura del Blueprint), pendiente de que lo arme en Zoho (ver
+limitación abajo)
 
 ## Qué se pidió
 
@@ -23,9 +24,11 @@ Creada → Necesita Análisis → Cotización Enviada → Negociación
 ```
 
 La transición que corresponde a "generar cotización" es la que lleva de
-**Necesita Análisis** a **Cotización Enviada** (el paso donde se genera la
-Cotización asociada a la Oportunidad). Simón confirmó con una captura del
-Blueprint que se llama literalmente **"Generar Cotización"**.
+**Creada** a **Necesita Análisis** (el paso donde se genera la Cotización
+asociada a la Oportunidad, apenas se crea). Simón confirmó con una captura
+del Blueprint que se llama literalmente **"Generar Cotización"**, y que su
+fase de origen es **Creada** (no "Necesita Análisis" como se había anotado
+al principio).
 
 En esa misma captura se ve que la transición **ya tiene un criterio
 configurado hoy** (aparece marcada con el ícono azul de criterio, igual que
@@ -47,17 +50,17 @@ es Ferretek, así que el criterio se agrega como exclusión:
   **`UN` no está en `Ferretek`**
 
 Con eso, para cualquier Oportunidad de UN Ferretek, ese botón deja de
-mostrarse en la fase "Necesita Análisis" — el resto de las UN sigue viendo
-el botón exactamente igual que hoy.
+mostrarse en la fase "Creada" — el resto de las UN sigue viendo el botón
+exactamente igual que hoy.
 
 > Ojo: si Ferretek necesita de todas formas avanzar la Oportunidad de
-> "Necesita Análisis" a "Cotización Enviada" (por ejemplo porque la
-> cotización para esa UN se genera fuera del CRM), va a hacer falta una
-> transición alternativa para que Ferretek pueda seguir avanzando sin ese
-> botón — igual que se hizo con "Ganar Oportunidad Ferretek" como
-> transición paralela. Si es el caso, avisame y la agrego a esta propuesta.
-> Si Ferretek simplemente no necesita generar Cotización desde la
-> Oportunidad (se maneja distinto), no hace falta nada más.
+> "Creada" a "Necesita Análisis" (por ejemplo porque la cotización para
+> esa UN se genera fuera del CRM), va a hacer falta una transición
+> alternativa para que Ferretek pueda seguir avanzando sin ese botón —
+> igual que se hizo con "Ganar Oportunidad Ferretek" como transición
+> paralela. Si es el caso, avisame y la agrego a esta propuesta. Si
+> Ferretek simplemente no necesita generar Cotización desde la Oportunidad
+> (se maneja distinto), no hace falta nada más.
 
 ## Pasos en Zoho (primero en Sandbox, después en Producción)
 
@@ -67,8 +70,7 @@ el botón exactamente igual que hoy.
    organización → elegís el ambiente Sandbox).
 2. Configuración (⚙️) → Automatización → **Blueprint** → Oportunidades.
 3. Abrí el Plan de acción activo y ubicá la transición **"Generar
-   Cotización"** (la que va de "Necesita Análisis" a "Cotización
-   Enviada").
+   Cotización"** (la que va de "Creada" a "Necesita Análisis").
 4. Entrá a esa transición → sección de **Criterios** (la misma pantalla
    donde agregaste `UN no está Ferretek` en "Ganar Oportunidad"). Vas a
    ver que ya tiene un criterio armado — **no lo borres**.
@@ -81,8 +83,8 @@ el botón exactamente igual que hoy.
 
 ### Probar en Sandbox
 
-1. Abrí una Oportunidad de prueba con UN = Ferretek en fase "Necesita
-   Análisis" → el botón "Generar Cotización" no debería aparecer.
+1. Abrí una Oportunidad de prueba con UN = Ferretek en fase "Creada" → el
+   botón "Generar Cotización" no debería aparecer.
 2. Abrí otra con una UN distinta en la misma fase → el botón debería seguir
    apareciendo normal.
 
@@ -102,8 +104,9 @@ arriba, igual que las veces anteriores.
 
 ## Próximo paso
 
-- Nombre de la transición ya confirmado ("Generar Cotización"). Falta
-  confirmar si Ferretek necesita o no una forma alternativa de avanzar de
-  fase sin ese botón.
+- Nombre y fase de origen de la transición ya confirmados: **"Generar
+  Cotización"**, de **Creada** a **Necesita Análisis**. Falta confirmar si
+  Ferretek necesita o no una forma alternativa de avanzar de fase sin ese
+  botón.
 - Cuando lo armes (en Sandbox o directo en Productivo), avisame para
   dejarlo marcado como aplicado acá y en `memory.md`.
