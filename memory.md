@@ -424,3 +424,25 @@ ver regla de sincronización en `CLAUDE.md`.
   adentro de los permisos de cada Perfil — no requiere tocar el botón en
   sí), y (3) los pasos agregados a la guía Sandbox → Producción. Queda
   pendiente que Simón diga para cuáles Perfiles habilitarlo.
+- Simón dejó el `AskUserQuestion` sobre Perfil vs Rol sin responder y en
+  su lugar contó el caso de uso real: el botón es para que los vendedores
+  de **2 UN puntuales** (Industria y Ferretería, Ematerra) puedan cotizar
+  rápido, porque pasar por una Oportunidad antes de Cotizaciones les
+  complica el flujo. Con ese dato cambié el enfoque de la restricción:
+  - Revisé Perfiles y no hay uno que separe exactamente esas 2 UN — el más
+    cercano, "Vendedor IyF Const y Ematerra", incluye también
+    Construcción (no pedida). Restringir por Perfil quedaría de más.
+  - Confirmé que Cotizaciones tiene su propio campo `UN` (lookup a
+    Unidades de Negocio), así que la restricción correcta es un
+    **Criterio en el botón** (`UN` es Industria y Ferretería O `UN` es
+    Ematerra) — mismo mecanismo que ya usa esta org en el Plan de acción
+    (ej. criterio Ferretek en "Generar Cotización"). No depende de quién
+    mira la Cotización, sino de la UN de esa Cotización puntual.
+  - Reescribí `zoho/config/propuesta-boton-abrir-cotizador-creator.md`
+    con este criterio y la guía actualizada (ya no por Perfil).
+  - De paso encontré que `Nombre de Oportunidad` en Cotizaciones **no es
+    obligatorio** a nivel de campo — técnicamente ya se podría crear una
+    Cotización sin Oportunidad previa. Quedó anotado como nota aparte por
+    si Simón quiere revisar por qué el equipo igual pasa por ahí, pero no
+    se mezcló con esta propuesta del botón.
+  Sigue pendiente que Simón lo arme en el Sandbox y confirme que funciona.
