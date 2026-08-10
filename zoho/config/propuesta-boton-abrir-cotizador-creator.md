@@ -1,16 +1,25 @@
 # Propuesta: botón "Abrir Cotizador" en Cotizaciones (abre el Cotizador de Creator)
 
-## Estado: LISTO PARA ARMAR
+## Estado: LISTO PARA ARMAR — falta que confirmes cómo resolver la
+restricción (ver sección de restricción más abajo)
 
 ## Qué se pidió
 
 Un botón en el módulo **Cotizaciones** (Quotes) que, al apretarlo, abra
 directamente **el Cotizador** — la app hecha en Zoho Creator que ya se usa
 para armar/calcular cotizaciones (la misma que ya mencionaste antes como
-"el Creator") — visible **solo para las Cotizaciones de 2 Unidades de
-Negocio puntuales: Industria y Ferretería y Ematerra**. El motivo: esos
-vendedores necesitan cotizar rápido, y pasar primero por una Oportunidad
-antes de llegar a Cotizaciones les complica el flujo del día a día.
+"el Creator") — pensado para que los vendedores de **2 Unidades de
+Negocio puntuales (Industria y Ferretería y Ematerra)** puedan cotizar
+rápido, sin tener que crear antes una Oportunidad a mano en el CRM.
+
+**Contexto clave que aclaraste:** ya existe un flujo donde, si la
+cotización se genera directo desde el Cotizador (Creator), **se crea
+automáticamente la Oportunidad en el CRM** del otro lado. Por eso el botón
+no tiene sentido adentro de una Cotización que ya existe en el CRM —
+tiene que estar **en la vista general del módulo Cotizaciones**, para que
+el vendedor entre directo a esa pestaña y cotice de cero en el Cotizador,
+sin crear nada a mano antes. La Oportunidad (y probablemente la
+Cotización) quedan creadas solas por esa automatización existente.
 
 ## URL del Cotizador (confirmada)
 
@@ -45,33 +54,44 @@ después si te sirve; por ahora el botón simple ya resuelve lo que pediste.
 | Módulo | Cotizaciones |
 | Nombre del botón | Abrir Cotizador |
 | Tipo | Botón personalizado → Abrir URL |
-| Ubicación | Vista de detalle de la Cotización |
+| Ubicación | **Vista general / lista de Cotizaciones** (no adentro de un registro puntual) |
 | URL destino | `https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones` |
-| Se abre en | Pestaña nueva (para no perder la Cotización abierta en el CRM) |
-| Visible para | Solo Cotizaciones de UN **Industria y Ferretería** o **Ematerra** — ver sección siguiente |
+| Se abre en | Pestaña nueva |
+| Visible para | Solo vendedores de Industria y Ferretería y Ematerra — ver sección siguiente |
 
-## Cómo queda restringido: por Criterio, según el campo UN de la Cotización
+## Cómo restringirlo — pendiente que decidas
 
-Antes había armado esto por Perfil (Vendedor, Gerente, etc.), pero contame
-el caso de uso: es para que los vendedores de **2 UN puntuales** (Industria
-y Ferretería y Ematerra) puedan cotizar rápido. Restringir por Perfil no
-encaja bien acá — revisé los Perfiles del módulo y no hay uno que separe
-exactamente esas 2 UN: el que más se acerca, **"Vendedor IyF Const y
-Ematerra"**, mezcla también **Construcción**, que no pediste incluir.
+Había armado esto con un Criterio por el campo `UN` de la Cotización, pero
+esa opción **ya no aplica**: ese criterio solo funciona cuando el botón
+está adentro de un registro puntual, y ahora el botón va en la vista
+general del módulo (sin ningún registro de por medio), porque el objetivo
+es justamente que el vendedor no tenga que crear nada antes.
 
-La forma correcta es la que ya usás en el Plan de acción de Oportunidades
-para casos parecidos (ej. el criterio de Ferretek en "Generar Cotización"):
-un **Criterio en el botón**, basado en el campo `UN` que ya tiene cada
-Cotización — así el botón aparece o no según la UN de esa Cotización
-puntual, sin importar el Perfil de quien la mira. Ventajas:
+Sin un registro de referencia, la única forma nativa de restringir un
+botón en Zoho vuelve a ser **por Perfil** — mismo tema que ya habíamos
+visto: no hay un Perfil que separe exactamente Industria y Ferretería +
+Ematerra. El más cercano, **"Vendedor IyF Const y Ematerra"**, incluye
+también **Construcción**.
 
-- No depende de a qué Perfil pertenece cada vendedor (evita el problema de
-  arriba con Construcción).
-- Si mañana cambia el equipo de ventas de esas UN, no hay que tocar nada
-  del botón — sigue funcionando solo.
+Tenés 3 caminos, elegí el que prefieras:
 
-**Criterio del botón:** `UN` es **Industria y Ferretería** **O** `UN` es
-**Ematerra**.
+1. **Habilitar el botón para el Perfil "Vendedor IyF Const y Ematerra"
+   (más simple)** — Construcción también va a poder verlo y usarlo. No
+   rompe nada (si alguien de Construcción lo usa, en el peor caso genera
+   una cotización/Oportunidad de más por ese lado), pero no es 100%
+   exclusivo de las 2 UN que pediste.
+2. **Pedir que se separe ese Perfil en 2** (uno solo para Industria y
+   Ferretería + Ematerra, otro para Construcción) — ahí sí queda exacto,
+   pero es un cambio de Perfiles más grande, aparte de este botón, y hay
+   que revisar qué otros permisos dependen de ese Perfil antes de
+   tocarlo.
+3. **No restringir por Zoho y resolverlo por uso/comunicación** — el
+   botón queda visible para todos los que tengan acceso a Cotizaciones,
+   y simplemente se le avisa al equipo que es para Industria y Ferretería
+   / Ematerra. Cero trabajo de configuración extra, pero no hay
+   restricción real.
+
+Decime cuál preferís y actualizo la guía de abajo con eso.
 
 ## Importante: esto no lo puedo aplicar yo directo, ni con tu OK
 
@@ -93,46 +113,53 @@ Configuración (⚙️) → Personalización → Módulos y Campos → **Cotizac
 → pestaña **Botones** → **Nuevo Botón**.
 
 1. Nombre: `Abrir Cotizador`.
-2. Ubicación: **Vista de detalle**.
+2. Ubicación: **Vista de lista** (la que se ve al entrar a la pestaña
+   Cotizaciones, sin abrir ningún registro).
 3. Tipo de acción: **Abrir URL**.
 4. URL: pegá tal cual
    `https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones`
 5. Abrir en: **Pestaña nueva**.
-6. **Criterio** (sección "Mostrar este botón solo si..." / "Add Criteria"):
-   `UN` **es** `Industria y Ferretería` **O** `UN` **es** `Ematerra`.
+6. Restricción: **pendiente** — depende de cuál de los 3 caminos de la
+   sección anterior elijas. Si es el camino 1 o 2 (por Perfil), se
+   configura después desde Usuarios y Control → Perfiles → el/los
+   Perfiles elegidos → sección de Botones personalizados del módulo
+   Cotizaciones → activar el interruptor de `Abrir Cotizador`.
 7. Guardar.
 
-### Paso 2 — Probar en el Sandbox
+> Nota: al crear el botón, fijate si Zoho te muestra la opción de vista
+> de lista como "acción sobre la página" (sin necesidad de seleccionar
+> ningún registro) — es lo que buscamos. Si solo aparece como acción
+> "sobre los registros seleccionados", avisame para revisar una
+> alternativa.
 
-1. Abrí una Cotización de prueba con `UN` = Industria y Ferretería (o
-   Ematerra) — confirmá que el botón **aparece** y abre el Cotizador en
-   una pestaña nueva.
-2. Abrí una Cotización de otra UN (ej. Construcción o Rental) — confirmá
-   que el botón **no aparece**.
+### Paso 2 — Restringirlo (según lo que elegiste arriba)
 
-### Paso 3 — Pasar del Sandbox a Producción
+Si elegiste el camino 1 o 2 (por Perfil): Configuración (⚙️) → Usuarios y
+Control → Perfiles → elegí el/los Perfiles habilitados → buscá el módulo
+Cotizaciones → activá el interruptor de `Abrir Cotizador` solo ahí y
+dejalo apagado en el resto. Si elegiste el camino 3, no hay nada que
+configurar acá.
+
+### Paso 3 — Probar en el Sandbox
+
+1. Entrá a la pestaña Cotizaciones (sin abrir ningún registro) con un
+   usuario que debería ver el botón — confirmá que aparece y que abre el
+   Cotizador en una pestaña nueva, con el formulario "Generar
+   Cotizaciones" listo.
+2. Si restringiste por Perfil, repetí con un usuario que no debería
+   verlo y confirmá que no aparece.
+
+### Paso 4 — Pasar del Sandbox a Producción
 
 1. Configuración (⚙️) → **Sandbox** → **Implementar en Producción**.
-2. Marcá para mover el botón `Abrir Cotizador`.
+2. Marcá para mover el botón `Abrir Cotizador` y, si tocaste Perfiles,
+   esos cambios también.
 3. Revisá la vista previa y confirmá el despliegue.
 
 ## Próximo paso
 
-Armalo en el Sandbox siguiendo los 3 pasos de arriba y probalo con una
-Cotización de cada UN (dentro y fuera del criterio) — avisame cuando esté
-funcionando para dejarlo marcado como aplicado acá, o si en algún momento
-querés la versión que abre directo el registro puntual de la cotización
-(la mejora que quedó anotada arriba).
-
-## Nota aparte: el "molestia" de pasar por Oportunidad antes de Cotizar
-
-Contaste que para estas 2 UN, tener que crear una Oportunidad antes de
-llegar a Cotizaciones les complica el flujo. Dato encontrado revisando el
-módulo: el campo `Nombre de Oportunidad` (`Deal_Name`) en Cotizaciones
-**no es obligatorio** a nivel de campo — técnicamente ya se podría crear
-una Cotización sin pasar por una Oportunidad primero. Si hoy igual están
-obligados a pasar por ahí, probablemente sea por cómo está armado el
-proceso/capacitación del equipo, no por una restricción del campo. Si
-querés, en otra vuelta puedo revisar más a fondo por qué pasa esto y ver
-si conviene ajustarlo — quedó anotado como pendiente, no lo incluí en esta
-propuesta para no mezclarlo con el botón.
+1. Decime cuál de los 3 caminos de restricción preferís (o si preferís
+   otra alternativa).
+2. Armalo en el Sandbox siguiendo los pasos de arriba y probalo.
+3. Avisame cuando esté funcionando para dejarlo marcado como aplicado
+   acá.

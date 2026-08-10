@@ -446,3 +446,22 @@ ver regla de sincronización en `CLAUDE.md`.
     si Simón quiere revisar por qué el equipo igual pasa por ahí, pero no
     se mezcló con esta propuesta del botón.
   Sigue pendiente que Simón lo arme en el Sandbox y confirme que funciona.
+- Simón aclaró el dato que faltaba: **ya existe un flujo que, cuando la
+  cotización se genera directo desde el Cotizador (Creator), crea sola la
+  Oportunidad en el CRM**. Con eso confirmó que el botón tiene que ir en
+  la **vista general del módulo Cotizaciones** (no adentro de una
+  Cotización puntual) — así el vendedor entra directo a esa pestaña y
+  cotiza de cero en el Cotizador, sin crear nada a mano antes; la
+  automatización existente se encarga del resto.
+  - Esto invalidó el criterio por `UN` armado antes (solo funciona
+    adentro de un registro puntual, y ahora no hay registro de por
+    medio) — volvió a quedar pendiente la restricción, otra vez por
+    Perfil (única opción nativa sin un registro de referencia), con el
+    mismo problema de siempre: no hay un Perfil que separe exactamente
+    Industria y Ferretería + Ematerra de Construcción.
+  - Actualicé `zoho/config/propuesta-boton-abrir-cotizador-creator.md`
+    con el botón en Vista de lista y **3 caminos** para que Simón elija:
+    (1) habilitar para "Vendedor IyF Const y Ematerra" tal cual (incluye
+    Construcción de más), (2) pedir que se separe ese Perfil en dos, o
+    (3) no restringir por Zoho y resolverlo por comunicación con el
+    equipo. Queda pendiente que Simón elija uno para cerrar la guía.
