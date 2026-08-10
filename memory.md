@@ -342,3 +342,25 @@ ver regla de sincronización en `CLAUDE.md`.
   VISTA` o una opción nueva a crear. Le pregunté directo pero no
   respondió todavía — queda esperando su respuesta para poder escribir la
   propuesta concreta.
+
+## 2026-08-10
+
+- Simón pidió que cuando la Oportunidad sea de UN **Ferretek** no se vea
+  la transición de generar cotización (Plan de acción de Oportunidades).
+- Ubiqué la fase relevante: el Plan de acción tiene la secuencia Creada →
+  Necesita Análisis → **Cotización Enviada** → Negociación → cierres. La
+  transición de "generar cotización" es la que lleva de "Necesita
+  Análisis" a "Cotización Enviada".
+- Mismo mecanismo que ya se usó para "Ganar Oportunidad Ferretek" (ver
+  2026-07-29): agregar un criterio a esa transición basado en el campo
+  **UN** (lookup a Unidades de Negocio) — en este caso de exclusión: `UN
+  no está en Ferretek`, para que el botón no aparezca cuando la
+  Oportunidad es de esa UN.
+- Dejé la propuesta completa (con pasos Sandbox → Producción) en
+  `zoho/pipeline/propuesta-ocultar-transicion-generar-cotizacion-ferretek.md`.
+  **No se pudo aplicar directo**: editar criterios de transiciones de
+  Blueprint no está entre las tools del MCP conectado (mismo límite que
+  siempre). Queda pendiente que Simón: (1) confirme el nombre exacto de la
+  transición si no es literalmente "Generar Cotización" (no pude leerlo
+  desde acá), (2) confirme si Ferretek necesita una forma alternativa de
+  avanzar de fase sin ese botón, y (3) lo arme en Zoho siguiendo la guía.
