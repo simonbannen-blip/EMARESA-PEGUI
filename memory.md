@@ -360,7 +360,17 @@ ver regla de sincronización en `CLAUDE.md`.
   `zoho/pipeline/propuesta-ocultar-transicion-generar-cotizacion-ferretek.md`.
   **No se pudo aplicar directo**: editar criterios de transiciones de
   Blueprint no está entre las tools del MCP conectado (mismo límite que
-  siempre). Queda pendiente que Simón: (1) confirme el nombre exacto de la
-  transición si no es literalmente "Generar Cotización" (no pude leerlo
-  desde acá), (2) confirme si Ferretek necesita una forma alternativa de
-  avanzar de fase sin ese botón, y (3) lo arme en Zoho siguiendo la guía.
+  siempre).
+- Simón compartió una captura del Blueprint que **confirma el nombre**:
+  la transición es literalmente **"Generar Cotización"** (Necesita
+  Análisis → Cotización Enviada). La captura también muestra que esa
+  transición **ya tiene un criterio configurado hoy** (marcada con el
+  ícono azul de criterio, igual que Ganar/Perder/Declinar Oportunidad) —
+  no se pudo leer cuál es ese criterio existente desde acá. Ajusté la
+  propuesta para que el criterio nuevo de Ferretek se agregue combinado
+  con **Y (AND)** al que ya existe, sin borrarlo.
+  - Se le dio la guía completa paso a paso para armarlo en el Sandbox y
+    validarlo, y después implementarlo en Producción.
+  - Queda pendiente que Simón confirme si Ferretek necesita una forma
+    alternativa de avanzar de fase sin el botón "Generar Cotización", y
+    que lo arme en Zoho siguiendo la guía.
