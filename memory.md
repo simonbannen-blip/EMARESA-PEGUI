@@ -399,6 +399,17 @@ ver regla de sincronización en `CLAUDE.md`.
   **No se pudo aplicar directo, ni con OK**: crear Botones personalizados
   no está entre las herramientas conectadas al MCP de Zoho CRM (mismo
   límite que Reglas de flujo/Blueprints) — Simón tiene que armarlo a
-  mano. Además falta un dato suyo para tener la URL final: la URL del
-  Cotizador (y si admite abrir un registro puntual por parámetro).
-  Queda pendiente que la pase para cerrar la propuesta.
+  mano. Además faltaba un dato suyo para tener la URL final: la URL del
+  Cotizador.
+- Simón pasó la URL: `https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones`
+  (formulario "Generar Cotizaciones" de la app `cotizador`, org Creator
+  `emaresa`). Actualicé la propuesta a **LISTO PARA ARMAR**: botón simple
+  que abre esa URL en pestaña nueva desde la vista de detalle de
+  Cotizaciones — cumple lo pedido tal cual. Quedó anotado como mejora
+  futura (no bloqueante) la opción de que el botón lleve directo al
+  registro puntual de esa cotización en el Cotizador usando el campo
+  `ID_Creator`, si en algún momento lo quiere — falta confirmar el patrón
+  de URL que usa Creator para *ver* un registro existente (distinto al de
+  este formulario, que es para crear uno nuevo).
+  Pendiente: que Simón lo arme en el Sandbox siguiendo la guía y confirme
+  que funciona, para pasarlo después a Producción.
