@@ -1,74 +1,50 @@
 # Propuesta: botón "Abrir Cotizador" en Cotizaciones (abre el Cotizador de Creator)
 
-## Estado: PROPUESTO — falta un dato tuyo antes de poder dejarlo armado del
-todo (la URL del Cotizador)
+## Estado: LISTO PARA ARMAR — guía completa, con la URL confirmada por Simón
 
 ## Qué se pidió
 
 Un botón en el módulo **Cotizaciones** (Quotes) que, al apretarlo, abra
 directamente **el Cotizador** — la app hecha en Zoho Creator que ya se usa
-para armar/calcular cotizaciones (la misma que mencionaste antes como "el
-Creator").
+para armar/calcular cotizaciones (la misma que ya mencionaste antes como
+"el Creator").
 
-## Lo que encontré revisando Cotizaciones hoy
+## URL del Cotizador (confirmada)
 
-Cada Cotización ya tiene un campo `ID_Creator` (texto) y, al revisar las 5
-Cotizaciones más recientes, **todas** lo tienen cargado con un ID numérico
-distinto al ID de la Cotización en el CRM, por ejemplo:
+```
+https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones
+```
 
-| Cotización (CRM) | `ID_Creator` |
-|---|---|
-| COT-REN-2864 | `4389062000010888092` |
-| 20260810-COT-II10022-1881 | `4389062000010890048` |
-| COT-CONST-467-2299 | `4389062000010889094` |
+Es el formulario **"Generar Cotizaciones"** de la app **cotizador**, dentro
+de la organización Creator **emaresa**. Con esta URL, el botón cumple
+exactamente lo pedido: abre el Cotizador listo para generar una cotización.
 
-Esto confirma dos cosas importantes:
+## Lo que encontré revisando Cotizaciones (contexto, no bloquea el armado)
 
-- **El Cotizador es efectivamente una app separada** (Zoho Creator, con su
-  propio ID de organización interno, distinto al de este CRM) — coincide
-  con lo que ya sabíamos por `ID_Creator`/`Respuesta_Creator` en Sucursales.
-- **Cada Cotización del CRM ya está enlazada 1 a 1 con un registro puntual
-  en el Cotizador** vía ese `ID_Creator`. Esto es una buena noticia: el
-  botón no tiene que abrir el Cotizador "en blanco" — puede llevar
-  directo a la cotización correcta, sin que el vendedor tenga que
-  buscarla de nuevo del otro lado.
+Cada Cotización del CRM tiene un campo `ID_Creator` (texto) cargado con un
+ID numérico de esa misma organización Creator (`emaresa`), distinto al ID
+de la Cotización acá en el CRM — por ejemplo `4389062000010888092` para
+COT-REN-2864. Esto confirma que cada Cotización ya queda enlazada con un
+registro puntual del lado del Cotizador cuando se genera.
 
-## Lo que me falta para dejar el botón armado del todo
+**Nota para más adelante (no forma parte de esta propuesta):** en teoría
+se podría hacer que el botón, en vez de abrir el formulario en blanco,
+lleve directo al registro puntual de esa cotización dentro del Cotizador
+usando `ID_Creator`. Para eso hace falta confirmar el patrón de URL que usa
+Creator para *ver/editar* un registro existente (es distinto al de este
+formulario, que es para *crear uno nuevo*) — se puede armar como mejora
+después si te sirve; por ahora el botón simple ya resuelve lo que pediste.
 
-El Cotizador (Zoho Creator) **no está dentro del alcance de las
-herramientas conectadas a esta sesión** (solo tengo acceso al CRM) — no
-puedo ver su URL ni cómo abre un registro puntual. Necesito que me
-confirmes:
-
-1. **La URL del Cotizador** — la que usás hoy vos (o el equipo) para
-   entrar a mano (algo con forma
-   `https://creator.zoho.com/<organización>/<nombre-de-la-app>/...`).
-2. **Si esa URL admite abrir directo un registro puntual pasándole un ID**
-   por parámetro (ej. `...?ID=1234...`), y si es así, **cómo se llama ese
-   parámetro**. Si no lo sabés de memoria, alcanza con que abras una
-   cotización cualquiera adentro del Cotizador y me pases la URL completa
-   que te queda en el navegador — de ahí se puede deducir el patrón.
-3. Si preferís que el botón aparezca **solo en la vista de detalle** de la
-   Cotización, o **también en la vista de lista**.
-
-Con esos 3 datos dejo la URL final del botón lista para pegar.
-
-## Cómo va a quedar armado el botón (una vez tenga la URL)
+## Cómo queda armado el botón
 
 | | |
 |---|---|
 | Módulo | Cotizaciones |
 | Nombre del botón | Abrir Cotizador |
 | Tipo | Botón personalizado → Abrir URL |
-| Ubicación | Vista de detalle de la Cotización (y lista, si lo confirmás) |
-| URL destino | `<URL BASE DEL COTIZADOR>` + parámetro con el valor del campo `ID_Creator` de la Cotización actual |
+| Ubicación | Vista de detalle de la Cotización |
+| URL destino | `https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones` |
 | Se abre en | Pestaña nueva (para no perder la Cotización abierta en el CRM) |
-
-> Nota: si el Cotizador **no** tiene forma de abrir un registro puntual
-> por URL, el botón igual se puede armar apuntando a la URL general de la
-> app (el vendedor entra y busca la cotización a mano del otro lado) — es
-> una versión más simple, avisame si preferís arrancar por ahí mientras
-> confirmás el resto.
 
 ## Importante: esto no lo puedo aplicar yo directo, ni con tu OK
 
@@ -90,27 +66,18 @@ Configuración (⚙️) → Personalización → Módulos y Campos → **Cotizac
 → pestaña **Botones** → **Nuevo Botón**.
 
 1. Nombre: `Abrir Cotizador`.
-2. Ubicación: **Vista de detalle** (marcá también **Vista de lista** si lo
-   pediste en el punto 3 de arriba).
+2. Ubicación: **Vista de detalle**.
 3. Tipo de acción: **Abrir URL**.
-4. URL: pegá la URL base del Cotizador y agregá el campo `ID_Creator`
-   como parámetro dinámico usando el selector de campos de Zoho (el mismo
-   que se usa para insertar merge fields), por ejemplo:
-   `https://creator.zoho.com/tuorg/tuapp/#Formulario/Ver/${Quotes.ID_Creator}`
-   — el patrón exacto depende de la respuesta al punto 2 de arriba.
+4. URL: pegá tal cual
+   `https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones`
 5. Abrir en: **Pestaña nueva**.
 6. Guardar.
 
 ### Paso 2 — Probar en el Sandbox
 
-1. Abrí una Cotización de prueba (con `ID_Creator` cargado).
-2. Apretá el botón nuevo y confirmá que abre el Cotizador **directo en
-   esa cotización** (no en blanco, no en otra).
-3. Probá también con una Cotización sin `ID_Creator` cargado (si existe
-   alguna vieja sin ese dato) para ver qué pasa — probablemente el
-   Cotizador muestre un error o pantalla vacía; si eso molesta, se puede
-   agregar más adelante una condición para ocultar el botón cuando
-   `ID_Creator` esté vacío.
+1. Abrí una Cotización cualquiera.
+2. Apretá el botón nuevo y confirmá que abre el Cotizador en una pestaña
+   nueva, con el formulario "Generar Cotizaciones" listo.
 
 ### Paso 3 — Pasar del Sandbox a Producción
 
@@ -120,7 +87,7 @@ Configuración (⚙️) → Personalización → Módulos y Campos → **Cotizac
 
 ## Próximo paso
 
-Pasame la URL del Cotizador (y si podés, la URL completa que te queda al
-abrir una cotización puntual desde ahí) para terminar de armar la URL
-exacta del botón y dejarte la guía 100% lista para pegar sin adivinar
-nada.
+Armalo en el Sandbox siguiendo los 3 pasos de arriba y probalo — avisame
+cuando esté funcionando para dejarlo marcado como aplicado acá, o si en
+algún momento querés la versión que abre directo el registro puntual de
+la cotización (la mejora que quedó anotada arriba).
