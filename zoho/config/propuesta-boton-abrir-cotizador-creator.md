@@ -1,14 +1,16 @@
 # Propuesta: botón "Abrir Cotizador" en Cotizaciones (abre el Cotizador de Creator)
 
-## Estado: LISTO PARA ARMAR — falta que definas para qué Perfiles habilitar
-el botón (ver sección "Restringir el botón a ciertos perfiles")
+## Estado: LISTO PARA ARMAR
 
 ## Qué se pidió
 
 Un botón en el módulo **Cotizaciones** (Quotes) que, al apretarlo, abra
 directamente **el Cotizador** — la app hecha en Zoho Creator que ya se usa
 para armar/calcular cotizaciones (la misma que ya mencionaste antes como
-"el Creator").
+"el Creator") — visible **solo para las Cotizaciones de 2 Unidades de
+Negocio puntuales: Industria y Ferretería y Ematerra**. El motivo: esos
+vendedores necesitan cotizar rápido, y pasar primero por una Oportunidad
+antes de llegar a Cotizaciones les complica el flujo del día a día.
 
 ## URL del Cotizador (confirmada)
 
@@ -46,59 +48,30 @@ después si te sirve; por ahora el botón simple ya resuelve lo que pediste.
 | Ubicación | Vista de detalle de la Cotización |
 | URL destino | `https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones` |
 | Se abre en | Pestaña nueva (para no perder la Cotización abierta en el CRM) |
-| Visible para | Restringido por **Perfil** (no todos los usuarios) — ver sección siguiente |
+| Visible para | Solo Cotizaciones de UN **Industria y Ferretería** o **Ematerra** — ver sección siguiente |
 
-## Restringir el botón a ciertos perfiles
+## Cómo queda restringido: por Criterio, según el campo UN de la Cotización
 
-Pediste que el botón no sea visible/accesible para todos. En Zoho CRM, los
-Botones personalizados se restringen **por Perfil** (el tipo de usuario:
-Vendedor, Gerente, etc.) desde los permisos del Perfil — no hace falta
-tocar el botón en sí, se habilita/deshabilita desde cada Perfil.
+Antes había armado esto por Perfil (Vendedor, Gerente, etc.), pero contame
+el caso de uso: es para que los vendedores de **2 UN puntuales** (Industria
+y Ferretería y Ematerra) puedan cotizar rápido. Restringir por Perfil no
+encaja bien acá — revisé los Perfiles del módulo y no hay uno que separe
+exactamente esas 2 UN: el que más se acerca, **"Vendedor IyF Const y
+Ematerra"**, mezcla también **Construcción**, que no pediste incluir.
 
-Estos son los 11 Perfiles que hoy tienen acceso al módulo Cotizaciones en
-esta org:
+La forma correcta es la que ya usás en el Plan de acción de Oportunidades
+para casos parecidos (ej. el criterio de Ferretek en "Generar Cotización"):
+un **Criterio en el botón**, basado en el campo `UN` que ya tiene cada
+Cotización — así el botón aparece o no según la UN de esa Cotización
+puntual, sin importar el Perfil de quien la mira. Ventajas:
 
-| Perfil |
-|---|
-| Administrator |
-| Standard |
-| Vendedor |
-| Responsable de Área |
-| Vendedor MIV |
-| Gerente |
-| Asistente |
-| Gerente de UN |
-| Responsable de Área MIV y MAK |
-| Vendedor MAK |
-| Vendedor IyF Const y Ematerra |
+- No depende de a qué Perfil pertenece cada vendedor (evita el problema de
+  arriba con Construcción).
+- Si mañana cambia el equipo de ventas de esas UN, no hay que tocar nada
+  del botón — sigue funcionando solo.
 
-**Todavía falta que definas** para cuáles de estos perfiles (o cuáles
-usuarios puntuales dentro de un perfil, si hiciera falta algo más fino)
-querés que el botón esté disponible. Cuando lo tengas claro, avisame y
-actualizo esta tabla marcando Sí/No por perfil antes de que lo apliques.
-
-### Cómo se configura (una vez definido el listado)
-
-Por cada Perfil, adentro del Sandbox:
-
-1. Configuración (⚙️) → Usuarios y Control → **Perfiles**.
-2. Elegí el Perfil (ej. "Vendedor").
-3. Buscá la sección de permisos del módulo **Cotizaciones** — ahí, junto a
-   los permisos de Crear/Editar/Eliminar, vas a ver listados los **Botones
-   personalizados** del módulo, con un interruptor por cada uno.
-4. Dejá **activado** el interruptor de `Abrir Cotizador` solo en los
-   Perfiles que definiste que sí deben verlo, y **desactivado** en el
-   resto.
-5. Guardar.
-
-Esto controla tanto que el botón **no se vea** como que **no se pueda
-usar** para los perfiles sin el permiso activado (no es solo estético).
-
-> Si en algún momento la restricción tiene que ser más fina que por Perfil
-> (ej. "estos 2 vendedores puntuales sí, el resto del mismo Perfil no"),
-> avisame — esa parte ya no se resuelve con el permiso del Perfil y hay
-> que ver una alternativa (separar esos usuarios a un Perfil propio, o un
-> Client Script).
+**Criterio del botón:** `UN` es **Industria y Ferretería** **O** `UN` es
+**Ematerra**.
 
 ## Importante: esto no lo puedo aplicar yo directo, ni con tu OK
 
@@ -125,34 +98,41 @@ Configuración (⚙️) → Personalización → Módulos y Campos → **Cotizac
 4. URL: pegá tal cual
    `https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones`
 5. Abrir en: **Pestaña nueva**.
-6. Guardar.
+6. **Criterio** (sección "Mostrar este botón solo si..." / "Add Criteria"):
+   `UN` **es** `Industria y Ferretería` **O** `UN` **es** `Ematerra`.
+7. Guardar.
 
-### Paso 2 — Restringir por Perfil (adentro del Sandbox)
+### Paso 2 — Probar en el Sandbox
 
-Seguí los pasos de la sección "Cómo se configura" de arriba, perfil por
-perfil, según el listado que definas.
-
-### Paso 3 — Probar en el Sandbox
-
-1. Abrí una Cotización cualquiera con un usuario de un Perfil que **sí**
-   debería ver el botón — confirmá que aparece y que abre el Cotizador en
+1. Abrí una Cotización de prueba con `UN` = Industria y Ferretería (o
+   Ematerra) — confirmá que el botón **aparece** y abre el Cotizador en
    una pestaña nueva.
-2. Repetí con un usuario de un Perfil que **no** debería verlo — confirmá
-   que el botón no aparece.
+2. Abrí una Cotización de otra UN (ej. Construcción o Rental) — confirmá
+   que el botón **no aparece**.
 
-### Paso 4 — Pasar del Sandbox a Producción
+### Paso 3 — Pasar del Sandbox a Producción
 
 1. Configuración (⚙️) → **Sandbox** → **Implementar en Producción**.
-2. Marcá para mover el botón `Abrir Cotizador` **y** los cambios de
-   permisos de los Perfiles que tocaste.
+2. Marcá para mover el botón `Abrir Cotizador`.
 3. Revisá la vista previa y confirmá el despliegue.
 
 ## Próximo paso
 
-1. Decime para qué Perfiles (de la tabla de arriba) querés que el botón
-   esté disponible.
-2. Armalo en el Sandbox siguiendo los 4 pasos de arriba y probalo con un
-   usuario que sí y uno que no tenga permiso.
-3. Avisame cuando esté funcionando para dejarlo marcado como aplicado
-   acá, o si en algún momento querés la versión que abre directo el
-   registro puntual de la cotización (la mejora que quedó anotada arriba).
+Armalo en el Sandbox siguiendo los 3 pasos de arriba y probalo con una
+Cotización de cada UN (dentro y fuera del criterio) — avisame cuando esté
+funcionando para dejarlo marcado como aplicado acá, o si en algún momento
+querés la versión que abre directo el registro puntual de la cotización
+(la mejora que quedó anotada arriba).
+
+## Nota aparte: el "molestia" de pasar por Oportunidad antes de Cotizar
+
+Contaste que para estas 2 UN, tener que crear una Oportunidad antes de
+llegar a Cotizaciones les complica el flujo. Dato encontrado revisando el
+módulo: el campo `Nombre de Oportunidad` (`Deal_Name`) en Cotizaciones
+**no es obligatorio** a nivel de campo — técnicamente ya se podría crear
+una Cotización sin pasar por una Oportunidad primero. Si hoy igual están
+obligados a pasar por ahí, probablemente sea por cómo está armado el
+proceso/capacitación del equipo, no por una restricción del campo. Si
+querés, en otra vuelta puedo revisar más a fondo por qué pasa esto y ver
+si conviene ajustarlo — quedó anotado como pendiente, no lo incluí en esta
+propuesta para no mezclarlo con el botón.
