@@ -348,9 +348,10 @@ ver regla de sincronización en `CLAUDE.md`.
 - Simón pidió que cuando la Oportunidad sea de UN **Ferretek** no se vea
   la transición de generar cotización (Plan de acción de Oportunidades).
 - Ubiqué la fase relevante: el Plan de acción tiene la secuencia Creada →
-  Necesita Análisis → **Cotización Enviada** → Negociación → cierres. La
-  transición de "generar cotización" es la que lleva de "Necesita
-  Análisis" a "Cotización Enviada".
+  Necesita Análisis → Cotización Enviada → Negociación → cierres. En un
+  primer momento anoté mal el tramo de la transición (Necesita Análisis →
+  Cotización Enviada); Simón corrigió: la transición de "generar
+  cotización" va de **"Creada"** a **"Necesita Análisis"**.
 - Mismo mecanismo que ya se usó para "Ganar Oportunidad Ferretek" (ver
   2026-07-29): agregar un criterio a esa transición basado en el campo
   **UN** (lookup a Unidades de Negocio) — en este caso de exclusión: `UN
@@ -362,15 +363,19 @@ ver regla de sincronización en `CLAUDE.md`.
   Blueprint no está entre las tools del MCP conectado (mismo límite que
   siempre).
 - Simón compartió una captura del Blueprint que **confirma el nombre**:
-  la transición es literalmente **"Generar Cotización"** (Necesita
-  Análisis → Cotización Enviada). La captura también muestra que esa
-  transición **ya tiene un criterio configurado hoy** (marcada con el
-  ícono azul de criterio, igual que Ganar/Perder/Declinar Oportunidad) —
-  no se pudo leer cuál es ese criterio existente desde acá. Ajusté la
-  propuesta para que el criterio nuevo de Ferretek se agregue combinado
-  con **Y (AND)** al que ya existe, sin borrarlo.
+  la transición es literalmente **"Generar Cotización"**. La captura
+  también muestra que esa transición **ya tiene un criterio configurado
+  hoy** (marcada con el ícono azul de criterio, igual que
+  Ganar/Perder/Declinar Oportunidad) — no se pudo leer cuál es ese
+  criterio existente desde acá. Ajusté la propuesta para que el criterio
+  nuevo de Ferretek se agregue combinado con **Y (AND)** al que ya
+  existe, sin borrarlo.
   - Se le dio la guía completa paso a paso para armarlo en el Sandbox y
     validarlo, y después implementarlo en Producción.
+  - **Corrección de Simón**: la fase de origen no es "Necesita Análisis"
+    sino **"Creada"** — la transición "Generar Cotización" va de "Creada"
+    a "Necesita Análisis". Se corrigió toda la propuesta (guía paso a
+    paso y prueba en Sandbox) para reflejar esto.
   - Queda pendiente que Simón confirme si Ferretek necesita una forma
     alternativa de avanzar de fase sin el botón "Generar Cotización", y
     que lo arme en Zoho siguiendo la guía.
