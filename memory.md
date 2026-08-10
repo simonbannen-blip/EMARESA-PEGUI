@@ -413,3 +413,14 @@ ver regla de sincronización en `CLAUDE.md`.
   este formulario, que es para crear uno nuevo).
   Pendiente: que Simón lo arme en el Sandbox siguiendo la guía y confirme
   que funciona, para pasarlo después a Producción.
+- Simón pidió que el botón no sea visible/accesible para todos los
+  usuarios. Preguntado el mecanismo (por Perfil, por usuarios puntuales, o
+  por UN del registro) eligió **por Perfil**, pero todavía no definió
+  cuáles. Actualicé la propuesta con: (1) el listado de los 11 Perfiles
+  que hoy tienen acceso a Cotizaciones (Administrator, Standard, Vendedor,
+  Responsable de Área, Vendedor MIV, Gerente, Asistente, Gerente de UN,
+  Responsable de Área MIV y MAK, Vendedor MAK, Vendedor IyF Const y
+  Ematerra), (2) cómo se restringe (interruptor por Botón personalizado
+  adentro de los permisos de cada Perfil — no requiere tocar el botón en
+  sí), y (3) los pasos agregados a la guía Sandbox → Producción. Queda
+  pendiente que Simón diga para cuáles Perfiles habilitarlo.
