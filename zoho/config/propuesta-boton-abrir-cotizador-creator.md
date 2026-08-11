@@ -1,7 +1,6 @@
 # Propuesta: botón "Abrir Cotizador" en Cotizaciones (abre el Cotizador de Creator)
 
-## Estado: LISTO PARA ARMAR — falta que confirmes cómo resolver la
-restricción (ver sección de restricción más abajo)
+## Estado: LISTO PARA ARMAR
 
 ## Qué se pidió
 
@@ -57,41 +56,25 @@ después si te sirve; por ahora el botón simple ya resuelve lo que pediste.
 | Ubicación | **Vista general / lista de Cotizaciones** (no adentro de un registro puntual) |
 | URL destino | `https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones` |
 | Se abre en | Pestaña nueva |
-| Visible para | Solo vendedores de Industria y Ferretería y Ematerra — ver sección siguiente |
+| Visible para | Solo el Perfil `Vendedor Distribución y Repuestos jardín` — ver sección siguiente |
 
-## Cómo restringirlo — pendiente que decidas
+## Cómo queda restringido: Perfil nuevo creado por Simón
 
-Había armado esto con un Criterio por el campo `UN` de la Cotización, pero
-esa opción **ya no aplica**: ese criterio solo funciona cuando el botón
-está adentro de un registro puntual, y ahora el botón va en la vista
-general del módulo (sin ningún registro de por medio), porque el objetivo
-es justamente que el vendedor no tenga que crear nada antes.
+Ya quedó resuelto: Simón creó un **Perfil nuevo** con exactamente los
+vendedores que necesita para esto (los nombres de las UN se renombraron en
+el medio, por eso el Perfil quedó con el nombre `Vendedor Distribución y
+Repuestos jardín`, aunque es para los vendedores de las 2 UN de este
+pedido — confirmado por Simón).
 
-Sin un registro de referencia, la única forma nativa de restringir un
-botón en Zoho vuelve a ser **por Perfil** — mismo tema que ya habíamos
-visto: no hay un Perfil que separe exactamente Industria y Ferretería +
-Ematerra. El más cercano, **"Vendedor IyF Const y Ematerra"**, incluye
-también **Construcción**.
+La restricción se resuelve igual que veníamos viendo para casos por
+Perfil: activar el botón `Abrir Cotizador` **solo** para ese Perfil desde
+sus permisos, dejándolo apagado en el resto.
 
-Tenés 3 caminos, elegí el que prefieras:
-
-1. **Habilitar el botón para el Perfil "Vendedor IyF Const y Ematerra"
-   (más simple)** — Construcción también va a poder verlo y usarlo. No
-   rompe nada (si alguien de Construcción lo usa, en el peor caso genera
-   una cotización/Oportunidad de más por ese lado), pero no es 100%
-   exclusivo de las 2 UN que pediste.
-2. **Pedir que se separe ese Perfil en 2** (uno solo para Industria y
-   Ferretería + Ematerra, otro para Construcción) — ahí sí queda exacto,
-   pero es un cambio de Perfiles más grande, aparte de este botón, y hay
-   que revisar qué otros permisos dependen de ese Perfil antes de
-   tocarlo.
-3. **No restringir por Zoho y resolverlo por uso/comunicación** — el
-   botón queda visible para todos los que tengan acceso a Cotizaciones,
-   y simplemente se le avisa al equipo que es para Industria y Ferretería
-   / Ematerra. Cero trabajo de configuración extra, pero no hay
-   restricción real.
-
-Decime cuál preferís y actualizo la guía de abajo con eso.
+**Antes de activar el botón, hay un paso previo:** al revisar el módulo
+Cotizaciones, ese Perfil nuevo **todavía no tenía acceso** al módulo (no
+aparecía en la lista de Perfiles con acceso a Cotizaciones) — hay que
+darle acceso primero, si no, ni el módulo ni el botón le van a aparecer a
+esos vendedores. Quedó incluido como Paso 1 de la guía de abajo.
 
 ## Importante: esto no lo puedo aplicar yo directo, ni con tu OK
 
@@ -107,7 +90,14 @@ que armarlo vos a mano en la interfaz de Zoho, siguiendo la guía de abajo.
 1. Arriba a la derecha, donde ves el nombre de tu organización, hacé clic.
 2. Elegí la opción marcada **Sandbox** (en vez de Producción).
 
-### Paso 1 — Crear el botón (adentro del Sandbox)
+### Paso 1 — Darle acceso a Cotizaciones al Perfil nuevo (adentro del Sandbox)
+
+Configuración (⚙️) → Usuarios y Control → **Perfiles** → `Vendedor
+Distribución y Repuestos jardín` → habilitá el acceso al módulo
+**Cotizaciones** (Ver/Crear como mínimo, lo que ya uses para los demás
+Perfiles de vendedores). Si ese Perfil ya lo tiene, saltealo.
+
+### Paso 2 — Crear el botón (adentro del Sandbox)
 
 Configuración (⚙️) → Personalización → Módulos y Campos → **Cotizaciones**
 → pestaña **Botones** → **Nuevo Botón**.
@@ -119,12 +109,7 @@ Configuración (⚙️) → Personalización → Módulos y Campos → **Cotizac
 4. URL: pegá tal cual
    `https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones`
 5. Abrir en: **Pestaña nueva**.
-6. Restricción: **pendiente** — depende de cuál de los 3 caminos de la
-   sección anterior elijas. Si es el camino 1 o 2 (por Perfil), se
-   configura después desde Usuarios y Control → Perfiles → el/los
-   Perfiles elegidos → sección de Botones personalizados del módulo
-   Cotizaciones → activar el interruptor de `Abrir Cotizador`.
-7. Guardar.
+6. Guardar.
 
 > Nota: al crear el botón, fijate si Zoho te muestra la opción de vista
 > de lista como "acción sobre la página" (sin necesidad de seleccionar
@@ -132,34 +117,32 @@ Configuración (⚙️) → Personalización → Módulos y Campos → **Cotizac
 > "sobre los registros seleccionados", avisame para revisar una
 > alternativa.
 
-### Paso 2 — Restringirlo (según lo que elegiste arriba)
+### Paso 3 — Restringirlo al Perfil nuevo
 
-Si elegiste el camino 1 o 2 (por Perfil): Configuración (⚙️) → Usuarios y
-Control → Perfiles → elegí el/los Perfiles habilitados → buscá el módulo
-Cotizaciones → activá el interruptor de `Abrir Cotizador` solo ahí y
-dejalo apagado en el resto. Si elegiste el camino 3, no hay nada que
-configurar acá.
+Configuración (⚙️) → Usuarios y Control → **Perfiles** → `Vendedor
+Distribución y Repuestos jardín` → sección de Botones personalizados del
+módulo Cotizaciones → activá el interruptor de `Abrir Cotizador` **solo**
+ahí. En el resto de los Perfiles (Vendedor, Vendedor MIV, etc.) dejalo
+apagado.
 
-### Paso 3 — Probar en el Sandbox
+### Paso 4 — Probar en el Sandbox
 
 1. Entrá a la pestaña Cotizaciones (sin abrir ningún registro) con un
-   usuario que debería ver el botón — confirmá que aparece y que abre el
-   Cotizador en una pestaña nueva, con el formulario "Generar
-   Cotizaciones" listo.
-2. Si restringiste por Perfil, repetí con un usuario que no debería
-   verlo y confirmá que no aparece.
+   usuario que tenga el Perfil `Vendedor Distribución y Repuestos jardín`
+   — confirmá que el botón aparece y abre el Cotizador en una pestaña
+   nueva, con el formulario "Generar Cotizaciones" listo.
+2. Repetí con un usuario de otro Perfil (ej. Vendedor a secas) — confirmá
+   que el botón **no aparece**.
 
-### Paso 4 — Pasar del Sandbox a Producción
+### Paso 5 — Pasar del Sandbox a Producción
 
 1. Configuración (⚙️) → **Sandbox** → **Implementar en Producción**.
-2. Marcá para mover el botón `Abrir Cotizador` y, si tocaste Perfiles,
-   esos cambios también.
+2. Marcá para mover: el botón `Abrir Cotizador`, el acceso nuevo del
+   Perfil al módulo Cotizaciones, y el permiso del botón en ese Perfil.
 3. Revisá la vista previa y confirmá el despliegue.
 
 ## Próximo paso
 
-1. Decime cuál de los 3 caminos de restricción preferís (o si preferís
-   otra alternativa).
-2. Armalo en el Sandbox siguiendo los pasos de arriba y probalo.
-3. Avisame cuando esté funcionando para dejarlo marcado como aplicado
-   acá.
+Armalo en el Sandbox siguiendo los 5 pasos de arriba y probalo con un
+usuario del Perfil nuevo y uno de otro Perfil — avisame cuando esté
+funcionando para dejarlo marcado como aplicado acá.
