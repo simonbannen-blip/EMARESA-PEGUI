@@ -465,3 +465,26 @@ ver regla de sincronización en `CLAUDE.md`.
     Construcción de más), (2) pedir que se separe ese Perfil en dos, o
     (3) no restringir por Zoho y resolverlo por comunicación con el
     equipo. Queda pendiente que Simón elija uno para cerrar la guía.
+- Simón preguntó si en vez de Perfil se podía restringir por Rol
+  (organigrama) o por usuario puntual. Confirmé revisando el CRM: **Rol
+  no aplica** (en Zoho el Rol jerárquico solo controla qué registros ve
+  cada uno, no qué botones tiene disponibles — eso siempre es por
+  Perfil). Para "por usuario" revisé los 157 usuarios activos y encontré
+  que **nadie tiene hoy el Perfil "Vendedor IyF Const y Ematerra"** — casi
+  todos los vendedores están en el Perfil genérico "Vendedor", así que ese
+  Perfil tampoco servía como estaba. Le expliqué 2 caminos por función
+  Deluge (lista fija de emails, o consulta en vivo a `Vendedores_por_UN`
+  — este último con el problema de que el campo `Activo` está mal cargado
+  para varios vendedores de Industria y Ferretería).
+- Simón resolvió el tema por su cuenta: **creó un Perfil nuevo** con
+  exactamente los vendedores que necesita (mostró una captura). El Perfil
+  quedó con el nombre `Vendedor Distribución y Repuestos jardín` porque
+  renombraron las UN en el medio — confirmó que igual es el correcto para
+  Industria y Ferretería + Ematerra. Reescribí la propuesta
+  (`zoho/config/propuesta-boton-abrir-cotizador-creator.md`) con la
+  restricción ya resuelta por ese Perfil, más un paso previo que detecté:
+  ese Perfil todavía no tenía acceso habilitado al módulo Cotizaciones
+  (no aparecía en la lista de 11 Perfiles con acceso), así que quedó
+  como Paso 1 de la guía dárselo antes de activar el botón.
+  Sigue pendiente que Simón arme los 5 pasos en el Sandbox y confirme
+  que funciona.
