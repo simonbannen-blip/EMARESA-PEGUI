@@ -97,33 +97,29 @@ Distribución y Repuestos jardín` → habilitá el acceso al módulo
 **Cotizaciones** (Ver/Crear como mínimo, lo que ya uses para los demás
 Perfiles de vendedores). Si ese Perfil ya lo tiene, saltealo.
 
-### Paso 2 — Crear el botón (adentro del Sandbox)
+### Paso 2 y 3 — Crear el botón Y restringirlo, en la misma pantalla
 
-Configuración (⚙️) → Personalización → Módulos y Campos → **Cotizaciones**
-→ pestaña **Botones** → **Nuevo Botón**.
+Confirmado por Simón con una captura real: Configuración (⚙️) →
+Personalización → Módulos y Campos → **Cotizaciones** → pestaña
+**Botones** → **Crear botón personalizado**. Esa pantalla ya trae todo
+junto (no hace falta ir después a Perfiles por separado):
 
-1. Nombre: `Abrir Cotizador`.
-2. Ubicación: **Vista de lista** (la que se ve al entrar a la pestaña
-   Cotizaciones, sin abrir ningún registro).
-3. Tipo de acción: **Abrir URL**.
+1. Nombre del botón: `Abrir Cotizador`.
+2. Definir acción: **Invocar una URL**.
+3. Seleccione Página: **En lista** (así el botón queda en la vista
+   general de Cotizaciones, sin depender de un registro puntual — las
+   otras opciones son "En registro", "En lista relacionada" y "En
+   asistentes", no sirven para esto).
 4. URL: pegá tal cual
    `https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones`
-5. Abrir en: **Pestaña nueva**.
-6. Guardar.
-
-> Nota: al crear el botón, fijate si Zoho te muestra la opción de vista
-> de lista como "acción sobre la página" (sin necesidad de seleccionar
-> ningún registro) — es lo que buscamos. Si solo aparece como acción
-> "sobre los registros seleccionados", avisame para revisar una
-> alternativa.
-
-### Paso 3 — Restringirlo al Perfil nuevo
-
-Configuración (⚙️) → Usuarios y Control → **Perfiles** → `Vendedor
-Distribución y Repuestos jardín` → sección de Botones personalizados del
-módulo Cotizaciones → activá el interruptor de `Abrir Cotizador` **solo**
-ahí. En el resto de los Perfiles (Vendedor, Vendedor MIV, etc.) dejalo
-apagado.
+5. Codificación de URL: dejar `UTF-8 (Unicode)` (default).
+6. Disposición de la acción del botón: dejar como esté por default,
+   salvo que prefieras que abra en pestaña nueva y haya una opción
+   puntual para eso — revisalo en pantalla.
+7. **Accesibilidad del botón → Seleccionar perfiles**: elegí
+   `Vendedor Distribución y Repuestos jardín`. Esto ya restringe el
+   botón a ese Perfil en el mismo paso.
+8. Guardar.
 
 ### Paso 4 — Probar en el Sandbox
 

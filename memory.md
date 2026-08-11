@@ -488,3 +488,15 @@ ver regla de sincronización en `CLAUDE.md`.
   como Paso 1 de la guía dárselo antes de activar el botón.
   Sigue pendiente que Simón arme los 5 pasos en el Sandbox y confirme
   que funciona.
+- Simón mandó una captura real de la pantalla "Crear botón personalizado"
+  del Sandbox. Con eso confirmé y simplifiqué la guía:
+  - "Seleccione Página" tiene las opciones En registro / **En lista** / En
+    lista relacionada / En asistentes — "En lista" es la correcta.
+  - La pantalla ya trae una sección **"Accesibilidad del botón" →
+    "Seleccionar perfiles"** en el mismo formulario — no hace falta ir
+    después a Perfiles por separado como tenía armado antes: ahí mismo se
+    elige `Vendedor Distribución y Repuestos jardín` y con eso el botón
+    queda restringido a ese Perfil en un solo paso.
+  - Actualicé `zoho/config/propuesta-boton-abrir-cotizador-creator.md`
+    fusionando los pasos 2 y 3 de la guía en uno solo, con los nombres de
+    campo exactos que muestra la pantalla real de Zoho.
