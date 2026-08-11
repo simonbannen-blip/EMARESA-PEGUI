@@ -500,3 +500,10 @@ ver regla de sincronización en `CLAUDE.md`.
   - Actualicé `zoho/config/propuesta-boton-abrir-cotizador-creator.md`
     fusionando los pasos 2 y 3 de la guía en uno solo, con los nombres de
     campo exactos que muestra la pantalla real de Zoho.
+- Simón mandó otra captura: al elegir "En lista" apareció un campo
+  "Seleccione Posición" con 3 opciones (Menú Utilidades / Cada registro /
+  Menú de acción masiva) que no había anticipado. Indiqué **"Menú
+  Utilidades"** (aparece arriba de la lista, sin depender de seleccionar
+  ni abrir un registro) — las otras dos dependen de un registro puntual o
+  de tener registros seleccionados, no sirven para este caso. Agregado a
+  la guía en `zoho/config/propuesta-boton-abrir-cotizador-creator.md`.

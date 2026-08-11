@@ -110,16 +110,21 @@ junto (no hace falta ir después a Perfiles por separado):
    general de Cotizaciones, sin depender de un registro puntual — las
    otras opciones son "En registro", "En lista relacionada" y "En
    asistentes", no sirven para esto).
-4. URL: pegá tal cual
+4. Seleccione Posición (aparece después de elegir "En lista"): **Menú
+   Utilidades** — aparece arriba de la lista, sin necesidad de
+   seleccionar ni abrir ningún registro. Las otras dos opciones no
+   sirven: "Cada registro" depende de un registro puntual, y "Menú de
+   acción masiva" solo se activa si seleccionás registros primero.
+5. URL: pegá tal cual
    `https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones`
-5. Codificación de URL: dejar `UTF-8 (Unicode)` (default).
-6. Disposición de la acción del botón: dejar como esté por default,
+6. Codificación de URL: dejar `UTF-8 (Unicode)` (default).
+7. Disposición de la acción del botón: dejar como esté por default,
    salvo que prefieras que abra en pestaña nueva y haya una opción
    puntual para eso — revisalo en pantalla.
-7. **Accesibilidad del botón → Seleccionar perfiles**: elegí
+8. **Accesibilidad del botón → Seleccionar perfiles**: elegí
    `Vendedor Distribución y Repuestos jardín`. Esto ya restringe el
    botón a ese Perfil en el mismo paso.
-8. Guardar.
+9. Guardar.
 
 ### Paso 4 — Probar en el Sandbox
 
