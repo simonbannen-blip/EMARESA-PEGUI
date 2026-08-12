@@ -507,3 +507,28 @@ ver regla de sincronización en `CLAUDE.md`.
   ni abrir un registro) — las otras dos dependen de un registro puntual o
   de tener registros seleccionados, no sirven para este caso. Agregado a
   la guía en `zoho/config/propuesta-boton-abrir-cotizador-creator.md`.
+
+## 2026-08-12
+
+- Simón creó una regla nueva de notificación por correo y le llegó el
+  correo **duplicado** en un caso asociado a **Zona Centro + Arriendo**.
+  No tenía a mano el registro puntual ni el nombre de la regla.
+- Confirmé que el campo que arma "Zona Centro" es el picklist `Zona` en
+  Oportunidades (valores: Zona Norte / Zona Centro / Zona Sur), y que
+  "Rental" corresponde al lookup `L_nea` (Tipo de Negocio) = **Arriendo**.
+  Revisé varias Oportunidades recientes con esa combinación (Zona Centro +
+  Arriendo) y sus Timelines (`getTimelines`) para buscar un disparo doble.
+- **Límite encontrado**: el Timeline de un registro no registra los envíos
+  de correo de una Regla de flujo de trabajo (solo deja rastro de
+  actualizaciones de campo, funciones, webhooks y transiciones de
+  Blueprint disparadas por reglas) — no hay forma de ver ahí si un email
+  se mandó una o dos veces. Tampoco existe en el MCP conectado una tool
+  para listar Reglas de flujo de trabajo / Alertas de correo (mismo límite
+  ya documentado antes con Blueprints y Reglas de flujo — solo hay
+  `getAssignmentRules` para reglas de asignación, no de notificación).
+  Con esto, **no se pudo diagnosticar la causa exacta desde acá**.
+- Le dejé a Simón un checklist de las causas más comunes de un correo
+  duplicado en Zoho para que revise él mismo en Configuración →
+  Automatización → Reglas de flujo de trabajo (y Alertas de correo dentro
+  de esa regla), y quedó pendiente que pase el nombre de la regla o un
+  registro puntual para poder acotar más si hace falta.
