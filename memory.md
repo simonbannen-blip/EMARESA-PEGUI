@@ -564,17 +564,31 @@ ver regla de sincronización en `CLAUDE.md`.
   `COT-REN-3001`): el campo `Rental_super_Porcentaje_Descuento` está en
   **`false`** (descuento real ≈9-10%, `Subtotal_sin_descuento` 1.700.000 →
   `Sub_Total` 1.550.000, no llega al 15%). Simón confirmó que con ese
-  descuento **no debería haberle llegado al Gerente** — así que queda
-  confirmado (no solo sospechado) que a `Notificar Gerente Rental` **le
-  falta la condición** `Rental - superó Porcentaje Descuento ES
-  Seleccionado`: hoy dispara para cualquier Cotización de Rental en Zona
-  Centro que llega a "Pendiente de Aprobación", sin filtrar por el 15%.
+  descuento **no debería haberle llegado al Gerente**.
+- Para confirmar la hipótesis (que a `Notificar Gerente Rental` le
+  faltaba el filtro de 15%) se buscó un segundo caso real con descuento
+  **superior** al 15% que también haya llegado a "Pendiente de
+  Aprobación" en Zona Centro (`executeCOQLQuery` con
+  `Rental_super_Porcentaje_Descuento = true`): `COT-REN-3005` (SACYR
+  CHILE S.A., ~25% de descuento). Resultado inesperado: **no disparó
+  ninguna de las dos reglas** — contradice la hipótesis de "dispara
+  siempre sin filtrar por %".
+- **Causa real confirmada con captura de la regla**: Simón compartió la
+  pantalla de `Notificar Gerente Rental` y su condición 4 es
+  **`Rental - superó Porcentaje Descuento ES No seleccionado`** — la
+  **misma** condición que tiene `Notificar jefe zona centro Rental`, no
+  la contraria. Con las dos reglas usando el mismo criterio (todas las
+  demás condiciones también son idénticas: UN=Rental, Fase=Pendiente de
+  Aprobación, Aprobación Descuento=Seleccionado, Tipo de Negocio=Arriendo),
+  quedan pegadas: disparan **juntas** cuando no se supera el 15%
+  (`COT-REN-3001`) y **ninguna** cuando sí se supera (`COT-REN-3005`).
+  Explica ambos casos observados sin contradicción.
 - **Pendiente para Simón antes de pasar a producción** (cambio en Zoho
   real, no soy yo quien lo aplica — no hay tool de edición de Reglas de
   flujo en el MCP conectado):
-  1. Abrir `Notificar Gerente Rental` (Cotizaciones → Automatización →
-     Reglas de flujo) y **agregar** la condición `Rental - superó
-     Porcentaje Descuento ES Seleccionado`, para que sea excluyente con la
-     del jefe de zona y solo dispare cuando el descuento supera 15%.
+  1. En `Notificar Gerente Rental` (Cotizaciones → Automatización →
+     Reglas de flujo), cambiar la condición 4 de `Rental - superó
+     Porcentaje Descuento ES No seleccionado` a **`ES Seleccionado`**
+     (dejarla en positivo). El resto de las condiciones quedan igual.
   2. Cambiar el campo "Para" de esa regla de su propio correo al correo
      real del Gerente de Rental.
