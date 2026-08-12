@@ -532,3 +532,45 @@ ver regla de sincronización en `CLAUDE.md`.
   Automatización → Reglas de flujo de trabajo (y Alertas de correo dentro
   de esa regla), y quedó pendiente que pase el nombre de la regla o un
   registro puntual para poder acotar más si hace falta.
+- **Corrección + diagnóstico resuelto**: Simón mandó capturas de la regla
+  ("Notificar jefe zona centro Rental", en Cotizaciones) y del correo
+  duplicado. Con el ejemplo real pude ubicar la Cotización exacta
+  (`COT-REN-3001`, id `5404724000594817087`, Cuenta CONSTRUCTORA CARRAN
+  S.A., $1.550.000 + IVA, Fase "Pendiente de Aprobación") vía
+  `executeCOQLQuery` sobre `Quotes`, y esta vez el Timeline **sí** mostró
+  los envíos de correo (`action: email_notification_sent`) — la limitación
+  anotada arriba (que el Timeline nunca registra emails de Reglas de
+  flujo) era **incorrecta**: si registra el envío cuando la acción de la
+  regla es una Notificación por correo, incluyendo destinatario y nombre
+  de la plantilla. El límite real sigue siendo que no hay una tool en el
+  MCP para *listar* Reglas de flujo de trabajo por su cuenta (solo se
+  pueden ver sus disparos ya ejecutados en el Timeline de un registro
+  puntual).
+- **Causa real**: no es la misma regla ejecutándose dos veces. Son **dos
+  reglas distintas** que se dispararon en el mismo segundo (16:30:00) para
+  esa Cotización, las dos con destinatario `stirapegui@emaresa.cl`:
+  1. `Notificar jefe zona centro Rental` (id `5404724000594701040`) →
+     email "Aprobación Rental Zona centro".
+  2. `Notificar Gerente Rental` (id `5404724000594701080`) → email
+     "Aprobacion Rental Gerente".
+- Simón confirmó la intención de negocio: son roles distintos a propósito
+  — cuando el **% de descuento supera el 15%**, el aviso tiene que ir al
+  **Gerente** (no solo al jefe de zona). Mientras probaba dejó su propio
+  correo como destinatario en las dos reglas, por eso le llegaron ambas a
+  él. La regla del jefe de zona ya tiene la condición correcta para esto
+  (`Rental - superó Porcentaje Descuento ES No seleccionado`, o sea solo
+  dispara si **no** se superó el umbral) — no vi las condiciones de
+  `Notificar Gerente Rental` (no compartió esa pantalla), pero como se
+  disparó junto con la del jefe en el mismo registro, es probable que le
+  **falte la condición contraria** (`Rental - superó Porcentaje Descuento
+  ES Seleccionado`) y por eso dispare siempre en vez de solo cuando se
+  supera el 15%.
+- **Pendiente para Simón antes de pasar a producción** (cambio en Zoho
+  real, no soy yo quien lo aplica — no hay tool de edición de Reglas de
+  flujo en el MCP conectado):
+  1. Abrir `Notificar Gerente Rental` (Cotizaciones → Automatización →
+     Reglas de flujo) y confirmar/agregar la condición `Rental - superó
+     Porcentaje Descuento ES Seleccionado`, para que sea excluyente con la
+     del jefe de zona y solo dispare cuando el descuento supera 15%.
+  2. Cambiar el campo "Para" de esa regla de su propio correo al correo
+     real del Gerente de Rental.
