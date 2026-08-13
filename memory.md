@@ -592,3 +592,60 @@ ver regla de sincronización en `CLAUDE.md`.
      (dejarla en positivo). El resto de las condiciones quedan igual.
   2. Cambiar el campo "Para" de esa regla de su propio correo al correo
      real del Gerente de Rental.
+
+## 2026-08-13
+
+- Simón pidió un campo nuevo **"Despacho sin Facturar"**: marca los
+  pedidos (Órdenes de venta) que necesitan despachar antes de facturar,
+  con autorización obligatoria del Gerente antes de poder usarse, y
+  después un aviso ("se informa"). Es para la UN **Construcción**, y
+  posiblemente otras UN más adelante. Pidió también que viajen el tipo de
+  cambio y la moneda de la venta, y que quede auditoría de quién y cuándo
+  autorizó.
+- Revisando **Cotizaciones** y **Órdenes de venta** encontré que esta org
+  **ya tiene exactamente este patrón armado** para otras aprobaciones
+  (Descuento, Sobreprecio, Cambio de Forma de Pago, Cartera de Cliente,
+  Venta Rental, Venta sobre $10 millones): siempre el mismo grupo de 4
+  campos (marca/gatillo, resultado de aprobación, fecha/hora de
+  aprobación, usuario que aprobó), más 2 campos genéricos de rechazo
+  (`Fecha_hora_Rechazo_Aprobaci_n` / `Usuario_Rechaza_Aprobaci_n`)
+  compartidos entre todos los tipos. La propuesta nueva replica ese mismo
+  patrón en vez de inventar algo distinto.
+- Confirmé que el tipo de cambio y la moneda **ya viajan solos**: los
+  campos `Currency` (Moneda), `Exchange_Rate` (Tasa de cambio) y
+  `Cotizaci_n_de_Moneda` (Cotización de Moneda) ya existen, con los mismos
+  datos, tanto en Cotizaciones como en Órdenes de venta — no hace falta
+  crear nada nuevo para ese punto del pedido.
+- Ubiqué dónde tiene que vivir el gatillo del flujo: la Orden de venta no
+  se crea a mano, nace en la transición **"Confirmar la Cotización"** del
+  Plan de acción de Cotizaciones (llama después a la función "SB Crear
+  Orden de Venta", ver nota de 2026-07-30) — así que la marca y la
+  autorización tienen que pasar **en la Cotización, antes** de esa
+  transición, no en la Orden de venta ya creada.
+- Confirmé que **Construcción** existe como registro en
+  `Unidades_de_Negocio` (junto con Rental, Industria y Ferretería,
+  Ferretek, Ematerra, Agroforestal y Jardines, Inamar Vapor, Inamar Izaje,
+  Ematerra, Maktotal). No hay forma de restringir un campo a una UN
+  específica a nivel de módulo — se hace por criterio en el Plan de
+  acción, igual que "Ganada por B2b" (2026-07-30).
+- Dejé la propuesta completa en
+  `zoho/pipeline/propuesta-campo-despacho-sin-facturar.md`: 4 campos
+  nuevos en Cotizaciones + los mismos 4 en Órdenes de venta
+  (`Despacho_sin_Facturar`, `Aprobado_Despacho_sin_Facturar`,
+  `Fecha_hora_Aprob_Despacho_sin_Facturar`,
+  `Aprobador_Despacho_sin_Facturar`), más la guía Sandbox → Producción
+  para: condición obligatoria en "Confirmar la Cotización" (criterio `UN
+  es Construcción`, extensible con `O` a otras UN), permisos de campo
+  restringidos a Perfiles Gerente/Gerente de UN, ajuste de la función "SB
+  Crear Orden de Venta" para copiar los campos a la Orden de venta, y una
+  Regla de flujo de trabajo de aviso al aprobar.
+  **No se aplicó nada en el Zoho real todavía** — a la espera del OK de
+  Simón. Los 8 campos (Cotizaciones + Órdenes de venta) los puedo crear yo
+  directo con las tools conectadas apenas confirme; el resto (función,
+  permisos, Plan de acción, Regla de flujo) lo tiene que armar él en el
+  Sandbox, igual que las propuestas anteriores de este tipo.
+- Quedan 4 preguntas abiertas para Simón antes de poder cerrar/aplicar la
+  propuesta: (1) destinatarios del aviso de autorización, (2) si hay otras
+  UN además de Construcción para el lanzamiento inicial, (3) si el flujo
+  también tiene que cubrir el camino "Ganada por B2b" (que hoy no genera
+  Orden de venta), y (4) su OK explícito para crear los 8 campos.
