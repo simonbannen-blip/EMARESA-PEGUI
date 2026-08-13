@@ -672,3 +672,23 @@ ver regla de sincronización en `CLAUDE.md`.
     todavía no autorizado).
   Sigue sin aplicarse nada en el Zoho real — es la misma propuesta de
   antes, actualizada con este flujo más detallado.
+- **Simón respondió las 5 preguntas pendientes y cerró el diseño**:
+  1. No hace falta aviso por correo — "se informa" se cumple con que
+     `Aprobado Despacho sin Facturar` quede visible como casilla en la
+     Cotización misma.
+  2. Es **solo para Construcción**, ninguna otra UN por ahora.
+  3. "Ganada por B2b" es un **camino aparte** — no hay que tocarlo.
+  4. Al ERP viaja `Aprobado Despacho sin Facturar` solo si quedó
+     aprobado; si lo rechaza el Gerente, no viaja nada. Y **solo el
+     Perfil Gerente** puede aprobar/rechazar (se sacó a Gerente de UN de
+     esa parte, que sí estaba en la versión anterior).
+  5. Pidió explícitamente que **no cree yo los campos** — que le explique
+     cómo armar todo él mismo en el Sandbox.
+  Reescribí `zoho/pipeline/propuesta-campo-despacho-sin-facturar.md` con
+  el diseño ya cerrado (estado "LISTO PARA ARMAR EN SANDBOX"), saqué el
+  paso de la Regla de flujo de trabajo de aviso, ajusté todas las
+  restricciones de Perfil a solo Gerente, y renuméré la guía a 9 pasos
+  (crear 8 campos → función SB Crear Orden de Venta → permisos de campo →
+  transición "Solicitar" con ventana check → sub-fases Aprobado/Rechazado
+  → probar → subir a Producción). Sigue sin aplicarse nada en el Zoho
+  real — la idea es que Simón lo arme él mismo siguiendo la guía.
