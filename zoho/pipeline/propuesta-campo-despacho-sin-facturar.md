@@ -76,13 +76,13 @@ automáticamente cuando una Cotización pasa por el Plan de acción (Blueprint)
 de Cotizaciones, en la transición **"Confirmar la Cotización"**, que llama
 después a la función **"SB Crear Orden de Venta"**.
 
-Por eso la marca "Despacho sin Facturar" tiene que poder elegirse **desde
-la Cotización** (donde trabaja el vendedor, antes de que exista la Orden de
-venta), y la autorización del Gerente tiene que pasar **antes** de que esa
-transición cree la Orden de venta — así el pedido nunca llega a despacho
-sin haber pasado por el Gerente. El dato aprobado se copia después a la
-Orden de venta ya creada (mismo mecanismo que hoy usan `Currency` /
-`Exchange_Rate`, que existen en ambos módulos).
+Por eso la aprobación de "Despacho sin Facturar" tiene que resolverse
+**en la Cotización** (donde trabaja el vendedor, antes de que exista la
+Orden de venta), y tiene que pasar **antes** de que la transición
+"Confirmar la Cotización" cree la Orden de venta — así el pedido nunca
+llega a despacho sin haber pasado por el Gerente. El dato aprobado se
+copia después a la Orden de venta ya creada (mismo mecanismo que hoy usan
+`Currency` / `Exchange_Rate`, que existen en ambos módulos).
 
 ### 4. Con qué UN restringirlo
 
@@ -94,16 +94,18 @@ acción** (Blueprint), igual que se hizo antes con "Ganada por B2b"
 (exclusiva de Construcción) o con ocultar "Generar Cotización" para
 Ferretek.
 
-## Propuesta de campos nuevos
+## Propuesta de campos nuevos (versión simplificada, 2026-08-13)
 
-Mismo patrón que ya usa esta org (ver punto 1), aplicado a **Cotizaciones**
-y **Órdenes de venta** (mismos 4 campos en los dos módulos, para que el dato
-quede también en el pedido ya creado):
+Simplificaste el diseño: no hace falta un campo separado para que el
+vendedor "pida" la modalidad — directamente el Gerente aprueba o rechaza,
+y eso ya genera el registro. Con eso, en vez de 8 campos quedan **4**:
+
+**En Cotizaciones (3 campos, mismo patrón de auditoría que ya usa esta
+org — ver punto 1 de arriba):**
 
 | Campo (label) | api_name propuesto | Tipo | Quién lo completa |
 |---|---|---|---|
-| Despacho sin Facturar | `Despacho_sin_Facturar` | Casilla de verificación | Vendedor/a — marca que este pedido necesita la modalidad |
-| Aprobado Despacho sin Facturar | `Aprobado_Despacho_sin_Facturar` | Casilla de verificación | Gerente — autoriza |
+| Aprobado Despacho sin Facturar | `Aprobado_Despacho_sin_Facturar` | Casilla de verificación | Se tilda al ejecutar la transición "Aprobar" (ver flujo abajo) |
 | Fh/hora Aprob. Despacho sin Facturar | `Fecha_hora_Aprob_Despacho_sin_Facturar` | Fecha y hora | Se completa solo (automático) al aprobar |
 | Aprobador Despacho sin Facturar | `Aprobador_Despacho_sin_Facturar` | Usuario (lookup) | Se completa solo (automático) con quien aprobó |
 
@@ -111,76 +113,59 @@ Para el rechazo no hace falta crear campos nuevos: se puede reusar
 `Fecha_hora_Rechazo_Aprobaci_n` / `Usuario_Rechaza_Aprobaci_n`, que ya son
 genéricos para cualquier tipo de aprobación en Cotizaciones.
 
+**En Órdenes de venta (1 campo):**
+
+| Campo (label) | api_name propuesto | Tipo | De dónde sale |
+|---|---|---|---|
+| Aprobado Despacho sin Facturar | `Aprobado_Despacho_sin_Facturar` | Casilla de verificación | Se copia desde la Cotización al crear la Orden de venta — es el campo que sigue camino al ERP |
+
 Pediste que **no los cree yo**, que te diga cómo armarlos vos mismo — la
-guía de abajo (Pasos 1 y 2) tiene el paso a paso para crear estos 8 campos
+guía de abajo (Pasos 1 y 2) tiene el paso a paso para crear estos 4 campos
 a mano en el Sandbox.
 
-## Propuesta del flujo de autorización — versión definida por vos
-(2026-08-13, actualizado)
+## Propuesta del flujo de autorización — versión simplificada
+(2026-08-13, ajustada a tu último mensaje)
 
-Nos diste el paso a paso concreto de cómo tiene que funcionar. Lo traduzco
-a los mecanismos de Zoho que le corresponden a cada punto:
+Tu idea: una transición nueva "Despacho sin Facturar" que lleva a la
+Cotización a la sub-fase Aprobada o Rechazada según lo que elija el
+aprobador, y después el campo que quedó aprobado se manda a la Orden de
+Venta. Así queda armado en Zoho:
 
-1. **"Abrir ventana check para evitar errores"** → un botón/transición
-   nuevo en el Plan de acción de Cotizaciones, ej. **"Solicitar Despacho
-   sin Facturar"**, configurado con **Campos obligatorios en la
-   transición** — es la función nativa de Zoho Blueprint que abre una
-   ventana emergente pidiendo confirmar/completar datos antes de dejar
-   ejecutar la transición (mismo mecanismo que ya usa esta org para exigir
-   Orden de Compra/HES en "Ganada por B2b", o el Motivo de Pérdida al
-   perder una Oportunidad). Ahí se lista lo que hay que revisar antes de
-   pedir la modalidad: como mínimo el propio campo `Despacho sin
-   Facturar`, y de paso `Moneda` / `Tasa de cambio` si querés que quede
-   confirmado en el mismo paso.
-2. **"Al aceptar esta ventana tilda check un campo nuevo en paralelo a
-   aprobación al gerente"** → al confirmar esa ventana, la transición hace
-   dos cosas **a la vez**, no una detrás de la otra:
-   - (a) marca sola el campo `Despacho sin Facturar` = Sí (queda pedido,
-     sin que nadie lo tipee aparte).
-   - (b) manda la Cotización a un estado de espera de aprobación del
-     Gerente (sub-fase, punto 3). El campo se tilda en el momento de
-     aceptar la ventana — no espera a que el Gerente resuelva; lo que sí
-     queda pendiente de resolver es el estado de aprobación.
-3. **"Crear subfase de cotización aprobada/rechaza despacho sin
-   facturar"** → dos estados nuevos en el Plan de acción de Cotizaciones:
-   **"Desp. sin Facturar — Aprobado"** y **"Desp. sin Facturar —
-   Rechazado"**. La Cotización entra primero a una sub-fase intermedia
-   **"Desp. sin Facturar — Pendiente"** (destino de la transición del
-   punto 1) y desde ahí el Gerente resuelve con dos transiciones nuevas:
-   - **Aprobar** → completa `Aprobado Despacho sin Facturar`, `Fh/hora
-     Aprob.` y `Aprobador` (automáticos), destino "Desp. sin Facturar —
-     Aprobado".
-   - **Rechazar** → usa los campos genéricos de rechazo ya existentes
-     (`Fecha_hora_Rechazo_Aprobaci_n` / `Usuario_Rechaza_Aprobaci_n`),
-     destino "Desp. sin Facturar — Rechazado".
-   Ambas transiciones restringidas **solo al Perfil Gerente** (confirmado
-   por vos — Gerente de UN no queda habilitado para esto). Desde cualquiera
-   de las dos sub-fases, la Cotización se reconecta al flujo normal para
-   poder seguir avanzando (ej. hacia "Confirmar la Cotización").
-4. **"Al cerrar ganar que ese nuevo campo 'check' se envíe a la OV para
-   llevarlo a ERP"** → al pasar por "Confirmar la Cotización" (Cerrada
-   Ganada), la función "SB Crear Orden de Venta" tiene que copiar el campo
-   a la Orden de venta (mismo mapeo del Paso 3 de la guía). Los campos
-   `Código de Log ERP` / `Detalle de Log ERP` que ya tiene Órdenes de venta
-   confirman que ya existe un canal armado desde ahí hacia el ERP — solo
-   hay que sumar el campo nuevo a ese envío existente, no armar uno nuevo.
-   Confirmaste el criterio: **si se aprobó, viaja `Aprobado Despacho sin
-   Facturar` = Sí al ERP; si no se aprobó, la Cotización queda en la
-   sub-fase "Rechazado" y no viaja nada** (y solo el Gerente puede revertir
-   eso aprobando).
+1. **Dos transiciones, no una** (aclaración técnica importante): en Zoho
+   Blueprint, cada transición tiene **un solo destino fijo** — no existe
+   una transición que pregunte "¿aprobás o rechazás?" y vaya a un lugar u
+   otro según la respuesta dentro de la misma ventana. Lo que sí se puede
+   (y es lo que arma exactamente lo que pediste) es tener **dos botones**
+   —**"Aprobar Despacho sin Facturar"** y **"Rechazar Despacho sin
+   Facturar"**— disponibles al mismo tiempo sobre la Cotización, y el
+   Gerente aprieta el que corresponde. Es la misma idea que "elegir cuál
+   seleccionar", solo que en la práctica son dos botones en vez de uno con
+   una opción adentro.
+2. **Ventana check**: ambas transiciones llevan **Campos obligatorios en
+   la transición** — la ventana emergente que Zoho abre antes de dejar
+   ejecutar el paso, para evitar errores (mismo mecanismo que ya usa esta
+   org para exigir Orden de Compra/HES en "Ganada por B2b"). En "Aprobar"
+   pedí como obligatorio `Aprobado Despacho sin Facturar`; en "Rechazar" no
+   hace falta pedir nada adicional (los campos de rechazo se completan
+   solos).
+3. **Sub-fases**: cada transición lleva a su propia sub-fase —
+   **"Desp. sin Facturar — Aprobada"** o **"Desp. sin Facturar —
+   Rechazada"**. Ambas transiciones restringidas **solo al Perfil
+   Gerente**.
+4. **Al Cerrar Ganada**, la función "SB Crear Orden de Venta" copia
+   `Aprobado Despacho sin Facturar` a la Orden de venta — de ahí sigue el
+   canal que ya existe hacia el ERP (`Código de Log ERP` / `Detalle de Log
+   ERP`). Si quedó Rechazada, ese campo sigue en No y no se manda nada
+   relevante al ERP.
 
-**Sobre el aviso ("luego se informa")**: aclaraste que no hace falta una
-notificación por correo aparte — "se informa" se cumple con que el campo
-`Aprobado Despacho sin Facturar` quede visible como casilla de verificación
-directamente en la Cotización, para que cualquiera que la abra (logística,
-despacho, etc.) vea ahí mismo si está aprobado o no. No hace falta armar
-ninguna Regla de flujo de trabajo de correo para esto.
+**Sobre el aviso ("luego se informa")**: no hace falta una notificación
+por correo aparte — se cumple con que `Aprobado Despacho sin Facturar`
+quede visible como casilla directamente en la Cotización.
 
-**Alcance por UN**: confirmaste que es **solo para Construcción**, sin
-otras UN por ahora.
+**Alcance por UN**: **solo Construcción**, sin otras UN por ahora.
 
-**Sobre "Ganada por B2b"**: confirmaste que es **un camino aparte** — no
-hace falta replicar ahí el control de Despacho sin Facturar.
+**Sobre "Ganada por B2b"**: es un camino aparte, no hace falta replicar
+ahí el control de Despacho sin Facturar.
 
 ## Guía paso a paso: primero en Sandbox, después en Producción
 
@@ -188,25 +173,27 @@ hace falta replicar ahí el control de Despacho sin Facturar.
 
 Arriba a la derecha, en el nombre de la organización, elegí **Sandbox**.
 
-### Paso 1 — Crear los 4 campos en Cotizaciones
+### Paso 1 — Crear los 3 campos en Cotizaciones
 
 Configuración (⚙️) → Personalización → Módulos y Campos → **Cotizaciones**
-→ Nuevo Campo, uno por uno, con los nombres y tipos de la tabla de arriba.
+→ Nuevo Campo, uno por uno, con los nombres y tipos de la tabla de arriba
+(`Aprobado Despacho sin Facturar`, `Fh/hora Aprob.`, `Aprobador`).
 Agregalos al layout cuando Zoho te lo pida.
 
-### Paso 2 — Crear los mismos 4 campos en Órdenes de venta
+### Paso 2 — Crear el campo en Órdenes de venta
 
-Igual que el Paso 1, pero en el módulo **Órdenes de venta**.
+Igual que el Paso 1, pero en el módulo **Órdenes de venta**, solo el campo
+`Aprobado Despacho sin Facturar`.
 
 ### Paso 3 — Ajustar la función "SB Crear Orden de Venta"
 
 Esta función (Deluge) es la que crea la Orden de venta desde la Cotización.
-Hay que sumarle el mapeo de los 4 campos nuevos (y confirmar que ya copia
-`Currency` / `Exchange_Rate` / `Cotización de Moneda`, que deberían estar
-desde antes). Esto **no lo puedo revisar ni editar yo** — no hay tool en el
-MCP conectado para ver/editar Funciones — pedile a quien mantenga esa
-función (o revisala vos en Configuración → Automatización → Funciones) que
-agregue esas 4 líneas de mapeo.
+Hay que sumarle el mapeo de `Aprobado Despacho sin Facturar` (y confirmar
+que ya copia `Currency` / `Exchange_Rate` / `Cotización de Moneda`, que
+deberían estar desde antes). Esto **no lo puedo revisar ni editar yo** —
+no hay tool en el MCP conectado para ver/editar Funciones — pedile a quien
+mantenga esa función (o revisala vos en Configuración → Automatización →
+Funciones) que agregue esa línea de mapeo.
 
 ### Paso 4 — Restringir quién edita "Aprobado Despacho sin Facturar"
 
@@ -220,93 +207,79 @@ datos de aprobación — y que `Aprobado Despacho sin Facturar` quede visible
 (aunque sea de solo lectura) para el resto de los Perfiles, ya que ese
 campo visible es justamente la forma en que "se informa" (ver más arriba).
 
-### Paso 5 — Crear la sub-fase "Pendiente" y la transición "Solicitar
-Despacho sin Facturar" (la ventana check)
+### Paso 5 — Crear las sub-fases "Aprobada" y "Rechazada"
 
 Configuración (⚙️) → Automatización → Planes de acción (Blueprint) →
-Cotizaciones:
+Cotizaciones → agregá dos estados nuevos: **"Desp. sin Facturar —
+Aprobada"** y **"Desp. sin Facturar — Rechazada"**.
 
-1. Agregá un estado nuevo: **"Desp. sin Facturar — Pendiente"**.
-2. Creá una transición nueva **"Solicitar Despacho sin Facturar"**, con
-   origen la fase donde hoy trabaja el vendedor (la misma desde la que
-   sale "Confirmar la Cotización" u otra que definas) y destino la
-   sub-fase "Desp. sin Facturar — Pendiente".
-3. En **Campos obligatorios en la transición** (esta es la "ventana
-   check") agregá `Despacho sin Facturar` — y de paso `Moneda` / `Tasa de
-   cambio` si querés que se confirmen ahí mismo.
-4. Criterio: `UN ES Construcción` (por ahora es la única UN habilitada).
+### Paso 6 — Crear las dos transiciones "Aprobar" / "Rechazar"
 
-### Paso 6 — Crear las sub-fases y transiciones de Aprobar / Rechazar
+Desde la fase donde hoy está la Cotización cuando el Gerente tiene que
+decidir (la que uses hoy antes de "Confirmar la Cotización"), creá:
 
-1. Agregá dos estados más: **"Desp. sin Facturar — Aprobado"** y
-   **"Desp. sin Facturar — Rechazado"**.
-2. Desde "Desp. sin Facturar — Pendiente", creá la transición
-   **"Aprobar Despacho sin Facturar"**:
-   - Campo obligatorio: `Aprobado Despacho sin Facturar` (Sí).
-   - Destino: "Desp. sin Facturar — Aprobado".
+1. **"Aprobar Despacho sin Facturar"**:
+   - Campos obligatorios en la transición (la "ventana check"):
+     `Aprobado Despacho sin Facturar` (que quede marcado Sí).
+   - Destino: "Desp. sin Facturar — Aprobada".
    - Restringila **solo al Perfil Gerente** (mismo mecanismo de
      restricción por Perfil ya usado con el botón del Cotizador, ver
-     `memory.md` 2026-08-10) — Gerente de UN no queda habilitado.
-3. Desde la misma sub-fase, creá **"Rechazar Despacho sin Facturar"**:
-   - Usa los campos genéricos de rechazo `Fecha_hora_Rechazo_Aprobaci_n` /
-     `Usuario_Rechaza_Aprobaci_n` (se completan solos).
-   - Destino: "Desp. sin Facturar — Rechazado".
-   - Misma restricción: solo Perfil Gerente.
-4. Desde ambas sub-fases nuevas, reconectá el flujo normal (agregá la
-   transición correspondiente para que desde "Aprobado" — y desde
-   "Rechazado" si corresponde seguir vendiendo sin la modalidad — se
+     `memory.md` 2026-08-10).
+   - Criterio: `UN ES Construcción` (por ahora es la única UN habilitada).
+2. **"Rechazar Despacho sin Facturar"**:
+   - No hace falta pedir campos obligatorios (los de rechazo se completan
+     solos: `Fecha_hora_Rechazo_Aprobaci_n` / `Usuario_Rechaza_Aprobaci_n`).
+   - Destino: "Desp. sin Facturar — Rechazada".
+   - Misma restricción: solo Perfil Gerente, mismo criterio de UN.
+3. Desde ambas sub-fases nuevas, reconectá el flujo normal (agregá la
+   transición correspondiente para que desde "Aprobada" — y desde
+   "Rechazada" si corresponde seguir vendiendo sin la modalidad — se
    pueda seguir hacia "Confirmar la Cotización").
 
 No hace falta armar ningún aviso por correo aparte: el campo `Aprobado
-Despacho sin Facturar`, visible en la Cotización (Paso 4), ya cumple el
-"se informa".
+Despacho sin Facturar`, visible en la Cotización, ya cumple el "se
+informa".
 
-### Paso 7 — Ajustar la función "SB Crear Orden de Venta"
+### Paso 7 — Terminar de ajustar la función "SB Crear Orden de Venta"
 
-Sumale a esta función el mapeo de los 4 campos nuevos hacia Órdenes de
-venta (y confirmá que ya copia `Currency` / `Exchange_Rate` / `Cotización
-de Moneda`, que deberían estar desde antes) — así el campo llega a la OV
-y sigue el canal existente hacia el ERP (`Código de Log ERP` / `Detalle de
-Log ERP`). Mandá `Aprobado Despacho sin Facturar` (el resultado ya
-autorizado por el Gerente) — confirmado por vos: si no se aprobó, la
-Cotización queda en la sub-fase Rechazado y no se manda nada al ERP. Esto
-**no lo puedo revisar ni editar yo** (sin tool de Funciones en el MCP
-conectado) — pedile a quien mantenga esa función que agregue el mapeo, o
-revisala vos en Configuración → Automatización → Funciones.
+Confirmá que el mapeo del Paso 3 quede mandando `Aprobado Despacho sin
+Facturar` a la Orden de venta — así llega y sigue el canal existente hacia
+el ERP (`Código de Log ERP` / `Detalle de Log ERP`). Si la Cotización
+quedó en "Rechazada", ese campo sigue en No, así que no se manda nada
+relevante al ERP.
 
 ### Paso 8 — Probar en el Sandbox
 
-1. Creá/editá una Cotización de prueba de UN Construcción.
-2. Ejecutá "Solicitar Despacho sin Facturar": debería abrirse la ventana
-   pidiendo `Despacho sin Facturar` (y Moneda/Tasa de cambio si las
-   sumaste) antes de dejarte avanzar.
-3. Confirmá que al aceptar, el campo `Despacho sin Facturar` queda en Sí y
-   la Cotización pasa a la sub-fase "Desp. sin Facturar — Pendiente".
-4. Con un usuario Vendedor o Gerente de UN (ningún Perfil salvo Gerente),
-   confirmá que **no** ve disponibles las transiciones Aprobar/Rechazar.
-5. Con un usuario de Perfil **Gerente**, ejecutá "Aprobar Despacho sin
-   Facturar" y confirmá que `Aprobado Despacho sin Facturar`, `Fh/hora
-   Aprob.` y `Aprobador` se completan solos, la Cotización pasa a "Desp.
-   sin Facturar — Aprobado", y el campo queda visible (tildado) para
-   cualquiera que abra la Cotización.
-6. Probá también el camino "Rechazar Despacho sin Facturar" con otra
-   Cotización de prueba, y confirmá que esa Cotización no puede avanzar a
-   "Confirmar la Cotización" (o si puede, que el campo queda sin tildar y
-   por lo tanto no viaja al ERP).
-7. Avanzá una Cotización aprobada hasta "Confirmar la Cotización" y
-   verificá que la Orden de venta se crea con el campo ya copiado
-   (Paso 7).
+1. Creá/editá una Cotización de prueba de UN Construcción, avanzála hasta
+   la fase donde aparecen los dos botones nuevos.
+2. Con un usuario Vendedor (Perfil distinto a Gerente), confirmá que
+   **no** ve disponibles "Aprobar Despacho sin Facturar" ni "Rechazar
+   Despacho sin Facturar".
+3. Con un usuario de Perfil **Gerente**, ejecutá "Aprobar Despacho sin
+   Facturar": debería abrirse la ventana pidiendo confirmar el check, y al
+   aceptar, `Aprobado Despacho sin Facturar`, `Fh/hora Aprob.` y
+   `Aprobador` se completan solos, y la Cotización pasa a "Desp. sin
+   Facturar — Aprobada".
+4. Probá también "Rechazar Despacho sin Facturar" con otra Cotización de
+   prueba, y confirmá que pasa a "Desp. sin Facturar — Rechazada" con los
+   campos de rechazo completos.
+5. Avanzá la Cotización aprobada hasta "Confirmar la Cotización" y
+   verificá que la Orden de venta se crea con `Aprobado Despacho sin
+   Facturar` ya copiado (Paso 7).
 
 ### Paso 9 — Pasar de Sandbox a Producción
 
-Configuración (⚙️) → Sandbox → Implementar en Producción, marcando los 8
-campos nuevos, las 3 sub-fases y sus transiciones (Solicitar / Aprobar /
-Rechazar), el ajuste de la función y los permisos de campo por Perfil.
+Configuración (⚙️) → Sandbox → Implementar en Producción, marcando los 4
+campos nuevos, las 2 sub-fases y sus transiciones (Aprobar / Rechazar), el
+ajuste de la función "SB Crear Orden de Venta".
 
 ## Resumen de lo confirmado (ya no queda pendiente)
 
+- Diseño simplificado: sin campo separado de "pedido" del vendedor — el
+  Gerente aprueba o rechaza directamente con dos botones nuevos.
+- 4 campos en total (3 en Cotizaciones + 1 en Órdenes de venta), no 8.
 - Restringido a la UN **Construcción** únicamente.
-- Solo el Perfil **Gerente** puede aprobar/rechazar (no Gerente de UN).
+- Solo el Perfil **Gerente** puede aprobar/rechazar.
 - Sin aviso por correo: "se informa" se cumple con el campo visible en la
   Cotización.
 - Al ERP viaja `Aprobado Despacho sin Facturar` solo cuando está en Sí; si
