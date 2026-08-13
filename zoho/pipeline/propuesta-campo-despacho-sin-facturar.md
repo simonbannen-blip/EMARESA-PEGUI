@@ -1,7 +1,23 @@
 # Propuesta: campo y flujo "Despacho sin Facturar"
 
-## Estado: LISTO PARA ARMAR EN SANDBOX — diseño confirmado por vos, lo armás
-vos mismo siguiendo la guía (no lo aplico yo)
+## Estado: EN CONSTRUCCIÓN EN SANDBOX — Paso 5 hecho, falta el Paso 6 en
+adelante (ver "Progreso real" abajo)
+
+## Progreso real (según capturas del Sandbox)
+
+- ✅ **Paso 5 hecho**: transición **"Despacho sin factura"** creada, con
+  origen en el estado **"Dirección de Facturación validada"** (no antes de
+  "Confirmar la Cotización" como decía la primera versión de esta
+  propuesta — el punto real del Blueprint es un poco antes) y destino el
+  estado nuevo **"Pendiente Aprobación Despacho sin Factura"**. Propietarios
+  ya cargados: Propietario del registro, Asistente de Ventas, Gerente
+  Construcción, CEO.
+- ⬜ Falta el **Paso 6**: crear "Aprobar Despacho sin Factura" y "Rechazar
+  Despacho sin Factura" desde "Pendiente Aprobación Despacho sin Factura",
+  restringidas solo a Gerente Construcción/CEO.
+- ⬜ Falta confirmar a dónde reconectar el flujo después de aprobar/rechazar
+  (por el diagrama que mandaste, el loop apunta cerca de "Validar Dirección
+  de D..." → "Dirección de Despacho..." → "Ganada").
 
 ## Qué se pidió
 
@@ -135,22 +151,23 @@ Gerente.** Son **3 transiciones**, no 2:
    (ANTES) dejaste: Propietario del registro, Asistente de Ventas (el lado
    vendedor) + Gerente Construcción, CEO (para que ellos también puedan
    iniciarla directo si hace falta). En **Criterios**, agregá `UN ES
-   Construcción`. Destino: una sub-fase nueva **"Desp. sin Facturar —
-   Pendiente"** — al llegar ahí es cuando "se genera la aprobación" para
-   el Gerente (aparecen los botones del punto 2, recién en esa sub-fase).
+   Construcción`. Destino: el estado nuevo **"Pendiente Aprobación
+   Despacho sin Factura"** — al llegar ahí es cuando "se genera la
+   aprobación" para el Gerente (aparecen los botones del punto 2, recién
+   en ese estado).
    En la pestaña **DURANTE** de esta transición es donde va el aviso para
    el vendedor (ver más abajo).
 2. **Dos transiciones más, solo para el Gerente**, disponibles desde
-   "Desp. sin Facturar — Pendiente":
+   "Pendiente Aprobación Despacho sin Factura":
    - **"Aprobar Despacho sin Facturar"** → Propietarios: **solo Gerente
      Construcción y CEO** (sin Propietario del registro ni Asistente de
      Ventas — así el vendedor no puede completar esto, aunque haya
      iniciado el paso 1). Campo obligatorio: `Aprobado Despacho sin
-     Facturar` = Sí. Destino: "Desp. sin Facturar — Aprobada".
+     Facturar` = Sí. Destino: "Aprobada Despacho sin Factura".
    - **"Rechazar Despacho sin Facturar"** → mismos Propietarios (solo
      Gerente Construcción / CEO). Usa los campos genéricos de rechazo
      (`Fecha_hora_Rechazo_Aprobaci_n` / `Usuario_Rechaza_Aprobaci_n`).
-     Destino: "Desp. sin Facturar — Rechazada".
+     Destino: "Rechazada Despacho sin Factura".
    Con esto, aunque el vendedor vea el primer botón, **no puede
    autoaprobarse** — el segundo paso (la aprobación real) queda cerrado
    solo para Gerente Construcción/CEO.
@@ -242,7 +259,7 @@ configurarla así:
    > esta Cotización son correctas — quedan fijas y viajan así hasta la
    > Orden de venta y el ERP. Esta solicitud queda pendiente de
    > autorización del Gerente antes de poder facturarse."
-3. **Destino**: creá el estado nuevo **"Desp. sin Facturar — Pendiente"**
+3. **Destino**: creá el estado nuevo **"Pendiente Aprobación Despacho sin Factura"**
    y elegilo como destino de esta transición (Configuración → Planes de
    acción → Cotizaciones → agregar estado, antes de guardar la
    transición).
@@ -250,21 +267,21 @@ configurarla así:
 ### Paso 6 — Crear la sub-fase "Aprobada"/"Rechazada" y las dos
 transiciones del Gerente
 
-1. Agregá dos estados más: **"Desp. sin Facturar — Aprobada"** y
-   **"Desp. sin Facturar — Rechazada"**.
-2. Desde "Desp. sin Facturar — Pendiente" (destino del Paso 5), creá
+1. Agregá dos estados más: **"Aprobada Despacho sin Factura"** y
+   **"Rechazada Despacho sin Factura"**.
+2. Desde "Pendiente Aprobación Despacho sin Factura" (destino del Paso 5), creá
    **"Aprobar Despacho sin Facturar"**:
    - Propietarios: **solo Gerente Construcción y CEO** — no incluyas acá
      Propietario del registro ni Asistente de Ventas, para que el
      vendedor no pueda autoaprobarse.
    - Campo obligatorio (ventana check): `Aprobado Despacho sin Facturar`
      = Sí.
-   - Destino: "Desp. sin Facturar — Aprobada".
+   - Destino: "Aprobada Despacho sin Factura".
 3. Desde la misma sub-fase, creá **"Rechazar Despacho sin Facturar"**:
    - Mismos Propietarios (solo Gerente Construcción / CEO).
    - Sin campos obligatorios extra (los de rechazo se completan solos:
      `Fecha_hora_Rechazo_Aprobaci_n` / `Usuario_Rechaza_Aprobaci_n`).
-   - Destino: "Desp. sin Facturar — Rechazada".
+   - Destino: "Rechazada Despacho sin Factura".
 4. Desde ambas sub-fases nuevas, reconectá el flujo normal (agregá la
    transición correspondiente para que desde "Aprobada" — y desde
    "Rechazada" si corresponde seguir vendiendo sin la modalidad — se
@@ -287,14 +304,14 @@ relevante al ERP.
 1. Con un usuario **Vendedor**, creá/editá una Cotización de prueba de UN
    Construcción y ejecutá **"Despacho sin facturar"**: debería abrirse la
    ventana pidiendo confirmar Moneda/Tasa de cambio (con el aviso), y al
-   aceptar la Cotización pasa a "Desp. sin Facturar — Pendiente".
+   aceptar la Cotización pasa a "Pendiente Aprobación Despacho sin Factura".
 2. Con ese mismo usuario Vendedor, confirmá que **no** ve disponibles
    "Aprobar Despacho sin Facturar" ni "Rechazar Despacho sin Facturar" en
    esa sub-fase (por los Propietarios del Paso 6).
 3. Con un usuario **Gerente Construcción** (o CEO), ejecutá "Aprobar
    Despacho sin Facturar": confirmá que `Aprobado Despacho sin Facturar`,
    `Fh/hora Aprob.` y `Aprobador` se completan solos, y la Cotización pasa
-   a "Desp. sin Facturar — Aprobada".
+   a "Aprobada Despacho sin Factura".
 4. Probá también "Rechazar Despacho sin Facturar" con otra Cotización de
    prueba (desde "Pendiente"), y confirmá que pasa a "Desp. sin Facturar —
    Rechazada" con los campos de rechazo completos.
