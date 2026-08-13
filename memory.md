@@ -692,3 +692,29 @@ ver regla de sincronización en `CLAUDE.md`.
   transición "Solicitar" con ventana check → sub-fases Aprobado/Rechazado
   → probar → subir a Producción). Sigue sin aplicarse nada en el Zoho
   real — la idea es que Simón lo arme él mismo siguiendo la guía.
+- Simón preguntó por qué hacían falta 4 campos por módulo — le expliqué
+  que cada uno cumple un rol distinto (pedido, resultado de aprobación,
+  auditoría de cuándo, auditoría de quién) y que si fuera un solo campo se
+  perdería la distinción entre "lo pidió el vendedor" y "lo aprobó el
+  Gerente".
+- **Simón simplificó el diseño él mismo**: en vez de que el vendedor pida
+  la modalidad con un campo aparte, propuso ir directo con una transición
+  que el aprobador ejecuta, la cual lleva a la Cotización a una sub-fase
+  Aprobada o Rechazada, y de ahí el campo que quedó aprobado se manda a la
+  Orden de Venta. Reescribí
+  `zoho/pipeline/propuesta-campo-despacho-sin-facturar.md` con este
+  enfoque más simple:
+  - Bajó de 8 a **4 campos** (3 en Cotizaciones: Aprobado + Fecha/hora +
+    Aprobador — ya no hace falta el campo separado de "pedido"; 1 en
+    Órdenes de venta: el mismo Aprobado, copiado).
+  - Aclaración técnica que le di: Zoho Blueprint no permite que una sola
+    transición tenga dos destinos según lo que elija el usuario en el
+    momento — hacen falta **dos botones** ("Aprobar Despacho sin
+    Facturar" / "Rechazar Despacho sin Facturar"), cada uno con su propio
+    destino fijo (sub-fase Aprobada o Rechazada). Es la forma de Zoho de
+    lograr lo que él describió como "una transición que dispara dos
+    subfases según lo que seleccione el aprobador".
+  - Guía renumerada a 9 pasos, mucho más corta que la versión anterior
+    (sin sub-fase "Pendiente" ni transición previa de "Solicitar").
+  Sigue sin aplicarse nada en el Zoho real — Simón lo arma él mismo en el
+  Sandbox.
