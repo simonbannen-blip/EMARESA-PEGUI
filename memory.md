@@ -746,3 +746,21 @@ ver regla de sincronización en `CLAUDE.md`.
   `zoho/pipeline/propuesta-campo-despacho-sin-facturar.md` completa con
   esto. Sigue sin aplicarse nada en el Zoho real — Simón lo sigue armando
   él mismo en el Sandbox, guiándome con capturas reales de las pantallas.
+- Simón mandó una captura del **Plan de acción completo de Cotizaciones**
+  (todos los estados y transiciones existentes) y confirmó que ya armó la
+  transición **"Despacho sin factura"**, con destino el estado nuevo
+  **"Pendiente Aprobación Despacho sin Factura"**. Con el diagrama pude
+  confirmar el origen real: sale del estado **"Dirección de Facturación
+  validada"** (no "antes de Confirmar la Cotización" como decía la
+  propuesta original — está un poco antes en el flujo real). Actualicé
+  `zoho/pipeline/propuesta-campo-despacho-sin-facturar.md`: renombré los
+  estados propuestos a los nombres reales que está usando Simón
+  ("Pendiente Aprobación Despacho sin Factura" / "Aprobada Despacho sin
+  Factura" / "Rechazada Despacho sin Factura"), corregí el estado de
+  origen, y agregué una sección "Progreso real" al principio del
+  documento marcando qué pasos ya están hechos en el Sandbox (Paso 5) y
+  cuáles faltan (Paso 6 en adelante: las transiciones Aprobar/Rechazar
+  restringidas a Gerente Construcción/CEO, y definir a dónde reconectan
+  el flujo — el diagrama sugiere cerca de "Validar Dirección de D..." →
+  "Dirección de Despacho..." → "Ganada"). Sigue sin aplicarse nada desde
+  esta sesión — Simón continúa armándolo él mismo.
