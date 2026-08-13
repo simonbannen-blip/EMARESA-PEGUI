@@ -649,3 +649,26 @@ ver regla de sincronización en `CLAUDE.md`.
   UN además de Construcción para el lanzamiento inicial, (3) si el flujo
   también tiene que cubrir el camino "Ganada por B2b" (que hoy no genera
   Orden de venta), y (4) su OK explícito para crear los 8 campos.
+- **Simón precisó el flujo con un paso a paso propio** (ventana de
+  verificación al pedir la modalidad → tilda el campo en paralelo al pedido
+  de aprobación al Gerente → sub-fases de Aprobado/Rechazado → al Cerrar
+  Ganada el campo viaja a la Orden de venta hacia el ERP). Reescribí
+  `zoho/pipeline/propuesta-campo-despacho-sin-facturar.md` traduciendo
+  cada punto a los mecanismos concretos de Zoho:
+  - Punto 1 → transición nueva "Solicitar Despacho sin Facturar" con
+    **Campos obligatorios en la transición** (la ventana emergente nativa
+    de Blueprint).
+  - Punto 2 → esa misma transición tilda `Despacho sin Facturar` y manda
+    la Cotización a una sub-fase "Pendiente", ambas cosas a la vez.
+  - Punto 3 → 3 sub-fases nuevas en el Plan de acción de Cotizaciones
+    ("Pendiente" / "Aprobado" / "Rechazado"), con transiciones Aprobar y
+    Rechazar restringidas a Perfiles Gerente/Gerente de UN.
+  - Punto 4 → la función "SB Crear Orden de Venta" tiene que copiar el
+    campo aprobado a la Orden de venta, que ya tiene canal armado hacia el
+    ERP (`Código de Log ERP`/`Detalle de Log ERP`).
+  - Sumé una quinta pregunta pendiente: si al ERP tiene que viajar
+    `Despacho sin Facturar` (el pedido) o `Aprobado Despacho sin
+    Facturar` (recomendé este último, para que el ERP nunca vea un pedido
+    todavía no autorizado).
+  Sigue sin aplicarse nada en el Zoho real — es la misma propuesta de
+  antes, actualizada con este flujo más detallado.
