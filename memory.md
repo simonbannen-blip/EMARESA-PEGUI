@@ -718,3 +718,31 @@ ver regla de sincronización en `CLAUDE.md`.
     (sin sub-fase "Pendiente" ni transición previa de "Solicitar").
   Sigue sin aplicarse nada en el Zoho real — Simón lo arma él mismo en el
   Sandbox.
+- Simón preguntó qué aviso ponerle al vendedor para evitar errores, y
+  mandó una captura real de la pantalla de Zoho: la transición
+  **"Despacho sin facturar"** (pestaña Transiciones → ANTES), ya con
+  **Propietarios** cargados (Propietario del registro, Asistente de
+  Ventas, Gerente Construcción, CEO) y la sección Criterios vacía todavía.
+  Eso reveló que el diseño real es **el vendedor SÍ aprieta una
+  transición primero**, y recién con eso "se genera la aprobación" para
+  el Gerente — contradice la versión anterior (solo 2 transiciones, ambas
+  de Gerente) que yo había simplificado de más.
+- **Corregí la propuesta a 3 transiciones**:
+  1. **"Despacho sin facturar"** (vendedor: Propietario del registro +
+     Asistente de Ventas, más Gerente Construcción/CEO por si quieren
+     iniciarla directo) → destino nuevo estado "Desp. sin Facturar —
+     Pendiente". El aviso para el vendedor va en la pestaña DURANTE de
+     esta transición, como texto de ayuda de los campos obligatorios
+     (sugerí pedir `Moneda`/`Tasa de cambio` como obligatorios ahí, con
+     un texto de advertencia).
+  2. **"Aprobar Despacho sin Facturar"** / **"Rechazar Despacho sin
+     Facturar"**, disponibles solo desde "Pendiente", con Propietarios
+     restringidos a **solo Gerente Construcción y CEO** (sin vendedor) —
+     así el vendedor no se puede autoaprobar aunque haya iniciado el paso
+     1.
+  Ajusté también el Paso 4 de la guía (permisos de campo por Perfil) para
+  que quede como respaldo del control real, que ahora es la lista de
+  Propietarios de cada transición. Reescribí
+  `zoho/pipeline/propuesta-campo-despacho-sin-facturar.md` completa con
+  esto. Sigue sin aplicarse nada en el Zoho real — Simón lo sigue armando
+  él mismo en el Sandbox, guiándome con capturas reales de las pantallas.
