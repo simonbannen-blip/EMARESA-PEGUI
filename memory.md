@@ -811,3 +811,12 @@ ver regla de sincronización en `CLAUDE.md`.
   EN SANDBOX**. Queda **1 sola pregunta abierta**: qué hacer si el Jefe
   Zonal rechaza en este nuevo primer paso (¿queda rechazada directo, o
   sube igual al Gerente Rental?).
+- Simón respondió: si el Jefe Zonal rechaza, **queda rechazada directo**,
+  no sube al Gerente Rental (mismo comportamiento estándar de Zoho para
+  cualquier rechazo, no hace falta configurar nada extra). Con esto cerré
+  la última pregunta pendiente — actualicé
+  `zoho/pipeline/propuesta-aprobacion-rental-jefe-zona-antes-gerente.md` a
+  **diseño cerrado, sin preguntas pendientes**. Sigue sin aplicarse nada en
+  el Zoho real (sin tool de Procesos de aprobación en el MCP) — queda en
+  manos de Simón armar las 3 reglas nuevas (4a/4b/4c) en el Sandbox
+  siguiendo la guía de 8 pasos del documento.

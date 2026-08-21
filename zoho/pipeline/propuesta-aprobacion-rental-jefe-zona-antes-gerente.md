@@ -1,8 +1,8 @@
 # Propuesta: en la aprobación de Rental, que el Gerente reciba la
 cotización recién después de que la apruebe el Jefe Zonal
 
-## Estado: LISTO PARA ARMAR EN SANDBOX — queda 1 pregunta abierta (ver
-"Preguntas pendientes")
+## Estado: LISTO PARA ARMAR EN SANDBOX — diseño cerrado, sin preguntas
+pendientes
 
 ## Qué se pidió
 
@@ -59,9 +59,9 @@ Así, cuando se supera el 15% de descuento: primero la ve el Jefe Zonal de
 la zona que corresponda (el mismo que ya la revisó en el tramo 5%-15%, si
 antes pasó por ahí), y **solo si él la aprueba**, Zoho la manda
 automáticamente al Gerente Rental como segundo paso. Si el Jefe Zonal la
-rechaza, no llega al Gerente (queda como "Cotización Rechazada", igual que
-pasa hoy si rechaza cualquier aprobador — ver pregunta pendiente abajo por
-si preferís otro comportamiento).
+rechaza, no llega al Gerente: queda directo como "Cotización Rechazada"
+(confirmado por vos — mismo comportamiento que ya tiene hoy cualquier
+rechazo, no hace falta configurar nada extra para esto).
 
 ## Guía paso a paso (Sandbox)
 
@@ -89,13 +89,6 @@ si preferís otro comportamiento).
    con el historial/Timeline de aprobación de la cotización).
 8. Repetir en Producción una vez validado en Sandbox.
 
-## Preguntas pendientes
-
-1. Cuando el Jefe Zonal **rechaza** en este primer paso nuevo (tramo >15%),
-   ¿está bien que la cotización quede directo como "Cotización Rechazada"
-   (como pasa hoy con cualquier rechazo), o preferís que en ese caso pase
-   igual al Gerente Rental para que él decida?
-
 ## Ya confirmado
 
 - El aprobador de la Regla 4 es el mismo **Gerente Rental** que ya
@@ -103,6 +96,9 @@ si preferís otro comportamiento).
   separado).
 - Estructura real de las 4 reglas y los cortes de 5% / 15%, confirmada por
   vos.
+- Si el Jefe Zonal rechaza en el nuevo primer paso (tramo >15%), la
+  cotización queda directo como "Cotización Rechazada" — no pasa al
+  Gerente Rental.
 
 ## Por qué no lo armo yo directo
 
