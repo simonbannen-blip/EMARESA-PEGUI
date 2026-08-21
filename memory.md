@@ -764,3 +764,33 @@ ver regla de sincronización en `CLAUDE.md`.
   el flujo — el diagrama sugiere cerca de "Validar Dirección de D..." →
   "Dirección de Despacho..." → "Ganada"). Sigue sin aplicarse nada desde
   esta sesión — Simón continúa armándolo él mismo.
+
+## 2026-08-21
+
+- Simón mandó una captura del **Proceso de aprobación "UN Rental -
+  Arriendo"** (módulo Cotizaciones, distinto de las Reglas de flujo de
+  aviso por correo vistas el 2026-08-12) y pidió que, cuando el caso le
+  toque al **Gerente** (Regla 2 del proceso, se dispara al superar el % de
+  descuento), la cotización **pase primero por el Jefe de Zona
+  correspondiente** antes de llegarle a él.
+- La captura muestra 2 reglas: Regla 1 (por Zona Norte, cuando NO se supera
+  el %, aprobador Jefe Ventas Zona Norte) y Regla 2 (cuando SÍ se supera el
+  %, sin criterio de Zona, aprobador Gerente Rental directo). Confirmé con
+  `executeCOQLQuery` sobre `Quotes` que el campo `Zona` tiene 3 valores
+  reales en uso: Zona Norte, Zona Centro, Zona Sur.
+- Como en Zoho un Proceso de aprobación sigue solo la primera regla que le
+  calza a un registro, y los aprobadores en secuencia (uno primero, y
+  recién si aprueba pasa al siguiente) solo se pueden encadenar **dentro de
+  una misma regla**, armé la propuesta: reemplazar la Regla 2 única por
+  **3 reglas** (una por Zona, mismo patrón que la Regla 1), cada una con
+  **2 aprobadores en secuencia** — primero el Jefe de esa Zona, después el
+  Gerente Rental. Guía completa en
+  `zoho/pipeline/propuesta-aprobacion-rental-jefe-zona-antes-gerente.md`.
+- **No se pudo aplicar directo**: Procesos de aprobación no están entre las
+  herramientas conectadas del MCP de Zoho CRM (mismo límite que Blueprints
+  y Reglas de flujo). Quedan 3 preguntas abiertas para Simón antes de
+  cerrar la guía: (1) si hay más reglas debajo de la 1 y la 2 que no
+  llegué a ver en la captura, (2) si los roles se llaman exactamente "Jefe
+  Ventas Zona Centro" / "Jefe Ventas Zona Sur", y (3) qué pasa si el Jefe
+  de Zona rechaza en este nuevo primer paso (¿queda rechazada directo, o
+  igual sube al Gerente?).
