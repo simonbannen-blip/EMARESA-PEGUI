@@ -794,3 +794,20 @@ ver regla de sincronización en `CLAUDE.md`.
   Ventas Zona Centro" / "Jefe Ventas Zona Sur", y (3) qué pasa si el Jefe
   de Zona rechaza en este nuevo primer paso (¿queda rechazada directo, o
   igual sube al Gerente?).
+- Simón corrigió/completó la estructura real: **son 4 reglas**, no 2. Las
+  Reglas 1, 2 y 3 son por zona (Norte/Centro/Sur) para el tramo de
+  descuento **>5% y ≤15%**, aprobador el Jefe Zonal de cada una; la Regla 4
+  es la que va al **Gerente Rental** cuando el descuento **supera el 15%**
+  (sin distinguir zona — coincide con lo que ya se había visto en la
+  captura original, solo que era la Regla 4, no la 2). Confirmó además,
+  respondiendo un `AskUserQuestion`, que el aprobador de esa Regla 4 es el
+  mismo **Gerente Rental** de siempre (no hay un rol "Gerente General"
+  separado; le dijo así por costumbre).
+- Reescribí `zoho/pipeline/propuesta-aprobacion-rental-jefe-zona-antes-gerente.md`
+  con la estructura de 4 reglas correcta: la propuesta sigue siendo la
+  misma idea (reemplazar la Regla 4 única por 3 reglas —4a/4b/4c, una por
+  zona— cada una con 2 aprobadores en secuencia: primero el Jefe Zonal de
+  esa zona, después el Gerente Rental), ya marcada como **LISTO PARA ARMAR
+  EN SANDBOX**. Queda **1 sola pregunta abierta**: qué hacer si el Jefe
+  Zonal rechaza en este nuevo primer paso (¿queda rechazada directo, o
+  sube igual al Gerente Rental?).
