@@ -820,3 +820,46 @@ ver regla de sincronización en `CLAUDE.md`.
   el Zoho real (sin tool de Procesos de aprobación en el MCP) — queda en
   manos de Simón armar las 3 reglas nuevas (4a/4b/4c) en el Sandbox
   siguiendo la guía de 8 pasos del documento.
+
+## 2026-08-31
+
+- Simón preguntó por qué se le quedaba pegado "Cargando..." en una pantalla
+  de Configuración → Reglas de flujo de trabajo del Sandbox. Se le dieron
+  las causas más probables (falla puntual del Sandbox, extensión del
+  navegador, campo roto en la regla, sesión vencida) y pasos para probar —
+  no fue necesario tocar nada en el CRM, era una duda de navegación.
+- Sobre una captura de un Proceso de aprobación existente ("UN Inamar
+  Izaje - Aprobación...", módulo Cotizaciones), se le explicó cómo llegar a
+  verlo (Configuración → Personalización → Procesos de automatización →
+  Aprobación de registros) y cómo ubicar la función Deluge asociada
+  ("Ejecución Proceso Aprobacion descuento Minimo") en Configuración →
+  Personalización → Automatización → Funciones.
+- Simón pidió armar una **aprobación nueva** para la UN **Inamar Izaje**:
+  monto de la cotización mayor a $1.000.000 (corrigió un primer dato de
+  $10.000.000) y descuento de al menos 10% del subtotal, aprobador
+  **Rodrigo Verdugo** (confirmado en el CRM como usuario activo, rol
+  "Gerente Inamar Izaje", `rverdugo@inamarizaje.cl`).
+  - Revisando los campos de **Quotes** (Cotizaciones, no Deals/Oportunidades
+    — ahí no existen estos campos) encontré que ya existe un campo
+    `Aprobaci_n_Sobre_10_millones` ("Aprobación Sobre 10 millones") y una
+    Sub Fase "Aprobado por precio sobre 10 millones", de otra UN — no
+    aplica para este caso porque el umbral real pedido es distinto
+    ($1.000.000, no $10.000.000), así que el criterio de monto se arma
+    comparando directo `Total general` (`Grand_Total`) > 1.000.000, sin
+    reutilizar ese campo ni crear uno nuevo para esa parte.
+  - Para el criterio de descuento (10% del subtotal de cada cotización, no
+    un monto fijo) hace falta un campo fórmula nuevo `% Descuento`
+    (Descuento ÷ Subtotal sin descuento) — no existe un campo genérico de
+    % de descuento hoy (solo uno específico de Rental,
+    `Rental_super_Porcentaje_Descuento`, boolean, no reutilizable).
+  - Al aprobar: pasa a "Cotización Aprobada" (sin función Deluge, a pedido
+    de Simón — más simple que el ejemplo original). Al rechazar:
+    "Cotización Rechazada" (estándar).
+  - Propuesta completa dejada en
+    `zoho/pipeline/propuesta-aprobacion-inamar-izaje-monto-descuento.md`,
+    estado **PENDIENTE DE OK** — falta que Simón confirme para crear el
+    campo `% Descuento` (esto sí lo puedo hacer yo con las tools
+    conectadas). El Proceso de aprobación en sí no se puede armar por API
+    (mismo límite de siempre, sin tool de Procesos de aprobación en el
+    MCP) — queda para que Simón lo arme en el Sandbox con la guía de 9
+    pasos del documento una vez creado el campo.
