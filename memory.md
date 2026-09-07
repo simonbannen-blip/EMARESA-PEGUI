@@ -863,3 +863,37 @@ ver regla de sincronización en `CLAUDE.md`.
     (mismo límite de siempre, sin tool de Procesos de aprobación en el
     MCP) — queda para que Simón lo arme en el Sandbox con la guía de 9
     pasos del documento una vez creado el campo.
+  - **Corrección importante de Simón**: el criterio de descuento no es el
+    % promedio de toda la cotización, sino que **alcanza con que un solo
+    producto** de la grilla tenga 10% o más ("si de 5 productos 1 tiene
+    10,1% de descuento tiene que enviar aprobación"). Esto invalida el
+    campo fórmula a nivel de cotización propuesto antes — un Proceso de
+    aprobación no puede mirar dentro de la grilla de productos
+    (Artículos presupuestados / Quoted_Items) para comparar cada línea.
+  - Antes de armar algo nuevo, se le pidió a Simón revisar si ya existía
+    una función que hiciera este chequeo por producto (dado que ya
+    existen los campos `Aprobador Descuento Item` y las Sub Fases
+    "Aprobado por Descuento de Item - 1/2"). Mandó el código de
+    `Ejecución Proceso Aprobacion descuento Minimo` — resultó ser solo la
+    acción que corre **después** de que un humano aprueba (marca la Sub
+    Fase "Aprobado por Precio por debajo del mínimo - 1" y reactiva el
+    proceso), sin ninguna lógica de cálculo de porcentaje. También
+    compartió los criterios completos de esa Regla 1 existente
+    (aprobador real: **Product Manager Izaje**, no Rodrigo Verdugo — es
+    un proceso de aprobación distinto, el de "Precio por debajo del
+    mínimo"), que confirmó que el campo `Aprobación Descuento` (booleano)
+    es el disparador **genérico de toda la organización** (mismo que usa
+    Rental a partir de 5%) — no reutilizable para el 10% de Inamar Izaje
+    sin pisar esa lógica compartida.
+  - **Diseño final**: nuevo campo booleano `Aprobación Item Sobre 10%` en
+    Cotizaciones, marcado por una **Regla de flujo de trabajo sobre
+    Artículos presupuestados** (sin código — `% Descuento` del producto
+    ≥10% → actualiza el campo en la Cotización relacionada vía "ID
+    principal"), y el Proceso de aprobación usa ese campo + UN + Monto
+    como criterios. Reescribí
+    `zoho/pipeline/propuesta-aprobacion-inamar-izaje-monto-descuento.md`
+    completa con este diseño y una guía de 5 pasos (campo → regla de
+    flujo → proceso de aprobación → pruebas positivas/negativas en
+    Sandbox → repetir en Producción), estado **LISTO PARA ARMAR EN
+    SANDBOX**. Sigue sin aplicarse nada en el Zoho real — Simón lo arma
+    él mismo siguiendo la guía.
