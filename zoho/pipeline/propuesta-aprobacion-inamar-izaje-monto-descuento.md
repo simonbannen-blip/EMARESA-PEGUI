@@ -6,10 +6,11 @@
 
 Nueva aprobación en **Cotizaciones**, para la **UN Inamar Izaje**: cuando
 el monto de la cotización sea **mayor a $1.000.000** Y **al menos uno de
-los productos** de esa cotización tenga un descuento de **10% o más**, la
-cotización debe pasar por la aprobación de **Rodrigo Verdugo** (Gerente
-Inamar Izaje). No importa el descuento promedio de toda la cotización —
-alcanza con que **un solo producto** llegue al 10%.
+los productos** de esa cotización tenga un descuento de **más de 10%**
+(10,1% o más — exactamente 10,0% no dispara), la cotización debe pasar
+por la aprobación de **Rodrigo Verdugo** (Gerente Inamar Izaje). No
+importa el descuento promedio de toda la cotización — alcanza con que
+**un solo producto** supere el 10%.
 
 ## Cómo queda armado en Zoho
 
@@ -41,7 +42,7 @@ campo `% Descuento` que ya existe en Artículos presupuestados (creado el
 mirar dentro de la grilla de productos** para comparar cada línea — solo
 puede comparar campos que están en la Cotización misma. Por eso hace
 falta un paso intermedio: una **Regla de flujo de trabajo** que vigile la
-grilla de productos y, apenas encuentre uno con 10% o más, marque un
+grilla de productos y, apenas encuentre uno con más de 10%, marque un
 campo en la Cotización (el padre). Ese campo es el que después usa el
 Proceso de aprobación como criterio.
 
@@ -87,8 +88,11 @@ crear un campo nuevo evita pisar esa lógica.
      la grilla de productos), avisame y te paso una alternativa con una
      función chica en vez de esto — pero probá primero este camino, que
      es el más simple.
-3. Cuándo se ejecuta: **Al crear o editar un registro**.
-4. Condición: `% Descuento` **mayor o igual a** `10`.
+3. Cuándo se ejecuta: **Al crear o editar un registro** (elegir la
+   opción "Fila agregada o modificada" cuando lo pregunte, para que
+   también se dispare si el producto se edita después de agregado).
+4. Condición: `% Descuento` **mayor que** `10` (operador `>`, no `>=` —
+   exactamente 10,0% no tiene que disparar la aprobación).
 5. Acción: **Actualizar campo**.
    - Módulo a actualizar: **Cotizaciones** (aparece como módulo
      relacionado, a través del campo "ID principal" que conecta cada
@@ -114,9 +118,9 @@ crear un campo nuevo evita pisar esa lógica.
 
 **Caso positivo** (tiene que disparar la aprobación):
 1. Crear una cotización de prueba con UN = Inamar Izaje.
-2. Agregar 2 o 3 productos, dejando a **uno solo** con 10% o más de
-   descuento (los demás en 0% o menos de 10% — así confirmás que alcanza
-   con uno solo).
+2. Agregar 2 o 3 productos, dejando a **uno solo** con más de 10% de
+   descuento (ej. 10,1%; los demás en 0% o 10% justo — así confirmás que
+   alcanza con uno solo, y que el 10% exacto no alcanza).
 3. Confirmar que el Total general de la cotización supera $1.000.000.
 4. Guardar y revisar: ¿el campo `Aprobación Item Sobre 10%` quedó
    marcado solo, sin que lo tocaras a mano?
@@ -127,10 +131,10 @@ crear un campo nuevo evita pisar esa lógica.
    pasa a "Cotización Rechazada".
 
 **Casos negativos** (NO tienen que disparar la aprobación):
-8. Cotización de Inamar Izaje con todos los productos por debajo de 10%
-   de descuento (aunque el monto sea alto): no debería pedir aprobación.
-9. Cotización de Inamar Izaje con un producto al 10%+ pero Total general
-   por debajo de $1.000.000: tampoco debería pedir aprobación.
+8. Cotización de Inamar Izaje con todos los productos en 10% o menos de
+   descuento (aunque el monto sea alto): no debería pedir aprobación.
+9. Cotización de Inamar Izaje con un producto con más de 10% pero Total
+   general por debajo de $1.000.000: tampoco debería pedir aprobación.
 10. Cotización de **otra UN** (no Inamar Izaje) con las mismas
     condiciones: tampoco debería activar esta aprobación puntual (aunque
     sí puede disparar otras aprobaciones ya existentes de esa UN).
