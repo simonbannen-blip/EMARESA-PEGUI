@@ -937,3 +937,18 @@ ver regla de sincronización en `CLAUDE.md`.
     "Ámbito" en Cotizaciones (producción), y que pase el campo "Ámbito"
     de Oportunidades del Sandbox a Producción para poder armar la Regla
     de flujo.
+  - Simón aclaró que él iba a crear todo directo en el Sandbox para
+    probarlo antes de pasarlo a Producción — creó el campo `Ámbito` en
+    Cotizaciones ahí mismo y empezó a armar la Regla de flujo **"Ámbito
+    Rental"**. Mandó una captura del asistente de la regla (paso
+    Condición) armando el filtro — le aclaré no usar el propio campo
+    `Ámbito` como condición (queda vacío en un registro recién creado,
+    nunca se cumpliría) y le pregunté el alcance real: confirmó que es
+    **solo para UN Rental**, sin distinguir Arriendo de Venta dentro de
+    esa UN. Actualicé ambas propuestas
+    (`zoho/config/propuesta-campo-ambito-en-cotizaciones.md` y
+    `zoho/pipeline/propuesta-flujo-ambito-oportunidad-a-cotizacion.md`)
+    con el nombre real de la regla y la condición correcta (`UN es
+    Rental`, no `Nombre de Trato no es nulo` como se había propuesto
+    antes). Sigue armándose en el Sandbox — falta el paso de la Acción
+    (Actualización de campo) y probarlo de punta a punta.
