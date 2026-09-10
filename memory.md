@@ -897,3 +897,43 @@ ver regla de sincronización en `CLAUDE.md`.
     Sandbox → repetir en Producción), estado **LISTO PARA ARMAR EN
     SANDBOX**. Sigue sin aplicarse nada en el Zoho real — Simón lo arma
     él mismo siguiendo la guía.
+
+## 2026-09-10
+
+- Simón preguntó si hay forma de traer un campo de la Oportunidad hasta
+  la Cotización, porque el "duplicado" solo trae campos de búsqueda
+  (lookup). Confirmé revisando los campos actuales de `Deals` y `Quotes`
+  que es un límite estándar de Zoho: al generar la Cotización desde la
+  Oportunidad solo se mapean campos estándar y lookups compartidos, nunca
+  campos de valor (picklist/texto/fecha) — hay varios ejemplos hoy
+  duplicados a mano entre ambos módulos (Canal de Venta, Origen, Región,
+  Zona, UN, Socio, Sucursal, etc.) que confirman que ninguno se
+  autocompleta. La solución nativa es una Regla de flujo sobre
+  Cotizaciones, "Al crear", con Actualización de campo tomando el valor
+  desde la Oportunidad relacionada (o una Función Deluge si el asistente
+  no ofrece esa opción para picklist).
+- Caso concreto: Simón está armando en el **Sandbox** un campo nuevo
+  **Ámbito** (picklist) en Oportunidades, con 9 valores (AGROINDUSTRIA,
+  MINERIA, CONSTRUCCION, EVENTOS, FORESTAL, RENTAL, INDUSTRIAL, ENERGIA,
+  LOGISTICA), y pidió traer ese valor a Cotizaciones.
+  - Pidió que yo cree el campo espejo en **Cotizaciones**. Al intentar
+    `createFields` en producción, el propio entorno de la sesión
+    **bloqueó la acción automáticamente** (control de seguridad, no fue
+    un error de Zoho) antes de que se creara nada. Simón después pidió
+    explícitamente **no crearlo todavía** — queda 100% como propuesta sin
+    aplicar.
+  - Dejé la propuesta del campo en
+    `zoho/config/propuesta-campo-ambito-en-cotizaciones.md` y la
+    propuesta del flujo que copia el valor en
+    `zoho/pipeline/propuesta-flujo-ambito-oportunidad-a-cotizacion.md`
+    (con la guía paso a paso de Regla de flujo, ya que crear Reglas de
+    flujo tampoco está entre las tools del MCP conectado — mismo límite
+    de siempre).
+  - Nota: la conexión MCP de esta sesión es a la organización de
+    **Producción** de Emaresa — no tiene alcance al Sandbox, así que no
+    puedo ver ni tocar nada de lo que Simón está armando ahí hasta que él
+    lo pase a Producción.
+  - Pendiente: que Simón confirme si/cuándo quiere que cree el campo
+    "Ámbito" en Cotizaciones (producción), y que pase el campo "Ámbito"
+    de Oportunidades del Sandbox a Producción para poder armar la Regla
+    de flujo.
