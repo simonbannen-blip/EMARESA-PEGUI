@@ -1,6 +1,16 @@
 # Propuesta: copiar "Ámbito" de la Oportunidad a la Cotización
 
-## Estado: PROPUESTO — pendiente de OK para crear el campo en Cotizaciones, de que Simón pase Ámbito a Producción en Oportunidades, y de armar la regla en Zoho
+## Estado: EN ARMADO EN SANDBOX por Simón
+
+## Progreso real
+
+- Simón creó el campo `Ámbito` en **Cotizaciones** directo en el Sandbox
+  (no hizo falta que yo lo creara — la conexión de esta sesión al MCP de
+  Zoho es solo a Producción).
+- Está armando la Regla de flujo **"Ámbito Rental"** (módulo
+  Cotizaciones), acotada a **UN = Rental** — cubre tanto la línea
+  Arriendo como la línea Venta tradicional dentro de esa UN (no se separa
+  por "Línea"/Tipo de Negocio, solo por la Unidad de Negocio Rental).
 
 ## Qué se pidió
 
@@ -38,8 +48,7 @@ regla:
 ## Flujo propuesto
 
 1. **Dispara**: al crear una Cotización.
-2. **Condición**: el campo "Nombre de Trato" (la Oportunidad de origen)
-   no está vacío.
+2. **Condición**: `UN` (Unidad de Negocio) de la Cotización **es Rental**.
 3. **Acción — Actualización de campo**: `Ámbito` (Cotización) = valor del
    campo `Ámbito` de la Oportunidad relacionada.
 
@@ -54,15 +63,15 @@ minutos.
 ### Pasos en Zoho (Configuración → Automatización → Reglas de flujo de trabajo)
 
 1. Módulo: **Cotizaciones**
-2. Cuándo ejecutar: **Al crear el registro**
-3. Criterio: "Nombre de Trato" **no es nulo** (siempre se cumple, ya que
-   toda Cotización nace desde una Oportunidad — se puede dejar sin
-   criterio también)
-4. Acción: **Actualización de campo** → módulo Cotizaciones → campo
+2. Nombre de la regla: **"Ámbito Rental"**
+3. Cuándo ejecutar: **Al crear el registro**
+4. Criterio: `UN` **es** `Rental` (cubre Arriendo y Venta dentro de esa
+   UN — no se filtra por "Línea"/Tipo de Negocio)
+5. Acción: **Actualización de campo** → módulo Cotizaciones → campo
    **Ámbito** → elegir como origen del valor "**Campo de otro módulo**" /
    "**Valor de campo asociado**" → Oportunidad (Nombre de Trato) → campo
    **Ámbito**
-5. Guardar y activar la regla.
+6. Guardar y activar la regla.
 
 > Si el asistente de Zoho no ofrece "campo de módulo asociado" para un
 > picklist (a veces limita esa opción a ciertos tipos de dato), la

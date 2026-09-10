@@ -1,6 +1,6 @@
 # Propuesta: campo "Ámbito" en Cotizaciones (espejo del campo en Oportunidades)
 
-## Estado: PROPUESTO — Simón pidió no crearlo todavía
+## Estado: HECHO EN SANDBOX por Simón (pendiente pasar a Producción)
 
 ## Por qué
 
@@ -46,9 +46,9 @@ Payload usado para `createFields` (módulo `Quotes`):
 Se intentó crear el campo en producción vía la tool conectada
 (`createFields`) y quedó bloqueado automáticamente por un control de
 seguridad del entorno antes de completarse — es decir, **el campo no
-llegó a crearse**. Después, Simón pidió explícitamente no crearlo
-todavía, así que esto queda solo como propuesta documentada hasta que dé
-el OK.
+llegó a crearse** desde esta sesión (que solo tiene alcance a
+Producción, no al Sandbox). Simón lo creó directo él mismo en el
+Sandbox, con los mismos datos de arriba.
 
 ## Ver también
 
@@ -58,5 +58,6 @@ campo al generar la Cotización.
 
 ## Próximo paso
 
-Esperando el OK de Simón para crear el campo (vía API o a mano en Zoho)
-cuando esté listo.
+Probar el flujo completo en Sandbox (ver
+`zoho/pipeline/propuesta-flujo-ambito-oportunidad-a-cotizacion.md`) y
+después pasar el campo (y la regla) a Producción.
