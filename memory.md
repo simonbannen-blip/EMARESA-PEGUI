@@ -952,3 +952,32 @@ ver regla de sincronización en `CLAUDE.md`.
     Rental`, no `Nombre de Trato no es nulo` como se había propuesto
     antes). Sigue armándose en el Sandbox — falta el paso de la Acción
     (Actualización de campo) y probarlo de punta a punta.
+
+## 2026-09-11
+
+- Simón reportó que al asociar un cliente a una Cartera de Cliente
+  (módulo `Cartera_de_Clientes`), no le aparece el usuario que busca en
+  el campo `Vendedor`. Revisando la configuración de ese campo en el CRM
+  de Producción encontré la causa exacta: tiene un filtro de búsqueda que
+  solo deja elegir usuarios con perfil `Vendedor`, `Administrator`,
+  `Responsable de Área` o `Asistente` **y** con el campo `Código de
+  Vendedor` cargado. Ese filtro nunca se actualizó cuando se crearon
+  perfiles de vendedor más nuevos — reviso los usuarios activos del CRM y
+  encontré 37 usuarios activos con perfiles de vendedor/gerente que hoy
+  quedan afuera del buscador solo por el perfil (Vendedor Distribución y
+  Repuestos jardín: 17, Vendedor MIV: 7, Gerente: 8, Responsable de Área
+  MIV y MAK: 4, Vendedor MAK: 1), varios de ellos con Código de Vendedor
+  ya cargado (ej. Pamela Torres, Rodrigo Lagos, Walter Riquelme).
+  - Dejé la propuesta completa en
+    `zoho/config/propuesta-ampliar-filtro-vendedor-cartera-de-clientes.md`,
+    estado **PENDIENTE DE OK** — agregar esos perfiles al filtro del
+    campo `Vendedor`. Queda una pregunta abierta: si el perfil `Gerente`
+    debe quedar incluido o no.
+  - No se puede aplicar por API (el MCP conectado no tiene tool para
+    editar el filtro de búsqueda de un campo existente) — Simón lo tiene
+    que hacer a mano en Configuración → Módulos y campos → Cartera de
+    Cliente → campo Vendedor → Filtro de búsqueda, idealmente probado
+    primero en Sandbox.
+  - Si además hace falta cargar `Código de Vendedor` a usuarios puntuales
+    sin ese dato, eso sí lo puedo hacer yo con `updateUser`, pero con su
+    OK explícito y sabiendo qué usuarios.
