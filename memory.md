@@ -1017,3 +1017,10 @@ ver regla de sincronización en `CLAUDE.md`.
   herramientas conectadas al MCP (solo Zoho CRM: registros y metadata) —
   Simón tiene que armarlo a mano siguiendo la guía, idealmente probado
   primero en el Sandbox.
+- Simón acotó el alcance: el flujo tiene que aplicar **solo a la UN
+  "Agroforestal y Jardines"**. Confirmé que ese registro existe con ese
+  nombre exacto en `Unidades_de_Negocio` (id `5404724000032587452`).
+  Actualicé `zoho/pipeline/propuesta-flujo-mail-cotizacion-cerrada-ganada.md`
+  agregando un paso de condición/filtro (`UN` de la Orden de venta es
+  "Agroforestal y Jardines") justo después del disparador, antes de
+  cualquier búsqueda de datos o envío de mail.
