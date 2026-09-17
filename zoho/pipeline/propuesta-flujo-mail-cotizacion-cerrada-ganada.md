@@ -31,6 +31,11 @@ un mail con:
   Pedido ERP`** en la Orden de venta — así se garantiza que el número ya
   esté disponible al armar el mail (evita mandarlo vacío si el ERP tarda en
   responder).
+- **Alcance**: el flujo aplica **solo a la UN "Agroforestal y Jardines"**
+  (confirmé que el registro existe con ese nombre exacto en
+  `Unidades_de_Negocio`, id `5404724000032587452`) — el resto de las UN no
+  tiene que recibir este aviso. El filtro se aplica sobre el campo `UN`
+  (lookup a Unidades de Negocio) que ya existe en Órdenes de venta.
 
 ## Por qué el disparador es la Orden de venta y no la Cotización
 
@@ -70,7 +75,11 @@ eso el flujo se ancla a ese campo, no a la fase de la Cotización.
    `Nro Pedido ERP` — para que dispare una sola vez, cuando ese campo pasa
    de vacío a tener valor (no en cada edición posterior de la Orden de
    venta).
-3. **Búsqueda de datos relacionados** (acciones "Get Record" / "Buscar
+3. **Condición (Decision / Filter)**: `UN` de la Orden de venta **es**
+   "Agroforestal y Jardines" — si no se cumple, el flujo corta ahí y no
+   manda nada. Es un paso de "Decision" con esa única condición, ubicado
+   justo después del disparador.
+4. **Búsqueda de datos relacionados** (acciones "Get Record" / "Buscar
    registro" del conector de Zoho CRM, encadenadas después del disparador):
    - Obtener la **Cuenta** relacionada (vía `Nombre de Cliente`) → datos del
      cliente.
@@ -79,22 +88,22 @@ eso el flujo se ancla a ese campo, no a la fase de la Cotización.
    - Obtener los **Adjuntos** de esa Cotización (acción "List Attachments" /
      "Listar adjuntos" del conector CRM) → identificar el archivo del
      comprobante de pago.
-4. **Adjuntar la Cotización como PDF**: el conector estándar de Zoho CRM en
+5. **Adjuntar la Cotización como PDF**: el conector estándar de Zoho CRM en
    Flow no siempre trae una acción directa de "exportar a PDF". Si no
    aparece, la alternativa es un paso de **Función Deluge** (Zoho Flow
    permite agregar una tarea de función) que llama a la API de CRM para
    generar/enviar el PDF de la Cotización, o usar la acción del conector que
    corresponda si Zoho ya la agregó (revisar el listado de acciones
    disponibles al armar el paso — puede variar entre orgs).
-5. **Acción final — Enviar correo**: conector de correo (Zoho Mail / Email
+6. **Acción final — Enviar correo**: conector de correo (Zoho Mail / Email
    genérico):
    - **Para**: `caraya@emaresa.cl`
    - **Asunto**: sugerido "Cotización Ganada — Pedido {{Nro Pedido ERP}} —
      {{Nombre de Cliente}}"
    - **Cuerpo**: datos del cliente + monto (`Total general`) + número de
      pedido (`Nro Pedido ERP`)
-   - **Adjuntos**: el archivo de comprobante de pago (obtenido en el paso 3)
-     + el PDF de la Cotización (paso 4)
+   - **Adjuntos**: el archivo de comprobante de pago (obtenido en el paso 4)
+     + el PDF de la Cotización (paso 5)
 
 ## Puntos a probar en Sandbox antes de pasar a Producción
 
