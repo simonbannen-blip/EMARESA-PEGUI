@@ -1024,3 +1024,64 @@ ver regla de sincronización en `CLAUDE.md`.
   agregando un paso de condición/filtro (`UN` de la Orden de venta es
   "Agroforestal y Jardines") justo después del disparador, antes de
   cualquier búsqueda de datos o envío de mail.
+- Sesión larga armando el flujo **en vivo junto con Simón**, directo en la
+  pantalla de Zoho Flow (Sandbox), guiándolo paso a paso por captura. Avances
+  y hallazgos:
+  - Disparador armado y probado: **"Updated module entry"** sobre Órdenes de
+    venta (este conector no tiene disparador por campo específico), con 3
+    criterios de filtro en el propio disparador: `UN` es "Agroforestal y
+    Jardines", `Nro Pedido ERP` no vacío, y `Aviso Crédito y Cobranza
+    Enviado` es false.
+  - Se creó en el Sandbox el campo booleano **"Aviso Crédito y Cobranza
+    Enviado"** en Órdenes de venta (sin marcar por defecto) — necesario
+    porque el disparador es genérico (cualquier edición del registro) y sin
+    este campo de control el mail se repetiría en cada edición posterior.
+  - Se armaron y probaron los pasos **"Fetch account"** (Cuenta del cliente)
+    y **"Fetch module entry"** sobre Cotizaciones (usando el campo "Entry
+    Id"), ambos con la conexión correcta al Sandbox ("Prueba Sandbox", no
+    la de Producción — se detectó y corrigió a tiempo que el primer intento
+    apuntaba a Producción).
+  - **Descubrimiento importante**: el conector de Zoho CRM en Flow **no
+    tiene ninguna acción para leer archivos Adjuntos de un registro**, y las
+    Funciones personalizadas de Flow **no pueden devolver un tipo de dato
+    "archivo"** (solo texto/número/fecha/mapa/lista/booleano) — esto
+    invalidó el plan original de "adjuntar el comprobante y la cotización
+    como PDF" directo desde Flow.
+  - Primera salida propuesta (subir el comprobante y la cotización a mano a
+    WorkDrive con campos de texto para pegar los links) fue **rechazada por
+    Simón**: el objetivo explícito es que el vendedor no haga *ningún*
+    trabajo manual nuevo, y esa salida le agregaba trabajo en vez de
+    sacárselo.
+  - Simón encontró la salida real: en "Archivos adjuntos" de la Cotización,
+    el botón "Adjuntar" ya tiene una opción nativa **"Zoho WorkDrive" → "+
+    Nuevo" → "Cargar archivos"** — deja subir el archivo desde la compu
+    exactamente igual que hoy, pero el archivo queda guardado en WorkDrive
+    (y sigue apareciendo en Adjuntos del CRM igual que siempre). Con esto,
+    el comprobante se resuelve sin agregarle ningún paso al vendedor: solo
+    hace falta una carpeta fija compartida en WorkDrive (no personal) y que
+    el nombre del archivo incluya el número de Cotización/Pedido, para que
+    el flujo lo encuentre por nombre con el conector de WorkDrive.
+  - Para la copia de la cotización, investigué en la documentación oficial
+    de Zoho CRM API v8 y encontré que la **Send Mail API**
+    (`POST /crm/v8/Quotes/{id}/actions/send_mail`) tiene un parámetro nativo
+    `inventory_details` que genera y adjunta el PDF de la Cotización
+    automáticamente (usando la Plantilla de Inventario configurada), sin
+    que nadie la exporte a mano. Fuente:
+    [Send Mail API | Zoho CRM API | V8](https://www.zoho.com/crm/developer/docs/api/v8/send-mail.html).
+  - Diseño final resultante: el envío del mail se arma en **una sola Función
+    personalizada (Deluge)** al final del flujo, que llama directo a la
+    Send Mail API (con `inventory_details` para la cotización y el link de
+    WorkDrive del comprobante en el cuerpo del mail) — ya no hace falta un
+    paso separado de "Enviar correo" del conector genérico de Flow.
+  - Reescribí `zoho/pipeline/propuesta-flujo-mail-cotizacion-cerrada-ganada.md`
+    completa con el diseño actualizado, los caminos descartados (para no
+    repetir la investigación si se retoma en otra sesión) y los pasos que
+    faltan armar.
+  - **Pendiente para la próxima sesión/continuación**: (1) que Simón cree la
+    carpeta compartida de WorkDrive para comprobantes y confirme su nombre,
+    (2) confirmar que existe un conector de Zoho WorkDrive en Flow con
+    acción de buscar archivo por nombre + generar link público, (3)
+    identificar el `id` de la Plantilla de Inventario de Cotizaciones para
+    Agroforestal y Jardines, (4) escribir y probar el código Deluge de la
+    Función personalizada final, (5) el paso final de "Update record" que
+    tilda "Aviso Crédito y Cobranza Enviado".
