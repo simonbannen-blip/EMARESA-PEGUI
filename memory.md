@@ -981,3 +981,39 @@ ver regla de sincronización en `CLAUDE.md`.
   - Si además hace falta cargar `Código de Vendedor` a usuarios puntuales
     sin ese dato, eso sí lo puedo hacer yo con `updateUser`, pero con su
     OK explícito y sabiendo qué usuarios.
+
+## 2026-09-17
+
+- Simón pidió un flujo en **Zoho Flow**: cuando una Cotización se cierre
+  como **Ganada**, mandar un mail con datos del cliente, monto del pedido,
+  copia del comprobante de pago, número del pedido (del legado) y copia de
+  la cotización.
+- Revisando campos de `Quotes` y `Sales_Orders` confirmé que no existe
+  ningún campo de "número de pedido del legado" ni de "comprobante de
+  pago" — con 3 preguntas a Simón se cerró el diseño:
+  1. El comprobante de pago se sube como **Adjunto en la Cotización**.
+  2. El destinatario iba a ser el rol "Encargado de Crédito y Cobranza",
+     pero el único usuario del CRM con ese rol (**Marco Lagos**) está
+     **deshabilitado** — Simón confirmó que el destinatario real es una
+     persona **fuera del CRM**: `caraya@emaresa.cl`.
+  3. "Número de pedido del legado" = campo `Nro Pedido ERP`
+     (`Nro_Pedido_ERP`) de **Órdenes de venta** (no existe en Cotizaciones;
+     se completa cuando responde el ERP tras crearse la Orden de venta vía
+     la función "SB Crear Orden de Venta").
+  - Simón pidió que el disparador del flujo sea justo cuando se completa
+    ese campo `Nro Pedido ERP` en la Orden de venta (no apenas la
+    Cotización pasa a Cerrada Ganada), para garantizar que el número ya
+    esté disponible al mandar el mail. Esto deja fuera del alcance el
+    camino alternativo "Ganada por B2b" (no genera Orden de venta ni número
+    de ERP, ver nota 2026-07-30) — anotado como pendiente aparte si algún
+    día se pide igual para ese camino.
+- Dejé la propuesta completa en
+  `zoho/pipeline/propuesta-flujo-mail-cotizacion-cerrada-ganada.md`: diseño
+  del disparador y las acciones en Zoho Flow, tabla de origen de cada dato,
+  y 3 puntos a probar en Sandbox (disparo único al completarse el campo,
+  cómo identificar el adjunto correcto del comprobante si hay más de uno, y
+  qué acción del conector CRM usar para adjuntar la Cotización como PDF).
+  **No se pudo aplicar nada directo**: Zoho Flow no está entre las
+  herramientas conectadas al MCP (solo Zoho CRM: registros y metadata) —
+  Simón tiene que armarlo a mano siguiendo la guía, idealmente probado
+  primero en el Sandbox.
