@@ -53,3 +53,14 @@ Vendedor MIV y Responsable de Área MIV y MAK si deben usarla.
 Se hace desde la pantalla de Zoho, porque el MCP no edita perfiles.
 
 **C. Pasar a todos a Administrator (no recomendada).** Ver arriba.
+
+## Decisión (2026-09-23)
+
+Simón eligió la opción B, solo para dos perfiles:
+- **Asistente** (19 usuarios)
+- **Vendedor Distribución Repuestos jardín y maquinari** (27 usuarios)
+
+Los dos ya tienen acceso a Órdenes de venta. Hay que activar **Ver** en:
+Catálogos de precios, Detalle Listas de Precios y Descuentos por UN.
+Simón lo aplica desde la pantalla de Zoho (el MCP no edita perfiles).
+Pendiente: confirmar que el PDF funciona después del cambio.

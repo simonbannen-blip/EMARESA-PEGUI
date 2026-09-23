@@ -1102,3 +1102,8 @@ ver regla de sincronización en `CLAUDE.md`.
   para unos 180 usuarios). No lo apliqué por el riesgo. Dejé las opciones en
   `zoho/config/propuesta-permisos-plantilla-ov-pdf.md`; queda pendiente de
   su elección.
+- Simón acotó el pedido: solo los perfiles **Asistente** y **Vendedor
+  Distribución Repuestos jardín y maquinari** necesitan exportar la OV.
+  Le pasé los pasos para activar "Ver" en Catálogos de precios, Detalle
+  Listas de Precios y Descuentos por UN en esos dos perfiles (lo hace él
+  desde Zoho). Pendiente confirmar que el PDF funciona.
