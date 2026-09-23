@@ -1085,3 +1085,20 @@ ver regla de sincronización en `CLAUDE.md`.
     Agroforestal y Jardines, (4) escribir y probar el código Deluge de la
     Función personalizada final, (5) el paso final de "Update record" que
     tilda "Aviso Crédito y Cobranza Enviado".
+
+## 2026-09-23
+
+- Soporte a Simón con la plantilla de inventario "OV prueba" (Órdenes de
+  venta): cómo insertar la tabla de Artículos solicitados, y el error "No
+  tiene permisos suficientes" al exportar a PDF para usuarios no admin
+  (a Simón, que es Administrator, le funciona; la carpeta ya está compartida
+  con todos).
+- Revisé en el CRM (solo lectura) el acceso de los perfiles a los módulos.
+  Causa probable: la plantilla usa campos de módulos que solo ven
+  Administrator y Vendedor MAK (Catálogos de precios, Detalle Listas de
+  Precios, Descuentos por UN). Además, Vendedor MIV y Responsable de Área
+  MIV y MAK no tienen acceso a Órdenes de venta.
+- Simón pidió "dar mi acceso a todos los usuarios" (= perfil Administrator
+  para unos 180 usuarios). No lo apliqué por el riesgo. Dejé las opciones en
+  `zoho/config/propuesta-permisos-plantilla-ov-pdf.md`; queda pendiente de
+  su elección.
