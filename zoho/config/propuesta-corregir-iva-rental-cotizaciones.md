@@ -138,3 +138,13 @@ cotizaciones con el mismo flujo de aprobación el mismo día (4448, 4459,
 4460, 4465) quedaron bien → el error ocurrió dentro de Creator al reenviar
 las líneas de esta cotización (ID Creator 4389062000011871288). Hay que
 revisarlo en Creator.
+
+## Corrección aplicada en COT-REN-4471 (2026-09-24 10:41, con OK de Simón)
+
+Actualizado vía API (sin disparar workflows/aprobaciones/blueprint), línea 1
+(ARR. BOMBA DE HORMIGÓN DIESEL SP-500): Subtotal y Total Rental
+5.244.900 → 4.458.165. Línea 2 sin cambios.
+
+Resultado verificado: Constuc_SUM_Subtotal 4.618.165 · Rental_IVA 877.451 ·
+Rental Total con IVA 5.495.616. Fase sigue "Cotización Aprobada".
+Pendiente: Código de Vendedor sigue vacío (antes 426).
