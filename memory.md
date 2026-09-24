@@ -1181,3 +1181,9 @@ ver regla de sincronización en `CLAUDE.md`.
   de COT-REN-4471 es que la integración (usuario Infraestructura, cotizador
   Creator) reescribió la línea al aprobar el descuento y dejó "Total
   Rental" sin descuento. Encontré ~10 de 200 COT-REN con diferencia similar.
+- Constuc_SUM_Subtotal es una agregación SUM del "Subtotal" de línea (lo
+  escribe Creator: Importe − Descuento + Seguro). Las diferencias en otras
+  COT-REN eran el seguro, no errores. Propuse que la agregación sume
+  "Total con descuentos" + una nueva agregación de "Valor Total Seguro",
+  para no depender de Creator. Pendiente: Simón verifica si "Total con
+  descuentos" aparece en la lista de la agregación.
