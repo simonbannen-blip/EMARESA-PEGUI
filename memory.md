@@ -1208,3 +1208,4 @@ ver regla de sincronización en `CLAUDE.md`.
   y al reenviar tras aprobación; siempre en una sola línea por cotización,
   probablemente la editada a mano). Dejé la fórmula correcta para TI/Creator
   y la protección en el CRM en la propuesta.
+- Preparé el caso para el proveedor de Creator: zoho/config/caso-proveedor-cot-ren-4471.md
