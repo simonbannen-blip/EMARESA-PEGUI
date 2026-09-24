@@ -201,3 +201,36 @@ coincide con los datos de la línea en el CRM. Patrones:
 
 No se puede ver el código de Creator desde el CRM; el patrón 1 apunta a
 un cálculo en Creator que en algún caso no multiplica por "Cant. Días".
+
+## Fuente del error y corrección (resumen para TI / Creator)
+
+**Dónde nace**: en el cotizador de **Zoho Creator**, en el cálculo de cada
+línea de producto Rental (campos que envía al CRM: `Importe_Rental`,
+`Subtotal`, `Total_Rental`). El CRM solo recibe esos valores vía API
+(usuario "Infraestructura Emaresa").
+
+Evidencia:
+- El error aparece tanto al **crear** la cotización (1050, 2285, 2438,
+  3356, 3782: líneas creadas el mismo segundo que la cotización) como al
+  **reenviar líneas tras aprobar descuento** (1610, 2229, 2900, 3027,
+  4471) → no depende de la aprobación, sino del cálculo de línea en Creator.
+- En cada cotización falla **una sola línea**; las demás cuadran →
+  probablemente la línea que el vendedor modificó a mano (precio, %
+  descuento, cantidad o días) y cuyo recálculo en Creator quedó incompleto
+  (hipótesis: no se puede ver el código de Creator desde el CRM).
+
+**Fórmula correcta de línea (debe correr SIEMPRE: al agregar fila, al
+cambiar precio/cantidad/días/%desc/descuento, antes de enviar al CRM y al
+reenviar tras aprobación):**
+
+```
+Importe_Rental = Precio_dia * Cantidad * Dias
+Descuento      = Importe_Rental * Porc_Descuento / 100
+Subtotal       = Importe_Rental - Descuento + Valor_Total_Seguro
+Total_Rental   = Subtotal
+```
+
+**Protección en el CRM (independiente de Creator)**: que
+`Constuc_SUM_Subtotal` sume "Total con descuentos" (calculado por Zoho)
++ una agregación nueva de "Valor Total Seguro", en vez del "Subtotal"
+que escribe Creator.

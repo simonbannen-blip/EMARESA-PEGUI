@@ -1204,3 +1204,7 @@ ver regla de sincronización en `CLAUDE.md`.
   días (precio de 1 día − descuento total → negativos). Otros: cantidad
   distinta (1655: 3 vs 4), precio distinto (1390), días distintos
   (0466/0727, ahí el Subtotal de Zoho sería el malo). Detalle en la propuesta.
+- Fuente del error: cálculo de línea Rental en Zoho Creator (falla al crear
+  y al reenviar tras aprobación; siempre en una sola línea por cotización,
+  probablemente la editada a mano). Dejé la fórmula correcta para TI/Creator
+  y la protección en el CRM en la propuesta.
