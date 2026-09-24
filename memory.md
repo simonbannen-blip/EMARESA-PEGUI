@@ -1217,3 +1217,10 @@ ver regla de sincronización en `CLAUDE.md`.
   probablemente la editada a mano). Dejé la fórmula correcta para TI/Creator
   y la protección en el CRM en la propuesta.
 - Preparé el caso para el proveedor de Creator: zoho/config/caso-proveedor-cot-ren-4471.md
+- Guiando a Simón paso a paso en el Sandbox. Oportunidades quedó con los
+  2 campos. En **Cotizaciones** Zoho no dejó crear otra "búsqueda de
+  usuario" (límite 5 por módulo; ya hay 5 de aprobadores). Simón aprobó
+  el rediseño: el vendedor secundario se elige **solo en la Oportunidad**
+  y baja solo a sus Cotizaciones (en Cotización "Vendedor Secundario"
+  pasa a ser texto de solo lectura). Guía y funciones actualizadas en
+  `zoho/pipeline/propuesta-campo-codigo-vendedor-secundario.md`.
