@@ -1174,3 +1174,10 @@ ver regla de sincronización en `CLAUDE.md`.
 - Simón empezó a aplicar el cambio. Confirmado: la fórmula original de
   `Rental_IVA` era `(${Cotizaciones.Constuc_SUM_Subtotal}*19)/100` (sobre
   el monto sin descuento). Quedó respaldada en la propuesta.
+- **Error mío corregido**: el cambio de fórmula (usar "Subtotal General con
+  Descuento") duplicaba el IVA en cotizaciones de Construcción, porque ahí
+  ese subtotal ya trae IVA (ej. COT-CONST-467-3262 quedó con total 320.492
+  en vez de 269.321). Pedí a Simón revertir ambas fórmulas. La causa real
+  de COT-REN-4471 es que la integración (usuario Infraestructura, cotizador
+  Creator) reescribió la línea al aprobar el descuento y dejó "Total
+  Rental" sin descuento. Encontré ~10 de 200 COT-REN con diferencia similar.

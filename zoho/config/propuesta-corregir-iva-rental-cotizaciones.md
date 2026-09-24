@@ -60,3 +60,40 @@ las fórmulas se recalculan solas al cambiar la definición.
 - `Rental_IVA`: `(${Cotizaciones.Constuc_SUM_Subtotal}*19)/100`
   → nueva: `Round((${Cotizaciones.Subtotal General con Descuento}*19)/100, 0)`
 - `Rental_Total_con_IVA`: pendiente de copiar.
+
+## ⚠️ Corrección del diagnóstico (2026-09-24, después de aplicar)
+
+**El cambio de fórmulas era incorrecto y hay que revertirlo.**
+
+- En cotizaciones de **Construcción** (COT-CONST-…), "Subtotal General con
+  Descuento" **ya incluye el IVA** (impuesto por línea), y ahí
+  `Constuc_SUM_Subtotal` es el neto con descuento (correcto). Con la
+  fórmula nueva el IVA se cobra dos veces. Ej.: COT-CONST-467-3262
+  (guardada 10:24, después del cambio) quedó con Rental_IVA 51.171 y total
+  320.492, cuando lo correcto es 43.001 y 269.321.
+- En **Rental** normalmente "Total Rental" de cada línea **ya viene con el
+  descuento** (ej. COT-REN-4475: Importe 495.000, desc. 24.750,
+  Total Rental 470.250), así que las fórmulas originales funcionan.
+
+**Causa real en COT-REN-4471**: en la línea 1, "Total Rental" y "Subtotal"
+quedaron en 5.244.900 (sin descuento) aunque el descuento de 786.735 (15%)
+sí está cargado. Las líneas fueron reescritas a las 09:42 por el usuario
+"Infraestructura Emaresa" (integración con el cotizador Creator) al
+aprobarse el descuento del ítem → la integración escribió "Total Rental"
+sin aplicar el descuento.
+
+**Acciones**:
+1. Revertir fórmulas a las originales:
+   - `Rental_IVA`: `(${Cotizaciones.Constuc_SUM_Subtotal}*19)/100`
+   - `Rental_Total_con_IVA`: `${Cotizaciones.Constuc_SUM_Subtotal}+${Cotizaciones.Rental_IVA}`
+     (reconstruida desde los datos; coincide en todas las cotizaciones revisadas)
+2. Volver a guardar las cotizaciones editadas mientras estuvo la fórmula
+   nueva (al menos COT-CONST-467-3262).
+3. Corregir "Total Rental" de la línea 1 de COT-REN-4471 a 4.458.165.
+4. Revisar con TI/Creator por qué la integración no aplica el descuento
+   al "Total Rental" en esos casos.
+
+Otras COT-REN (últimas 200 con descuento) donde Constuc_SUM_Subtotal es
+mayor que el Subtotal: 4472 (+39.000), 4471 (+786.735), 4455 (+405.000),
+4451 (+162.000), 4450 (+162.000), 4203 (+84.000), 4141 (+135.000),
+4067 (+66.000), 4039 (+66.000), 4032 (+90.000). ~10 de 200.
