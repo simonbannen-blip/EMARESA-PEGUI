@@ -1158,3 +1158,8 @@ ver regla de sincronización en `CLAUDE.md`.
   no es la plantilla, sino el perfil o el uso compartido de las OV. Pasé a
   Simón los pasos para comparar los permisos de Cotizaciones y Órdenes de
   venta en el perfil y en "Compartir datos".
+- **Causa encontrada**: Cotizaciones y OV son "Privado", pero Cotizaciones
+  tiene 21 reglas de uso compartido (vendedores → asistentes/encargados, etc.)
+  y Órdenes de venta ninguna. Propuse replicar en OV las reglas hacia roles
+  Asistente/Encargado, probando primero con una. Tabla completa en
+  `zoho/config/propuesta-permisos-plantilla-ov-pdf.md`.
