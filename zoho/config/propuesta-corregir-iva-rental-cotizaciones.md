@@ -54,3 +54,9 @@ El PDF además muestra en la columna "Valor Total" el `Total_Rental`
 
 Nota: las cotizaciones ya creadas se recalculan cuando se editan/guardan;
 las fórmulas se recalculan solas al cambiar la definición.
+
+## Fórmulas originales (respaldo, antes del cambio)
+
+- `Rental_IVA`: `(${Cotizaciones.Constuc_SUM_Subtotal}*19)/100`
+  → nueva: `Round((${Cotizaciones.Subtotal General con Descuento}*19)/100, 0)`
+- `Rental_Total_con_IVA`: pendiente de copiar.

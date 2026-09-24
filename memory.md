@@ -1171,3 +1171,6 @@ ver regla de sincronización en `CLAUDE.md`.
   5.495.616). Propuse basar IVA y total en "Subtotal General con
   Descuento" y corregir la columna "Valor Total" del PDF. Detalle en
   `zoho/config/propuesta-corregir-iva-rental-cotizaciones.md`.
+- Simón empezó a aplicar el cambio. Confirmado: la fórmula original de
+  `Rental_IVA` era `(${Cotizaciones.Constuc_SUM_Subtotal}*19)/100` (sobre
+  el monto sin descuento). Quedó respaldada en la propuesta.
