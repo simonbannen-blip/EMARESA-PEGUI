@@ -1230,3 +1230,8 @@ ver regla de sincronización en `CLAUDE.md`.
   el secundario en **Lectura/Escritura** (antes Acceso total). Pendiente
   ubicar la ventana "Campos relacionados" que propone el código de la
   ficha del usuario.
+- Regla "VS Cotización - crear" se disparó pero falló (400): la regla
+  pasa el ID como texto y `zoho.crm.getRecordById` exige número (BIGINT).
+  A mano funcionaba porque Zoho lo convierte. Corregido agregando
+  `.toLong()` a los IDs en las 3 funciones (guía actualizada); Simón
+  aplica el cambio en el Sandbox y reprueba.

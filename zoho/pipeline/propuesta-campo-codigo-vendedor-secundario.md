@@ -114,7 +114,7 @@ categoría **Automatización / Flujo de trabajo**.
 Calcula el código en la Oportunidad y lo baja a todas sus Cotizaciones.
 
 ```deluge
-deal = zoho.crm.getRecordById("Deals", dealId);
+deal = zoho.crm.getRecordById("Deals", dealId.toLong());
 vend = deal.get("Vendedor_Secundario");
 nombre = "";
 if(vend != null)
@@ -136,9 +136,9 @@ if(vend != null && deal.get("UN") != null)
 }
 mapaDeal = Map();
 mapaDeal.put("C_digo_de_Vendedor_Secundario", codigo);
-zoho.crm.updateRecord("Deals", dealId, mapaDeal);
+zoho.crm.updateRecord("Deals", dealId.toLong(), mapaDeal);
 // 2) Bajar nombre y código a todas las Cotizaciones de esta Oportunidad
-cotizaciones = zoho.crm.getRelatedRecords("Quotes", "Deals", dealId);
+cotizaciones = zoho.crm.getRelatedRecords("Quotes", "Deals", dealId.toLong());
 for each cot in cotizaciones
 {
 	codCot = "";
@@ -166,7 +166,7 @@ Al crear la Cotización (o si le cambian la UN), trae nombre y código
 desde su Oportunidad.
 
 ```deluge
-quote = zoho.crm.getRecordById("Quotes", quoteId);
+quote = zoho.crm.getRecordById("Quotes", quoteId.toLong());
 nombre = "";
 codigo = "";
 if(quote.get("Deal_Name") != null)
@@ -192,13 +192,13 @@ if(quote.get("Deal_Name") != null)
 mapa = Map();
 mapa.put("Vendedor_Secundario", nombre);
 mapa.put("C_digo_de_Vendedor_Secundario", codigo);
-zoho.crm.updateRecord("Quotes", quoteId, mapa);
+zoho.crm.updateRecord("Quotes", quoteId.toLong(), mapa);
 ```
 
 #### Función 3: `vendedorSecundarioOV` (argumento `soId`)
 
 ```deluge
-so = zoho.crm.getRecordById("Sales_Orders", soId);
+so = zoho.crm.getRecordById("Sales_Orders", soId.toLong());
 codigo = "";
 if(so.get("Quote_Name") != null)
 {
@@ -215,7 +215,7 @@ if(codigo != "")
 {
 	mapa = Map();
 	mapa.put("C_digo_de_Vendedor_Secundario", codigo);
-	zoho.crm.updateRecord("Sales_Orders", soId, mapa);
+	zoho.crm.updateRecord("Sales_Orders", soId.toLong(), mapa);
 }
 ```
 
