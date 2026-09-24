@@ -64,3 +64,17 @@ Los dos ya tienen acceso a Órdenes de venta. Hay que activar **Ver** en:
 Catálogos de precios, Detalle Listas de Precios y Descuentos por UN.
 Simón lo aplica desde la pantalla de Zoho (el MCP no edita perfiles).
 Pendiente: confirmar que el PDF funciona después del cambio.
+
+## Verificación (2026-09-24)
+
+El error seguía en la OV 5404724000611143779 (dueño: Cristian Jara, perfil
+Vendedor Distribución Repuestos jardín y maquinari). Estado real en el CRM:
+
+| Perfil | Catálogos de precios | Descuentos por UN | Detalle Listas de Precios |
+|---|---|---|---|
+| Asistente | ✅ aplicado | ✅ aplicado | ❌ falta |
+| Vendedor Distribución Repuestos jardín y maquinari | ❌ falta | ❌ falta | ❌ falta |
+
+Nota: la tabla de productos de la OV tiene el campo "Catálogo de precios"
+(Price_Book_Name), que apunta al módulo Catálogos de precios. Por eso ese
+permiso es el más probable de bloquear el PDF.
