@@ -1135,3 +1135,12 @@ ver regla de sincronización en `CLAUDE.md`.
   solo "Código de Vendedor Secundario" (texto), copiado desde la
   Cotización; el campo de lista de usuarios queda solo en Oportunidades y
   Cotizaciones. Total: 5 campos. Pendiente OK para crearlos.
+
+## 2026-09-24
+
+- Seguía el error del PDF de la OV. Verifiqué en el CRM (solo lectura): en
+  **Asistente** faltaba solo "Detalle Listas de Precios"; en **Vendedor
+  Distribución Repuestos jardín y maquinari** (perfil de quien probó,
+  Cristian Jara) no quedó guardado ninguno de los 3 permisos. Se lo indiqué
+  a Simón para que lo complete. Detalle en
+  `zoho/config/propuesta-permisos-plantilla-ov-pdf.md`.
