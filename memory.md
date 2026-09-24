@@ -1154,3 +1154,7 @@ ver regla de sincronización en `CLAUDE.md`.
   "Producto Confirmado" está oculto en ambos, así que se descarta. También
   sugerí comparar los permisos extra (Exportar/Imprimir) de ambos módulos
   en el perfil. Tabla en `zoho/config/propuesta-permisos-plantilla-ov-pdf.md`.
+- La plantilla pública de OV también falla para el Asistente → el problema
+  no es la plantilla, sino el perfil o el uso compartido de las OV. Pasé a
+  Simón los pasos para comparar los permisos de Cotizaciones y Órdenes de
+  venta en el perfil y en "Compartir datos".

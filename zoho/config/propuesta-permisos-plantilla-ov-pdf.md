@@ -112,3 +112,17 @@ Candidatos a revisar: (1) columna Bodega en la plantilla; (2) permisos
 extra del módulo Órdenes de venta en el perfil (Exportar/Imprimir),
 comparados con Cotizaciones; (3) prueba con la plantilla pública para
 separar plantilla vs. permisos.
+
+## Prueba con plantilla pública (2026-09-24)
+
+Al Asistente tampoco le funciona la plantilla pública "Plantilla de orden
+de venta". Conclusión: **no es la plantilla "OV prueba"**; el bloqueo es del
+perfil o de cómo se comparten las OV. Bodega no está en la plantilla.
+
+Próximos pasos (en Zoho, pantalla de Simón):
+1. Perfiles → Asistente → Permisos de módulo: comparar Cotizaciones vs
+   Órdenes de venta, incluidas las opciones extra (Exportar, Imprimir, etc.).
+2. Control de seguridad → Compartir datos: comparar el acceso por defecto
+   de Cotizaciones vs Órdenes de venta.
+3. Ver si algún perfil no administrador (p. ej. Gerente) sí puede exportar
+   una OV, para aislar el perfil.
