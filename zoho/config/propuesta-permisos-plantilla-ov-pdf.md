@@ -64,3 +64,101 @@ Los dos ya tienen acceso a Órdenes de venta. Hay que activar **Ver** en:
 Catálogos de precios, Detalle Listas de Precios y Descuentos por UN.
 Simón lo aplica desde la pantalla de Zoho (el MCP no edita perfiles).
 Pendiente: confirmar que el PDF funciona después del cambio.
+
+## Verificación (2026-09-24)
+
+El error seguía en la OV 5404724000611143779 (dueño: Cristian Jara, perfil
+Vendedor Distribución Repuestos jardín y maquinari). Estado real en el CRM:
+
+| Perfil | Catálogos de precios | Descuentos por UN | Detalle Listas de Precios |
+|---|---|---|---|
+| Asistente | ✅ aplicado | ✅ aplicado | ❌ falta |
+| Vendedor Distribución Repuestos jardín y maquinari | ❌ falta | ❌ falta | ❌ falta |
+
+Nota: la tabla de productos de la OV tiene el campo "Catálogo de precios"
+(Price_Book_Name), que apunta al módulo Catálogos de precios. Por eso ese
+permiso es el más probable de bloquear el PDF.
+
+## Nueva causa probable (2026-09-24)
+
+Con Catálogos de precios y Descuentos por UN ya aplicados, al perfil
+Asistente le seguía fallando. "Detalle Listas de Precios" no aparece en los
+perfiles porque es un módulo oculto, y la OV no lo usa: se descarta.
+
+En la tabla de productos de la OV (Artículos solicitados) hay 2 campos
+**ocultos para todos los perfiles salvo Administrator**:
+- **Bodega**
+- **Producto Confirmado**
+
+Si "OV prueba" incluye alguna de esas columnas, eso explica que solo a los
+administradores les funcione. Solución propuesta: quitar esas 2 columnas de
+la plantilla (sin tocar permisos). La otra opción es cambiarlas a "solo
+lectura" para los perfiles que exportan.
+
+## Comparación Cotizaciones vs Órdenes de venta (2026-09-24)
+
+Simón aclara que el PDF de Cotizaciones sí funciona para esos perfiles.
+Diferencias encontradas (solo lectura):
+
+| | Cotizaciones | Órdenes de venta |
+|---|---|---|
+| Acceso al módulo (Asistente / Vend. Distribución) | Sí | Sí |
+| "Producto Confirmado" oculto en tabla de productos | Sí | Sí (no es la causa) |
+| Campo **Bodega** en tabla de productos (oculto a todos salvo Admin, apunta a otro módulo) | No existe | **Sí** |
+| Quién crea el registro | El vendedor | La integración ERP (usuario "Infraestructura Emaresa") |
+| Aprobadores (campos de usuario) y proceso de aprobación | — | Sí |
+
+Candidatos a revisar: (1) columna Bodega en la plantilla; (2) permisos
+extra del módulo Órdenes de venta en el perfil (Exportar/Imprimir),
+comparados con Cotizaciones; (3) prueba con la plantilla pública para
+separar plantilla vs. permisos.
+
+## Prueba con plantilla pública (2026-09-24)
+
+Al Asistente tampoco le funciona la plantilla pública "Plantilla de orden
+de venta". Conclusión: **no es la plantilla "OV prueba"**; el bloqueo es del
+perfil o de cómo se comparten las OV. Bodega no está en la plantilla.
+
+Próximos pasos (en Zoho, pantalla de Simón):
+1. Perfiles → Asistente → Permisos de módulo: comparar Cotizaciones vs
+   Órdenes de venta, incluidas las opciones extra (Exportar, Imprimir, etc.).
+2. Control de seguridad → Compartir datos: comparar el acceso por defecto
+   de Cotizaciones vs Órdenes de venta.
+3. Ver si algún perfil no administrador (p. ej. Gerente) sí puede exportar
+   una OV, para aislar el perfil.
+
+## Causa encontrada: reglas de uso compartido (2026-09-24)
+
+Cotizaciones y Órdenes de venta tienen el mismo acceso por defecto
+(**Privado**). La diferencia está en las **Reglas de uso compartido**:
+Cotizaciones tiene 21 reglas activas y Órdenes de venta **ninguna**.
+
+Reglas de Cotizaciones (nombres truncados en la captura de Simón):
+
+| Regla | Desde | Con | Permiso |
+|---|---|---|---|
+| Compartido para Apro… | Vend Industri… (Grupo) | Aprobadores … (Grupo) | Lectura/escritura |
+| R:CEO a R:Sub Gte Ve… | CEO (Rol) | Sub Gerente … (Rol) | Leer/escribir/eliminar |
+| R:CEO a G:Aprobador… | CEO (Rol) | Aprobadores … (Grupo) | Lectura/escritura |
+| N:Caldereria a G:Cald… | Criterios | Vapor Calder… (Grupo) | Lectura/escritura |
+| N:Izaje a R:PM Izaje | Criterios | Encargado d… (Rol) | Lectura/escritura |
+| N:Equipos Procesos a … | Criterios | Product Man… (Rol) | Lectura/escritura |
+| IyF - G:Vend IyF a R:Jef… | Vend Industri… (Grupo) | IyF - Jefe Ad… (Rol) | Lectura/escritura |
+| Const R:Vend Geosinté… | Vendedores … (Rol) | Asistente de … (Rol) | Lectura/escritura |
+| Const -R:Vend General… | Vendedores … (Rol) | Asistente de … (Rol) | Lectura/escritura |
+| Const - R:Vend Fuerza … | Vendedor Fu… (Rol) | Asistente de … (Rol) | Lectura/escritura |
+| Const - R:KAM Mineria … | KAM Mineria (Rol) | Asistente de … (Rol) | Lectura/escritura |
+| Const - R:Vend Equipo… | Vendedores … (Rol) | Asistente de … (Rol) | Lectura/escritura |
+| Const - R:Vend Repues… | Vendedores … (Rol) | Encargado d… (Rol) | Lectura/escritura |
+| IyF G:Vend IyF a R:Asis… | Vend Industri… (Grupo) | IyF - Asistent… (Rol) | Lectura/escritura |
+| R:CEO a G:Aprobador… | CEO (Rol) | Aprobadores … (Grupo) | Leer/escribir/eliminar |
+| R:Ceo a R:Encargado … | CEO (Rol) | Encargado d… (Rol) | Leer/escribir/eliminar |
+| G:Vend Rental a R:Enc… | Vend Rental (Grupo) | Encargado d… (Rol) | Leer/escribir/eliminar |
+| R:PMEV a R:Cubicador | Product Man… (Rol) | Cubicador (Rol) | Lectura/escritura |
+| R:Jefe de Presupuesto … | Jefe de Presu… (Rol) | Ingeniero de … (Rol) | Lectura/escritura |
+| N:Izaje a R:Asist | Criterios | Asistente de … (Rol) | Leer/escribir/eliminar (superiores incluidos) |
+
+**Propuesta:** crear en Órdenes de venta las mismas reglas que comparten
+con roles de **Asistente** y **Encargado** (las que usan los perfiles
+Asistente y Vendedor Distribución). Empezar por una sola regla, probar el
+PDF y después replicar el resto. Lo aplica Simón desde Zoho.

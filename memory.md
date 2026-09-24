@@ -1146,3 +1146,74 @@ ver regla de sincronización en `CLAUDE.md`.
   despliegue a Producción. Pendiente: completar códigos faltantes en
   Usuarios por UN (Rental, Inamar Vapor, Maktotal casi sin códigos) y
   confirmar si aplica a Rental.
+- Seguía el error del PDF de la OV. Verifiqué en el CRM (solo lectura): en
+  **Asistente** faltaba solo "Detalle Listas de Precios"; en **Vendedor
+  Distribución Repuestos jardín y maquinari** (perfil de quien probó,
+  Cristian Jara) no quedó guardado ninguno de los 3 permisos. Se lo indiqué
+  a Simón para que lo complete. Detalle en
+  `zoho/config/propuesta-permisos-plantilla-ov-pdf.md`.
+- Al Asistente le seguía fallando el PDF. Encontré que los campos **Bodega**
+  y **Producto Confirmado** de la tabla de productos de la OV están ocultos
+  para todos los perfiles salvo Administrator. Si la plantilla "OV prueba"
+  los usa, bloquean el PDF. Propuse a Simón sacarlos de la plantilla.
+- Simón señaló que el PDF de Cotizaciones sí funciona. Comparé ambos
+  módulos: la diferencia clave es el campo **Bodega** en la tabla de
+  productos de la OV (no existe en Cotizaciones; oculto a todos salvo Admin).
+  "Producto Confirmado" está oculto en ambos, así que se descarta. También
+  sugerí comparar los permisos extra (Exportar/Imprimir) de ambos módulos
+  en el perfil. Tabla en `zoho/config/propuesta-permisos-plantilla-ov-pdf.md`.
+- La plantilla pública de OV también falla para el Asistente → el problema
+  no es la plantilla, sino el perfil o el uso compartido de las OV. Pasé a
+  Simón los pasos para comparar los permisos de Cotizaciones y Órdenes de
+  venta en el perfil y en "Compartir datos".
+- **Causa encontrada**: Cotizaciones y OV son "Privado", pero Cotizaciones
+  tiene 21 reglas de uso compartido (vendedores → asistentes/encargados, etc.)
+  y Órdenes de venta ninguna. Propuse replicar en OV las reglas hacia roles
+  Asistente/Encargado, probando primero con una. Tabla completa en
+  `zoho/config/propuesta-permisos-plantilla-ov-pdf.md`.
+- Simón reportó que la Cotización Rental suma mal (COT-REN-4471). Verifiqué
+  en el CRM (solo lectura): `Constuc_SUM_Subtotal` (Rental_SUM_Subtotal)
+  suma "Total Rental" de los ítems, que es el monto **sin descuento**
+  (5.404.900 vs 4.618.165 correcto). De ahí salen mal `Rental_IVA`
+  (1.026.931 en vez de 877.451) y el total del PDF (6.431.831 en vez de
+  5.495.616). Propuse basar IVA y total en "Subtotal General con
+  Descuento" y corregir la columna "Valor Total" del PDF. Detalle en
+  `zoho/config/propuesta-corregir-iva-rental-cotizaciones.md`.
+- Simón empezó a aplicar el cambio. Confirmado: la fórmula original de
+  `Rental_IVA` era `(${Cotizaciones.Constuc_SUM_Subtotal}*19)/100` (sobre
+  el monto sin descuento). Quedó respaldada en la propuesta.
+- **Error mío corregido**: el cambio de fórmula (usar "Subtotal General con
+  Descuento") duplicaba el IVA en cotizaciones de Construcción, porque ahí
+  ese subtotal ya trae IVA (ej. COT-CONST-467-3262 quedó con total 320.492
+  en vez de 269.321). Pedí a Simón revertir ambas fórmulas. La causa real
+  de COT-REN-4471 es que la integración (usuario Infraestructura, cotizador
+  Creator) reescribió la línea al aprobar el descuento y dejó "Total
+  Rental" sin descuento. Encontré ~10 de 200 COT-REN con diferencia similar.
+- Constuc_SUM_Subtotal es una agregación SUM del "Subtotal" de línea (lo
+  escribe Creator: Importe − Descuento + Seguro). Las diferencias en otras
+  COT-REN eran el seguro, no errores. Propuse que la agregación sume
+  "Total con descuentos" + una nueva agregación de "Valor Total Seguro",
+  para no depender de Creator. Pendiente: Simón verifica si "Total con
+  descuentos" aparece en la lista de la agregación.
+- Revisé el historial de COT-REN-4471: mismo flujo de aprobación que otras
+  que quedaron bien; nadie la editó en el CRM. Al aprobarse, Creator
+  reescribió las líneas con Subtotal/Total Rental sin descuento (y borró el
+  Código de Vendedor). La falla está en Creator; hay que revisar esa
+  cotización ahí (ID Creator 4389062000011871288).
+- Con OK de Simón corregí COT-REN-4471 en el CRM: Subtotal y Total Rental
+  de la línea 1 a 4.458.165 (sin disparar automatizaciones). Quedó IVA
+  877.451 y total 5.495.616. El Código de Vendedor sigue vacío (era 426).
+- Barrido de ~2.000 líneas COT-REN con descuento (may–sep): ningún otro
+  caso igual a 4471, pero 13 cotizaciones con el subtotal Rental mal por
+  otros patrones (líneas con Subtotal negativo o muy bajo, descuento
+  restado 2 veces en 1655). Tabla en la propuesta. No corregí nada: espera OK.
+- Analicé por qué fallan las 13 COT-REN: el cálculo de línea de Creator no
+  cuadra con el CRM. Patrón principal (8-9 casos): no multiplica por los
+  días (precio de 1 día − descuento total → negativos). Otros: cantidad
+  distinta (1655: 3 vs 4), precio distinto (1390), días distintos
+  (0466/0727, ahí el Subtotal de Zoho sería el malo). Detalle en la propuesta.
+- Fuente del error: cálculo de línea Rental en Zoho Creator (falla al crear
+  y al reenviar tras aprobación; siempre en una sola línea por cotización,
+  probablemente la editada a mano). Dejé la fórmula correcta para TI/Creator
+  y la protección en el CRM en la propuesta.
+- Preparé el caso para el proveedor de Creator: zoho/config/caso-proveedor-cot-ren-4471.md
