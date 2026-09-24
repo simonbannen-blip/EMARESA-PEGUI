@@ -97,3 +97,24 @@ Otras COT-REN (últimas 200 con descuento) donde Constuc_SUM_Subtotal es
 mayor que el Subtotal: 4472 (+39.000), 4471 (+786.735), 4455 (+405.000),
 4451 (+162.000), 4450 (+162.000), 4203 (+84.000), 4141 (+135.000),
 4067 (+66.000), 4039 (+66.000), 4032 (+90.000). ~10 de 200.
+
+## Definición real de Constuc_SUM_Subtotal y solución de fondo
+
+`Constuc_SUM_Subtotal` es un **campo de agregación**: SUM del campo
+"Subtotal" de la tabla de productos (2 decimales). Ese "Subtotal" de línea
+lo escribe el cotizador Creator (= Importe − Descuento + Seguro). Si
+Creator no resta el descuento (COT-REN-4471), todo el cálculo sale mal.
+
+Propuesta para que no dependa de Creator:
+1. Cambiar la agregación de `Constuc_SUM_Subtotal` a SUM de
+   **"Total con descuentos"** (calculado por Zoho) — si el campo aparece
+   en la lista.
+2. Crear agregación nueva **"SUM Seguro"** = SUM de "Valor Total Seguro".
+3. `Rental_IVA` = `((${Constuc_SUM_Subtotal} + ${SUM Seguro})*19)/100`
+   `Rental_Total_con_IVA` = `${Constuc_SUM_Subtotal} + ${SUM Seguro} + ${Rental_IVA}`
+   con "valores en blanco como 0".
+4. Las agregaciones no se aplican retroactivamente: hay que actualizar
+   los registros existentes.
+
+Hallazgo: las diferencias en 4472, 4455, 4451, etc. son el **seguro**
+(ej. 4472: +39.000 = Valor Total Seguro), no errores.
