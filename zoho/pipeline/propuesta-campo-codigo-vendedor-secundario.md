@@ -1,13 +1,26 @@
 # Vendedor Secundario (Oportunidad → Cotización → Orden de venta)
 
-## Estado: GUÍA LISTA — Simón lo arma en Sandbox, prueba y despliega a Producción
+## Estado: EN ARMADO EN SANDBOX por Simón (guiado paso a paso)
+
+Avance:
+- ✅ Paso 1: entró al Sandbox.
+- ✅ Paso 2: "Usuarios por UN" ya tiene datos con códigos en el Sandbox.
+- ✅ Paso 3: creados en Oportunidades `Vendedor Secundario` (búsqueda de
+  usuario) y `Código de Vendedor Secundario` (texto, solo lectura).
+- ⚠️ Paso 4: al crear `Vendedor Secundario` como búsqueda de usuario en
+  **Cotizaciones**, Zoho dio error de **máximo de campos de búsqueda de
+  usuario** (Cotizaciones ya tiene 5: Aprobador Descuento Item,
+  Aprobador Cartera de Cliente, Aprobador Mínimo de Venta, Aprobador 2da
+  Selección, Usuario Rechaza Aprobación). **Rediseño aprobado por Simón
+  (2026-09-24)**: el vendedor secundario se elige solo en la Oportunidad
+  y baja automáticamente a sus Cotizaciones (ver Diseño).
 
 ## Qué se pidió y para qué
 
 El **Propietario de la Cotización** es un vendedor, pero muchas veces la
 cotización la **termina otro vendedor** — el "vendedor secundario".
-Simón quiere registrarlo en la Oportunidad/Cotización y que su **código**
-llegue a la **Orden de venta**.
+Simón quiere registrarlo y que su **código** llegue a la **Orden de
+venta**.
 
 Requisitos de Simón (2026-09-24):
 
@@ -17,96 +30,78 @@ Requisitos de Simón (2026-09-24):
 
 ## Hallazgos en el CRM real (lectura, 2026-09-24)
 
-- No existe ningún campo de vendedor secundario en Oportunidades,
-  Cotizaciones ni Órdenes de venta.
 - El código de vendedor **depende de la Unidad de Negocio**: vive en el
   módulo **Usuarios por UN** (`Vendedores_por_UN`, campos `Vendedor`,
   `UN`, `Activo`, `C_digo_de_Vendedor`). Ej.: Tirapegui = 131 en
-  Construcción y 1111 en Agroforestal; Carrasco Garrido = 999 en IyF y
-  7777777 en Agroforestal.
-- El campo "Código de Vendedor" de la ficha del **Usuario** NO sirve
-  como fuente: solo ~50 de 158 usuarios activos lo tienen, y hay valores
-  erróneos (ej. un teléfono).
+  Construcción y 1111 en Agroforestal.
+- El "Código de Vendedor" de la ficha del **Usuario** NO sirve: solo ~50
+  de 158 usuarios activos lo tienen, con valores erróneos.
 - En Usuarios por UN hay 139 filas activas, pero **muchas sin código**
-  (casi toda la UN **Rental**, Inamar Vapor y Maktotal). Para esos
-  vendedores el código secundario quedará vacío hasta completar esa
-  tabla.
-- Los 3 módulos tienen el campo `UN` (búsqueda a Unidades de Negocio).
-  Cotización tiene `Deal_Name` (Oportunidad); OV tiene `Quote_Name`
-  (Cotización) y `Deal_Name`.
+  (casi toda Rental, Inamar Vapor y Maktotal).
+- Los 3 módulos tienen `UN`. Cotización tiene `Deal_Name`; OV tiene
+  `Quote_Name` y `Deal_Name`.
+- Límite de Zoho: **máx. 5 campos "búsqueda de usuario" por módulo**.
+  Cotizaciones ya está en el tope.
 
-## Diseño
+## Diseño (final)
 
-| Campo | Tipo | Oportunidades | Cotizaciones | Órdenes de venta |
-|---|---|---|---|---|
-| **Vendedor Secundario** | Búsqueda de usuario | ✅ | ✅ | ❌ (no va el nombre) |
-| **Código de Vendedor Secundario** | Línea única (texto), solo lectura | ✅ | ✅ | ✅ |
+| Campo | Oportunidades | Cotizaciones | Órdenes de venta |
+|---|---|---|---|
+| **Vendedor Secundario** | Búsqueda de usuario (lo elige el vendedor) | Línea única, **solo lectura** (nombre, se llena solo) | ❌ |
+| **Código de Vendedor Secundario** | Línea única, solo lectura | Línea única, solo lectura | Línea única, solo lectura |
 
-- El vendedor **elige a la persona** en la Oportunidad o en la
-  Cotización; el **código se completa solo** buscando en Usuarios por UN
-  la fila de ese vendedor + la UN del registro.
-- Al crear la Cotización desde la Oportunidad: si la Cotización no trae
-  vendedor secundario, se copia el de la Oportunidad.
-- Al crear la OV: se copia **solo el código**, tal cual, desde la
-  Cotización (respaldo: desde la Oportunidad).
+- El vendedor secundario **se elige SOLO en la Oportunidad**. El código
+  se busca en Usuarios por UN (vendedor + UN del registro).
+- Al elegirlo/cambiarlo en la Oportunidad → se actualizan **todas las
+  Cotizaciones de esa Oportunidad** (nombre + código según la UN de cada
+  cotización).
+- Al crear una Cotización → trae nombre y código desde su Oportunidad.
+- Al crear la OV → se copia **solo el código** desde la Cotización
+  (respaldo: desde la Oportunidad).
 
 ---
 
 ## PASO A PASO
 
-### Parte A — Preparar el Sandbox
+### Parte A — Preparar el Sandbox ✅
 
-1. En **Producción**: Configuración → Administración de datos →
-   **Sandbox**. Usar el Sandbox existente (el del campo Ámbito). Si
-   hace mucho que no se actualiza, **Actualizar (Refresh)** para que
-   tenga la configuración actual de Producción.
-2. Entrar al Sandbox (botón **Acceder / Iniciar sesión en Sandbox**).
-3. Revisar si el Sandbox tiene datos. Si es solo de configuración (sin
-   registros), crear para las pruebas:
-   - 1 fila en **Usuarios por UN**: Usuario = un vendedor de prueba,
-     UN = Construcción, Activo = ✔, Código de Vendedor = `TEST123`.
-   - 1 fila más, mismo usuario, UN = Agroforestal y Jardines, código
-     `TEST456` (para probar que el código cambia según la UN).
-   - 1 Cliente de prueba.
+### Parte B — Crear los campos
 
-### Parte B — Crear los campos (en el Sandbox)
+**Oportunidades** ✅ (hecho): `Vendedor Secundario` (búsqueda de
+usuario) + `Código de Vendedor Secundario` (línea única, solo lectura).
 
-Configuración → Personalización → **Módulos y campos**.
+**Cotizaciones** (en todos los diseños):
+- `Vendedor Secundario` → **Línea única**, solo lectura.
+- `Código de Vendedor Secundario` → **Línea única**, solo lectura.
 
-**Oportunidades** → diseño(s) de Oportunidad → arrastrar:
-1. **Búsqueda de usuario** → etiqueta `Vendedor Secundario`.
-2. **Línea única** → etiqueta `Código de Vendedor Secundario`.
-   - En las propiedades del campo (⚙) → **Establecer permiso** → dejarlo
-     **Solo lectura** para todos los perfiles (lo llena el sistema).
-3. Ubicarlos al lado de "Código de Vendedor". Guardar.
+**Órdenes de venta** (en todos los diseños):
+- Solo `Código de Vendedor Secundario` → Línea única, solo lectura.
 
-**Cotizaciones** → mismo par de campos, mismas etiquetas exactas.
-Repetir en **todos los diseños** de Cotizaciones que se usan
-(Agroforestal, Construcción, Rental, etc.).
+Solo lectura: ⋮ sobre el campo → Establecer permiso → Solo lectura para
+todos los perfiles menos Administrator.
 
-**Órdenes de venta** → **solo** `Código de Vendedor Secundario` (Línea
-única, solo lectura), al lado de "Código del Vendedor". Todos los
-diseños.
+Verificar nombres de API (Configuración → Desarrollador → API y SDK →
+Nombres de API): `Vendedor_Secundario` y `C_digo_de_Vendedor_Secundario`
+en cada módulo.
 
-4. Verificar los **nombres de API**: Configuración → Desarrollador →
-   API y SDK → Nombres de API → cada módulo. Deben quedar:
-   - `Vendedor_Secundario`
-   - `C_digo_de_Vendedor_Secundario`
-
-   Si Zoho les puso otro nombre, avisar para ajustar el código de abajo.
-
-### Parte C — Crear las 3 funciones (en el Sandbox)
+### Parte C — Crear las 3 funciones
 
 Configuración → Desarrollador → **Funciones** → **+ Nueva función** →
-categoría **Flujo de trabajo (Automatización)**.
+categoría **Automatización / Flujo de trabajo**.
 
-#### Función 1: `codigoVendedorSecundarioOportunidad`
+#### Función 1: `vendedorSecundarioOportunidad` (argumento `dealId`)
 
-Argumento: `dealId` (tipo cadena/string).
+Calcula el código en la Oportunidad y lo baja a todas sus Cotizaciones.
 
 ```deluge
 deal = zoho.crm.getRecordById("Deals", dealId);
 vend = deal.get("Vendedor_Secundario");
+nombre = "";
+if(vend != null)
+{
+	nombre = ifnull(vend.get("name"), "");
+}
+// 1) Código en la Oportunidad, según su UN
 codigo = "";
 if(vend != null && deal.get("UN") != null)
 {
@@ -119,48 +114,68 @@ if(vend != null && deal.get("UN") != null)
 		}
 	}
 }
-mapa = Map();
-mapa.put("C_digo_de_Vendedor_Secundario", codigo);
-zoho.crm.updateRecord("Deals", dealId, mapa);
+mapaDeal = Map();
+mapaDeal.put("C_digo_de_Vendedor_Secundario", codigo);
+zoho.crm.updateRecord("Deals", dealId, mapaDeal);
+// 2) Bajar nombre y código a todas las Cotizaciones de esta Oportunidad
+cotizaciones = zoho.crm.getRelatedRecords("Quotes", "Deals", dealId);
+for each cot in cotizaciones
+{
+	codCot = "";
+	if(vend != null && cot.get("UN") != null)
+	{
+		filasCot = zoho.crm.searchRecords("Vendedores_por_UN", "(UN:equals:" + cot.get("UN").get("id") + ")");
+		for each fila in filasCot
+		{
+			if(fila.get("Vendedor") != null && fila.get("Vendedor").get("id").toString() == vend.get("id").toString() && fila.get("Activo") == true && ifnull(fila.get("C_digo_de_Vendedor"), "") != "")
+			{
+				codCot = fila.get("C_digo_de_Vendedor");
+			}
+		}
+	}
+	mapaCot = Map();
+	mapaCot.put("Vendedor_Secundario", nombre);
+	mapaCot.put("C_digo_de_Vendedor_Secundario", codCot);
+	zoho.crm.updateRecord("Quotes", cot.get("id"), mapaCot);
+}
 ```
 
-#### Función 2: `codigoVendedorSecundarioCotizacion`
+#### Función 2: `vendedorSecundarioCotizacion` (argumento `quoteId`)
 
-Argumento: `quoteId` (string).
+Al crear la Cotización (o si le cambian la UN), trae nombre y código
+desde su Oportunidad.
 
 ```deluge
 quote = zoho.crm.getRecordById("Quotes", quoteId);
-vend = quote.get("Vendedor_Secundario");
-mapa = Map();
-// si la Cotización no tiene vendedor secundario, tomarlo de la Oportunidad
-if(vend == null && quote.get("Deal_Name") != null)
+nombre = "";
+codigo = "";
+if(quote.get("Deal_Name") != null)
 {
-	dealRec = zoho.crm.getRecordById("Deals", quote.get("Deal_Name").get("id"));
-	vend = dealRec.get("Vendedor_Secundario");
+	deal = zoho.crm.getRecordById("Deals", quote.get("Deal_Name").get("id"));
+	vend = deal.get("Vendedor_Secundario");
 	if(vend != null)
 	{
-		mapa.put("Vendedor_Secundario", vend.get("id"));
-	}
-}
-codigo = "";
-if(vend != null && quote.get("UN") != null)
-{
-	filas = zoho.crm.searchRecords("Vendedores_por_UN", "(UN:equals:" + quote.get("UN").get("id") + ")");
-	for each fila in filas
-	{
-		if(fila.get("Vendedor") != null && fila.get("Vendedor").get("id").toString() == vend.get("id").toString() && fila.get("Activo") == true && ifnull(fila.get("C_digo_de_Vendedor"), "") != "")
+		nombre = ifnull(vend.get("name"), "");
+		if(quote.get("UN") != null)
 		{
-			codigo = fila.get("C_digo_de_Vendedor");
+			filas = zoho.crm.searchRecords("Vendedores_por_UN", "(UN:equals:" + quote.get("UN").get("id") + ")");
+			for each fila in filas
+			{
+				if(fila.get("Vendedor") != null && fila.get("Vendedor").get("id").toString() == vend.get("id").toString() && fila.get("Activo") == true && ifnull(fila.get("C_digo_de_Vendedor"), "") != "")
+				{
+					codigo = fila.get("C_digo_de_Vendedor");
+				}
+			}
 		}
 	}
 }
+mapa = Map();
+mapa.put("Vendedor_Secundario", nombre);
 mapa.put("C_digo_de_Vendedor_Secundario", codigo);
 zoho.crm.updateRecord("Quotes", quoteId, mapa);
 ```
 
-#### Función 3: `codigoVendedorSecundarioOV`
-
-Argumento: `soId` (string).
+#### Función 3: `vendedorSecundarioOV` (argumento `soId`)
 
 ```deluge
 so = zoho.crm.getRecordById("Sales_Orders", soId);
@@ -184,80 +199,56 @@ if(codigo != "")
 }
 ```
 
-En cada función: **Guardar** → botón **Ejecutar** con el ID de un
-registro de prueba para ver que no da error.
+### Parte D — Reglas de flujo
 
-### Parte D — Crear las reglas de flujo (en el Sandbox)
+Configuración → Automatización → **Reglas de flujo de trabajo**.
+Acción: **Función** → mapear el argumento al ID del registro.
 
-Configuración → Automatización → **Reglas de flujo de trabajo** →
-**+ Crear regla**. En la acción elegir **Función** → la función creada
-→ mapear el argumento al **ID** del registro (ej. `dealId` =
-Oportunidades → ID de Oportunidad).
-
-| # | Módulo | Nombre de la regla | Cuándo | Condición | Función |
+| # | Módulo | Nombre | Cuándo | Condición | Función |
 |---|---|---|---|---|---|
-| 1 | Oportunidades | VS Oportunidad - crear | Al **crear** | Vendedor Secundario **no está vacío** | codigoVendedorSecundarioOportunidad |
-| 2 | Oportunidades | VS Oportunidad - editar | Al **editar** → "Campos específicos modificados": **Vendedor Secundario** o **UN** | Todos | codigoVendedorSecundarioOportunidad |
-| 3 | Cotizaciones | VS Cotización - crear | Al **crear** | Todos | codigoVendedorSecundarioCotizacion |
-| 4 | Cotizaciones | VS Cotización - editar | Al **editar** → campos modificados: **Vendedor Secundario** o **UN** | Todos | codigoVendedorSecundarioCotizacion |
-| 5 | Órdenes de venta | VS OV - crear | Al **crear** | Todos | codigoVendedorSecundarioOV |
+| 1 | Oportunidades | VS Oportunidad - crear | Al crear | Vendedor Secundario no está vacío | vendedorSecundarioOportunidad |
+| 2 | Oportunidades | VS Oportunidad - editar | Al editar → campos modificados: Vendedor Secundario o UN | Todos | vendedorSecundarioOportunidad |
+| 3 | Cotizaciones | VS Cotización - crear | Al crear | Todos | vendedorSecundarioCotizacion |
+| 4 | Cotizaciones | VS Cotización - cambio UN | Al editar → campo modificado: UN | Todos | vendedorSecundarioCotizacion |
+| 5 | Órdenes de venta | VS OV - crear | Al crear | Todos | vendedorSecundarioOV |
 
 ### Parte E — Pruebas en el Sandbox
 
-Marcar cada una ✅/❌:
+1. Oportunidad (UN con código para el vendedor de prueba) → elegir
+   Vendedor Secundario → aparece el código.
+2. Cambiar la UN de la Oportunidad → el código cambia.
+3. Generar Cotización desde esa Oportunidad → trae nombre y código.
+4. **Caso más común**: Oportunidad sin vendedor secundario → generar
+   Cotización → recién ahí elegir el Vendedor Secundario **en la
+   Oportunidad** → la Cotización se actualiza sola.
+5. Cambiar el vendedor en la Oportunidad → se actualizan sus
+   Cotizaciones.
+6. Convertir la Cotización en OV → la OV tiene el **código** (no el
+   nombre).
+7. Cotización sin vendedor secundario → OV sin código, sin error.
+8. Con un usuario de perfil Vendedor: puede elegir el Vendedor
+   Secundario en la Oportunidad y **no** puede escribir en los campos de
+   solo lectura.
 
-1. **Oportunidad con vendedor secundario**: crear Oportunidad UN =
-   Construcción, elegir Vendedor Secundario = vendedor de prueba →
-   guardar → el Código debe quedar `TEST123`.
-2. **Cambio de UN**: editar esa Oportunidad, UN = Agroforestal →
-   código pasa a `TEST456`.
-3. **Cotización desde la Oportunidad**: generar Cotización desde la
-   Oportunidad del caso 1 → debe traer Vendedor Secundario y el código
-   según la UN de la Cotización.
-4. **Vendedor elegido en la Cotización** (caso más común): Oportunidad
-   sin vendedor secundario → generar Cotización → elegir ahí el
-   Vendedor Secundario → guardar → aparece el código.
-5. **Cambio de vendedor en la Cotización**: cambiar a otro vendedor →
-   el código se actualiza (o queda vacío si ese vendedor no tiene código
-   en esa UN).
-6. **Convertir Cotización en Orden de venta** → la OV debe tener el
-   **código** (no el nombre) en "Código de Vendedor Secundario".
-7. **Sin vendedor secundario**: Cotización sin vendedor secundario →
-   convertir a OV → el campo queda vacío y no da error.
-8. **Vendedor normal (no admin)**: repetir el caso 4 con un usuario de
-   perfil Vendedor → puede elegir el Vendedor Secundario y **no** puede
-   escribir a mano el código.
-
-Si algo falla: Configuración → Desarrollador → Funciones → la función
-→ **Registros/Logs** para ver el error, y avisar.
+Si algo falla: Configuración → Desarrollador → Funciones → la función →
+Registros/Logs.
 
 ### Parte F — Pasar a Producción
 
-1. En **Producción**: Configuración → Administración de datos →
-   **Sandbox** → elegir el Sandbox → **Implementar / Deploy** (o
-   "Implementar cambios").
-2. Seleccionar los cambios:
-   - Campos: `Vendedor Secundario` (Oportunidades, Cotizaciones) y
-     `Código de Vendedor Secundario` (Oportunidades, Cotizaciones, OV).
-   - Diseños (layouts) modificados de los 3 módulos.
-   - Las 3 funciones.
-   - Las 5 reglas de flujo.
-3. Implementar y esperar el aviso de que terminó.
-4. **Revisar en Producción**:
-   - Las 5 reglas están **activas** (a veces llegan desactivadas).
-   - Los campos aparecen en todos los diseños y el código es solo
-     lectura.
-5. **Prueba real en Producción**: una Cotización de prueba con un
-   vendedor que tenga código en Usuarios por UN → convertir a OV →
-   revisar el código → borrar los registros de prueba.
-6. Pendiente de datos (no bloquea la puesta en marcha): **completar
-   los códigos faltantes en Usuarios por UN** (sobre todo Rental,
-   Inamar Vapor y Maktotal) — si un vendedor no tiene código ahí, su
-   código secundario queda vacío.
+1. En Producción: Configuración → Administración de datos → Sandbox →
+   el Sandbox → **Implementar / Deploy**.
+2. Seleccionar: campos y diseños de los 3 módulos, las 3 funciones y las
+   5 reglas.
+3. En Producción: revisar que las 5 reglas estén **activas** y los
+   campos en todos los diseños.
+4. Prueba real Cotización → OV y borrar los registros de prueba.
+5. Pendiente de datos: completar códigos faltantes en Usuarios por UN
+   (Rental, Inamar Vapor, Maktotal).
 
-## Preguntas abiertas
+## Notas
 
-- Rental ya usa en Cotizaciones un campo aparte "Cód Vendedor Rental"
-  (`C_digo_del_Vendedor`) y casi no tiene códigos en Usuarios por UN.
-  ¿El vendedor secundario aplica también a Rental? Si sí, hay que
-  completar esos códigos.
+- Si una Cotización ya se convirtió en OV y después cambian el vendedor
+  en la Oportunidad, la Cotización se actualiza pero la OV ya creada
+  **no** (la OV conserva el código con que se creó).
+- ¿Aplica a Rental? Rental casi no tiene códigos en Usuarios por UN y
+  usa aparte "Cód Vendedor Rental" en Cotizaciones.
