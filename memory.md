@@ -1199,3 +1199,8 @@ ver regla de sincronización en `CLAUDE.md`.
   caso igual a 4471, pero 13 cotizaciones con el subtotal Rental mal por
   otros patrones (líneas con Subtotal negativo o muy bajo, descuento
   restado 2 veces en 1655). Tabla en la propuesta. No corregí nada: espera OK.
+- Analicé por qué fallan las 13 COT-REN: el cálculo de línea de Creator no
+  cuadra con el CRM. Patrón principal (8-9 casos): no multiplica por los
+  días (precio de 1 día − descuento total → negativos). Otros: cantidad
+  distinta (1655: 3 vs 4), precio distinto (1390), días distintos
+  (0466/0727, ahí el Subtotal de Zoho sería el malo). Detalle en la propuesta.

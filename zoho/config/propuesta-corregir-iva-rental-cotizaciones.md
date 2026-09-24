@@ -177,3 +177,27 @@ Constuc_SUM_Subtotal) contra Total con descuentos + Seguro.
 
 (Diferencias < 1.000 son redondeos y se ignoraron.) Todas vienen del
 "Subtotal" de línea que escribe Creator → refuerza la solución de fondo.
+
+### Causas por cotización (análisis de líneas)
+
+En todas, el "Subtotal"/"Total Rental" de línea (calculado por Creator) no
+coincide con los datos de la línea en el CRM. Patrones:
+
+1. **No multiplica por los días** — Subtotal = precio de 1 día − descuento
+   del período completo → negativo o casi 0.
+   Ej. COT-REN-2900: 42.400 (1 día) − 127.200 (desc. 30 días) = −84.800.
+   Casos: 2900, 3027, 2229, 2438, 1610 (2 generadores), 2285 (bomba),
+   1050 (6 torres: 175.704 − 351.408), 3356 (80.454 − 72.408,6 = 8.045,4).
+   3782: precio de 1 día con 15% desc (76.517 × 0,85 = 65.039).
+2. **Cantidad distinta** — COT-REN-1655: Creator calculó 3 placas
+   (2.494.800 × 0,9), el CRM tiene 4 (3.326.400 − 10%). Cerrada Ganada:
+   confirmar cuál es la cantidad real.
+3. **Precio distinto** — COT-REN-1390: Creator usó 72.408,6/día, el CRM
+   73.000/día (BW-120). Dif. 15.081.
+4. **Días distintos** — COT-REN-0466 y 0727: en el CRM esas líneas dicen
+   1 día, Creator calculó 5 días (como el resto). Aquí el que estaría mal
+   es el Subtotal de Zoho, no el de Rental.
+5. **Descuento no restado** — COT-REN-4471 (ya corregida).
+
+No se puede ver el código de Creator desde el CRM; el patrón 1 apunta a
+un cálculo en Creator que en algún caso no multiplica por "Cant. Días".
