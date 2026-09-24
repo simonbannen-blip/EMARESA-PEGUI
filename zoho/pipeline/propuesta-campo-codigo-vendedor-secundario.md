@@ -14,6 +14,26 @@ Avance:
   Selección, Usuario Rechaza Aprobación). **Rediseño aprobado por Simón
   (2026-09-24)**: el vendedor secundario se elige solo en la Oportunidad
   y baja automáticamente a sus Cotizaciones (ver Diseño).
+- ✅ Paso 4 (corregido): campos creados en Cotizaciones (2, texto) y OV
+  (1); nombres de API confirmados por Simón.
+- ✅ Paso 5: Función 1 `vendedorSecundarioOportunidad` creada y guarda
+  sin errores. Primera ejecución manual no buscó código porque el
+  Vendedor Secundario no estaba guardado aún en la Oportunidad
+  (260921-OP-CONST-200-000177). Reprobando.
+- Decisiones de Simón sobre el campo `Vendedor Secundario`
+  (Oportunidades):
+  - **Aplica solo a Construcción.** El filtro de usuarios por Rol queda
+    en: Vendedores Generalistas, Vendedor Fuerza, Vendedores
+    Geosintéticos, Vendedores Equipos Construcción, Vendedores
+    Repuestos.
+  - "Permitir accesibilidad de registros" activado con permiso
+    **Lectura/Escritura** (se cambió desde "Acceso total" para que el
+    secundario pueda trabajar la Oportunidad pero no borrarla).
+- Observación: al elegir el vendedor, Zoho muestra una ventana "Campos
+  relacionados" que propone el código tomado de la **ficha del
+  usuario** (no por UN). No viene de las propiedades del campo. La
+  función lo sobrescribe con el código de Usuarios por UN; queda
+  pendiente ubicar su origen y desactivarla para no confundir.
 
 ## Qué se pidió y para qué
 

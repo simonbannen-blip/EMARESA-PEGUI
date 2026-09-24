@@ -1224,3 +1224,9 @@ ver regla de sincronización en `CLAUDE.md`.
   y baja solo a sus Cotizaciones (en Cotización "Vendedor Secundario"
   pasa a ser texto de solo lectura). Guía y funciones actualizadas en
   `zoho/pipeline/propuesta-campo-codigo-vendedor-secundario.md`.
+- Avance Sandbox vendedor secundario: campos creados en los 3 módulos,
+  Función 1 creada. Simón decidió: aplica **solo a Construcción**
+  (filtro por roles de Construcción) y accesibilidad del registro para
+  el secundario en **Lectura/Escritura** (antes Acceso total). Pendiente
+  ubicar la ventana "Campos relacionados" que propone el código de la
+  ficha del usuario.
