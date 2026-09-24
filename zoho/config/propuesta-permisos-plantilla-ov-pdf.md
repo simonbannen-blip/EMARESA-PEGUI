@@ -94,3 +94,21 @@ Si "OV prueba" incluye alguna de esas columnas, eso explica que solo a los
 administradores les funcione. Solución propuesta: quitar esas 2 columnas de
 la plantilla (sin tocar permisos). La otra opción es cambiarlas a "solo
 lectura" para los perfiles que exportan.
+
+## Comparación Cotizaciones vs Órdenes de venta (2026-09-24)
+
+Simón aclara que el PDF de Cotizaciones sí funciona para esos perfiles.
+Diferencias encontradas (solo lectura):
+
+| | Cotizaciones | Órdenes de venta |
+|---|---|---|
+| Acceso al módulo (Asistente / Vend. Distribución) | Sí | Sí |
+| "Producto Confirmado" oculto en tabla de productos | Sí | Sí (no es la causa) |
+| Campo **Bodega** en tabla de productos (oculto a todos salvo Admin, apunta a otro módulo) | No existe | **Sí** |
+| Quién crea el registro | El vendedor | La integración ERP (usuario "Infraestructura Emaresa") |
+| Aprobadores (campos de usuario) y proceso de aprobación | — | Sí |
+
+Candidatos a revisar: (1) columna Bodega en la plantilla; (2) permisos
+extra del módulo Órdenes de venta en el perfil (Exportar/Imprimir),
+comparados con Cotizaciones; (3) prueba con la plantilla pública para
+separar plantilla vs. permisos.

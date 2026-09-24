@@ -1148,3 +1148,9 @@ ver regla de sincronización en `CLAUDE.md`.
   y **Producto Confirmado** de la tabla de productos de la OV están ocultos
   para todos los perfiles salvo Administrator. Si la plantilla "OV prueba"
   los usa, bloquean el PDF. Propuse a Simón sacarlos de la plantilla.
+- Simón señaló que el PDF de Cotizaciones sí funciona. Comparé ambos
+  módulos: la diferencia clave es el campo **Bodega** en la tabla de
+  productos de la OV (no existe en Cotizaciones; oculto a todos salvo Admin).
+  "Producto Confirmado" está oculto en ambos, así que se descarta. También
+  sugerí comparar los permisos extra (Exportar/Imprimir) de ambos módulos
+  en el perfil. Tabla en `zoho/config/propuesta-permisos-plantilla-ov-pdf.md`.
