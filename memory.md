@@ -1135,3 +1135,14 @@ ver regla de sincronización en `CLAUDE.md`.
   solo "Código de Vendedor Secundario" (texto), copiado desde la
   Cotización; el campo de lista de usuarios queda solo en Oportunidades y
   Cotizaciones. Total: 5 campos. Pendiente OK para crearlos.
+- Simón pidió el paso a paso para armarlo en **Sandbox**, probar y pasar
+  a Producción. Revisando datos (solo lectura) encontré que el código de
+  vendedor **depende de la UN** y vive en **Usuarios por UN**
+  (`Vendedores_por_UN`), no en la ficha del usuario (esa está incompleta
+  y con errores). Rediseñé: el código secundario se busca por vendedor +
+  UN del registro. Reescribí
+  `zoho/pipeline/propuesta-campo-codigo-vendedor-secundario.md` como guía
+  completa: campos, 3 funciones Deluge, 5 reglas de flujo, 8 pruebas y
+  despliegue a Producción. Pendiente: completar códigos faltantes en
+  Usuarios por UN (Rental, Inamar Vapor, Maktotal casi sin códigos) y
+  confirmar si aplica a Rental.
