@@ -1163,3 +1163,11 @@ ver regla de sincronización en `CLAUDE.md`.
   y Órdenes de venta ninguna. Propuse replicar en OV las reglas hacia roles
   Asistente/Encargado, probando primero con una. Tabla completa en
   `zoho/config/propuesta-permisos-plantilla-ov-pdf.md`.
+- Simón reportó que la Cotización Rental suma mal (COT-REN-4471). Verifiqué
+  en el CRM (solo lectura): `Constuc_SUM_Subtotal` (Rental_SUM_Subtotal)
+  suma "Total Rental" de los ítems, que es el monto **sin descuento**
+  (5.404.900 vs 4.618.165 correcto). De ahí salen mal `Rental_IVA`
+  (1.026.931 en vez de 877.451) y el total del PDF (6.431.831 en vez de
+  5.495.616). Propuse basar IVA y total en "Subtotal General con
+  Descuento" y corregir la columna "Valor Total" del PDF. Detalle en
+  `zoho/config/propuesta-corregir-iva-rental-cotizaciones.md`.
