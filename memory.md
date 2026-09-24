@@ -1122,3 +1122,11 @@ ver regla de sincronización en `CLAUDE.md`.
   la conversión Cotización → OV lo copia sola (si no, segunda regla).
 - Pendiente: OK de Simón para crear los campos, y respuesta a si debe ser
   texto libre o lista de usuarios.
+- Simón explicó el porqué: el Propietario de la Cotización es un vendedor,
+  pero muchas veces la termina otro — ese es el vendedor secundario.
+  Ajusté la propuesta: como el secundario se conoce recién en la
+  Cotización, el campo debe poder llenarse/cambiarse ahí. Encontré que
+  los Usuarios ya tienen "Código de Vendedor", así que recomiendo un campo
+  **Vendedor Secundario** (lista de usuarios) + **Código de Vendedor
+  Secundario** que se llena solo con el código del usuario elegido, en
+  los 3 módulos. Pendiente OK de Simón.

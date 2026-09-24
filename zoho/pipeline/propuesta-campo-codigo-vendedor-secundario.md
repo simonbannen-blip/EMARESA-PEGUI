@@ -1,12 +1,78 @@
 # Propuesta: campo "Código de Vendedor Secundario" (Oportunidad → Cotización → Orden de venta)
 
-## Estado: PROPUESTA — esperando OK de Simón para crear los campos
+## Estado: PROPUESTA — esperando OK de Simón para crear los campos (diseño recomendado: lista de usuarios + código automático)
 
 ## Qué se pidió
 
 Simón quiere un campo nuevo en la **Oportunidad** llamado **Código de
 Vendedor Secundario**, y que ese dato viaje a la **Cotización** y a la
 **Orden de venta**.
+
+## Para qué es (contexto que dio Simón)
+
+El **Propietario de la Cotización** es un vendedor, pero muchas veces la
+cotización la **termina otro vendedor**. Ese otro vendedor es el
+"vendedor secundario", y su código tiene que quedar registrado en la
+Cotización y llegar a la Orden de venta.
+
+Consecuencia para el diseño: el vendedor secundario muchas veces se
+conoce **recién en la etapa de Cotización** (no al abrir la
+Oportunidad). Por eso el campo tiene que poder **completarse o cambiarse
+directo en la Cotización**, no solo copiarse desde la Oportunidad.
+
+## Diseño recomendado (ajustado al contexto)
+
+Encontré que cada **Usuario** del CRM ya tiene su propio campo
+**"Código de Vendedor"** (`C_digo_de_Vendedor` en Usuarios). Entonces lo
+más seguro es que el vendedor **elija a la persona** de una lista, y el
+código se complete solo (evita errores de tipeo en el código):
+
+| Campo | Tipo | Módulos | Quién lo llena |
+|---|---|---|---|
+| **Vendedor Secundario** | Búsqueda de usuario | Oportunidades, Cotizaciones, Órdenes de venta | El vendedor, eligiendo de la lista |
+| **Código de Vendedor Secundario** | Texto (solo lectura en el diseño) | Oportunidades, Cotizaciones, Órdenes de venta | Automático, desde el Código de Vendedor del usuario elegido |
+
+Reglas:
+
+1. **Al elegir/cambiar el Vendedor Secundario** (en Oportunidad o
+   Cotización) → se completa solo el Código de Vendedor Secundario con el
+   código de ese usuario.
+2. **Al crear la Cotización desde la Oportunidad** → si la Oportunidad
+   ya tenía vendedor secundario, se copia. Si no, se elige en la
+   Cotización (que es el caso más común, según lo que contó Simón).
+3. **Al crear la Orden de venta** → se copian ambos campos desde la
+   Cotización.
+
+Función Deluge para la regla 1 en Cotizaciones (al crear o editar,
+cuando cambia "Vendedor Secundario"; argumento `quoteId`):
+
+```deluge
+quote = zoho.crm.getRecordById("Quotes", quoteId);
+vend = quote.get("Vendedor_Secundario");
+codigo = "";
+if(vend == null && quote.get("Deal_Name") != null)
+{
+	// sin vendedor elegido en la Cotización: tomarlo de la Oportunidad
+	dealRec = zoho.crm.getRecordById("Deals", quote.get("Deal_Name").get("id"));
+	vend = dealRec.get("Vendedor_Secundario");
+}
+mapa = Map();
+if(vend != null)
+{
+	user = zoho.crm.getRecordById("users", vend.get("id"));
+	codigo = ifnull(user.get("users").get(0).get("C_digo_de_Vendedor"), "");
+	mapa.put("Vendedor_Secundario", vend.get("id"));
+}
+mapa.put("C_digo_de_Vendedor_Secundario", codigo);
+zoho.crm.updateRecord("Quotes", quoteId, mapa);
+```
+
+(La misma lógica, cambiando el módulo, sirve para Oportunidades y para
+Órdenes de venta tomando el dato desde `Quote_Name`.)
+
+> La versión original de esta propuesta (solo campo de texto libre,
+> copiado desde la Oportunidad al crear) queda abajo como alternativa
+> más simple.
 
 ## Lo que hay hoy en el CRM (revisado en vivo, solo lectura, 2026-09-24)
 
@@ -20,7 +86,7 @@ Vendedor Secundario**, y que ese dato viaje a la **Cotización** y a la
 **No existe** ningún campo de vendedor secundario en ninguno de los tres
 módulos — hay que crearlo en los tres.
 
-## Paso 1 — Crear el campo en los 3 módulos
+## Alternativa simple: Paso 1 — Crear el campo en los 3 módulos
 
 Mismo nombre y mismo tipo en los tres (así Zoho le asigna el mismo
 API name en todos, lo que facilita el traspaso):
