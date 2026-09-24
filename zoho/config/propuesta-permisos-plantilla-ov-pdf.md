@@ -126,3 +126,39 @@ Próximos pasos (en Zoho, pantalla de Simón):
    de Cotizaciones vs Órdenes de venta.
 3. Ver si algún perfil no administrador (p. ej. Gerente) sí puede exportar
    una OV, para aislar el perfil.
+
+## Causa encontrada: reglas de uso compartido (2026-09-24)
+
+Cotizaciones y Órdenes de venta tienen el mismo acceso por defecto
+(**Privado**). La diferencia está en las **Reglas de uso compartido**:
+Cotizaciones tiene 21 reglas activas y Órdenes de venta **ninguna**.
+
+Reglas de Cotizaciones (nombres truncados en la captura de Simón):
+
+| Regla | Desde | Con | Permiso |
+|---|---|---|---|
+| Compartido para Apro… | Vend Industri… (Grupo) | Aprobadores … (Grupo) | Lectura/escritura |
+| R:CEO a R:Sub Gte Ve… | CEO (Rol) | Sub Gerente … (Rol) | Leer/escribir/eliminar |
+| R:CEO a G:Aprobador… | CEO (Rol) | Aprobadores … (Grupo) | Lectura/escritura |
+| N:Caldereria a G:Cald… | Criterios | Vapor Calder… (Grupo) | Lectura/escritura |
+| N:Izaje a R:PM Izaje | Criterios | Encargado d… (Rol) | Lectura/escritura |
+| N:Equipos Procesos a … | Criterios | Product Man… (Rol) | Lectura/escritura |
+| IyF - G:Vend IyF a R:Jef… | Vend Industri… (Grupo) | IyF - Jefe Ad… (Rol) | Lectura/escritura |
+| Const R:Vend Geosinté… | Vendedores … (Rol) | Asistente de … (Rol) | Lectura/escritura |
+| Const -R:Vend General… | Vendedores … (Rol) | Asistente de … (Rol) | Lectura/escritura |
+| Const - R:Vend Fuerza … | Vendedor Fu… (Rol) | Asistente de … (Rol) | Lectura/escritura |
+| Const - R:KAM Mineria … | KAM Mineria (Rol) | Asistente de … (Rol) | Lectura/escritura |
+| Const - R:Vend Equipo… | Vendedores … (Rol) | Asistente de … (Rol) | Lectura/escritura |
+| Const - R:Vend Repues… | Vendedores … (Rol) | Encargado d… (Rol) | Lectura/escritura |
+| IyF G:Vend IyF a R:Asis… | Vend Industri… (Grupo) | IyF - Asistent… (Rol) | Lectura/escritura |
+| R:CEO a G:Aprobador… | CEO (Rol) | Aprobadores … (Grupo) | Leer/escribir/eliminar |
+| R:Ceo a R:Encargado … | CEO (Rol) | Encargado d… (Rol) | Leer/escribir/eliminar |
+| G:Vend Rental a R:Enc… | Vend Rental (Grupo) | Encargado d… (Rol) | Leer/escribir/eliminar |
+| R:PMEV a R:Cubicador | Product Man… (Rol) | Cubicador (Rol) | Lectura/escritura |
+| R:Jefe de Presupuesto … | Jefe de Presu… (Rol) | Ingeniero de … (Rol) | Lectura/escritura |
+| N:Izaje a R:Asist | Criterios | Asistente de … (Rol) | Leer/escribir/eliminar (superiores incluidos) |
+
+**Propuesta:** crear en Órdenes de venta las mismas reglas que comparten
+con roles de **Asistente** y **Encargado** (las que usan los perfiles
+Asistente y Vendedor Distribución). Empezar por una sola regla, probar el
+PDF y después replicar el resto. Lo aplica Simón desde Zoho.
