@@ -1192,3 +1192,6 @@ ver regla de sincronización en `CLAUDE.md`.
   reescribió las líneas con Subtotal/Total Rental sin descuento (y borró el
   Código de Vendedor). La falla está en Creator; hay que revisar esa
   cotización ahí (ID Creator 4389062000011871288).
+- Con OK de Simón corregí COT-REN-4471 en el CRM: Subtotal y Total Rental
+  de la línea 1 a 4.458.165 (sin disparar automatizaciones). Quedó IVA
+  877.451 y total 5.495.616. El Código de Vendedor sigue vacío (era 426).
