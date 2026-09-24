@@ -1187,3 +1187,8 @@ ver regla de sincronización en `CLAUDE.md`.
   "Total con descuentos" + una nueva agregación de "Valor Total Seguro",
   para no depender de Creator. Pendiente: Simón verifica si "Total con
   descuentos" aparece en la lista de la agregación.
+- Revisé el historial de COT-REN-4471: mismo flujo de aprobación que otras
+  que quedaron bien; nadie la editó en el CRM. Al aprobarse, Creator
+  reescribió las líneas con Subtotal/Total Rental sin descuento (y borró el
+  Código de Vendedor). La falla está en Creator; hay que revisar esa
+  cotización ahí (ID Creator 4389062000011871288).

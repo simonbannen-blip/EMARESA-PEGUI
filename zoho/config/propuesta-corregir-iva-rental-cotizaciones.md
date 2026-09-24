@@ -118,3 +118,23 @@ Propuesta para que no dependa de Creator:
 
 Hallazgo: las diferencias en 4472, 4455, 4451, etc. son el **seguro**
 (ej. 4472: +39.000 = Valor Total Seguro), no errores.
+
+## Por qué falló COT-REN-4471 en particular (historial del registro)
+
+- 09:33:53 — Creator crea la cotización vía API (usuario Infraestructura).
+- 09:35:14 — Katherine Antich agrega nota "DESCUENTO DE 15% PARA CERRAR UN
+  ARRIENDO DE 3 A 6 MESES".
+- 09:42:33 — Paulette Quintana aprueba (proceso "UN Rental - Arriendo - 1°
+  Aprobación Dto por Item").
+- 09:42:34-36 — funciones "Ejecución Proceso de Aprobación descuento item 1",
+  "cotizacionAprobada", "SB Enviar Fase Cotizacion a Creator".
+- 09:42:40 — Creator reescribe las líneas: Descuento 786.735 OK, pero
+  Subtotal y Total Rental = 5.244.900 (sin descuento).
+- 09:42:41 — "Enviar Sub Fase de Cotizacion a Creator"; además se borró el
+  Código de Vendedor (426 → vacío).
+
+Nadie editó la cotización en el CRM entre la creación y la aprobación. Otras
+cotizaciones con el mismo flujo de aprobación el mismo día (4448, 4459,
+4460, 4465) quedaron bien → el error ocurrió dentro de Creator al reenviar
+las líneas de esta cotización (ID Creator 4389062000011871288). Hay que
+revisarlo en Creator.
