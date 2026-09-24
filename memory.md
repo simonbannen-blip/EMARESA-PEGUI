@@ -1144,3 +1144,7 @@ ver regla de sincronización en `CLAUDE.md`.
   Cristian Jara) no quedó guardado ninguno de los 3 permisos. Se lo indiqué
   a Simón para que lo complete. Detalle en
   `zoho/config/propuesta-permisos-plantilla-ov-pdf.md`.
+- Al Asistente le seguía fallando el PDF. Encontré que los campos **Bodega**
+  y **Producto Confirmado** de la tabla de productos de la OV están ocultos
+  para todos los perfiles salvo Administrator. Si la plantilla "OV prueba"
+  los usa, bloquean el PDF. Propuse a Simón sacarlos de la plantilla.

@@ -78,3 +78,19 @@ Vendedor Distribución Repuestos jardín y maquinari). Estado real en el CRM:
 Nota: la tabla de productos de la OV tiene el campo "Catálogo de precios"
 (Price_Book_Name), que apunta al módulo Catálogos de precios. Por eso ese
 permiso es el más probable de bloquear el PDF.
+
+## Nueva causa probable (2026-09-24)
+
+Con Catálogos de precios y Descuentos por UN ya aplicados, al perfil
+Asistente le seguía fallando. "Detalle Listas de Precios" no aparece en los
+perfiles porque es un módulo oculto, y la OV no lo usa: se descarta.
+
+En la tabla de productos de la OV (Artículos solicitados) hay 2 campos
+**ocultos para todos los perfiles salvo Administrator**:
+- **Bodega**
+- **Producto Confirmado**
+
+Si "OV prueba" incluye alguna de esas columnas, eso explica que solo a los
+administradores les funcione. Solución propuesta: quitar esas 2 columnas de
+la plantilla (sin tocar permisos). La otra opción es cambiarlas a "solo
+lectura" para los perfiles que exportan.
