@@ -1130,3 +1130,8 @@ ver regla de sincronización en `CLAUDE.md`.
   **Vendedor Secundario** (lista de usuarios) + **Código de Vendedor
   Secundario** que se llena solo con el código del usuario elegido, en
   los 3 módulos. Pendiente OK de Simón.
+- Simón aclaró: en la **Orden de venta tiene que llegar el código** del
+  vendedor secundario, **no el nombre**. Ajusté la propuesta: la OV lleva
+  solo "Código de Vendedor Secundario" (texto), copiado desde la
+  Cotización; el campo de lista de usuarios queda solo en Oportunidades y
+  Cotizaciones. Total: 5 campos. Pendiente OK para crearlos.

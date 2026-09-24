@@ -29,7 +29,7 @@ código se complete solo (evita errores de tipeo en el código):
 
 | Campo | Tipo | Módulos | Quién lo llena |
 |---|---|---|---|
-| **Vendedor Secundario** | Búsqueda de usuario | Oportunidades, Cotizaciones, Órdenes de venta | El vendedor, eligiendo de la lista |
+| **Vendedor Secundario** | Búsqueda de usuario | Oportunidades, Cotizaciones (**no** en Órdenes de venta) | El vendedor, eligiendo de la lista |
 | **Código de Vendedor Secundario** | Texto (solo lectura en el diseño) | Oportunidades, Cotizaciones, Órdenes de venta | Automático, desde el Código de Vendedor del usuario elegido |
 
 Reglas:
@@ -40,8 +40,14 @@ Reglas:
 2. **Al crear la Cotización desde la Oportunidad** → si la Oportunidad
    ya tenía vendedor secundario, se copia. Si no, se elige en la
    Cotización (que es el caso más común, según lo que contó Simón).
-3. **Al crear la Orden de venta** → se copian ambos campos desde la
-   Cotización.
+3. **Al crear la Orden de venta** → se copia **solo el Código de
+   Vendedor Secundario** desde la Cotización. **Requisito de Simón
+   (2026-09-24): en la Orden de venta tiene que llegar el código del
+   vendedor, no el nombre.** Por eso la OV no lleva el campo "Vendedor
+   Secundario" (nombre), solo el código — igual que el "Código del
+   Vendedor" que ya tiene la OV hoy. El código se copia tal cual desde la
+   Cotización (ya viene resuelto ahí), así no depende de volver a buscar
+   al usuario.
 
 Función Deluge para la regla 1 en Cotizaciones (al crear o editar,
 cuando cambia "Vendedor Secundario"; argumento `quoteId`):
@@ -67,8 +73,10 @@ mapa.put("C_digo_de_Vendedor_Secundario", codigo);
 zoho.crm.updateRecord("Quotes", quoteId, mapa);
 ```
 
-(La misma lógica, cambiando el módulo, sirve para Oportunidades y para
-Órdenes de venta tomando el dato desde `Quote_Name`.)
+(La misma lógica, cambiando el módulo, sirve para Oportunidades. Para
+Órdenes de venta se usa la función del Paso 3 de abajo, que copia solo
+el código desde la Cotización — `Quote_Name` — con respaldo desde la
+Oportunidad.)
 
 > La versión original de esta propuesta (solo campo de texto libre,
 > copiado desde la Oportunidad al crear) queda abajo como alternativa
