@@ -148,3 +148,32 @@ Actualizado vía API (sin disparar workflows/aprobaciones/blueprint), línea 1
 Resultado verificado: Constuc_SUM_Subtotal 4.618.165 · Rental_IVA 877.451 ·
 Rental Total con IVA 5.495.616. Fase sigue "Cotización Aprobada".
 Pendiente: Código de Vendedor sigue vacío (antes 426).
+
+## Barrido de otras cotizaciones Rental (2026-09-24)
+
+Revisé ~2.000 líneas con descuento de COT-REN creadas entre 2026-05-05 y
+2026-09-24, comparando el "Subtotal" de línea (lo que suma
+Constuc_SUM_Subtotal) contra Total con descuentos + Seguro.
+
+**Igual a 4471 (descuento no restado)**: ninguna otra.
+
+**Otras con el subtotal Rental mal (patrones distintos)**:
+
+| Cotización | Fase | Subtotal Zoho | Constuc_SUM_Subtotal | Problema |
+|---|---|---|---|---|
+| COT-REN-3782 | Pendiente de Aprobación | 3.230.770,5 | 1.344.626 | línea con Subtotal 65.039 (muy bajo) |
+| COT-REN-3356 | Creada | 2.341.211,4 | 8.045,4 | Subtotal de línea 8.045 |
+| COT-REN-3027 | Cotización Aprobada | 1.896.223 | −775.083 | Subtotal de línea negativo |
+| COT-REN-2900 | Cotización Aprobada | 1.144.800 | −84.800 | negativo |
+| COT-REN-2438 | Cotización Rechazada | 2.886.041 | 620.503 | negativo en una línea |
+| COT-REN-2285 | Creada | 6.583.984 | 2.232.119 | negativo en una línea |
+| COT-REN-2229 | Cotización Aprobada | 561.943,5 | −77.129,5 | negativo |
+| COT-REN-1655 | Cerrada Ganada | 2.993.760 | 2.245.320 | descuento restado 2 veces (−748.440) |
+| COT-REN-1610 | Cotización Aprobada | 2.447.479,5 | 864.756,5 | 2 líneas negativas |
+| COT-REN-1390 | Creada | 3.558.990 | 3.543.909 | −15.081 |
+| COT-REN-1050 | Enviada | 3.162.672 | −175.704 | negativo |
+| COT-REN-0727 | Creada | 100.250 | 181.250 | +81.000 (sobre-valorada) |
+| COT-REN-0466 | Creada | 2.490.198,8 | 2.666.498 | +176.299 (sobre-valorada) |
+
+(Diferencias < 1.000 son redondeos y se ignoraron.) Todas vienen del
+"Subtotal" de línea que escribe Creator → refuerza la solución de fondo.

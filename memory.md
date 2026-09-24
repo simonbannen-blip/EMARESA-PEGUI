@@ -1195,3 +1195,7 @@ ver regla de sincronización en `CLAUDE.md`.
 - Con OK de Simón corregí COT-REN-4471 en el CRM: Subtotal y Total Rental
   de la línea 1 a 4.458.165 (sin disparar automatizaciones). Quedó IVA
   877.451 y total 5.495.616. El Código de Vendedor sigue vacío (era 426).
+- Barrido de ~2.000 líneas COT-REN con descuento (may–sep): ningún otro
+  caso igual a 4471, pero 13 cotizaciones con el subtotal Rental mal por
+  otros patrones (líneas con Subtotal negativo o muy bajo, descuento
+  restado 2 veces en 1655). Tabla en la propuesta. No corregí nada: espera OK.
