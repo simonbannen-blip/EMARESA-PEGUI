@@ -1107,3 +1107,18 @@ ver regla de sincronización en `CLAUDE.md`.
   Le pasé los pasos para activar "Ver" en Catálogos de precios, Detalle
   Listas de Precios y Descuentos por UN en esos dos perfiles (lo hace él
   desde Zoho). Pendiente confirmar que el PDF funciona.
+
+## 2026-09-24
+
+- Simón pidió un campo **Código de Vendedor Secundario** en Oportunidades
+  que se traspase a Cotizaciones y Órdenes de venta.
+- Revisé en vivo (solo lectura): no existe ningún campo de vendedor
+  secundario en los tres módulos (sí existe "Código de Vendedor" en
+  Oportunidades/Cotizaciones y "Código del Vendedor" en Órdenes de venta).
+- Dejé la propuesta en
+  `zoho/pipeline/propuesta-campo-codigo-vendedor-secundario.md`: crear el
+  campo de texto con la misma etiqueta en los 3 módulos, regla de flujo
+  con función Deluge para copiarlo Oportunidad → Cotización, y probar si
+  la conversión Cotización → OV lo copia sola (si no, segunda regla).
+- Pendiente: OK de Simón para crear los campos, y respuesta a si debe ser
+  texto libre o lista de usuarios.
