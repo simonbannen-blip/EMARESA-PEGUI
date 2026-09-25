@@ -20,6 +20,10 @@ Avance:
   sin errores. Primera ejecución manual no buscó código porque el
   Vendedor Secundario no estaba guardado aún en la Oportunidad
   (260921-OP-CONST-200-000177). Reprobando.
+- ✅ Regla 3 "VS Cotización - crear" funcionando en Sandbox
+  (2026-09-25): al generar Cotización trae Cristian Silva / 289. Hubo
+  que (1) agregar `.toLong()` a los IDs y (2) mapear `quoteId` a
+  "ID de registro".
 - Decisiones de Simón sobre el campo `Vendedor Secundario`
   (Oportunidades):
   - **Aplica solo a Construcción.** El filtro de usuarios por Rol queda
@@ -222,7 +226,10 @@ if(codigo != "")
 ### Parte D — Reglas de flujo
 
 Configuración → Automatización → **Reglas de flujo de trabajo**.
-Acción: **Función** → mapear el argumento al ID del registro.
+Acción: **Función** → mapear el argumento con `#` → módulo → **"ID de registro"**
+(⚠️ NO usar "ID de Cotización" u otros parecidos: quedan como
+`${Campo no admitido}` y la función falla con "Unable to cast TEXT into
+Long". Pasó en el Sandbox el 2026-09-24/25).
 
 | # | Módulo | Nombre | Cuándo | Condición | Función |
 |---|---|---|---|---|---|

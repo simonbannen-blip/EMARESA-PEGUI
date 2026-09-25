@@ -1235,3 +1235,11 @@ ver regla de sincronización en `CLAUDE.md`.
   A mano funcionaba porque Zoho lo convierte. Corregido agregando
   `.toLong()` a los IDs en las 3 funciones (guía actualizada); Simón
   aplica el cambio en el Sandbox y reprueba.
+
+## 2026-09-25
+
+- Vendedor secundario (Sandbox): la regla "VS Cotización - crear" seguía
+  fallando porque el argumento estaba mapeado a "ID de Cotización", que
+  Zoho no reconoce (`${Campo no admitido}`). Mapeado a **"ID de
+  registro"** → funciona: la Cotización nueva trae Cristian Silva / 289.
+  Siguen las reglas de Oportunidades y OV.
