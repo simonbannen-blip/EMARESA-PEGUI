@@ -1,6 +1,6 @@
 # Vendedor Secundario (Oportunidad → Cotización → Orden de venta)
 
-## Estado: EN ARMADO EN SANDBOX por Simón (guiado paso a paso)
+## Estado: PROBADO OK EN SANDBOX (2026-09-25) — falta pasar a Producción y que el proveedor lo agregue al JSON de OV → ERP (ver caso-proveedor-vendedor-secundario-ov-erp.md)
 
 Avance:
 - ✅ Paso 1: entró al Sandbox.
