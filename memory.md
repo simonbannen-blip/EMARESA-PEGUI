@@ -1250,3 +1250,7 @@ ver regla de sincronización en `CLAUDE.md`.
   Construcción con código, sacados de Usuarios por UN) y el código se
   llena solo. Ajusté Función 1 y 2 (en la guía). Detecté códigos
   duplicados: 376 (Nuñez / Vasquez Villagra) y 502 (Corvalán / Espinoza).
+- Simón simplificó: solo 2 reglas (VS Cotización en "Crear o editar" y
+  VS OV - crear). El dato va Oportunidad → Cotización → OV, sin volver a
+  la Oportunidad. La Función 1 queda sin uso; la Función 2 v4 busca ella
+  misma el código en Usuarios por UN cuando lo toma de la Oportunidad.
