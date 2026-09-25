@@ -1254,3 +1254,9 @@ ver regla de sincronización en `CLAUDE.md`.
   VS OV - crear). El dato va Oportunidad → Cotización → OV, sin volver a
   la Oportunidad. La Función 1 queda sin uso; la Función 2 v4 busca ella
   misma el código en Usuarios por UN cuando lo toma de la Oportunidad.
+- Simón confirmó que **todas las pruebas en Sandbox salieron bien**
+  (lista en Cotización, desde Oportunidad, conversión a OV, aprobación
+  Creator). Preparé el caso para el proveedor de la integración ERP:
+  `zoho/pipeline/caso-proveedor-vendedor-secundario-ov-erp.md` (agregar
+  `C_digo_de_Vendedor_Secundario` de Órdenes de venta al JSON hacia el
+  ERP). Pendiente: pasar a Producción.
