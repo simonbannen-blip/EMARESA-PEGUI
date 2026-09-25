@@ -39,6 +39,68 @@ Avance:
   función lo sobrescribe con el código de Usuarios por UN; queda
   pendiente ubicar su origen y desactivarla para no confundir.
 
+## CAMBIO v4 (2026-09-25): solo 2 reglas, sin Función 1
+
+Decisión de Simón: el dato va en una sola dirección (Oportunidad →
+Cotización → OV). No hace falta propagar desde la Oportunidad a
+Cotizaciones ya existentes ni devolver nada a la Oportunidad. Si el
+secundario cambia después, el vendedor lo elige en la lista de la
+Cotización.
+
+Configuración final:
+
+| Regla | Módulo | Cuándo | Función | Argumento |
+|---|---|---|---|---|
+| VS Cotización | Cotizaciones | **Crear o editar** + repetir en cada edición | vendedorSecundarioCotizacion | quoteId = ID de registro |
+| VS OV - crear | Órdenes de venta | Crear | vendedorSecundarioOV | soId = ID de registro |
+
+- Función 1 (`vendedorSecundarioOportunidad`) queda sin uso (se puede
+  borrar). El "Código de Vendedor Secundario" de la Oportunidad solo lo
+  llena la ventana nativa de Zoho (código de la ficha del usuario); no
+  se usa para nada.
+- Función 2 v4: si la Cotización no tiene vendedor elegido y la
+  Oportunidad sí, busca el código en Usuarios por UN (UN de la
+  Cotización) y selecciona "Nombre - código" en la lista.
+
+### Función 2 v4: `vendedorSecundarioCotizacion`
+
+```deluge
+quote = zoho.crm.getRecordById("Quotes", quoteId.toLong());
+vs = ifnull(quote.get("Vendedor_Secundario"), "");
+mapa = Map();
+// Sin vendedor elegido en la Cotización: tomarlo de la Oportunidad
+if(vs == "" && quote.get("Deal_Name") != null && quote.get("UN") != null)
+{
+	deal = zoho.crm.getRecordById("Deals", quote.get("Deal_Name").get("id").toLong());
+	vend = deal.get("Vendedor_Secundario");
+	if(vend != null)
+	{
+		codDeal = "";
+		filas = zoho.crm.searchRecords("Vendedores_por_UN", "(UN:equals:" + quote.get("UN").get("id") + ")");
+		for each fila in filas
+		{
+			if(fila.get("Vendedor") != null && fila.get("Vendedor").get("id").toString() == vend.get("id").toString() && fila.get("Activo") == true && ifnull(fila.get("C_digo_de_Vendedor"), "") != "")
+			{
+				codDeal = fila.get("C_digo_de_Vendedor");
+			}
+		}
+		if(codDeal != "")
+		{
+			vs = ifnull(vend.get("name"), "") + " - " + codDeal;
+			mapa.put("Vendedor_Secundario", vs);
+		}
+	}
+}
+// El código es lo que viene después de " - "
+codigo = "";
+if(vs.contains(" - "))
+{
+	codigo = vs.getSuffix(" - ").trim();
+}
+mapa.put("C_digo_de_Vendedor_Secundario", codigo);
+zoho.crm.updateRecord("Quotes", quoteId.toLong(), mapa);
+```
+
 ## CAMBIO v3 (2026-09-25): lista desplegable en Cotizaciones
 
 **Motivo (Simón):** hay vendedores que trabajan solo con la Cotización
