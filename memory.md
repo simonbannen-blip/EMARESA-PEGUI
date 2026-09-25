@@ -1243,3 +1243,10 @@ ver regla de sincronización en `CLAUDE.md`.
   Zoho no reconoce (`${Campo no admitido}`). Mapeado a **"ID de
   registro"** → funciona: la Cotización nueva trae Cristian Silva / 289.
   Siguen las reglas de Oportunidades y OV.
+- Simón planteó que algunos vendedores trabajan solo con la Cotización
+  que viene de Creator (sin Oportunidad) y necesitan elegir el vendedor
+  secundario ahí. Diseño v3: en Cotizaciones "Vendedor Secundario" pasa a
+  **lista de selección** "Nombre - código" (15 vendedores de
+  Construcción con código, sacados de Usuarios por UN) y el código se
+  llena solo. Ajusté Función 1 y 2 (en la guía). Detecté códigos
+  duplicados: 376 (Nuñez / Vasquez Villagra) y 502 (Corvalán / Espinoza).
