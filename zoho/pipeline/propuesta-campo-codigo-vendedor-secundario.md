@@ -39,6 +39,131 @@ Avance:
   función lo sobrescribe con el código de Usuarios por UN; queda
   pendiente ubicar su origen y desactivarla para no confundir.
 
+## CAMBIO v3 (2026-09-25): lista desplegable en Cotizaciones
+
+**Motivo (Simón):** hay vendedores que trabajan solo con la Cotización
+que viene desde Creator (sin pasar por la Oportunidad). Necesitan
+elegir el vendedor secundario **en la Cotización**. No se puede usar
+búsqueda de usuario (tope de 5 en Cotizaciones), así que se usa una
+**Lista de selección** con "Nombre - código"; el código se rellena solo
+leyendo lo que viene después del " - ".
+
+Dato: en Producción, de 2.000 cotizaciones de Construcción desde junio
+2026, solo 5 no tienen Oportunidad (casi todas nacen con una, muchas
+creadas por "Infraestructura Emaresa").
+
+### Valores de la lista (Construcción, Usuarios por UN, activos con código, roles de venta)
+
+```
+Cesar Valladares - 384
+Cristian Collao Gahona - 490
+Cristian Jara - 130
+Cristian Nuñez - 376
+Cristian Silva - 289
+Enrique Castro - 422
+Ernesto Corvalán - 502
+Fabiola Sanhueza - 480
+Hector Godoy - 29
+Jhosmar Acacio - 425
+Manuel Ortiz - 466
+Raul Muñoz - 467
+Sergio Guerrero - 388
+Victor Olivares - 66
+Walter Uribe - 465
+```
+
+Excluidos: asistentes/encargados/jefes sin código; Infraestructura
+Emaresa (159) y Simon Tirapegui (131, CEO); 2 filas activas con código
+472 y 482 cuyos usuarios ya no están activos. **Códigos duplicados a
+revisar en Usuarios por UN:** 376 = Cristian Nuñez y Gabriela Vasquez
+Villagra (asistente); 502 = Ernesto Corvalán y Nicolas Espinoza
+(asistente).
+
+Mantención: cuando entra o sale un vendedor de Construcción, agregar o
+quitar su valor en esta lista (formato exacto `Nombre Apellido - código`,
+con el nombre igual al del usuario en Zoho).
+
+### Cambios en el Sandbox
+
+1. Cotizaciones: reemplazar el campo de texto `Vendedor Secundario` por
+   una **Lista de selección** `Vendedor Secundario` (editable) con los
+   valores de arriba. `Código de Vendedor Secundario` sigue solo lectura.
+   Confirmar el nombre de API nuevo (puede quedar con un número al final
+   si Zoho guarda el anterior).
+2. Reemplazar Función 1 y Función 2 por las versiones v3 (abajo).
+3. Regla 4 pasa a ser **"VS Cotización - editar"**: al editar, campo
+   modificado **Vendedor Secundario** → Función 2.
+
+### Función 1 v3: `vendedorSecundarioOportunidad`
+
+```deluge
+deal = zoho.crm.getRecordById("Deals", dealId.toLong());
+vend = deal.get("Vendedor_Secundario");
+nombre = "";
+codigo = "";
+if(vend != null)
+{
+	nombre = ifnull(vend.get("name"), "");
+	if(deal.get("UN") != null)
+	{
+		filas = zoho.crm.searchRecords("Vendedores_por_UN", "(UN:equals:" + deal.get("UN").get("id") + ")");
+		for each fila in filas
+		{
+			if(fila.get("Vendedor") != null && fila.get("Vendedor").get("id").toString() == vend.get("id").toString() && fila.get("Activo") == true && ifnull(fila.get("C_digo_de_Vendedor"), "") != "")
+			{
+				codigo = fila.get("C_digo_de_Vendedor");
+			}
+		}
+	}
+}
+mapaDeal = Map();
+mapaDeal.put("C_digo_de_Vendedor_Secundario", codigo);
+zoho.crm.updateRecord("Deals", dealId.toLong(), mapaDeal);
+// Bajar a las Cotizaciones solo si la Oportunidad tiene vendedor secundario con código
+if(nombre != "" && codigo != "")
+{
+	cotizaciones = zoho.crm.getRelatedRecords("Quotes", "Deals", dealId.toLong());
+	for each cot in cotizaciones
+	{
+		mapaCot = Map();
+		mapaCot.put("Vendedor_Secundario", nombre + " - " + codigo);
+		mapaCot.put("C_digo_de_Vendedor_Secundario", codigo);
+		zoho.crm.updateRecord("Quotes", cot.get("id").toLong(), mapaCot);
+	}
+}
+```
+
+### Función 2 v3: `vendedorSecundarioCotizacion`
+
+```deluge
+quote = zoho.crm.getRecordById("Quotes", quoteId.toLong());
+vs = ifnull(quote.get("Vendedor_Secundario"), "");
+mapa = Map();
+// Si en la Cotización no eligieron vendedor secundario, tomarlo de la Oportunidad
+if(vs == "" && quote.get("Deal_Name") != null)
+{
+	deal = zoho.crm.getRecordById("Deals", quote.get("Deal_Name").get("id").toLong());
+	vend = deal.get("Vendedor_Secundario");
+	codDeal = ifnull(deal.get("C_digo_de_Vendedor_Secundario"), "");
+	if(vend != null && codDeal != "")
+	{
+		vs = ifnull(vend.get("name"), "") + " - " + codDeal;
+		mapa.put("Vendedor_Secundario", vs);
+	}
+}
+// El código es lo que viene después de " - "
+codigo = "";
+if(vs.contains(" - "))
+{
+	codigo = vs.getSuffix(" - ").trim();
+}
+mapa.put("C_digo_de_Vendedor_Secundario", codigo);
+zoho.crm.updateRecord("Quotes", quoteId.toLong(), mapa);
+```
+
+(Función 3 de la OV no cambia: copia el código que tenga la Cotización.)
+
+
 ## Qué se pidió y para qué
 
 El **Propietario de la Cotización** es un vendedor, pero muchas veces la
