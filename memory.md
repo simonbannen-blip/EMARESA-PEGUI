@@ -1288,3 +1288,11 @@ ver regla de sincronización en `CLAUDE.md`.
 - Simón decidió: la Oportunidad debe mostrar el monto de la **última
   Cotización creada o editada** (opción 1, no sumar). Propuesta marcada
   como aprobada; siguiente paso: armarla en Sandbox con la guía.
+- Simón preguntó si ya había una regla/función parecida para ajustarla en
+  vez de crear otra. Sí: regla **"SB Guardar importe de la cotización"**
+  (Cotizaciones) → función **"SB Validar Importe Oportunidad"**, que
+  copia el total a `Importe` de la Oportunidad solo **al crear**
+  (confirmado en el timeline de COT-REN-4596: Creator actualizó el total
+  50 s después de crear y la regla no volvió a correr). Nueva propuesta:
+  cambiar esa regla a "Crear o editar" y revisar el código de la función
+  (pendiente que Simón lo pegue). Documentado en la misma propuesta.

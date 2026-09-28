@@ -1,6 +1,6 @@
 # Propuesta: actualizar el Monto de la Oportunidad al editar la Cotización
 
-## Estado: APROBADA (opción 1) — lista para armar en Sandbox
+## Estado: APROBADA (opción 1) — AJUSTAR REGLA EXISTENTE (no crear una nueva). Pendiente: Simón pega el código actual de la función
 
 **Decisión de Simón (2026-09-28):** la Oportunidad muestra el monto de la
 **última Cotización creada o editada** (no la suma).
@@ -31,6 +31,47 @@ modificadas contra el `Monto` de su Oportunidad:
 
 O sea: el traspaso actual solo ocurre **al crear**. Al editar no existe
 ninguna automatización que vuelva a copiar el monto.
+
+## Hallazgo: ya existe la regla que copia el monto (2026-09-28)
+
+Simón preguntó si había algo parecido para ajustarlo en vez de crear algo
+nuevo. Revisando el historial (timeline) de COT-REN-4596 y de su
+Oportunidad 260928-OP-REN-004188 en Producción:
+
+- Regla de flujo **"SB Guardar importe de la cotización"** (módulo
+  Cotizaciones, id 5404724000040191058) → ejecuta la función
+  **"SB Validar Importe Oportunidad"** (id 5404724000040191054). Esa
+  función es la que escribe `Importe` (`Amount`) y `Ingresos esperados`
+  en la Oportunidad.
+- Solo corre **al crear**: la Cotización se creó por API desde Creator a
+  las 12:06:50 con total 620.900, la regla copió 620.900 a la
+  Oportunidad a las 12:07:01, y a las 12:07:51 Creator actualizó el total
+  a 7.027.000 → la regla **no** volvió a correr. La Oportunidad quedó en
+  620.900 y se cerró ganada así (12:10:31).
+- Otras reglas que corren en Cotizaciones y no tienen que ver con el
+  monto: "Ámbito Rental", "VS Cotización - crear/editar", "SB Verificar
+  Empresa Usuario Cotización", "SB Enviar Fase de Cotización a Creator",
+  "SB Actualizar Fase de Oportunidad según Cotización", "Enviar
+  Cotización Rental a ERP".
+
+### Cambio propuesto (reemplaza los pasos 1 y 2 de más abajo)
+
+1. Editar la regla **"SB Guardar importe de la cotización"**: cambiar
+   "Cuándo ejecutar" de **Crear** a **Crear o editar**, marcar "repetir
+   cada vez que se edite" y, si se puede, "cuando se modifique el campo
+   **Total general**".
+2. Revisar el código de **"SB Validar Importe Oportunidad"** (Simón lo
+   copia y me lo pasa): si tiene alguna condición del tipo "solo si la
+   Oportunidad no tiene monto", hay que quitarla para que sobrescriba
+   con la última cotización. Evaluar agregar ahí el resguardo de
+   Oportunidades cerradas.
+3. Ojo con el resguardo de "no tocar Oportunidades cerradas": en este
+   caso la Oportunidad se cerró 3 minutos después de la edición, así
+   que el resguardo no habría molestado; pero si Creator corrigiera el
+   total después del cierre, no se reflejaría. Decidir al ver el código.
+
+La función nueva de más abajo queda solo como respaldo si la existente
+no se puede adaptar.
 
 ## Punto a decidir: Oportunidades con más de una Cotización
 
