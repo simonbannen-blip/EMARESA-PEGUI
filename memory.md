@@ -1273,3 +1273,6 @@ ver regla de sincronización en `CLAUDE.md`.
 - Simón corrigió: el JSON al ERP se envía **desde la Cotización**, no
   desde Órdenes de venta, y pidió el texto en un solo párrafo. Reescribí
   `zoho/pipeline/caso-proveedor-ambito-rental-erp.md` así.
+- Simón pidió sacar del texto la lista de valores y el pedido del nombre
+  de la clave del JSON. Actualizado en
+  `zoho/pipeline/caso-proveedor-ambito-rental-erp.md`.
