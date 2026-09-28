@@ -1270,3 +1270,6 @@ ver regla de sincronización en `CLAUDE.md`.
   el caso de Vendedor Secundario). Notas internas: falta que el campo
   exista también en Órdenes de venta y se copie desde la Cotización, y
   confirmar el nombre de API real al pasarlo a Producción.
+- Simón corrigió: el JSON al ERP se envía **desde la Cotización**, no
+  desde Órdenes de venta, y pidió el texto en un solo párrafo. Reescribí
+  `zoho/pipeline/caso-proveedor-ambito-rental-erp.md` así.
