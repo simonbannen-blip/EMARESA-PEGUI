@@ -1260,3 +1260,13 @@ ver regla de sincronización en `CLAUDE.md`.
   `zoho/pipeline/caso-proveedor-vendedor-secundario-ov-erp.md` (agregar
   `C_digo_de_Vendedor_Secundario` de Órdenes de venta al JSON hacia el
   ERP). Pendiente: pasar a Producción.
+
+## 2026-09-28
+
+- Simón pidió una redacción para pedirle al proveedor de la integración
+  ERP que incluya el campo nuevo **"Ámbito"** (UN Rental) en el JSON que
+  se envía al ERP. Dejé el texto listo para enviar en
+  `zoho/pipeline/caso-proveedor-ambito-rental-erp.md` (mismo formato que
+  el caso de Vendedor Secundario). Notas internas: falta que el campo
+  exista también en Órdenes de venta y se copie desde la Cotización, y
+  confirmar el nombre de API real al pasarlo a Producción.
