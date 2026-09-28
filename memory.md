@@ -1285,3 +1285,6 @@ ver regla de sincronización en `CLAUDE.md`.
   cerradas (Ganada/Perdida/Declinada). Recomendé "última cotización
   editada manda" (no sumar). Pendiente OK y prueba en Sandbox:
   `zoho/pipeline/propuesta-sincronizar-monto-cotizacion-a-oportunidad.md`.
+- Simón decidió: la Oportunidad debe mostrar el monto de la **última
+  Cotización creada o editada** (opción 1, no sumar). Propuesta marcada
+  como aprobada; siguiente paso: armarla en Sandbox con la guía.
