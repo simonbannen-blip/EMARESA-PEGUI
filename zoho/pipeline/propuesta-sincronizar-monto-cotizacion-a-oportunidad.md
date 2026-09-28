@@ -1,6 +1,6 @@
 # Propuesta: actualizar el Monto de la Oportunidad al editar la Cotización
 
-## Estado: APROBADA (opción 1) — AJUSTAR REGLA EXISTENTE (no crear una nueva). Pendiente: Simón pega el código actual de la función
+## Estado: APROBADA (opción 1) — AJUSTAR REGLA Y FUNCIÓN EXISTENTES — en armado en Sandbox
 
 **Decisión de Simón (2026-09-28):** la Oportunidad muestra el monto de la
 **última Cotización creada o editada** (no la suma).
@@ -72,6 +72,54 @@ Oportunidad 260928-OP-REN-004188 en Producción:
 
 La función nueva de más abajo queda solo como respaldo si la existente
 no se puede adaptar.
+
+## Código actual de "SB Validar Importe Oportunidad" (respaldo, 2026-09-28)
+
+Argumentos en la regla: `importe` = Oportunidades - Importe, `idOp` =
+Oportunidades - ID de Oportunidad, `total` = Cotizaciones - Total general.
+
+```deluge
+void automation.SBvalidarImporteOportunidad(Float importe,Int idOp,Float total)
+{
+if(importe == 0 || importe == null)
+{
+	zoho.crm.updateRecord("Deals",idOp,{"Amount":total});
+}
+}
+```
+
+Confirma el problema: **solo copia si la Oportunidad no tiene monto**.
+Aunque la regla corra al editar, una Oportunidad que ya tiene monto no
+se toca. (También explica que con varias cotizaciones quedaba el monto
+de la primera.)
+
+## Código nuevo propuesto (mismos argumentos, no hay que tocar la asignación)
+
+```deluge
+void automation.SBvalidarImporteOportunidad(Float importe,Int idOp,Float total)
+{
+	if(total == null)
+	{
+		return;
+	}
+	if(importe == null || importe != total)
+	{
+		op = zoho.crm.getRecordById("Deals",idOp);
+		fase = ifnull(op.get("Stage"),"");
+		if(fase != "Cerrada Ganada" && fase != "Cerrada Perdida" && fase != "Declinada")
+		{
+			zoho.crm.updateRecord("Deals",idOp,{"Amount":total});
+		}
+	}
+}
+```
+
+- Copia el total si es distinto al monto actual (antes: solo si estaba
+  vacío) → siempre manda la última cotización creada o editada.
+- No toca Oportunidades cerradas (Ganada/Perdida/Declinada). Las
+  cotizaciones Cerrada Ganada además quedan bloqueadas ("Bloquear
+  Cotizaciones"), así que no se editan después del cierre.
+- Regla: ya cambiada por Simón a "cada vez que se cree o edite" (Sandbox).
 
 ## Punto a decidir: Oportunidades con más de una Cotización
 

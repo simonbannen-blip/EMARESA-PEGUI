@@ -1296,3 +1296,9 @@ ver regla de sincronización en `CLAUDE.md`.
   50 s después de crear y la regla no volvió a correr). Nueva propuesta:
   cambiar esa regla a "Crear o editar" y revisar el código de la función
   (pendiente que Simón lo pegue). Documentado en la misma propuesta.
+- Simón cambió en Sandbox la regla "SB Guardar importe de la cotización"
+  a "cada vez que se cree o edite" y compartió el código de "SB Validar
+  Importe Oportunidad": solo copiaba el total si la Oportunidad tenía
+  importe vacío o 0 (por eso nunca se actualizaba). Propuse código nuevo
+  (copia si el total cambió, salvo Oportunidades cerradas), mismos
+  argumentos. Respaldo del código viejo y nuevo en la propuesta.
