@@ -1276,3 +1276,12 @@ ver regla de sincronización en `CLAUDE.md`.
 - Simón pidió sacar del texto la lista de valores y el pedido del nombre
   de la clave del JSON. Actualizado en
   `zoho/pipeline/caso-proveedor-ambito-rental-erp.md`.
+- Simón preguntó si al **editar una Cotización** se puede actualizar el
+  **Monto de la Oportunidad** (hoy solo se copia al crear). Confirmado con
+  datos de Producción: cotizaciones editadas quedan distintas a su
+  Oportunidad (ej. COT-REN-4596 7.027.000 vs 620.900). Propuesta: regla de
+  flujo en Cotizaciones (crear o editar) + función Deluge que copia
+  `Grand_Total` → `Amount` de la Oportunidad, sin tocar Oportunidades
+  cerradas (Ganada/Perdida/Declinada). Recomendé "última cotización
+  editada manda" (no sumar). Pendiente OK y prueba en Sandbox:
+  `zoho/pipeline/propuesta-sincronizar-monto-cotizacion-a-oportunidad.md`.
