@@ -1,6 +1,9 @@
 # Propuesta: actualizar el Monto de la Oportunidad al editar la Cotización
 
-## Estado: PROPUESTA — pendiente OK de Simón (armar primero en Sandbox)
+## Estado: APROBADA (opción 1) — lista para armar en Sandbox
+
+**Decisión de Simón (2026-09-28):** la Oportunidad muestra el monto de la
+**última Cotización creada o editada** (no la suma).
 
 ## Qué se pidió
 
