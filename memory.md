@@ -1346,3 +1346,13 @@ ver regla de sincronización en `CLAUDE.md`.
   Oportunidades no la mostraba. Las plantillas no se pueden cambiar de
   módulo: le indiqué crear una nueva en Oportunidades. Anotado en la
   propuesta.
+- **Diseño final del aviso al KAM** (decidido por Simón): crear campo
+  **"KAM Asociado"** (búsqueda de usuario) en **Cotizaciones**, que se
+  llena con la función **"SB Copiar KAM a Cotizacion"** (regla crear o
+  editar en Cotizaciones, copia `KAM_Asociado` desde la Oportunidad), y
+  mandar el correo con la plantilla de Cotizaciones. Revisado en
+  Producción: la Cotización la crea Creator por API y el vendedor la pasa
+  a "Enviada" a mano con la transición de Blueprint **"Confirmar Envío de
+  Cotización"** (Blueprint "SB Gestión de Cotizaciones") → recomendé
+  poner la alerta de correo en el "Después" de esa transición. Propuesta
+  reescrita en `zoho/pipeline/plantilla-mail-aviso-kam-cotizacion-enviada.md`.
