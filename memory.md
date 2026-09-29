@@ -1356,3 +1356,9 @@ ver regla de sincronización en `CLAUDE.md`.
   Cotización"** (Blueprint "SB Gestión de Cotizaciones") → recomendé
   poner la alerta de correo en el "Después" de esa transición. Propuesta
   reescrita en `zoho/pipeline/plantilla-mail-aviso-kam-cotizacion-enviada.md`.
+- Cotizaciones ya no admite más campos "Búsqueda de usuario" (límite). Se
+  cambió a **dos campos**: `KAM Asociado` (texto, nombre) y `Email KAM`
+  (correo). La función los llena desde la Oportunidad; como el lookup de
+  usuario solo trae nombre e id, consulta el email del usuario por API con
+  una conexión `crm_usuarios` (scope `ZohoCRM.users.READ`). URL de Sandbox
+  vs Producción anotada. La alerta del Blueprint se manda a "Email KAM".
