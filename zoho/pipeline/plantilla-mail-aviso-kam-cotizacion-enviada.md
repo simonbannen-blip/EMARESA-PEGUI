@@ -113,6 +113,10 @@ ejemplo, desde el Cliente o haciéndolo obligatorio en ciertas UN).
 
 ## Plantilla (módulo Oportunidades)
 
+> En Zoho, **una plantilla no se puede cambiar de módulo** una vez creada
+> (tampoco al clonarla). Si quedó creada en Cotizaciones, hay que crear una
+> **nueva** en Oportunidades y la de Cotizaciones se puede borrar.
+
 **Nombre de la plantilla:** Aviso KAM - Cotización Enviada
 
 **Asunto:**
