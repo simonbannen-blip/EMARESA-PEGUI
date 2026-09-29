@@ -1316,3 +1316,13 @@ ver regla de sincronización en `CLAUDE.md`.
   en Oportunidades + regla de flujo (Fase cambia a "Cotización Enviada" y
   KAM Asociado no vacío → alerta de correo al KAM Asociado). Pendiente OK
   para armarla en Sandbox.
+- Simón va a armar la automatización del aviso al KAM. Revisé en
+  Producción: la fase "Cotización Enviada" la pone la regla de
+  Cotizaciones **"SB Actualizar Fase de Oportunidad según Cotización"**
+  (actualización de campo "Act. Fase a Cotización enviada"), no el
+  vendedor. Como un cambio hecho por una regla puede no disparar otra,
+  documenté Opción A (regla en Oportunidades, sin código, probar en
+  Sandbox) y Opción B (función Deluge con sendmail agregada a la regla
+  existente). Además: solo 92 Oportunidades tienen KAM Asociado y las 5
+  últimas en "Cotización Enviada" lo tienen vacío. Todo en
+  `zoho/pipeline/plantilla-mail-aviso-kam-cotizacion-enviada.md`.
