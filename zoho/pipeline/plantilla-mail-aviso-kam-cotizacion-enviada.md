@@ -32,22 +32,38 @@ Como el KAM se copia al **crear** la Cotización (paso 2) y el envío pasa
 después (paso 3), cuando llega el momento del correo el KAM ya está en la
 Cotización.
 
-## Paso 1 — Campo nuevo en Cotizaciones
+## Ajuste (29-09-2026): Cotizaciones no admite más campos "Búsqueda de usuario"
 
-- Configuración → Personalización → Módulos → **Cotizaciones** → diseño.
-- Arrastrar un campo **"Búsqueda de usuario"** (user lookup).
-- Etiqueta: **KAM Asociado**. No obligatorio.
-- Revisar el **nombre de API** que le asigna Zoho (debería ser
-  `KAM_Asociado`); si es otro, cambiarlo en la función del paso 2.
+Simón no pudo crear el campo como búsqueda de usuario (el módulo ya llegó
+al límite de ese tipo de campo). Solución: **dos campos simples** que llena
+la función:
 
-## Paso 2 — Función que copia el KAM de la Oportunidad
+- **KAM Asociado** — Línea única (texto): nombre del KAM (para el saludo).
+- **Email KAM** — Correo electrónico: a esta dirección se manda la alerta.
 
-- Configuración → Desarrollador → Funciones → **Nueva función** (Categoría:
-  Automatización, módulo Cotizaciones).
-- Nombre: **SB Copiar KAM a Cotizacion**
-- Argumentos (mapearlos al asociarla a la regla):
-  - `quoteId` = Cotizaciones → **ID de Cotización**
-  - `dealId` = Cotizaciones → Nombre de Oportunidad → **ID de Oportunidad**
+El campo `KAM_Asociado` de la Oportunidad solo trae nombre e id (revisado
+en Producción: `{"name":"Braulio Guzmán","id":"5404724000038063001"}`), sin
+email. Por eso la función consulta el usuario por API, lo que requiere una
+**conexión** de Deluge.
+
+## Paso 1 — Campos nuevos en Cotizaciones
+
+- Configuración → Personalización → Módulos y campos → Cotizaciones →
+  diseño.
+- **Línea única**, etiqueta `KAM Asociado` (API esperado `KAM_Asociado`).
+- **Correo electrónico**, etiqueta `Email KAM` (API esperado `Email_KAM`).
+
+## Paso 2 — Conexión para leer usuarios
+
+- Configuración → Desarrollador → Conexiones → **Crear conexión** →
+  servicio **Zoho OAuth**.
+- Nombre de la conexión: `crm_usuarios`.
+- Alcance (scope): `ZohoCRM.users.READ`.
+- Crear y **Conectar** (autorizar con un usuario administrador).
+
+## Paso 3 — Función "SB Copiar KAM a Cotizacion"
+
+Argumentos: `quoteId` (ID de Cotización), `dealId` (ID de Oportunidad).
 
 ```deluge
 if(dealId == null || dealId == "")
@@ -58,51 +74,48 @@ deal = zoho.crm.getRecordById("Deals",dealId.toLong());
 kam = deal.get("KAM_Asociado");
 if(kam != null)
 {
-	quote = zoho.crm.getRecordById("Quotes",quoteId.toLong());
-	actual = quote.get("KAM_Asociado");
-	actualId = "";
-	if(actual != null)
+	// Sandbox: https://sandbox.zohoapis.com  |  Producción: https://www.zohoapis.com
+	resp = invokeurl
+	[
+		url :"https://sandbox.zohoapis.com/crm/v8/users/" + kam.get("id")
+		type :GET
+		connection:"crm_usuarios"
+	];
+	users = resp.get("users");
+	if(users != null && users.size() > 0)
 	{
-		actualId = actual.get("id").toString();
-	}
-	if(actualId != kam.get("id").toString())
-	{
-		resp = zoho.crm.updateRecord("Quotes",quoteId.toLong(),{"KAM_Asociado":kam.get("id")});
-		info resp;
+		email = users.get(0).get("email");
+		quote = zoho.crm.getRecordById("Quotes",quoteId.toLong());
+		if(quote.get("Email_KAM") != email || quote.get("KAM_Asociado") != kam.get("name"))
+		{
+			upd = zoho.crm.updateRecord("Quotes",quoteId.toLong(),{"KAM_Asociado":kam.get("name"),"Email_KAM":email});
+			info upd;
+		}
 	}
 }
 ```
 
-- Solo escribe si el KAM cambió (no hace ediciones de más).
-- Una actualización hecha desde una función no vuelve a disparar reglas,
-  así que no genera bucles.
+**Al pasar a Producción cambiar la URL** a `https://www.zohoapis.com/...`.
 
-## Paso 3 — Regla que ejecuta la función
+## Paso 4 — Regla que ejecuta la función
 
-- Reglas de flujo de trabajo → **Crear regla** → módulo **Cotizaciones**.
-- Nombre: **SB Copiar KAM a Cotización**
-- Cuándo: **Acción de registro → Crear o editar**, con "Repetir" **marcado**
-  (así también toma el KAM si se completa en la Oportunidad después).
-- Condición: **Todas las Cotizaciones** (o "Nombre de Oportunidad no está
-  vacío").
-- Acción: **Función** → SB Copiar KAM a Cotizacion.
+- Reglas de flujo de trabajo → Crear regla → módulo **Cotizaciones** →
+  `SB Copiar KAM a Cotización`.
+- Cuándo: **Crear o editar**, con "Repetir" **marcado**.
+- Condición: **Nombre de Oportunidad no está vacío**.
+- Acción: **Función** → SB Copiar KAM a Cotizacion (quoteId = ID de
+  Cotización, dealId = ID de Oportunidad).
 
-## Paso 4 — Enviar el correo al confirmar el envío
+## Paso 5 — Alerta de correo al confirmar el envío (Blueprint)
 
-**Opción recomendada — en el Blueprint:**
-
-- Configuración → Automatización → Blueprint → **SB Gestión de
-  Cotizaciones** → transición **"Confirmar Envío de Cotización"** →
-  sección **Después** → **Alertas de correo electrónico** → nueva alerta:
-  - Plantilla: **Aviso KAM - Cotización Enviada** (la de Cotizaciones).
-  - Para: campo de usuario **KAM Asociado**.
-- Es lo más directo: sale justo cuando el vendedor confirma el envío.
-- Si la Cotización no tiene KAM, simplemente no hay destinatario.
-
-**Alternativa — regla de flujo** (si no se quiere tocar el Blueprint):
-Cotizaciones → al **editar**, **sin** "Repetir", condición **Fase de
-Cotización es Enviada** Y **KAM Asociado no está vacío** → alerta de correo
-con la misma plantilla a KAM Asociado.
+- Blueprint **SB Gestión de Cotizaciones** → transición **"Confirmar Envío
+  de Cotización"** → **Después** → Alertas de correo electrónico → nueva:
+  - Plantilla: **Aviso KAM - Cotización Enviada** (Cotizaciones).
+  - Para: el campo de correo **Email KAM** (aparece entre los campos de
+    correo del módulo en el selector de destinatarios).
+- Si "Email KAM" no aparece como destinatario, alternativa: agregar
+  `sendmail` al final de la función (o una función aparte en el "Después"
+  de la transición).
 
 ## Plantilla (módulo Cotizaciones)
 
