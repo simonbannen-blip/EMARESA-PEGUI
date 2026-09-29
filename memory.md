@@ -1309,3 +1309,10 @@ ver regla de sincronización en `CLAUDE.md`.
   existe campo "KAM" en Cotizaciones ni en Clientes (KAM es un rol);
   pendiente definir si el destinatario es el Propietario de Cliente o el
   de la Cotización, y cómo se dispara.
+- Simón decidió armar el aviso al KAM desde **Oportunidades**: ahí existe
+  el campo `KAM Asociado` (`KAM_Asociado`, usuario) y la Oportunidad pasa a
+  la fase **"Cotización Enviada"** al enviar la cotización. Rehíce
+  `zoho/pipeline/plantilla-mail-aviso-kam-cotizacion-enviada.md`: plantilla
+  en Oportunidades + regla de flujo (Fase cambia a "Cotización Enviada" y
+  KAM Asociado no vacío → alerta de correo al KAM Asociado). Pendiente OK
+  para armarla en Sandbox.
