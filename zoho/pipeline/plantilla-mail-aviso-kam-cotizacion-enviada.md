@@ -1,6 +1,6 @@
 # Plantilla de correo + regla de flujo: aviso al KAM cuando la Oportunidad pasa a "Cotización Enviada"
 
-## Estado: PROPUESTA (pendiente OK de Simón para armarla en Sandbox)
+## Estado: EN ARMADO (Simón arma la automatización; probar primero en Sandbox)
 
 ## Para qué
 
@@ -17,15 +17,88 @@ Se arma en **Oportunidades** (no en Cotizaciones), porque:
 - Cuando la cotización se envía, la Oportunidad queda en la fase
   **"Cotización Enviada"** (valor del campo `Fase` / `Stage`).
 
-## Regla de flujo propuesta
+## Cómo cambia hoy la fase a "Cotización Enviada" (revisado en Producción)
 
-- **Módulo:** Oportunidades
-- **Cuándo:** al editar un registro, cuando se modifica el campo **Fase**
-- **Condición:** `Fase` es `Cotización Enviada` **Y** `KAM Asociado` no está
-  vacío
-- **Acción:** Alerta de correo electrónico con la plantilla de abajo
-  - **Para:** campo de usuario **KAM Asociado**
-  - (Opcional) **CC:** Propietario de Oportunidad
+En el timeline de la Oportunidad 260929-OP-II-10015-002312 (29-09-2026) se
+ve que la fase **no la cambia el vendedor a mano**: la cambia la regla de
+flujo **"SB Actualizar Fase de Oportunidad según Cotización"** (módulo
+Cotizaciones), con la acción de actualización de campo **"Act. Fase a
+Cotización enviada"** (Creada → Cotización Enviada).
+
+Esto importa porque en Zoho, **un cambio hecho por la acción "actualizar
+campo" de una regla normalmente no dispara otras reglas de flujo**. Por eso
+hay que probar en Sandbox si la regla nueva de Oportunidades se dispara; si
+no, se usa la opción B.
+
+## Opción A (recomendada, sin código): regla en Oportunidades
+
+1. Configuración → Automatización → Reglas de flujo de trabajo → **Crear
+   regla**.
+2. Módulo: **Oportunidades**. Nombre: **SB Aviso KAM - Cotización
+   Enviada**.
+3. Ejecutar cuando: **se edite un registro** → marcar **"Cuando se
+   modifique un campo específico"** → campo **Fase**.
+4. Condición: **Fase es Cotización Enviada** Y **KAM Asociado no está
+   vacío**.
+5. Acción instantánea: **Alerta de correo electrónico** → plantilla **Aviso
+   KAM - Cotización Enviada** → Para: **KAM Asociado** (en la lista de
+   usuarios del registro). Opcional CC: Propietario de Oportunidad.
+6. Guardar y probar: enviar una cotización de una Oportunidad que tenga KAM
+   Asociado y revisar el timeline de la Oportunidad.
+
+## Opción B (si la A no se dispara): agregar una función a la regla existente
+
+Agregar, como acción extra en la regla **"SB Actualizar Fase de
+Oportunidad según Cotización"** (Cotizaciones), una función que envía el
+correo directo al KAM de la Oportunidad.
+
+- Nombre: **SB Aviso KAM Cotizacion Enviada**
+- Argumento: `dealId` = Cotizaciones → Nombre de Oportunidad → **ID de
+  Oportunidad**
+
+```deluge
+deal = zoho.crm.getRecordById("Deals",dealId.toLong());
+kam = deal.get("KAM_Asociado");
+if(kam != null && kam.get("email") != null)
+{
+	cliente = ifnull(deal.get("Account_Name"),{"name":""}).get("name");
+	contacto = ifnull(deal.get("Contact_Name"),{"name":""}).get("name");
+	un = ifnull(deal.get("UN"),{"name":""}).get("name");
+	vendedor = ifnull(deal.get("Owner"),{"name":""}).get("name");
+	link = "https://crm.zoho.com/crm/tab/Potentials/" + dealId;
+	cuerpo = "Hola " + kam.get("name") + ",<br><br>";
+	cuerpo = cuerpo + "Te informamos que se envió una cotización a tu cliente asociado:<br><br>";
+	cuerpo = cuerpo + "- Cliente: " + cliente + "<br>";
+	cuerpo = cuerpo + "- Contacto: " + contacto + "<br>";
+	cuerpo = cuerpo + "- Oportunidad: " + deal.get("Deal_Name") + "<br>";
+	cuerpo = cuerpo + "- N° de Oportunidad: " + ifnull(deal.get("Nro_de_Oportunidad"),"") + "<br>";
+	cuerpo = cuerpo + "- Unidad de Negocio: " + un + "<br>";
+	cuerpo = cuerpo + "- Importe: CLP " + ifnull(deal.get("Amount"),0) + "<br>";
+	cuerpo = cuerpo + "- Fecha estimada de cierre: " + ifnull(deal.get("Closing_Date"),"") + "<br>";
+	cuerpo = cuerpo + "- Vendedor: " + vendedor + "<br><br>";
+	cuerpo = cuerpo + "Te recomendamos coordinar con el vendedor el seguimiento con el cliente.<br><br>";
+	cuerpo = cuerpo + "Puedes revisar el detalle en el CRM: <a href='" + link + "'>" + link + "</a><br><br>";
+	cuerpo = cuerpo + "Saludos,<br>Equipo Comercial Emaresa";
+	sendmail
+	[
+		from :zoho.adminuserid
+		to :kam.get("email")
+		subject :"Cotización enviada: " + deal.get("Deal_Name") + " - " + cliente
+		message :cuerpo
+	]
+}
+```
+
+Nota: si el importe no se actualiza a tiempo (la regla de monto corre en
+paralelo), puede salir el importe anterior en el correo.
+
+## Ojo: pocas Oportunidades tienen KAM Asociado
+
+Al 29-09-2026 solo **92 Oportunidades** tienen `KAM Asociado` completo, y
+las 5 últimas que pasaron a "Cotización Enviada" lo tenían **vacío**. Sin
+KAM, el correo no se envía (la condición lo filtra). Si se quiere que el
+aviso llegue siempre, hay que asegurar que el campo se complete (por
+ejemplo, desde el Cliente o haciéndolo obligatorio en ciertas UN).
 
 ## Plantilla (módulo Oportunidades)
 
