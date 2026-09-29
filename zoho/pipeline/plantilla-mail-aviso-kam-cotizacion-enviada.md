@@ -46,6 +46,11 @@ no, se usa la opción B.
      Enviada), y no en cada edición posterior.
 4. Condición: **Fase es Cotización Enviada** Y **KAM Asociado no está
    vacío**.
+   - Si **Fase tampoco aparece en la lista de condiciones**, usar
+     **Probabilidad (%) es 75**: en esta org, "Cotización Enviada" es la
+     única fase con probabilidad 75 (Creada 0, Necesita Análisis 20,
+     Negociación 90, Cerrada Ganada 100, Contactado/Perdida/Declinada 0), y
+     Zoho la actualiza sola al cambiar la fase.
 5. Acción instantánea: **Alerta de correo electrónico** → plantilla **Aviso
    KAM - Cotización Enviada** → Para: **KAM Asociado** (en la lista de
    usuarios del registro). Opcional CC: Propietario de Oportunidad.

@@ -1332,3 +1332,5 @@ ver regla de sincronización en `CLAUDE.md`.
   disparar "al editar" (en general) con condición Fase = Cotización
   Enviada y **sin** marcar "Repetir cada vez que se edite", así corre una
   sola vez cuando la Oportunidad llega a esa fase.
+  Si Fase tampoco aparece en la condición, usar **Probabilidad (%) = 75**
+  (única fase con 75 es "Cotización Enviada").
