@@ -1302,6 +1302,38 @@ ver regla de sincronización en `CLAUDE.md`.
   importe vacío o 0 (por eso nunca se actualizaba). Propuse código nuevo
   (copia si el total cambió, salvo Oportunidades cerradas), mismos
   argumentos. Respaldo del código viejo y nuevo en la propuesta.
+- Simón pidió una plantilla de correo para avisar al **KAM asociado** que
+  se envió la Cotización. Texto listo (asunto + cuerpo con campos de
+  combinación de Cotizaciones) en
+  `zoho/pipeline/plantilla-mail-aviso-kam-cotizacion-enviada.md`. Ojo: no
+  existe campo "KAM" en Cotizaciones ni en Clientes (KAM es un rol);
+  pendiente definir si el destinatario es el Propietario de Cliente o el
+  de la Cotización, y cómo se dispara.
+- Simón decidió armar el aviso al KAM desde **Oportunidades**: ahí existe
+  el campo `KAM Asociado` (`KAM_Asociado`, usuario) y la Oportunidad pasa a
+  la fase **"Cotización Enviada"** al enviar la cotización. Rehíce
+  `zoho/pipeline/plantilla-mail-aviso-kam-cotizacion-enviada.md`: plantilla
+  en Oportunidades + regla de flujo (Fase cambia a "Cotización Enviada" y
+  KAM Asociado no vacío → alerta de correo al KAM Asociado). Pendiente OK
+  para armarla en Sandbox.
+- Simón va a armar la automatización del aviso al KAM. Revisé en
+  Producción: la fase "Cotización Enviada" la pone la regla de
+  Cotizaciones **"SB Actualizar Fase de Oportunidad según Cotización"**
+  (actualización de campo "Act. Fase a Cotización enviada"), no el
+  vendedor. Como un cambio hecho por una regla puede no disparar otra,
+  documenté Opción A (regla en Oportunidades, sin código, probar en
+  Sandbox) y Opción B (función Deluge con sendmail agregada a la regla
+  existente). Además: solo 92 Oportunidades tienen KAM Asociado y las 5
+  últimas en "Cotización Enviada" lo tienen vacío. Todo en
+  `zoho/pipeline/plantilla-mail-aviso-kam-cotizacion-enviada.md`.
+- En Sandbox, al crear la regla de Oportunidades, a Simón no le aparecía
+  **Fase** en "Cuando se modifique un campo específico" (Fase la controla
+  el Blueprint "Gestión de Oportunidades"). Alternativa documentada:
+  disparar "al editar" (en general) con condición Fase = Cotización
+  Enviada y **sin** marcar "Repetir cada vez que se edite", así corre una
+  sola vez cuando la Oportunidad llega a esa fase.
+  Si Fase tampoco aparece en la condición, usar **Probabilidad (%) = 75**
+  (única fase con 75 es "Cotización Enviada").
 - Simón pidió un tutorial para que el equipo configure el **registro de
   llamadas** en la app móvil de Zoho CRM (Más → engranaje → Registro de
   llamadas), con los interruptores igual a su pantallazo: Registro de
