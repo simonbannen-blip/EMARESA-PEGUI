@@ -1362,3 +1362,14 @@ ver regla de sincronización en `CLAUDE.md`.
   usuario solo trae nombre e id, consulta el email del usuario por API con
   una conexión `crm_usuarios` (scope `ZohoCRM.users.READ`). URL de Sandbox
   vs Producción anotada. La alerta del Blueprint se manda a "Email KAM".
+- Al crear la conexión `crm_usuarios`, a Simón no le aparecía el servicio
+  "Zoho OAuth": se usa **Servicios predeterminados → Zoho CRM** con scope
+  `ZohoCRM.users.READ`. Actualizado en la propuesta.
+- Simón decidió **volver a armar el aviso al KAM en Oportunidades** (no
+  en Cotizaciones). Pasos vigentes al inicio de
+  `zoho/pipeline/plantilla-mail-aviso-kam-cotizacion-enviada.md`: plantilla
+  en Oportunidades + regla "Crear o editar" sin repetir, condición Fase =
+  Cotización Enviada (o Probabilidad 75) y KAM no vacío → alerta a KAM
+  Asociado. Respaldo si no se dispara: función en el "Después" de la
+  transición "Confirmar Envío de Cotización" que actualiza la Oportunidad
+  con `trigger: workflow`. Lo del camino de Cotizaciones queda sin uso.
