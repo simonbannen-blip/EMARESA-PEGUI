@@ -1302,3 +1302,10 @@ ver regla de sincronización en `CLAUDE.md`.
   importe vacío o 0 (por eso nunca se actualizaba). Propuse código nuevo
   (copia si el total cambió, salvo Oportunidades cerradas), mismos
   argumentos. Respaldo del código viejo y nuevo en la propuesta.
+- Simón pidió una plantilla de correo para avisar al **KAM asociado** que
+  se envió la Cotización. Texto listo (asunto + cuerpo con campos de
+  combinación de Cotizaciones) en
+  `zoho/pipeline/plantilla-mail-aviso-kam-cotizacion-enviada.md`. Ojo: no
+  existe campo "KAM" en Cotizaciones ni en Clientes (KAM es un rol);
+  pendiente definir si el destinatario es el Propietario de Cliente o el
+  de la Cotización, y cómo se dispara.
