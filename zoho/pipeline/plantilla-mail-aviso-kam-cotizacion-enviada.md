@@ -130,7 +130,7 @@ Cotización ${Cotizaciones.Asunto} enviada a ${Cotizaciones.Nombre de Cliente}
 **Cuerpo:**
 
 ```
-Hola ${Cotizaciones.KAM Asociado},  (campo de texto con el nombre)
+Hola ${Cotizaciones.KAM Asociado},
 
 Te informamos que se envió la siguiente cotización a tu cliente:
 
