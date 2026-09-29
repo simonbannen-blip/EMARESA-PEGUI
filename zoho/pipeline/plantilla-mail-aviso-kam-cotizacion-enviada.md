@@ -36,10 +36,21 @@ no, se usa la opción B.
    regla**.
 2. Módulo: **Oportunidades**. Nombre: **SB Aviso KAM - Cotización
    Enviada**.
-3. Ejecutar cuando: **se edite un registro** → marcar **"Cuando se
-   modifique un campo específico"** → campo **Fase**.
+3. Ejecutar cuando: **se edite un registro** (edición en general). **No**
+   usar "Cuando se modifique un campo específico": ahí **Fase no aparece**
+   (confirmado por Simón en Sandbox, 29-09-2026), porque Fase la maneja el
+   Blueprint "Gestión de Oportunidades".
+   - Dejar **desmarcada** la opción **"Repetir este flujo de trabajo cada
+     vez que se edite un registro"**: así la regla corre **una sola vez**,
+     cuando la Oportunidad pasa a cumplir la condición (llega a Cotización
+     Enviada), y no en cada edición posterior.
 4. Condición: **Fase es Cotización Enviada** Y **KAM Asociado no está
    vacío**.
+   - Si **Fase tampoco aparece en la lista de condiciones**, usar
+     **Probabilidad (%) es 75**: en esta org, "Cotización Enviada" es la
+     única fase con probabilidad 75 (Creada 0, Necesita Análisis 20,
+     Negociación 90, Cerrada Ganada 100, Contactado/Perdida/Declinada 0), y
+     Zoho la actualiza sola al cambiar la fase.
 5. Acción instantánea: **Alerta de correo electrónico** → plantilla **Aviso
    KAM - Cotización Enviada** → Para: **KAM Asociado** (en la lista de
    usuarios del registro). Opcional CC: Propietario de Oportunidad.

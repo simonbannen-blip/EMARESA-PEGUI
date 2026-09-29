@@ -1326,3 +1326,11 @@ ver regla de sincronización en `CLAUDE.md`.
   existente). Además: solo 92 Oportunidades tienen KAM Asociado y las 5
   últimas en "Cotización Enviada" lo tienen vacío. Todo en
   `zoho/pipeline/plantilla-mail-aviso-kam-cotizacion-enviada.md`.
+- En Sandbox, al crear la regla de Oportunidades, a Simón no le aparecía
+  **Fase** en "Cuando se modifique un campo específico" (Fase la controla
+  el Blueprint "Gestión de Oportunidades"). Alternativa documentada:
+  disparar "al editar" (en general) con condición Fase = Cotización
+  Enviada y **sin** marcar "Repetir cada vez que se edite", así corre una
+  sola vez cuando la Oportunidad llega a esa fase.
+  Si Fase tampoco aparece en la condición, usar **Probabilidad (%) = 75**
+  (única fase con 75 es "Cotización Enviada").
