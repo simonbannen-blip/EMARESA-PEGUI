@@ -1334,3 +1334,11 @@ ver regla de sincronización en `CLAUDE.md`.
   sola vez cuando la Oportunidad llega a esa fase.
   Si Fase tampoco aparece en la condición, usar **Probabilidad (%) = 75**
   (única fase con 75 es "Cotización Enviada").
+- Simón pidió un tutorial para que el equipo configure el **registro de
+  llamadas** en la app móvil de Zoho CRM (Más → engranaje → Registro de
+  llamadas), con los interruptores igual a su pantallazo: Registro de
+  llamadas ON, Registrar automáticamente ON, Solicitud para registrar
+  OFF, Registrar llamadas perdidas ON, Acciones de seguimiento ON.
+  Guardado en `zoho/tutoriales/tutorial-registro-llamadas-app-movil.html`
+  (pantallazos en `zoho/tutoriales/img/`) y publicado como página:
+  https://claude.ai/artifact/JV7ictN69RZ9y7b26JvnoW
