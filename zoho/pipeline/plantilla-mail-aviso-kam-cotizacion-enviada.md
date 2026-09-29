@@ -1,5 +1,48 @@
 # Aviso al KAM cuando se envía una Cotización
 
+## >>> DECISIÓN VIGENTE (29-09-2026, tarde): se vuelve a armar en OPORTUNIDADES <<<
+
+Simón descartó el camino de campos en Cotizaciones (límite de búsqueda de
+usuario + necesidad de conexión para el email) y pidió hacerlo **en la
+Oportunidad**, donde `KAM Asociado` ya es campo de usuario (la alerta de
+correo puede ir directo a él, sin conexión ni código).
+
+### Pasos
+
+1. **Plantilla** en módulo **Oportunidades**: "Aviso KAM - Cotización
+   Enviada" (texto en la sección "Plantilla (módulo Oportunidades)" del
+   historial más abajo, o adaptar la de Cotizaciones reinsertando campos).
+2. **Regla** en Oportunidades "SB Aviso KAM - Cotización Enviada":
+   - Cuándo: Acción de registro → **Crear o editar**, **sin** "Repetir".
+   - Condición: **Fase es Cotización Enviada** (si Fase no aparece:
+     **Probabilidad (%) es 75**) Y **KAM Asociado no está vacío**.
+   - Acción: Alerta de correo → plantilla anterior → Para: **KAM Asociado**.
+3. **Probar en Sandbox**: la fase la cambia la regla de Cotizaciones "SB
+   Actualizar Fase de Oportunidad según Cotización"; hay que confirmar que
+   ese cambio dispara la regla nueva.
+4. **Si no se dispara** (cambio hecho por otra regla): agregar en el
+   Blueprint "SB Gestión de Cotizaciones" → transición "Confirmar Envío de
+   Cotización" → **Después** → Función, que actualiza la Oportunidad con
+   `trigger: workflow` para forzar que corra la regla:
+
+```deluge
+// Argumento: dealId = ID de Oportunidad (desde la Cotización)
+if(dealId != null && dealId != "")
+{
+	resp = zoho.crm.updateRecord("Deals",dealId.toLong(),{"Stage":"Cotización Enviada"},{"trigger":{"workflow"}});
+	info resp;
+}
+```
+
+Lo creado en Sandbox para el camino anterior (campos KAM Asociado / Email
+KAM en Cotizaciones, conexión `crm_usuarios`, función y regla "SB Copiar
+KAM a Cotización") **ya no se usa** y se puede borrar.
+
+---
+
+# Historial del diseño (caminos anteriores)
+
+
 ## Estado: EN ARMADO EN SANDBOX (Simón lo arma; diseño final = campo KAM en Cotizaciones)
 
 ## Para qué
