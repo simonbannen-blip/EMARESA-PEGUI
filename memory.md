@@ -1342,3 +1342,7 @@ ver regla de sincronización en `CLAUDE.md`.
   Guardado en `zoho/tutoriales/tutorial-registro-llamadas-app-movil.html`
   (pantallazos en `zoho/tutoriales/img/`) y publicado como página:
   https://claude.ai/artifact/JV7ictN69RZ9y7b26JvnoW
+- Simón había creado la plantilla en el módulo Cotizaciones y la regla de
+  Oportunidades no la mostraba. Las plantillas no se pueden cambiar de
+  módulo: le indiqué crear una nueva en Oportunidades. Anotado en la
+  propuesta.
