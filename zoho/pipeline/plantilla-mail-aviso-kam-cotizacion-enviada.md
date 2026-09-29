@@ -1,57 +1,76 @@
-# Plantilla de correo: aviso al KAM de que se envió la Cotización
+# Plantilla de correo + regla de flujo: aviso al KAM cuando la Oportunidad pasa a "Cotización Enviada"
 
-## Estado: BORRADOR (texto listo; falta definir cómo se dispara y a quién se envía)
+## Estado: PROPUESTA (pendiente OK de Simón para armarla en Sandbox)
 
 ## Para qué
 
-Avisar al **KAM asociado** que la Cotización ya fue enviada al cliente, para
-que pueda hacer el seguimiento comercial.
+Avisar al **KAM asociado** que se envió la cotización al cliente, para que
+pueda hacer el seguimiento comercial.
 
-## Nota sobre el destinatario
+## Decisión (Simón, 29-09-2026)
 
-En el CRM **no existe un campo "KAM"** ni en Cotizaciones ni en Clientes
-(revisado en Producción, 29-09-2026): "KAM" es un **rol** de usuario (ej.
-"KAM Mineria"). Opciones para dirigir el correo:
+Se arma en **Oportunidades** (no en Cotizaciones), porque:
 
-- **Propietario de Cliente** (`Account_Name.Owner`) — si el KAM es el dueño
-  de la cuenta (recomendado si así se trabaja la cartera).
-- **Propietario de Cotización** (`Owner`) — si quien cotiza es el mismo KAM.
-- Un campo nuevo "KAM" en Clientes, si el KAM no es ninguno de los dos.
+- Ahí existe el campo **`KAM Asociado`** (`KAM_Asociado`, búsqueda de
+  usuario). En Cotizaciones y Clientes no hay campo KAM (revisado en
+  Producción).
+- Cuando la cotización se envía, la Oportunidad queda en la fase
+  **"Cotización Enviada"** (valor del campo `Fase` / `Stage`).
 
-## Plantilla (módulo Cotizaciones)
+## Regla de flujo propuesta
+
+- **Módulo:** Oportunidades
+- **Cuándo:** al editar un registro, cuando se modifica el campo **Fase**
+- **Condición:** `Fase` es `Cotización Enviada` **Y** `KAM Asociado` no está
+  vacío
+- **Acción:** Alerta de correo electrónico con la plantilla de abajo
+  - **Para:** campo de usuario **KAM Asociado**
+  - (Opcional) **CC:** Propietario de Oportunidad
+
+## Plantilla (módulo Oportunidades)
+
+**Nombre de la plantilla:** Aviso KAM - Cotización Enviada
 
 **Asunto:**
 
 ```
-Cotización ${Cotizaciones.Número de Cotización} enviada a ${Cotizaciones.Nombre de Cliente}
+Cotización enviada: ${Oportunidades.Nombre de Oportunidad} - ${Oportunidades.Nombre de Cliente}
 ```
 
 **Cuerpo:**
 
 ```
-Hola,
+Hola ${Oportunidades.KAM Asociado},
 
-Te informamos que se envió la siguiente cotización a tu cliente:
+Te informamos que se envió una cotización a tu cliente asociado:
 
-- Cliente: ${Cotizaciones.Nombre de Cliente}
-- Contacto: ${Cotizaciones.Nombre de Contacto}
-- N° de Cotización: ${Cotizaciones.Número de Cotización}
-- Asunto: ${Cotizaciones.Asunto}
-- Oportunidad: ${Cotizaciones.Nombre de Oportunidad}
-- Total: ${Cotizaciones.Moneda} ${Cotizaciones.Total general}
-- Válida hasta: ${Cotizaciones.Válido hasta}
-- Enviada por: ${Cotizaciones.Propietario de Cotización}
+- Cliente: ${Oportunidades.Nombre de Cliente}
+- Contacto: ${Oportunidades.Nombre de Contacto}
+- Oportunidad: ${Oportunidades.Nombre de Oportunidad}
+- N° de Oportunidad: ${Oportunidades.Nro. de Oportunidad}
+- Unidad de Negocio: ${Oportunidades.UN}
+- Importe: ${Oportunidades.Importe}
+- Fecha estimada de cierre: ${Oportunidades.Fecha de cierre}
+- Vendedor: ${Oportunidades.Propietario de Oportunidad}
 
-Te recomendamos hacer seguimiento con el cliente antes de la fecha de
-vencimiento de la cotización.
+Te recomendamos coordinar con el vendedor el seguimiento con el cliente.
 
-Puedes revisar el detalle en el CRM aquí: ${Cotizaciones.URL del registro}
+Puedes revisar el detalle de la oportunidad y sus cotizaciones en el CRM:
+${Oportunidades.URL del registro}
 
 Saludos,
 Equipo Comercial Emaresa
 ```
 
-Los `${...}` son campos de combinación: al armar la plantilla en Zoho
-(Configuración → Personalización → Plantillas → Correo electrónico →
-Cotizaciones) se insertan con el botón **"Insertar campo de combinación"**
-para que queden con el nombre interno correcto.
+## Notas
+
+- Los `${...}` se insertan en Zoho con el botón **"Insertar campo de
+  combinación"** (Configuración → Personalización → Plantillas → Correo
+  electrónico → Oportunidades), para que queden con el nombre interno
+  correcto.
+- Una plantilla de Oportunidades **no puede mostrar datos de la
+  Cotización** (N° de cotización, validez), porque son registros
+  relacionados. La cotización se ve desde el link a la Oportunidad.
+- El **Importe** de la Oportunidad refleja el monto de la última cotización
+  una vez aplicada la propuesta
+  `propuesta-sincronizar-monto-cotizacion-a-oportunidad.md`.
