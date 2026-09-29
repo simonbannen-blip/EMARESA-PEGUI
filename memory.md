@@ -1362,3 +1362,6 @@ ver regla de sincronización en `CLAUDE.md`.
   usuario solo trae nombre e id, consulta el email del usuario por API con
   una conexión `crm_usuarios` (scope `ZohoCRM.users.READ`). URL de Sandbox
   vs Producción anotada. La alerta del Blueprint se manda a "Email KAM".
+- Al crear la conexión `crm_usuarios`, a Simón no le aparecía el servicio
+  "Zoho OAuth": se usa **Servicios predeterminados → Zoho CRM** con scope
+  `ZohoCRM.users.READ`. Actualizado en la propuesta.
