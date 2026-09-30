@@ -1399,3 +1399,9 @@ ver regla de sincronización en `CLAUDE.md`.
   después de 10:59 (CONST-66-3469, CONST-466-3474, REN-4621/4688/4690, II
   y FRT vacías). Ambos campos con 2 decimales. Falta probar un caso USD y
   un Rental con seguro (las 274 antiguas siguen sin recalcular).
+- (2026-09-30) Simón pidió un campo con el **precio unitario con descuento**
+  en las líneas de Cotización. Revisado `Quoted_Items`: "Descuento" es el
+  monto de toda la línea (no por unidad). Propuse campo fórmula
+  `Precio Unitario con Descuento` = Precio de lista × (1 − Descuento ÷
+  Importe), con If para Importe 0. Detalle en
+  `zoho/config/propuesta-campo-precio-unitario-con-descuento.md`.
