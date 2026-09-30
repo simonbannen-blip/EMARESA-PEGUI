@@ -42,6 +42,22 @@ también funcione si en alguna línea el Importe incluye días u otro factor
 Precio de lista 100.000 · Cantidad 3 · Importe 300.000 · Descuento 30.000
 → 100.000 × (1 − 30.000 / 300.000) = **90.000** por unidad.
 
+## Paso a paso en Sandbox
+
+1. Entrar a Sandbox → ⚙️ Configuración → Personalización → Módulos y campos
+   → **Cotizaciones** → pestaña Diseños → abrir el diseño **Estándar**.
+2. Bajar hasta la grilla **Artículos presupuestados**.
+3. En el panel izquierdo (Nuevos campos), arrastrar **Fórmula** y soltarlo
+   dentro de la grilla Artículos presupuestados (junto a "% Descuento").
+4. Etiqueta: `Precio Unitario con Descuento`. Tipo de retorno: **Moneda**.
+   Posiciones decimales: **2**.
+5. En el editor de fórmula, pegar la fórmula (si marca error, borrar los
+   nombres de campo y volver a insertarlos con "Insertar campo").
+6. "Comprobar sintaxis" → Guardar → **Guardar diseño**.
+7. Probar: crear una cotización en Sandbox con precio 100.000, cantidad 3 y
+   descuento 30.000 → el campo debe mostrar 90.000. Probar también con
+   descuento en % (ej. 10%) y con una línea sin descuento (= precio lista).
+
 ## Notas
 
 - No incluye el "% Desc Adicional" (campo aparte). Si se quiere que también
