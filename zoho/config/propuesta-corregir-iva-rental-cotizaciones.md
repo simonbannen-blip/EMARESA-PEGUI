@@ -299,3 +299,16 @@ Condición por `Tasa de cambio` (Exchange_Rate): CLP = 1, USD ≠ 1
 - `Rental_Total_con_IVA`: sin cambio (`${Cotizaciones.Constuc_SUM_Subtotal}+${Cotizaciones.Rental_IVA}`), subir decimales a 2.
 
 Verificar: COT-CONST-384-3471 → 184,68 / 1.156,68; COT-REN-4676 → 296.145 / 1.854.805.
+
+## Conteo de cotizaciones con IVA erróneo (2026-09-30 11:06)
+
+1.014 cotizaciones modificadas desde 24-09. 319 sin subtotal Rental
+(Ferretek, etc., quedarán vacías). **274 con IVA distinto al correcto**
+(listado: `cotizaciones-iva-erroneo-desde-2026-09-24.csv`):
+Construcción 242, Rental 14, Maktotal 11, Ind. y Ferretería 4, AyF 3.
+188 CLP (sobrevaloradas en total ~222,7 MM CLP en "Rental Total con IVA"),
+86 USD. Por fase: Creada 183, Cerrada Ganada 55, Cerrada Perdida 14,
+Enviada 13, otras 9.
+Rental: ~8 son el seguro fuera del IVA; 4568/4598/1737 son diferencias de
+pocos pesos; 4448, 4670 y 4618 tienen el subtotal de línea de Creator
+malo (el recálculo no las arregla, revisar aparte).
