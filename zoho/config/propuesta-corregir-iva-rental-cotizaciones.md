@@ -267,3 +267,18 @@ en todas las cotizaciones guardadas desde entonces:
 
 Las fórmulas se recalculan al cambiar la definición; verificar después en
 COT-REN-4614/4676 (esperado 296.145 / 1.854.805) y en una COT-CONST.
+
+## Estado real en Producción (pantallazos 2026-09-30) y corrección final
+
+Simón creía haberlas revertido, pero en Producción están así:
+- `Rental_IVA`: `Round((${Cotizaciones.Subtotal General con Descuento}*19)/100,0)`
+- `Rental_Total_con_IVA`: `${Cotizaciones.Subtotal General con Descuento}+Round(${Cotizaciones.Subtotal General con Descuento}*0.19,0)`
+
+Reemplazar por (sirve para todas las UN; el seguro Rental ya viene en el
+Subtotal de línea, y si es 0/vacío no suma):
+- `Rental_IVA`: `Round((${Cotizaciones.Constuc_SUM_Subtotal}*19)/100,0)`
+- `Rental_Total_con_IVA`: `${Cotizaciones.Constuc_SUM_Subtotal}+${Cotizaciones.Rental_IVA}`
+- Campos vacíos → vacío (no 0), para Ferretek.
+
+Verificar: COT-REN-4614/4676 → 296.145 / 1.854.805;
+COT-CONST-384-3471 → 185 / 1.157.

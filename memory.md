@@ -1381,3 +1381,9 @@ ver regla de sincronización en `CLAUDE.md`.
   también a todas las COT-CONST guardadas desde el 24-09 (IVA doble).
   Pedí revertir las dos fórmulas. Detalle en
   `zoho/config/propuesta-corregir-iva-rental-cotizaciones.md`.
+- (2026-09-30) Pantallazos de Producción confirman que Rental_IVA y
+  Rental_Total_con_IVA siguen con "Subtotal General con Descuento" (Simón
+  creía haberlas revertido). Le pasé las fórmulas finales basadas en
+  Constuc_SUM_Subtotal (con Round), válidas para todas las UN; el seguro
+  Rental ya está incluido en el Subtotal de línea. Pendiente que las
+  aplique y yo verifique en 4614/4676 y una COT-CONST.
