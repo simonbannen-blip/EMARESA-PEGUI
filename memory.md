@@ -1391,3 +1391,7 @@ ver regla de sincronización en `CLAUDE.md`.
   USD: propuse If con Tasa de cambio == 1 (CLP → Round 0, USD → Round 2) y
   subir Posiciones decimales de ambos campos de 0 a 2. Pendiente verificar
   valores recalculados.
+- Conteo IVA erróneo desde 24-09: 274 cotizaciones (Construcción 242,
+  Rental 14, Maktotal 11, IND 4, AyF 3; 55 Cerradas Ganadas; ~222,7 MM CLP
+  sobrevalorados en total). Listado CSV en zoho/config/. Pendiente OK de
+  Simón para recalcularlas vía API sin disparar automatizaciones.
