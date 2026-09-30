@@ -234,3 +234,36 @@ Total_Rental   = Subtotal
 `Constuc_SUM_Subtotal` sume "Total con descuentos" (calculado por Zoho)
 + una agregación nueva de "Valor Total Seguro", en vez del "Subtotal"
 que escribe Creator.
+
+## ⚠️ Las fórmulas NO se revirtieron (detectado 2026-09-30)
+
+Simón reportó IVA mal en **COT-REN-4614** (5404724000613059923, Cerrada
+Ganada) y **COT-REN-4676** (5404724000613647945, Pendiente de Aprobación).
+Mismos ítems en ambas: Compresor M-50 30 días (1.364.220 − 18% desc.
+245.559,6 + seguro 120.000 = 1.238.660) + Traslado 320.000.
+
+| Campo | Valor en CRM | Correcto |
+|---|---|---|
+| Rental_SUM_Subtotal (Constuc_SUM_Subtotal) | 1.558.660 | 1.558.660 ✔ |
+| Subtotal General con Descuento | 1.438.660,4 (sin seguro) | — |
+| Rental_IVA | 273.345 (= 19% de 1.438.660,4) | **296.145** |
+| Rental Total con IVA | 1.712.005 | **1.854.805** |
+
+Las líneas (Creator) están bien. El error es que `Rental_IVA` y
+`Rental_Total_con_IVA` **siguen calculando sobre "Subtotal General con
+Descuento"** (el cambio del 24-09 que se pidió revertir). Consecuencias
+en todas las cotizaciones guardadas desde entonces:
+- **Rental con seguro**: IVA y total quedan cortos (no incluyen el seguro).
+- **Construcción (COT-CONST)**: IVA cobrado dos veces
+  (ej. COT-CONST-384-3471: Rental_SUM 972, IVA debería ser 185, CRM dice 220).
+- Rental sin seguro, II y FRT: coinciden por casualidad (ambos subtotales iguales).
+
+646 cotizaciones con Rental_SUM_Subtotal modificadas desde 24-09 10:00
+(no todas afectadas; las afectadas son las de los dos primeros grupos).
+
+**Acción**: revertir en Configuración > Módulos > Cotizaciones > campos:
+- `Rental_IVA`: `(${Cotizaciones.Constuc_SUM_Subtotal}*19)/100`
+- `Rental_Total_con_IVA`: `${Cotizaciones.Constuc_SUM_Subtotal}+${Cotizaciones.Rental_IVA}`
+
+Las fórmulas se recalculan al cambiar la definición; verificar después en
+COT-REN-4614/4676 (esperado 296.145 / 1.854.805) y en una COT-CONST.

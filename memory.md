@@ -1373,3 +1373,11 @@ ver regla de sincronización en `CLAUDE.md`.
   Asociado. Respaldo si no se dispara: función en el "Después" de la
   transición "Confirmar Envío de Cotización" que actualiza la Oportunidad
   con `trigger: workflow`. Lo del camino de Cotizaciones queda sin uso.
+- (2026-09-30) Simón reportó IVA mal en COT-REN-4614 y COT-REN-4676. Causa:
+  las fórmulas `Rental_IVA` y `Rental_Total_con_IVA` **nunca se revirtieron**
+  del cambio del 24-09 — siguen usando "Subtotal General con Descuento",
+  que no incluye el seguro (Rental) y ya trae IVA (Construcción). En esas
+  dos: IVA 273.345 → debe ser 296.145; total 1.712.005 → 1.854.805. Afecta
+  también a todas las COT-CONST guardadas desde el 24-09 (IVA doble).
+  Pedí revertir las dos fórmulas. Detalle en
+  `zoho/config/propuesta-corregir-iva-rental-cotizaciones.md`.
