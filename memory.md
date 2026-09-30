@@ -1395,3 +1395,7 @@ ver regla de sincronización en `CLAUDE.md`.
   Rental 14, Maktotal 11, IND 4, AyF 3; 55 Cerradas Ganadas; ~222,7 MM CLP
   sobrevalorados en total). Listado CSV en zoho/config/. Pendiente OK de
   Simón para recalcularlas vía API sin disparar automatizaciones.
+- Verificado 11:15: fórmulas de IVA correctas en cotizaciones guardadas
+  después de 10:59 (CONST-66-3469, CONST-466-3474, REN-4621/4688/4690, II
+  y FRT vacías). Ambos campos con 2 decimales. Falta probar un caso USD y
+  un Rental con seguro (las 274 antiguas siguen sin recalcular).
