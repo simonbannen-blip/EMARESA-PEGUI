@@ -23,10 +23,21 @@ y la integración con el ERP falló:
 `Detalle de Log ERP = "Error at line : 67, Value is empty and 'get' function cannot be applied"`.
 No tiene Nro Pedido ERP. Es la única OV ligada a la cotización.
 
-## Propuesta (pendiente OK de Simón — no aplicado)
+## Propuesta
 
 - **A (recomendada):** borrar la OV incompleta y volver a generarla con la
   función "SB Convertir Orden de Venta x Linea Negocio" (ahora que la Sucursal
   del Cliente ya está llena), para que salga con todos los datos y se envíe al ERP.
 - **B:** mantener la OV y completarle por API los campos faltantes copiándolos
   desde la cotización; luego reintentar el envío al ERP.
+
+## Aplicado (2026-09-30)
+
+- Simón eligió la opción A. Se borró por API la OV incompleta
+  (id 5404724000613996068; sin Nro Pedido ERP, sin cambios desde su creación).
+- Pendiente (Simón): volver a generar la OV con la función
+  "SB Convertir Orden de Venta x Linea Negocio". La cotización sigue en
+  "Cerrada Ganada" y bloqueada, así que la transición del Blueprint ya no
+  aparece: hay que ejecutar la función a mano (Configuración → Funciones →
+  Ejecutar, con el id de la cotización) o devolver la cotización a la fase
+  anterior y repetir "Confirmar Cotización Izaje". No usar el botón Convertir.

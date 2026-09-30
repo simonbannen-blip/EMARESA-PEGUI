@@ -1414,3 +1414,6 @@ ver regla de sincronización en `CLAUDE.md`.
   no había creado OV. Propuse borrar la OV y regenerarla con la función, o
   completarla por API. Pendiente OK. Detalle en
   `zoho/pipeline/caso-cot-ii10015-1741-ov-convertida-a-mano.md`.
+- Simón aprobó la opción A: borré la OV incompleta de COT-II10015-1741
+  (id 5404724000613996068). Falta que él regenere la OV con la función del
+  Blueprint (ejecutarla a mano o repetir la transición), no con Convertir.
