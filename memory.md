@@ -1407,3 +1407,10 @@ ver regla de sincronización en `CLAUDE.md`.
   `zoho/config/propuesta-campo-precio-unitario-con-descuento.md`.
 - Simón pidió el paso a paso para crear "Precio Unitario con Descuento" en
   Sandbox; agregado a la propuesta. Pendiente que lo cree y lo pruebe.
+- (2026-09-30) Simón pidió "rehacer el último cambio" en COT-II10015-1741.
+  Su último cambio: llenó Sucursal del Cliente y convirtió a OV con el botón
+  estándar (12:55). La OV salió sin UN/Sucursal/despacho/pago y el ERP dio
+  error "line 67, Value is empty". El día anterior la función del Blueprint
+  no había creado OV. Propuse borrar la OV y regenerarla con la función, o
+  completarla por API. Pendiente OK. Detalle en
+  `zoho/pipeline/caso-cot-ii10015-1741-ov-convertida-a-mano.md`.
