@@ -1405,3 +1405,5 @@ ver regla de sincronización en `CLAUDE.md`.
   `Precio Unitario con Descuento` = Precio de lista × (1 − Descuento ÷
   Importe), con If para Importe 0. Detalle en
   `zoho/config/propuesta-campo-precio-unitario-con-descuento.md`.
+- Simón pidió el paso a paso para crear "Precio Unitario con Descuento" en
+  Sandbox; agregado a la propuesta. Pendiente que lo cree y lo pruebe.
