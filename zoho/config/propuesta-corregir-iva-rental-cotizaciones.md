@@ -282,3 +282,20 @@ Subtotal de línea, y si es 0/vacío no suma):
 
 Verificar: COT-REN-4614/4676 → 296.145 / 1.854.805;
 COT-CONST-384-3471 → 185 / 1.157.
+
+## Ajuste pedido: sin redondeo a entero cuando la cotización es en USD (2026-09-30)
+
+Simón aplicó las fórmulas finales a las 10:49 (Producción). Pidió que en
+USD no se redondee (ej. COT-CONST-384-3471, USD: IVA 184,68 → 185).
+
+Ojo: ambos campos tienen **Posiciones decimales = 0**, así que aunque se
+quite el Round igual se ven sin decimales → subirlo a 2.
+
+Condición por `Tasa de cambio` (Exchange_Rate): CLP = 1, USD ≠ 1
+(ej. 0,001030439). Es numérico, más seguro que comparar el picklist Moneda.
+
+- `Rental_IVA`:
+  `If(${Cotizaciones.Tasa de cambio}==1,Round((${Cotizaciones.Constuc_SUM_Subtotal}*19)/100,0),Round((${Cotizaciones.Constuc_SUM_Subtotal}*19)/100,2))`
+- `Rental_Total_con_IVA`: sin cambio (`${Cotizaciones.Constuc_SUM_Subtotal}+${Cotizaciones.Rental_IVA}`), subir decimales a 2.
+
+Verificar: COT-CONST-384-3471 → 184,68 / 1.156,68; COT-REN-4676 → 296.145 / 1.854.805.
