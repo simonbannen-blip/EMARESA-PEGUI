@@ -1387,3 +1387,7 @@ ver regla de sincronización en `CLAUDE.md`.
   Constuc_SUM_Subtotal (con Round), válidas para todas las UN; el seguro
   Rental ya está incluido en el Subtotal de línea. Pendiente que las
   aplique y yo verifique en 4614/4676 y una COT-CONST.
+- Simón aplicó las fórmulas finales de IVA (10:49). Pidió no redondear en
+  USD: propuse If con Tasa de cambio == 1 (CLP → Round 0, USD → Round 2) y
+  subir Posiciones decimales de ambos campos de 0 a 2. Pendiente verificar
+  valores recalculados.
