@@ -70,3 +70,6 @@ Precio de lista 100.000 · Cantidad 3 · Importe 300.000 · Descuento 30.000
 
 - 2026-09-30: propuesto. Pendiente que Simón lo cree (o dé OK para
   crearlo).
+- 2026-09-30: **creado en Sandbox por Simón** (Fórmula, Moneda, 2 decimales,
+  sintaxis "Sin errores"; valores en blanco como 0). Pendiente: probar en
+  Sandbox y luego crearlo igual en Producción.

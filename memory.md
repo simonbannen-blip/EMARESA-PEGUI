@@ -1417,3 +1417,7 @@ ver regla de sincronización en `CLAUDE.md`.
 - Simón aprobó la opción A: borré la OV incompleta de COT-II10015-1741
   (id 5404724000613996068). Falta que él regenere la OV con la función del
   Blueprint (ejecutarla a mano o repetir la transición), no con Convertir.
+- Simón creó "Precio Unitario con Descuento" en Sandbox (fórmula con
+  `${Artículos presupuestados.…}`, Moneda, blancos como 0). Pendiente
+  probar y replicar en Producción; en cotizaciones antiguas solo calcula al
+  volver a guardarlas.
