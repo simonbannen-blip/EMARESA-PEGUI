@@ -38,6 +38,25 @@ Lo creado en Sandbox para el camino anterior (campos KAM Asociado / Email
 KAM en Cotizaciones, conexión `crm_usuarios`, función y regla "SB Copiar
 KAM a Cotización") **ya no se usa** y se puede borrar.
 
+### Paso a paso en Producción (02-10-2026)
+
+1. Plantilla "Aviso KAM - Cotización Enviada" en **Oportunidades**
+   (mismo texto que Sandbox, campos insertados con "Insertar campo de
+   combinación").
+2. Regla "SB Aviso KAM - Cotización Enviada" (Oportunidades): Crear o
+   editar, **sin** Repetir; condiciones Fase = Cotización Enviada (o
+   Probabilidad 75) Y KAM Asociado no vacío Y **Hora de modificación de
+   fase = Hoy**; alerta a **KAM Asociado** (campo), casillas desmarcadas.
+3. Solo si en Sandbox hizo falta: función del paso 4 en el Blueprint.
+4. Prueba controlada con una Oportunidad propia.
+
+**Ojo (revisado en Producción 02-10-2026):** ya hay **43 Oportunidades en
+"Cotización Enviada" con KAM Asociado**. Con una regla "sin repetir",
+Zoho las podría considerar como que cumplen la condición por primera vez
+en su próxima edición y mandar el aviso tarde. La condición extra "Hora de
+modificación de fase = Hoy" lo evita (si ese campo no aparece en la
+condición, usar "Hora de creación posterior a la fecha de activación").
+
 ---
 
 # Historial del diseño (caminos anteriores)

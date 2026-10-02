@@ -1421,3 +1421,9 @@ ver regla de sincronización en `CLAUDE.md`.
   `${Artículos presupuestados.…}`, Moneda, blancos como 0). Pendiente
   probar y replicar en Producción; en cotizaciones antiguas solo calcula al
   volver a guardarlas.
+- (2026-10-02) Simón pidió el paso a paso para pasar el aviso al KAM a
+  **Producción**. Agregado a la propuesta. Revisado en Producción: hay
+  **43 Oportunidades** ya en "Cotización Enviada" con KAM Asociado, que
+  podrían disparar el aviso en su próxima edición → se agregó la condición
+  "Hora de modificación de fase = Hoy" (alternativa: hora de creación
+  posterior a la activación).
