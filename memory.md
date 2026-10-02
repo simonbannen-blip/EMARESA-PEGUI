@@ -1427,3 +1427,7 @@ ver regla de sincronización en `CLAUDE.md`.
   podrían disparar el aviso en su próxima edición → se agregó la condición
   "Hora de modificación de fase = Hoy" (alternativa: hora de creación
   posterior a la activación).
+- (2026-10-02) **Aviso al KAM activo en Producción** (regla de
+  Oportunidades "SB Aviso KAM - Cotización Enviada"). Simón se agregó
+  también como destinatario para recibir copia de cada aviso. Propuesta
+  marcada como activa.
