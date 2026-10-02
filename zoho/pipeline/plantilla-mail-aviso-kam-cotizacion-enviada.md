@@ -1,5 +1,7 @@
 # Aviso al KAM cuando se envía una Cotización
 
+## Estado: ✅ ACTIVO EN PRODUCCIÓN (02-10-2026) — Simón también recibe el aviso (agregado como destinatario)
+
 ## >>> DECISIÓN VIGENTE (29-09-2026, tarde): se vuelve a armar en OPORTUNIDADES <<<
 
 Simón descartó el camino de campos en Cotizaciones (límite de búsqueda de
