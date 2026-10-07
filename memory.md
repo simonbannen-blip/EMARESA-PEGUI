@@ -1431,3 +1431,14 @@ ver regla de sincronización en `CLAUDE.md`.
   Oportunidades "SB Aviso KAM - Cotización Enviada"). Simón se agregó
   también como destinatario para recibir copia de cada aviso. Propuesta
   marcada como activa.
+
+## 2026-10-07
+
+- Simón reportó que un vendedor de otra área (con acceso por uso compartido
+  a las cotizaciones de los Vendedores Generalistas) no ve las transiciones
+  del Blueprint en COT-CONST-29-3217 (propietario Hector Godoy, rol
+  Vendedores Generalistas). El registro sí es editable. Causa: en el
+  Blueprint "SB Gestión de Cotizaciones", el "Quién" de cada transición
+  probablemente es solo "Propietario del registro". Propuse agregar el rol
+  de los vendedores de repuestos en Antes → Quién de cada transición.
+  Detalle en `zoho/pipeline/caso-transiciones-blueprint-no-propietario.md`.
