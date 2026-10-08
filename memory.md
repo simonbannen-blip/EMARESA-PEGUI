@@ -1453,3 +1453,7 @@ ver regla de sincronización en `CLAUDE.md`.
   subformulario. La creación por API quedó bloqueada por permisos → se le
   pasó el paso a paso. Detalle en
   `zoho/config/propuesta-campo-plazo-completo-articulos-presupuestados.md`.
+- Simón **descartó** el plan B (no crear "Plazo Completo"); quiere insertar
+  `Plazo` y `Unidad` directo en Writer. Se le guió con "Insertar tabla para
+  repetición de fila" eligiendo ambos campos en el diálogo, tras borrar el
+  campo huérfano "Artículos presupuestados.Unidad" (creado sin asignar).
