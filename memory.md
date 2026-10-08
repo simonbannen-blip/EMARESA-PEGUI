@@ -1442,3 +1442,14 @@ ver regla de sincronización en `CLAUDE.md`.
   probablemente es solo "Propietario del registro". Propuse agregar el rol
   de los vendedores de repuestos en Antes → Quién de cada transición.
   Detalle en `zoho/pipeline/caso-transiciones-blueprint-no-propietario.md`.
+
+## 2026-10-08
+
+- Simón armando la plantilla de Cotizaciones en Zoho Writer: necesita
+  `Plazo` + `Unidad` (de Artículos presupuestados) bajo "Plazo de entrega".
+  Los campos de subformulario solo funcionan dentro de una región de
+  repetición; el segundo campo le quedaba "sin asignar". Plan B aprobado:
+  campo fórmula "Plazo Completo" = Concat(Plazo,' ',Unidad) en el
+  subformulario. La creación por API quedó bloqueada por permisos → se le
+  pasó el paso a paso. Detalle en
+  `zoho/config/propuesta-campo-plazo-completo-articulos-presupuestados.md`.
