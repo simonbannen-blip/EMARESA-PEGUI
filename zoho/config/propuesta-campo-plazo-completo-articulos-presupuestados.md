@@ -1,6 +1,6 @@
 # Propuesta: campo "Plazo Completo" en Artículos presupuestados (Cotizaciones)
 
-**Fecha:** 2026-10-08 · **Estado:** OK de Simón; pendiente de crear (en la sesión el permiso para crear el campo por API quedó bloqueado, se le dio el paso a paso)
+**Fecha:** 2026-10-08 · **Estado:** DESCARTADA por Simón (prefiere insertar Plazo y Unidad directo en Writer)
 
 ## Problema
 En la plantilla de cotización (Zoho Writer), bajo "Plazo de entrega", se
