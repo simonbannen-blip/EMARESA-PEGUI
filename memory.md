@@ -1469,3 +1469,8 @@ ver regla de sincronización en `CLAUDE.md`.
   es que el Teamspace (CRM for Everyone) o las reglas de uso compartido
   estén asignadas por rol y no incluyan "Repuestos 2.0". Pendiente que
   Simón confirme el síntoma exacto (barra gris / error / sin resultados).
+- Simón aclaró que el usuario afectado es **Walter Uribe** (id
+  5404724000062787025, wuribe@emaresa.cl, rol "Repuestos 2.0", mismo perfil
+  que antes). Ve las cotizaciones de Raul Muñoz (mismo rol), así que el
+  acceso a registros funciona; el bloqueo es de la barra de búsqueda.
+  Revisar Teamspace/rol y, si no, comparar con Raul/Manuel/Ernesto.
