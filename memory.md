@@ -1457,3 +1457,15 @@ ver regla de sincronización en `CLAUDE.md`.
   `Plazo` y `Unidad` directo en Writer. Se le guió con "Insertar tabla para
   repetición de fila" eligiendo ambos campos en el diálogo, tras borrar el
   campo huérfano "Artículos presupuestados.Unidad" (creado sin asignar).
+
+## 2026-10-09
+
+- Simón reportó que tras cambiar de rol a un usuario, este no puede usar la
+  barra "Buscar registros". Revisado: el 2026-10-08 Simón pasó a **Raul
+  Muñoz, Walter Uribe, Manuel Ortiz y Ernesto Corvalán** al rol nuevo
+  **"Repuestos 2.0"** (id 5404724000616658050); el perfil sigue siendo
+  "Vendedor Distribución Repuestos jardín y maquinari" (no cambió). Como el
+  perfil es igual al de antes, la causa apunta al rol nuevo: lo más probable
+  es que el Teamspace (CRM for Everyone) o las reglas de uso compartido
+  estén asignadas por rol y no incluyan "Repuestos 2.0". Pendiente que
+  Simón confirme el síntoma exacto (barra gris / error / sin resultados).
