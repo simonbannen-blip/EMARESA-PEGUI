@@ -1506,3 +1506,13 @@ ver regla de sincronización en `CLAUDE.md`.
   revisar: precio de lista ~30 % bajo el precio del producto + 20 % de
   descuento, y cliente en estado BL con sobregiro. Sigue pendiente el OK
   para recalcular las 274 vía API.
+- Precios de COT-CONST-29-2814 vs catálogo (historial de Productos):
+  Mezcladora HV 400 cotizada a 2.400.000 = precio del catálogo ese día,
+  pero ese precio venía de un cambio del 28-08 (3.390.000 → 2.400.000) que
+  se revirtió el 07-10 a 3.390.000 → probable error de catálogo.
+  Betonera HV 150 cotizada a 1.290.000, catálogo 1.850.000 (desde 28-07)
+  → ~30 % bajo catálogo; no calza con ningún precio histórico, podría ser
+  lista/precio especial del cliente (sin permiso de lectura a Precios
+  Especiales / Lista Precios por Cliente). Ambos quedan sobre el precio
+  mínimo tras el 20 %. Al crearse (03-09) el subtotal era 18.450.000; el
+  Cotizador reescribió las líneas el 30-09 a 16.050.000.
