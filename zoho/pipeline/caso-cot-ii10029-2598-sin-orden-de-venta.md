@@ -41,16 +41,25 @@ rechazara, y la función no dejara registro del error.
 No está 100 % confirmado: el código y los logs de la función no se ven
 desde las herramientas conectadas.
 
+## Por qué quedó ese descuento (aclarado por Simón)
+
+La vendedora quería un precio final de **$1.100.000** y por eso buscó el %
+que lo diera. El % exacto sería 11,0557…%; el Cotizador solo acepta 2
+decimales, así que con 11,06 % el total quedó en $1.099.946,77 y el monto
+del descuento con 4 decimales. El problema de fondo es que el Cotizador
+no permite fijar un precio final o un descuento en pesos, solo un %.
+
 ## Propuesta (pendiente OK de Simón)
 
-1. **Arreglar esta cotización**: redondear el descuento de la línea a
-   `136.782` (o el monto que defina la vendedora) y volver a generar la OV con
+1. **Arreglar esta cotización**: dejar el descuento de la línea en
+   **`136.729`** exacto, lo que da el precio de $1.100.000 que buscaba la vendedora, y volver a generar la OV con
    la función "SB Convertir Orden de Venta x Linea Negocio" (Configuración →
    Funciones → Ejecutar con el id de la cotización). **No usar el botón
    Convertir** (ver caso 1741: la OV sale incompleta y falla en el ERP).
    Para confirmar la causa: antes de redondear, ver en la función el log de
    la ejecución de las 13:42 del 13-10.
-2. **Prevenir**: pedir a quien mantiene el Cotizador (Creator) o la función
+2. **Prevenir**: que el Cotizador permita ingresar el precio final o el
+   descuento en pesos (y calcule el % solo), además de pedir a quien mantiene el Cotizador (Creator) o la función
    que redondee los descuentos a pesos enteros (CLP) antes de mandarlos al
    CRM / al crear la OV, y que la función registre el error en
    `Detalle de Log ERP` cuando la OV no se pueda crear.
