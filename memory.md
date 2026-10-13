@@ -1485,3 +1485,12 @@ ver regla de sincronización en `CLAUDE.md`.
   Cotización con el nuevo campo "Precio unitario con descuento" (pedido por
   vendedores; hoy solo se ve el total de descuentos). Versión en
   `zoho/pipeline/mail-propuesta-precio-unitario-con-descuento.md`.
+- Simón preguntó por qué la cotización **20261013-COT-II10029-2598**
+  (Inamar Izaje, IMPORTADORA VIMA, Vanessa Ponce) no creó Orden de Venta.
+  La función "SB Convertir Orden de Venta x Linea Negocio" sí corrió al
+  pasar "Confirmar Cotización Izaje", pero no dejó OV ni error. Causa más
+  probable: descuento de la línea con 4 decimales (136.782,2274, por un
+  11,06 %) — única línea así en Inamar Izaje desde agosto. Propuesta
+  (redondear y regenerar con la función, no con Convertir) en
+  `zoho/pipeline/caso-cot-ii10029-2598-sin-orden-de-venta.md`. No se tocó
+  nada en el CRM.
