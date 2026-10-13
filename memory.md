@@ -1481,3 +1481,7 @@ ver regla de sincronización en `CLAUDE.md`.
   plantilla. Se asumió que es la plantilla de Cotizaciones en Zoho Writer
   (trabajada el 2026-10-08). Borrador en
   `zoho/pipeline/mail-feedback-borrador-plantilla-cotizacion.md`.
+- Simón pidió mejorar su mail que comparte 4 propuestas de plantilla de
+  Cotización con el nuevo campo "Precio unitario con descuento" (pedido por
+  vendedores; hoy solo se ve el total de descuentos). Versión en
+  `zoho/pipeline/mail-propuesta-precio-unitario-con-descuento.md`.
