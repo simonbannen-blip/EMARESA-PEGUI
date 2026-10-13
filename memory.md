@@ -1498,3 +1498,11 @@ ver regla de sincronización en `CLAUDE.md`.
   eso puso 11,06 % (el Cotizador solo acepta % con 2 decimales). Ajustada la
   propuesta: descuento exacto de $136.729 → total $1.100.000; y como mejora,
   que el Cotizador permita ingresar precio final o descuento en pesos.
+- Simón preguntó por valores raros en **COT-CONST-29-2814** (RENTAL VALDIVIA,
+  Héctor Godoy, Cerrada Ganada). Es una de las 274 del CSV de IVA erróneo:
+  guardada el 30-09 08:31, antes de corregir las fórmulas → IVA cobrado dos
+  veces (IVA 2.903.124 y total 18.182.724; correcto 2.439.600 y
+  15.279.600). Las cotizaciones de hoy ya calculan bien. Otras cosas a
+  revisar: precio de lista ~30 % bajo el precio del producto + 20 % de
+  descuento, y cliente en estado BL con sobregiro. Sigue pendiente el OK
+  para recalcular las 274 vía API.
