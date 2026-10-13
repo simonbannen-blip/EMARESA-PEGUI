@@ -1474,3 +1474,10 @@ ver regla de sincronización en `CLAUDE.md`.
   que antes). Ve las cotizaciones de Raul Muñoz (mismo rol), así que el
   acceso a registros funciona; el bloqueo es de la barra de búsqueda.
   Revisar Teamspace/rol y, si no, comparar con Raul/Manuel/Ernesto.
+
+## 2026-10-13
+
+- Simón pidió redactar un mail para pedir feedback sobre el borrador de una
+  plantilla. Se asumió que es la plantilla de Cotizaciones en Zoho Writer
+  (trabajada el 2026-10-08). Borrador en
+  `zoho/pipeline/mail-feedback-borrador-plantilla-cotizacion.md`.
