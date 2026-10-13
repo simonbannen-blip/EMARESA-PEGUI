@@ -1494,3 +1494,7 @@ ver regla de sincronización en `CLAUDE.md`.
   (redondear y regenerar con la función, no con Convertir) en
   `zoho/pipeline/caso-cot-ii10029-2598-sin-orden-de-venta.md`. No se tocó
   nada en el CRM.
+- Simón aclaró que la vendedora buscaba un precio final de $1.100.000 y por
+  eso puso 11,06 % (el Cotizador solo acepta % con 2 decimales). Ajustada la
+  propuesta: descuento exacto de $136.729 → total $1.100.000; y como mejora,
+  que el Cotizador permita ingresar precio final o descuento en pesos.
