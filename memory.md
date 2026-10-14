@@ -1516,3 +1516,6 @@ ver regla de sincronización en `CLAUDE.md`.
   Especiales / Lista Precios por Cliente). Ambos quedan sobre el precio
   mínimo tras el 20 %. Al crearse (03-09) el subtotal era 18.450.000; el
   Cotizador reescribió las líneas el 30-09 a 16.050.000.
+- Simón pidió el tutorial de registro de llamadas en **PDF para mandar
+  por WhatsApp**. Generado desde la misma página (tamaño A4, 4 páginas,
+  un paso por bloque sin cortes): `zoho/tutoriales/Tutorial-Registro-Llamadas-Zoho-CRM.pdf`.
