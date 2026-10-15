@@ -204,3 +204,33 @@ Al terminar, borra los clientes y segmentos `PRUEBA SEG TOP` del Sandbox.
 > Recordatorio: cada vendedor nuevo de IyF tiene que estar cargado en
 > **Usuarios por UN** con UN = Industria y Ferretería para que sus clientes
 > reciban el Top automáticamente.
+
+---
+
+## Hallazgos en la función existente "Enviar Segmento de Cuenta a Creator" (2026-10-15)
+
+Código revisado (pegado por Simón). Argumentos: idSegmento, idCuentaCreator,
+segmento, idUNCreator, idCreator.
+
+1. **Sandbox** envía a Creator con header `environment: development` →
+   va al ambiente de desarrollo de Creator, no al real. ✔
+2. **Error línea 26 (rama Sandbox, alta):**
+   `id = response.get("result").getJSON("data").get("ID");` — `result` es
+   una lista, hay que tomar el primer elemento. Corrección propuesta:
+
+   ```
+   id = "";
+   resultado = response.get("result");
+   if(resultado != null && resultado.size() > 0 && resultado.get(0).get("data") != null)
+   {
+   	id = resultado.get(0).get("data").get("ID");
+   }
+   ```
+3. **Rama Producción (alta):** guarda `"Respuesta_Creator":response.toString()`
+   pero ahí la variable se llama `res` → Respuesta_Creator queda siempre
+   vacío en Producción (confirmado: SEG-13947..13950 tienen ID Creator pero
+   Respuesta_Creator null). Corrección: usar `res.toString()`.
+4. **571 segmentos IyF cargados desde el 07-10 sin ID Creator** (526 Top,
+   44 Premium, 1 Exclusive) — la carga masiva no dispara reglas, así que
+   probablemente **nunca llegaron a Creator**. Pendiente decidir si se
+   reenvían (ej. con "reprocesar" o una función de una vez).
