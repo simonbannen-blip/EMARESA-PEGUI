@@ -1550,3 +1550,9 @@ ver regla de sincronización en `CLAUDE.md`.
   `cuentaId` = Clientes → ID de Cliente (le apareció el aviso "Guardar y
   asociar / Configurar asignación", que se resolvió mapeando el argumento).
   Siguiente: pruebas en Sandbox (ver guía).
+- Simón pidió que el Segmento creado por la función **también se envíe a
+  Creator** (hoy, al crearlo a mano, corre la regla "Enviar Segmento de
+  Cuenta a Creator" y llena ID Creator / Respuesta_Creator). Causa: lo
+  creado con `zoho.crm.createRecord` desde Deluge no dispara reglas de
+  flujo. Ajuste: `createRecord(..., {"trigger":{"workflow"}})`. Riesgo a
+  vigilar: si el cliente aún no existe en Creator al crear el segmento.
