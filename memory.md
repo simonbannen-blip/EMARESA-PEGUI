@@ -1570,3 +1570,6 @@ ver regla de sincronización en `CLAUDE.md`.
   Respuesta_Creator queda siempre vacío (usa `response` en vez de `res`);
   y **571 segmentos IyF cargados desde el 07-10 no tienen ID Creator**
   (526 Top, 44 Premium, 1 Exclusive) → probablemente no están en Creator.
+- Simón dejó en pausa el reenvío de los 571 segmentos sin ID Creator ("si
+  es muy difícil da igual"); va a hacer una nueva prueba de cliente en
+  Sandbox para ver si el segmento llega a Creator.
