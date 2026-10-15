@@ -1546,3 +1546,7 @@ ver regla de sincronización en `CLAUDE.md`.
   ajustó para no usar IDs fijos (UN por nombre, usuario ERP por correo
   infraestructura@emaresa.cl), porque en Sandbox los IDs pueden cambiar.
   Simón está en Usuarios por UN como IyF, así que puede probar él mismo.
+- Simón pegó la función `crearSegmentoTopIyF` y la guardó con el argumento
+  `cuentaId` = Clientes → ID de Cliente (le apareció el aviso "Guardar y
+  asociar / Configurar asignación", que se resolvió mapeando el argumento).
+  Siguiente: pruebas en Sandbox (ver guía).
