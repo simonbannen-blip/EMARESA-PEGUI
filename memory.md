@@ -1563,3 +1563,10 @@ ver regla de sincronización en `CLAUDE.md`.
   vacío si es nuevo). Ojo: depende de que el Cliente ya tenga ID Creator;
   un cliente recién creado podría no tenerlo aún al crearse el segmento.
   Los IDs del Sandbox empiezan con 663876… (distintos a Producción 540472…).
+- Simón pegó el código de "Enviar Segmento de Cuenta a Creator". Hallazgos
+  (detalle al final de `zoho/pipeline/guia-sandbox-segmento-top-iyf.md`):
+  Sandbox envía al ambiente **development** de Creator (no al real);
+  error línea 26 por leer `result` (lista) sin `.get(0)`; en Producción
+  Respuesta_Creator queda siempre vacío (usa `response` en vez de `res`);
+  y **571 segmentos IyF cargados desde el 07-10 no tienen ID Creator**
+  (526 Top, 44 Premium, 1 Exclusive) → probablemente no están en Creator.
