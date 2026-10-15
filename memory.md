@@ -1519,3 +1519,16 @@ ver regla de sincronización en `CLAUDE.md`.
 - Simón pidió el tutorial de registro de llamadas en **PDF para mandar
   por WhatsApp**. Generado desde la misma página (tamaño A4, 4 páginas,
   un paso por bloque sin cortes): `zoho/tutoriales/Tutorial-Registro-Llamadas-Zoho-CRM.pdf`.
+
+## 2026-10-15
+
+- Simón pidió un flujo para que al crear un Cliente nuevo de **Industria y
+  Ferretería** se cree solo su Segmento "Top" (módulo Segmentos de
+  Cuentas, UN IyF id 5404724000032587507). Hallazgo: el Cliente **no tiene
+  campo de UN** (Empresas no distingue, Cartera de Clientes no se usa desde
+  dic-2025) y la mayoría de clientes nuevos los crea el usuario de
+  integración "Emaresa" desde el ERP. Propuse 3 formas de reconocer al
+  cliente IyF (A: por vendedor que lo crea; B: campo nuevo "UN de origen";
+  C: al primer negocio en IyF), recomendando A + C, con función Deluge que
+  evita duplicados. Pendiente que Simón elija. Detalle en
+  `zoho/pipeline/propuesta-flujo-segmento-top-clientes-nuevos-iyf.md`.
