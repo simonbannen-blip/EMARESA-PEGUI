@@ -1537,3 +1537,12 @@ ver regla de sincronización en `CLAUDE.md`.
   nazcan con Segmento "Top" → se elige **opción A** (por vendedor que lo
   crea). Sin carga masiva ni opción C. Propuesta actualizada con pasos de
   armado y prueba en Sandbox.
+- Simón pidió el paso a paso completo para crearlo en **Sandbox** y probar.
+  Guía en `zoho/pipeline/guia-sandbox-segmento-top-iyf.md`: preparación
+  (datos en Sandbox, **desactivar en Sandbox las reglas Creator/ERP** de
+  Clientes y Segmentos para no mandar clientes de prueba a sistemas
+  reales), regla + función, 4 pruebas (crea Top / no crea si no es IyF /
+  no duplica / editar no dispara) y despliegue a Producción. El código se
+  ajustó para no usar IDs fijos (UN por nombre, usuario ERP por correo
+  infraestructura@emaresa.cl), porque en Sandbox los IDs pueden cambiar.
+  Simón está en Usuarios por UN como IyF, así que puede probar él mismo.

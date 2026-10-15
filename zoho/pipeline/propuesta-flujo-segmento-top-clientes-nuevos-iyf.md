@@ -44,6 +44,11 @@ Recomendación original: A + C — A para los que crea el vendedor, C como red
 para los que vienen del ERP. Ambos usan la misma función y nunca duplican
 (si el cliente ya tiene segmento en IyF, no hace nada).
 
+> **Código y paso a paso final (Sandbox + pruebas + Producción):**
+> `guia-sandbox-segmento-top-iyf.md`. Esa versión no usa IDs fijos (busca la
+> UN por nombre y el usuario ERP por correo). El código de abajo es el
+> borrador original.
+
 ## Flujo (opción A) — Configuración → Automatización → Reglas de flujo de trabajo
 
 1. Módulo **Clientes** → Cuándo: **Al crear el registro**.
