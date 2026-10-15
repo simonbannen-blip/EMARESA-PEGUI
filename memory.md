@@ -1556,3 +1556,10 @@ ver regla de sincronización en `CLAUDE.md`.
   creado con `zoho.crm.createRecord` desde Deluge no dispara reglas de
   flujo. Ajuste: `createRecord(..., {"trigger":{"workflow"}})`. Riesgo a
   vigilar: si el cliente aún no existe en Creator al crear el segmento.
+- La función existente **"Enviar Segmento de Cuenta a Creator"** recibe 5
+  argumentos: idSegmento (int), idCuentaCreator (ID Creator del Cliente),
+  segmento (valor, ej. "Top"), idUNCreator (ID Creator de la UN; IyF =
+  4389062000000085007 en Producción) e idCreator (ID Creator del segmento,
+  vacío si es nuevo). Ojo: depende de que el Cliente ya tenga ID Creator;
+  un cliente recién creado podría no tenerlo aún al crearse el segmento.
+  Los IDs del Sandbox empiezan con 663876… (distintos a Producción 540472…).
