@@ -1579,3 +1579,9 @@ ver regla de sincronización en `CLAUDE.md`.
   "Infraestructura Emaresa" (la función corre con ese usuario), no el
   vendedor — opcional asignar el Owner al vendedor. Falta: prueba negativa
   (usuario no IyF) y desplegar a Producción.
+- ✅ **En Producción y funcionando**: Simón lo desplegó y creó el cliente
+  "prueba segmento" (RUT 76999908-6, id 5404724000620376032, 17:06:07).
+  Pensó que no salió, pero lo verifiqué: a los 3 s se creó **SEG-13951**
+  (Industria y Ferretería, Top) con ID Creator 4389062000012373022 → llegó
+  a Creator. Probablemente no refrescó la ficha. Pendiente: borrar el
+  cliente/segmento de prueba (también existen en Creator).
