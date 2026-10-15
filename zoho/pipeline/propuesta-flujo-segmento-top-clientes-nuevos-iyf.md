@@ -1,6 +1,11 @@
 # Propuesta: crear Segmento "Top" automático para clientes nuevos de Industria y Ferretería
 
-## Estado: PROPUESTO — falta que Simón confirme cómo reconocer a un cliente "de IyF"
+## Estado: DEFINIDO (opción A) — pendiente de armar en Zoho
+
+**Decisión de Simón (2026-10-15):** todos los clientes existentes de IyF ya
+tienen algún segmento, así que **no hace falta carga masiva ni la opción C**.
+Solo se necesita que los clientes **nuevos creados por vendedores de IyF**
+nazcan con su Segmento asociado "Top" → se usa la **opción A**.
 
 ## Qué se pidió
 
@@ -34,7 +39,8 @@ IyF**. Opciones:
 | **B. Campo nuevo en Clientes** | Campo lista "UN de origen" en Clientes; si = Industria y Ferretería → Top | Lo más claro y explícito. Requiere que se complete al crear (y que el ERP lo mande, o un vendedor lo llene). |
 | **C. Al primer negocio en IyF** | Cuando se crea la primera Oportunidad/Cotización con UN = IyF de un cliente que no tiene segmento en IyF | Cubre también los clientes del ERP. Se crea al primer negocio, no en el minuto en que nace el cliente. |
 
-**Recomendación: A + C** — A para los que crea el vendedor, C como red
+~~Recomendación inicial: A + C~~ (descartada: se eligió solo A).
+Recomendación original: A + C — A para los que crea el vendedor, C como red
 para los que vienen del ERP. Ambos usan la misma función y nunca duplican
 (si el cliente ya tiene segmento en IyF, no hace nada).
 
@@ -83,19 +89,19 @@ void crearSegmentoTopIyF(int cuentaId)
 }
 ```
 
-## Flujo (opción C) — red para clientes del ERP
+## Pasos para armarlo
 
-Regla en **Oportunidades** (y/o Cotizaciones) → Al crear → Condición
-`UN` es Industria y Ferretería → Función con argumento `cuentaId` =
-Cliente de la Oportunidad. Mismo código desde "evitar duplicados" en
-adelante (sin el chequeo de creador).
+1. En **Sandbox**: crear la función de arriba (Configuración →
+   Desarrollador → Funciones → Nueva función → categoría Automatización)
+   y la regla de flujo en Clientes "Al crear" que la llame.
+2. Probar: un vendedor de IyF crea un cliente de prueba → en su lista
+   "Segmento asociado" debe aparecer un registro UN = Industria y
+   Ferretería, Segmento = Top. Crear otro cliente con un usuario que no
+   sea de IyF → no debe crearse nada.
+3. Si funciona, repetir los mismos pasos en Producción.
 
-## Pendiente antes de armarlo
-
-1. Simón elige A, B, C o combinación.
-2. Confirmar si los clientes nuevos ya existentes sin segmento IyF se
-   completan con una carga única (eso sí lo puedo hacer yo por API, con OK).
-3. Probar primero en Sandbox con un cliente creado por un vendedor de IyF.
+> Nota: un vendedor nuevo de IyF tiene que estar cargado en "Usuarios por
+> UN" con UN = Industria y Ferretería para que sus clientes reciban el Top.
 
 > Las reglas de flujo y funciones no se pueden crear con las herramientas
 > conectadas a esta sesión — se arman a mano en Zoho con los pasos de arriba.
