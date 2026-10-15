@@ -1532,3 +1532,8 @@ ver regla de sincronización en `CLAUDE.md`.
   C: al primer negocio en IyF), recomendando A + C, con función Deluge que
   evita duplicados. Pendiente que Simón elija. Detalle en
   `zoho/pipeline/propuesta-flujo-segmento-top-clientes-nuevos-iyf.md`.
+- Simón confirmó que todos los clientes existentes de IyF ya tienen
+  segmento: solo falta que los **nuevos creados por vendedores de IyF**
+  nazcan con Segmento "Top" → se elige **opción A** (por vendedor que lo
+  crea). Sin carga masiva ni opción C. Propuesta actualizada con pasos de
+  armado y prueba en Sandbox.
