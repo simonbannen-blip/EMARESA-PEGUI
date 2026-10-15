@@ -35,6 +35,14 @@ UN = Industria y Ferretería y Segmento = Top.
 
 ---
 
+> **Envío a Creator:** los registros creados desde una función **no disparan
+> las reglas de flujo** salvo que se pida explícitamente. Por eso el
+> `createRecord` lleva `{"trigger":{"workflow"}}`: así corre la regla
+> existente "Enviar Segmento de Cuenta a Creator" igual que cuando el
+> segmento se crea a mano. Si Creator rechaza el segmento porque el cliente
+> aún no llegó a Creator, se puede reenviar marcando el check "reprocesar"
+> del segmento (a confirmar) o agregar una espera.
+
 ## Parte 1 — Crear la regla y la función en Sandbox (10 min)
 
 1. **Configuración → Automatización → Reglas de flujo de trabajo →
@@ -107,7 +115,8 @@ void automation.crearSegmentoTopIyF(Int cuentaId)
 	nuevo.put("Cuenta", cuentaId);
 	nuevo.put("UN", unIyF);
 	nuevo.put("Segmento", "Top");
-	resp = zoho.crm.createRecord("Segmentos_de_Cuentas", nuevo);
+	// trigger workflow: para que corra la regla "Enviar Segmento de Cuenta a Creator"
+	resp = zoho.crm.createRecord("Segmentos_de_Cuentas", nuevo, {"trigger":{"workflow"}});
 	info resp;
 }
 ```
