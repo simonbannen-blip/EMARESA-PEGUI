@@ -1,6 +1,6 @@
 # Propuesta: crear Segmento "Top" automático para clientes nuevos de Industria y Ferretería
 
-## Estado: DEFINIDO (opción A) — pendiente de armar en Zoho
+## Estado: PROBADO OK EN SANDBOX (2026-10-15) — falta prueba negativa y pasar a Producción
 
 **Decisión de Simón (2026-10-15):** todos los clientes existentes de IyF ya
 tienen algún segmento, así que **no hace falta carga masiva ni la opción C**.

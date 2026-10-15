@@ -1573,3 +1573,9 @@ ver regla de sincronización en `CLAUDE.md`.
 - Simón dejó en pausa el reenvío de los 571 segmentos sin ID Creator ("si
   es muy difícil da igual"); va a hacer una nueva prueba de cliente en
   Sandbox para ver si el segmento llega a Creator.
+- ✅ **Prueba en Sandbox OK**: cliente "prueba 3" → se creó SEG-155
+  (UN Industria y Ferretería, Top) y llegó a Creator (ID Creator
+  4389062000012382014, code 3000). Propietario/creador del segmento quedó
+  "Infraestructura Emaresa" (la función corre con ese usuario), no el
+  vendedor — opcional asignar el Owner al vendedor. Falta: prueba negativa
+  (usuario no IyF) y desplegar a Producción.
