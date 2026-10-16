@@ -1598,3 +1598,19 @@ ver regla de sincronización en `CLAUDE.md`.
   NEOGEL y re-ejecutar la función de OV. Detalle en
   `zoho/pipeline/caso-cot-ii10022-1776-sucursal-de-otro-cliente.md`.
 - Nota: la 2598 (caso del 13-10) ya tiene su OV (creada 13-10 15:28).
+
+## 2026-10-16 — Cuadro de despacho Rental autocompletado
+
+- Simón quiere que el cuadro "DATOS DE DESPACHO / RETIRO" que los vendedores
+  Rental mandan además de la cotización se llene solo con datos del CRM y
+  el vendedor complete el resto desde el correo.
+- Propuesta (pendiente OK + prueba en Sandbox): función Deluge
+  `enviarCuadroDespachoRental` + regla en Cotizaciones (Cerrada Ganada y
+  UN = Rental) que manda al propietario un correo con el cuadro en HTML;
+  celdas sin dato en amarillo "COMPLETAR". ~14 de 31 filas salen solas
+  (cliente, RUT, obra, dirección, contacto, teléfono, equipos, días,
+  seguro, valor diario, flete, N° cotización, retira cliente). Validado el
+  mapeo con COT-REN-5288. Detalle y código en
+  `zoho/pipeline/propuesta-cuadro-despacho-rental-autocompletado.md`.
+- Preguntas abiertas: a quién se reenvía, en qué momento, seguro en UF vs
+  pesos, y qué es el campo "Cuadro digitable" (creado 29-09, casi sin uso).
