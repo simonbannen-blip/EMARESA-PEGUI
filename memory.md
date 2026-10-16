@@ -1585,3 +1585,16 @@ ver regla de sincronización en `CLAUDE.md`.
   (Industria y Ferretería, Top) con ID Creator 4389062000012373022 → llegó
   a Creator. Probablemente no refrescó la ficha. Pendiente: borrar el
   cliente/segmento de prueba (también existen en Creator).
+
+## 2026-10-16 — COT-II10022-1776 Cerrada Ganada sin OV
+
+- Simón preguntó por qué la cotización 20260731-COT-II10022-1776 (NEOGEL,
+  Fabián Rodriguez) no creó OV. Causa: el 09-10 el Cotizador cambió el
+  cliente de GELYMAR a NEOGEL, pero la **Sucursal del Cliente quedó la de
+  GELYMAR** ("CAMINO A PARGUA KM.25"). La función de OV corrió al confirmar
+  (16-10 09:04) y no creó nada ni dejó error. Descartado: forma de pago vacía
+  (otras sin forma de pago sí generaron OV).
+- Propuesta (pendiente OK): cambiar la sucursal a "MATRIZ- - UN: (210)" de
+  NEOGEL y re-ejecutar la función de OV. Detalle en
+  `zoho/pipeline/caso-cot-ii10022-1776-sucursal-de-otro-cliente.md`.
+- Nota: la 2598 (caso del 13-10) ya tiene su OV (creada 13-10 15:28).
