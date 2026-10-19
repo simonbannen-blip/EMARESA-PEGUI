@@ -1614,3 +1614,12 @@ ver regla de sincronización en `CLAUDE.md`.
   `zoho/pipeline/propuesta-cuadro-despacho-rental-autocompletado.md`.
 - Preguntas abiertas: a quién se reenvía, en qué momento, seguro en UF vs
   pesos, y qué es el campo "Cuadro digitable" (creado 29-09, casi sin uso).
+
+## 2026-10-19 — Ticket proveedor: Crédito Simple siempre disponible
+
+- Simón pidió redactar un ticket para el proveedor: habilitar la forma de
+  pago "Crédito Simple" para que se pueda seleccionar siempre (aunque el
+  cliente no tenga Crédito Simple) y completar el flujo, porque esos casos
+  los administra un encargado en KARVE. Objetivo: agilizar el proceso.
+- Borrador en `zoho/config/ticket-proveedor-habilitar-credito-simple-siempre.md`.
+  Relacionado con `propuesta-regla-efectivo-credito-simple.md`.
