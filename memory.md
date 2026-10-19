@@ -1623,3 +1623,19 @@ ver regla de sincronización en `CLAUDE.md`.
   los administra un encargado en KARVE. Objetivo: agilizar el proceso.
 - Borrador en `zoho/config/ticket-proveedor-habilitar-credito-simple-siempre.md`.
   Relacionado con `propuesta-regla-efectivo-credito-simple.md`.
+
+## 2026-10-19 — Caso ENOTEC: no aparece Crédito Simple al cotizar
+
+- Simón reportó que en ENOTEC (RUT 99535580-9, UN Inamar Izaje) no sale
+  "Crédito Simple" al cotizar la última oportunidad (002508) aunque la LC lo
+  tiene. PD: tenía 2 LC de Inamar Izaje.
+- En el CRM está bien: LC Inamar Izaje IDLINEA-446488 = CREDITO SIMPLE desde
+  el 16-10 11:14, enviada OK al Cotizador; la OP es del 19-10. Otros clientes
+  de Inamar Izaje con Crédito Simple cotizan normal.
+- Causa probable: LC huérfanas/duplicadas en el Cotizador (copia de
+  IDLINEA-91920, borrada del CRM, y un ID Creator viejo de IDLINEA-353222).
+  Solución: limpiar en el Cotizador y dejar solo IDs Creator
+  4389062000011402036 (Inamar) y 4389062000005472263 (Emaresa).
+- Detectado además: picklist "Forma de Pago" con valores internos cruzados
+  (CREDITO SIMPLE = `Contado`, LETRAS = `Crédito Simple`, CHEQUE = `Vale Vista`).
+- Detalle en `zoho/pipeline/caso-enotec-credito-simple-no-aparece-cotizador.md`.
