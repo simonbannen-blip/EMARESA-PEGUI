@@ -1639,3 +1639,13 @@ ver regla de sincronización en `CLAUDE.md`.
 - Detectado además: picklist "Forma de Pago" con valores internos cruzados
   (CREDITO SIMPLE = `Contado`, LETRAS = `Crédito Simple`, CHEQUE = `Vale Vista`).
 - Detalle en `zoho/pipeline/caso-enotec-credito-simple-no-aparece-cotizador.md`.
+
+## 2026-10-22 — Usuario no puede eliminar tareas en forma masiva
+
+- Simón reportó que un usuario borra tareas de a una pero no masivamente
+  (tiene ~240). Causa: falta el permiso de perfil **Eliminación masiva**
+  (Permisos de herramientas); el borrado individual depende de otro permiso.
+- Propuesta (pendiente OK + nombre del usuario): activar el permiso en su
+  perfil (o clon del perfil), o borrar las tareas por API en lotes de 100.
+  Candidatos por cantidad de tareas abiertas: Silva 264, Rodriguez 255.
+  Detalle en `zoho/config/caso-usuario-no-puede-eliminar-tareas-masivo.md`.
