@@ -1,6 +1,6 @@
 # Caso: usuarios MIV no pueden clonar cotizaciones
 
-Fecha: 2026-10-22 · Estado: **diagnóstico parcial / falta el síntoma exacto de Simón**
+Fecha: 2026-10-22 · Estado: **hipótesis "falta Crear" descartada / falta el síntoma exacto**
 
 ## Perfiles involucrados (usuarios activos)
 - **Vendedor MIV** (7): Lorena Argomedo, Braulio Guzmán, Daniela Muñoz Gomez,
@@ -31,3 +31,19 @@ Fecha: 2026-10-22 · Estado: **diagnóstico parcial / falta el síntoma exacto d
 
 Si después de eso sigue fallando, el mensaje exacto de error indica qué
 módulo/campo falta (ver tabla de módulos arriba).
+
+## Actualización 2026-10-22 — captura de Simón
+El perfil (Campañas y Órdenes de venta apagados → coincide con Vendedor MIV)
+**ya tiene Cotizaciones: Vista, Crear, Editar**. Hipótesis de "falta Crear"
+descartada. Además, Vendedor MIV casi no usa cotizaciones (es dueño de 1);
+las cotizaciones MIV las hacen los Responsables de Área MIV y MAK (que también crean).
+
+Revisada COT-MIV-000239 (Ancao): ítems sin Catálogo de precios, sin Obra Rental
+ni Segmento; Blueprint activo; registro no bloqueado. Nada que impida clonar
+a nivel de permisos/datos.
+
+Pendiente de Simón: quién lo intentó, en qué cotización, y qué pasa exactamente
+(no aparece "Clonar" en el menú "…", o sale un mensaje de error — cuál).
+Nota: existen los campos "ID Cotizac. Original" y "Tipo de Cotización"
+(1° Selección…) — revisar si hay un botón/flujo propio para clonar/revisar
+cotizaciones que esté restringido por perfil.

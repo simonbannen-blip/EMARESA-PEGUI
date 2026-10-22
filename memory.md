@@ -1661,3 +1661,6 @@ ver regla de sincronización en `CLAUDE.md`.
 - Propuesta (pendiente síntoma exacto y OK): activar "Crear" en
   Cotizaciones en el perfil Vendedor MIV. Detalle en
   `zoho/config/caso-usuarios-miv-no-pueden-clonar-cotizaciones.md`.
+- Actualización: la captura del perfil muestra que Cotizaciones ya tiene
+  Vista/Crear/Editar → hipótesis descartada. Pendiente: síntoma exacto
+  (quién, qué cotización, falta el botón o sale error).
