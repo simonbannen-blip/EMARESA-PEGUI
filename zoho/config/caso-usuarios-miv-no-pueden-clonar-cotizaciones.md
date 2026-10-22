@@ -47,3 +47,15 @@ Pendiente de Simón: quién lo intentó, en qué cotización, y qué pasa exacta
 Nota: existen los campos "ID Cotizac. Original" y "Tipo de Cotización"
 (1° Selección…) — revisar si hay un botón/flujo propio para clonar/revisar
 cotizaciones que esté restringido por perfil.
+
+## Actualización 2 — se usa el "Clonar" nativo (menú "…")
+Captura de Simón (vista admin) en COT-MIV-000239: el menú "…" muestra Clonar y
+además **"Botón Crear"**, que es la personalización de botones estándar
+(Crear / Editar / Clonar) por perfil y layout. Como la org redirige la creación
+y edición al Cotizador ("Editar Cotización"), lo más probable es que **Clonar
+esté sobrescrito u oculto para los perfiles MIV** en esa configuración.
+
+Revisar: Configuración → Personalización → Módulos y campos → Cotizaciones →
+Botones → botones estándar (o "…" → Botón Crear) → acción **Clonar**: ver qué
+regla aplica a "Vendedor MIV" y "Responsable de Área MIV y MAK" y dejarla
+igual a la de los perfiles que sí pueden clonar.

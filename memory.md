@@ -1664,3 +1664,6 @@ ver regla de sincronización en `CLAUDE.md`.
 - Actualización: la captura del perfil muestra que Cotizaciones ya tiene
   Vista/Crear/Editar → hipótesis descartada. Pendiente: síntoma exacto
   (quién, qué cotización, falta el botón o sale error).
+- Se usa el Clonar nativo (menú "…"). Nueva hipótesis: personalización de
+  botones estándar (opción "Botón Crear") con Clonar sobrescrito/oculto para
+  perfiles MIV. Pendiente que Simón lo revise.
