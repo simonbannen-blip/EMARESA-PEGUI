@@ -1,0 +1,33 @@
+# Caso: usuarios MIV no pueden clonar cotizaciones
+
+Fecha: 2026-10-22 · Estado: **diagnóstico parcial / falta el síntoma exacto de Simón**
+
+## Perfiles involucrados (usuarios activos)
+- **Vendedor MIV** (7): Lorena Argomedo, Braulio Guzmán, Daniela Muñoz Gomez,
+  Nicolas Avila, Pablo Farias, Patricio Castro, Vladimir Barrales.
+- **Responsable de Área MIV y MAK** (4): Francisco Lledo Calvo, Jorge Ancao
+  Paillalef, Sebastian Herrera Romero, Patricio Alarcon.
+
+## Qué revisé (solo lectura)
+- En Zoho clonar = **crear** un registro nuevo con los datos del original. No hay
+  un permiso aparte para clonar: depende del permiso **Crear** en Cotizaciones del perfil.
+- Ambos perfiles tienen acceso al módulo Cotizaciones y al layout Standard (único).
+- **Responsable de Área MIV y MAK** crea cotizaciones a diario (COT-MIV-000232
+  a 000239, 14 al 22-10) → tiene "Crear". **Vendedor MIV** creó solo 3 en total
+  (Argomedo 1, Guzmán 2) → probablemente le falta "Crear" en Cotizaciones.
+- Campos: ningún campo obligatorio está oculto para MIV. Los campos ocultos
+  (aprobadores, Obra Rental, Código vendedor, Plazo de entrega del ítem, etc.)
+  no impiden clonar, solo no se copian.
+- Módulos vinculados: MIV tiene acceso a Cuentas, Contactos, Oportunidades,
+  Productos, UN, Líneas, Sucursales, Formas de pago, Transportistas. Le faltan
+  Obras Rental y Catálogos de precios (y Segmentos en Resp. Área MIV), pero en
+  sus cotizaciones esos campos vienen vacíos → no deberían bloquear.
+
+## Solución propuesta (requiere OK — cambio en CRM en vivo, lo hace Simón en Setup)
+1. Configuración → Usuarios y control → Control de seguridad → Perfiles →
+   **Vendedor MIV** (y verificar también **Responsable de Área MIV y MAK**).
+2. Permisos de módulo → **Cotizaciones** → activar **Crear** (además de Ver/Editar) → Guardar.
+3. Probar con un usuario MIV: abrir una cotización → menú "…" → **Clonar**.
+
+Si después de eso sigue fallando, el mensaje exacto de error indica qué
+módulo/campo falta (ver tabla de módulos arriba).

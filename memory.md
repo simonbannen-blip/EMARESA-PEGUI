@@ -1649,3 +1649,15 @@ ver regla de sincronización en `CLAUDE.md`.
   perfil (o clon del perfil), o borrar las tareas por API en lotes de 100.
   Candidatos por cantidad de tareas abiertas: Silva 264, Rodriguez 255.
   Detalle en `zoho/config/caso-usuario-no-puede-eliminar-tareas-masivo.md`.
+- Simón confirmó que el caso de las tareas ya lo resolvió él.
+
+## 2026-10-22 — Usuarios MIV no pueden clonar cotizaciones
+
+- Pedido: que los usuarios de MIV (perfiles Vendedor MIV y Responsable de
+  Área MIV y MAK) puedan clonar cotizaciones.
+- Clonar en Zoho depende del permiso **Crear** en Cotizaciones. Resp. Área
+  MIV crea cotizaciones a diario (sí lo tiene); Vendedor MIV creó solo 3 en
+  total → probable falta de "Crear". Campos y módulos vinculados descartados.
+- Propuesta (pendiente síntoma exacto y OK): activar "Crear" en
+  Cotizaciones en el perfil Vendedor MIV. Detalle en
+  `zoho/config/caso-usuarios-miv-no-pueden-clonar-cotizaciones.md`.
