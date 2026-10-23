@@ -78,3 +78,12 @@ Solución (la aplica Simón en Zoho; el MCP no lee ni edita Client Scripts):
    **"Vendedor MIV"** si corresponde) a la lista de perfiles/roles permitidos,
    escrito exactamente igual que el nombre del perfil. Guardar.
 4. Probar con Patricio Alarcon.
+
+## Paso a paso entregado a Simón (2026-10-23)
+1. Engranaje (Configuración) → Developer Hub → Client Script (o "…" → Administrar script de cliente).
+2. Filtrar Módulo = Cotizaciones; abrir el script de la página **Clonar** que contiene "no tiene permisos para clonar".
+3. Ubicar la condición con nombres de perfil/rol, p. ej.:
+   - `if (perfil != "Administrator" && perfil != "Gerente")` → agregar `&& perfil != "Responsable de Área MIV y MAK"` (y `&& perfil != "Vendedor MIV"`).
+   - o una lista `["Administrator","Gerente"]` → agregar `,"Responsable de Área MIV y MAK","Vendedor MIV"`.
+4. Guardar (y Publicar si lo pide). Probar con Patricio Alarcon (Ctrl+F5 antes).
+Perfiles: Patricio Alarcon = "Responsable de Área MIV y MAK"; rol = "Jefe de Presupuesto - Product Manager Equipos y Calderería Vapor".
