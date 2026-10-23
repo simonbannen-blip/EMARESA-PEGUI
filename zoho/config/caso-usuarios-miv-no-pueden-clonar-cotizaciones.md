@@ -119,3 +119,13 @@ if (perfilesPermitidos.indexOf(user.profile.name) === -1) {
       return false;
   }
 ```
+
+## Botón personalizado "Clonar Cotización" (2026-10-23)
+Simón quiere que los usuarios MIV vean el botón propio **"Clonar Cotización"**
+(dentro del desplegable de "Editar Cotización", junto a "Ver Contrato Rental").
+Es un botón personalizado: su visibilidad se define por perfil en el mismo botón.
+Pasos: desplegable "Editar Cotización" → Administrar botones → "Clonar Cotización"
+→ Editar → sección de perfiles ("¿Quién puede ver este botón?") → agregar
+"Responsable de Área MIV y MAK" y "Vendedor MIV" → Guardar.
+Si el botón abre el Cotizador (Creator) o una función, puede tener su propia
+validación de permisos: si después aparece un error al usarlo, revisar ahí.
