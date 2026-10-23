@@ -129,3 +129,14 @@ Pasos: desplegable "Editar Cotización" → Administrar botones → "Clonar Coti
 "Responsable de Área MIV y MAK" y "Vendedor MIV" → Guardar.
 Si el botón abre el Cotizador (Creator) o una función, puede tener su propia
 validación de permisos: si después aparece un error al usarlo, revisar ahí.
+
+## Vista de Patricio Alarcon (COT-MIV-000228) — 2026-10-23
+- No ve ningún botón personalizado: ni "Editar Cotización" ni su desplegable
+  (Clonar Cotización / Ver Contrato Rental). Solo "Editar" y "…" (con Clonar nativo).
+- Si "Clonar Cotización" ya tuviera su perfil, debería verlo aunque sea solo.
+  → Verificar que el cambio de perfiles del botón quedó guardado (captura de
+  la configuración del botón).
+- Ojo: las cotizaciones MIV se hacen en el CRM (Origen = CRM, ID Creator vacío),
+  no en el Cotizador. Si "Clonar Cotización" abre el Cotizador, probablemente no
+  sirva para cotizaciones MIV aunque se vea. Para MIV, el "Clonar" nativo del
+  menú "…" (ya habilitado vía script) es la vía natural.
