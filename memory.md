@@ -1671,3 +1671,4 @@ ver regla de sincronización en `CLAUDE.md`.
   permisos para clonar cotización!" → es un Client Script propio en
   Cotizaciones (página Clonar) que filtra por perfil/rol. Solución: agregar
   los perfiles MIV a la lista de permitidos del script (lo hace Simón).
+- Entregado paso a paso para editar el Client Script de Clonar (23-10).
