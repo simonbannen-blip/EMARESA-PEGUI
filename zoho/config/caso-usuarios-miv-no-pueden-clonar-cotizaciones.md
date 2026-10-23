@@ -59,3 +59,22 @@ Revisar: Configuración → Personalización → Módulos y campos → Cotizacio
 Botones → botones estándar (o "…" → Botón Crear) → acción **Clonar**: ver qué
 regla aplica a "Vendedor MIV" y "Responsable de Área MIV y MAK" y dejarla
 igual a la de los perfiles que sí pueden clonar.
+
+## Actualización 3 — causa encontrada (2026-10-23)
+Patricio Alarcon (Responsable de Área MIV y MAK) al hacer clic en Clonar ve:
+> "Hola Patricio Alarcon, usted no tiene permisos para clonar cotización!"
+
+No es un mensaje nativo de Zoho: es un **Client Script** propio (se abre la
+pantalla de clonación, con Fase = Creada de fondo, y el script la bloquea con
+una alerta). El script valida el perfil/rol del usuario contra una lista de
+permitidos, y los perfiles MIV no están en esa lista.
+
+Solución (la aplica Simón en Zoho; el MCP no lee ni edita Client Scripts):
+1. Configuración → Developer Hub → **Client Script** (o en la cotización:
+   "…" → Administrar script de cliente).
+2. Filtrar módulo **Cotizaciones**, página **Clonar** (evento onLoad). Buscar el
+   script que contiene "no tiene permisos para clonar".
+3. En la condición, agregar **"Responsable de Área MIV y MAK"** (y
+   **"Vendedor MIV"** si corresponde) a la lista de perfiles/roles permitidos,
+   escrito exactamente igual que el nombre del perfil. Guardar.
+4. Probar con Patricio Alarcon.
