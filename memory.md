@@ -1685,3 +1685,17 @@ ver regla de sincronización en `CLAUDE.md`.
 - Resumen en `zoho/pipeline/lineas-credito-duplicadas.md` y listado completo
   en `zoho/pipeline/lineas-credito-duplicadas-2026-10-23.csv`.
 - No se borró nada en el CRM; falta definir criterio de cuál conservar.
+
+## 2026-10-23 — Nueva fase de Cotización "Actualización de oferta" (Inamar Vapor)
+
+- Pedido: fase "Actualización de oferta" solo para UN Inamar Vapor,
+  seleccionable desde todas las fases menos Cerrada Ganada / Perdida, y
+  cómo hacerlo en Sandbox.
+- Revisado: Cotizaciones tiene un solo diseño (Standard) y la UN es un
+  lookup → el valor del listado no se puede limitar por UN; la
+  restricción se hace en el Blueprint "SB Gestión de Cotizaciones" con
+  una **transición común** con criterio UN = Inamar Vapor.
+- Inamar Vapor hoy: Enviada 139, Creada 50, Cerrada Perdida 7.
+- Guía paso a paso en
+  `zoho/pipeline/guia-sandbox-fase-actualizacion-de-oferta-inamar-vapor.md`.
+  Pendiente: transiciones de salida, impacto en Creator, OK para Producción.
