@@ -1673,3 +1673,4 @@ ver regla de sincronización en `CLAUDE.md`.
   los perfiles MIV a la lista de permitidos del script (lo hace Simón).
 - Entregado paso a paso para editar el Client Script de Clonar (23-10).
 - Script "Deshabilitar clonar cotización" solo permitía Administrator; entregada versión con lista de perfiles (Administrator + 2 perfiles MIV). Pendiente que Simón lo guarde y pruebe.
+- Pedido adicional: que MIV vea el botón propio "Clonar Cotización" (desplegable de Editar Cotización). Pasos entregados: Administrar botones → agregar perfiles MIV.
