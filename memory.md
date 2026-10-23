@@ -1675,3 +1675,13 @@ ver regla de sincronización en `CLAUDE.md`.
 - Script "Deshabilitar clonar cotización" solo permitía Administrator; entregada versión con lista de perfiles (Administrator + 2 perfiles MIV). Pendiente que Simón lo guarde y pruebe.
 - Pedido adicional: que MIV vea el botón propio "Clonar Cotización" (desplegable de Editar Cotización). Pasos entregados: Administrar botones → agregar perfiles MIV.
 - Patricio sigue sin ver el botón "Clonar Cotización" (no ve ningún botón personalizado). Pedida captura de la config del botón; advertido que ese botón probablemente usa el Cotizador y las cotizaciones MIV son de origen CRM.
+
+## 2026-10-23 — Listado de Líneas de Crédito duplicadas
+
+- Simón pidió cuántas Líneas de Crédito hay duplicadas.
+- Revisé las 113.094 LC del CRM agrupando por Cliente + UN: **819 clientes**
+  con LC repetida, 1.649 LC involucradas, **830 sobrantes**. La mayoría en
+  Emaresa (515 clientes) e Inamar Izaje (196). Además hay 32 LC sin cliente.
+- Resumen en `zoho/pipeline/lineas-credito-duplicadas.md` y listado completo
+  en `zoho/pipeline/lineas-credito-duplicadas-2026-10-23.csv`.
+- No se borró nada en el CRM; falta definir criterio de cuál conservar.
