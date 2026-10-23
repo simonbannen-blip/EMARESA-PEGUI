@@ -1667,3 +1667,7 @@ ver regla de sincronización en `CLAUDE.md`.
 - Se usa el Clonar nativo (menú "…"). Nueva hipótesis: personalización de
   botones estándar (opción "Botón Crear") con Clonar sobrescrito/oculto para
   perfiles MIV. Pendiente que Simón lo revise.
+- Causa encontrada (23-10): al clonar, Patricio Alarcon ve "usted no tiene
+  permisos para clonar cotización!" → es un Client Script propio en
+  Cotizaciones (página Clonar) que filtra por perfil/rol. Solución: agregar
+  los perfiles MIV a la lista de permitidos del script (lo hace Simón).
