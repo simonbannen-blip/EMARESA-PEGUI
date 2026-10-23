@@ -1672,3 +1672,4 @@ ver regla de sincronización en `CLAUDE.md`.
   Cotizaciones (página Clonar) que filtra por perfil/rol. Solución: agregar
   los perfiles MIV a la lista de permitidos del script (lo hace Simón).
 - Entregado paso a paso para editar el Client Script de Clonar (23-10).
+- Script "Deshabilitar clonar cotización" solo permitía Administrator; entregada versión con lista de perfiles (Administrator + 2 perfiles MIV). Pendiente que Simón lo guarde y pruebe.

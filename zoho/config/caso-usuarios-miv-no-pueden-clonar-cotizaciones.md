@@ -87,3 +87,35 @@ Solución (la aplica Simón en Zoho; el MCP no lee ni edita Client Scripts):
    - o una lista `["Administrator","Gerente"]` → agregar `,"Responsable de Área MIV y MAK","Vendedor MIV"`.
 4. Guardar (y Publicar si lo pide). Probar con Patricio Alarcon (Ctrl+F5 antes).
 Perfiles: Patricio Alarcon = "Responsable de Área MIV y MAK"; rol = "Jefe de Presupuesto - Product Manager Equipos y Calderería Vapor".
+
+## Script real y corrección (2026-10-23)
+Script: **"Deshabilitar clonar cotización"** — Cotizaciones · Clonar página (Estándar) · onSave.
+Hoy solo deja clonar al perfil **Administrator** (todos los demás perfiles están bloqueados).
+
+Original:
+```js
+var user = ZDK.Apps.CRM.Users.fetchById($Crm.user.id);
+log(user.profile.name);
+if (user.profile.name != 'Administrator') {
+      ZDK.Client.showAlert('Hola '+user.first_name+' ' +user.last_name+', usted no tiene permisos para clonar cotización!');
+      return false;
+  }
+```
+
+Corregido (entregado a Simón para reemplazar):
+```js
+var user = ZDK.Apps.CRM.Users.fetchById($Crm.user.id);
+log(user.profile.name);
+
+// Perfiles que pueden clonar cotizaciones
+var perfilesPermitidos = [
+    'Administrator',
+    'Responsable de Área MIV y MAK',
+    'Vendedor MIV'
+];
+
+if (perfilesPermitidos.indexOf(user.profile.name) === -1) {
+      ZDK.Client.showAlert('Hola '+user.first_name+' ' +user.last_name+', usted no tiene permisos para clonar cotización!');
+      return false;
+  }
+```
