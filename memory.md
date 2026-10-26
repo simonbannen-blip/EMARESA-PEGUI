@@ -1719,3 +1719,16 @@ ver regla de sincronización en `CLAUDE.md`.
   oferta" (el setValue del Client Script no aplica). Entregado plan B:
   regla de flujo al Crear con Fase = Actualización de oferta → Fase =
   Creada (actualización de campo o función Deluge con updateRecord).
+
+## 2026-10-26 — Ocultar sección completa en un diseño
+
+- Simón quiere ocultar entera la sección "Ocultar" (idOrigen, ID Creator,
+  Plazo de Pago JSON, casillas de Aprobación/Aprobado por, Rental Total con
+  IVA, etc.; parece ser Cotizaciones).
+- Opciones entregadas: (1) eliminar la sección en el editor de diseño → los
+  campos pasan a "Campos no utilizados" y se conservan los datos, pero hay
+  que probar en Sandbox que el Cotizador/Creator y las aprobaciones sigan
+  escribiendo en esos campos; (2) dejar los campos ocultos por perfil
+  (permiso de campo) para todos menos Administrador, que es lo más seguro
+  si integraciones o flujos los usan.
+- Con el MCP no se pueden editar diseños; lo hace Simón.
