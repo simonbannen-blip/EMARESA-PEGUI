@@ -146,3 +146,9 @@ hacer una prueba con una cotización real de Inamar Vapor.
   4. Pendiente de Simón: si fases de post-venta (Lista para Confirmar,
      Direc. de Facturación/Despacho, pendiente aprobación despacho) deben
      quedar fuera del "Desde".
+- En el "Durante" de la transición no aparece "Notas" como campo. Se
+  indicó crear en Cotizaciones un campo Área de texto
+  **"Motivo actualización de oferta"** y pedirlo obligatorio en el
+  Durante. (Campos multilínea existentes revisados — Detalle Revisión,
+  Comentario del Motivo de Pérdida, etc. — ya tienen otro uso.)
+  Al pasar a Producción, crear el mismo campo antes del Blueprint.

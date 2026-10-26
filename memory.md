@@ -1703,3 +1703,6 @@ ver regla de sincronización en `CLAUDE.md`.
   la transición común con criterio UN = Inamar Vapor y reusar
   "Confirmar Envío de Cotización" y "Perder Cotización" como salidas
   (agregando la fase nueva como origen). Detalle en la guía.
+- 26-10: "Notas" no aparece en el Durante del Blueprint → indicado crear
+  campo Área de texto "Motivo actualización de oferta" en Cotizaciones
+  (Sandbox) y pedirlo obligatorio en la transición.
