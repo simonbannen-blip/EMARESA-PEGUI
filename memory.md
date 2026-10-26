@@ -1706,3 +1706,9 @@ ver regla de sincronización en `CLAUDE.md`.
 - 26-10: "Notas" no aparece en el Durante del Blueprint → indicado crear
   campo Área de texto "Motivo actualización de oferta" en Cotizaciones
   (Sandbox) y pedirlo obligatorio en la transición.
+- 26-10: Simón descarta el campo de motivo (usarán nota manual) y pide
+  que en "Actualización de oferta" se pueda clonar. Entregado Client
+  Script "Deshabilitar clonar cotización" modificado: si Fase =
+  Actualización de oferta deja clonar a cualquiera y la copia parte en
+  Creada; resto igual (lista de perfiles). Pendiente probar en Sandbox y
+  definir qué pasa con la original.

@@ -152,3 +152,46 @@ hacer una prueba con una cotización real de Inamar Vapor.
   Durante. (Campos multilínea existentes revisados — Detalle Revisión,
   Comentario del Motivo de Pérdida, etc. — ya tienen otro uso.)
   Al pasar a Producción, crear el mismo campo antes del Blueprint.
+
+## Cambio de diseño 2026-10-26: nota manual + permitir clonar
+- Simón descarta el campo de motivo: los vendedores dejarán una **nota
+  manual** al pasar a "Actualización de oferta".
+- Nuevo objetivo: **cuando la cotización está en "Actualización de
+  oferta", se debe poder clonar** (hoy el Client Script "Deshabilitar
+  clonar cotización" — Cotizaciones · página Clonar · onSave — solo deja
+  clonar a ciertos perfiles; ver
+  `zoho/config/caso-usuarios-miv-no-pueden-clonar-cotizaciones.md`).
+- Script propuesto (reemplaza al actual, probar primero en Sandbox):
+
+```js
+var user = ZDK.Apps.CRM.Users.fetchById($Crm.user.id);
+var fase = ZDK.Page.getField('Quote_Stage').getValue();
+log('Perfil: ' + user.profile.name + ' | Fase al clonar: ' + fase);
+
+// Perfiles que siempre pueden clonar cotizaciones
+var perfilesPermitidos = [
+    'Administrator',
+    'Responsable de Área MIV y MAK',
+    'Vendedor MIV'
+];
+
+// Cotizaciones en "Actualización de oferta" (solo Inamar Vapor llega a
+// esa fase) se pueden clonar con cualquier perfil. La copia parte en Creada.
+if (fase === 'Actualización de oferta') {
+    ZDK.Page.getField('Quote_Stage').setValue('Creada');
+    return true;
+}
+
+if (perfilesPermitidos.indexOf(user.profile.name) === -1) {
+    ZDK.Client.showAlert('Hola ' + user.first_name + ' ' + user.last_name + ', usted no tiene permisos para clonar cotización!');
+    return false;
+}
+```
+
+- Supuesto a validar en Sandbox: que la pantalla de clonar traiga la Fase
+  de la cotización original. Si al clonar sale el bloqueo igual, la
+  pantalla trae otra fase (ej. Creada) y hay que leer la fase desde la
+  cotización original.
+- Pendiente: qué pasa con la cotización original después de clonar
+  (¿queda en Actualización de oferta, pasa a Recotizada o Cerrada
+  Perdida?).
