@@ -129,3 +129,20 @@ hacer una prueba con una cotización real de Inamar Vapor.
 - Confirmar transiciones de salida desde "Actualización de oferta".
 - Confirmar con proveedor el impacto en Creator.
 - OK de Simón para aplicar en Producción.
+
+## Avance 2026-10-26 (Sandbox)
+- Simón ya agregó la fase "Actualización de oferta" al lienzo del
+  Blueprint (sin transiciones aún). El Blueprint ya usa transiciones
+  comunes (marca "C"): "Confirmar Envío de Cotización" → Enviada,
+  "Perder Cotización" → Cerrada Perdida, "Transición 1", "Marcar Sin Stock".
+- Siguiente paso indicado:
+  1. Transición común nueva hacia "Actualización de oferta" (desde todas
+     las fases menos Cerrada Ganada/Perdida), criterio UN = Inamar Vapor.
+  2. Para las salidas, **reusar** las transiciones comunes existentes:
+     agregar "Actualización de oferta" como fase de origen en
+     "Confirmar Envío de Cotización" (→ Enviada) y "Perder Cotización"
+     (→ Cerrada Perdida). Desde Enviada sigue el flujo normal a Ganada.
+  3. Límite de tiempo de la fase: dejar vacío.
+  4. Pendiente de Simón: si fases de post-venta (Lista para Confirmar,
+     Direc. de Facturación/Despacho, pendiente aprobación despacho) deben
+     quedar fuera del "Desde".

@@ -1699,3 +1699,7 @@ ver regla de sincronización en `CLAUDE.md`.
 - Guía paso a paso en
   `zoho/pipeline/guia-sandbox-fase-actualizacion-de-oferta-inamar-vapor.md`.
   Pendiente: transiciones de salida, impacto en Creator, OK para Producción.
+- 26-10: Simón creó la fase en el Blueprint del Sandbox. Indicado: crear
+  la transición común con criterio UN = Inamar Vapor y reusar
+  "Confirmar Envío de Cotización" y "Perder Cotización" como salidas
+  (agregando la fase nueva como origen). Detalle en la guía.
