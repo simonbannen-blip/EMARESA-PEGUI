@@ -195,3 +195,7 @@ if (perfilesPermitidos.indexOf(user.profile.name) === -1) {
 - Pendiente: qué pasa con la cotización original después de clonar
   (¿queda en Actualización de oferta, pasa a Recotizada o Cerrada
   Perdida?).
+- Confirmado por Simón (26-10): se clona con el **Clonar normal** ("…" →
+  Clonar) y la **original queda en "Actualización de oferta"** (no se
+  mueve). El script propuesto cubre ese caso tal cual; no hace falta
+  tocar el botón personalizado "Clonar Cotización".

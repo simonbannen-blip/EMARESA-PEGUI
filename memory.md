@@ -1712,3 +1712,6 @@ ver regla de sincronización en `CLAUDE.md`.
   Actualización de oferta deja clonar a cualquiera y la copia parte en
   Creada; resto igual (lista de perfiles). Pendiente probar en Sandbox y
   definir qué pasa con la original.
+- 26-10: Confirmado: clonan con el Clonar normal y la original queda en
+  Actualización de oferta. Script entregado sirve sin cambios; falta
+  que Simón lo pruebe en Sandbox.
