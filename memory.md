@@ -1715,3 +1715,7 @@ ver regla de sincronización en `CLAUDE.md`.
 - 26-10: Confirmado: clonan con el Clonar normal y la original queda en
   Actualización de oferta. Script entregado sirve sin cambios; falta
   que Simón lo pruebe en Sandbox.
+- 26-10: Prueba Sandbox: la copia clonada queda en "Actualización de
+  oferta" (el setValue del Client Script no aplica). Entregado plan B:
+  regla de flujo al Crear con Fase = Actualización de oferta → Fase =
+  Creada (actualización de campo o función Deluge con updateRecord).

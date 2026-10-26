@@ -199,3 +199,27 @@ if (perfilesPermitidos.indexOf(user.profile.name) === -1) {
   Clonar) y la **original queda en "Actualización de oferta"** (no se
   mueve). El script propuesto cubre ese caso tal cual; no hace falta
   tocar el botón personalizado "Clonar Cotización".
+
+## Prueba Sandbox 2026-10-26: la copia queda en "Actualización de oferta"
+- Con el script, al clonar la copia sigue en "Actualización de oferta":
+  el `setValue('Creada')` del Client Script no se aplica (probable: el
+  Blueprint controla el campo Fase en el formulario).
+- Plan B entregado: **regla de flujo de trabajo** en Cotizaciones,
+  al **Crear**, condición Fase de Cotización = Actualización de oferta
+  (solo una clonada se crea en esa fase), acción:
+  - Opción 1: Actualización de campo Fase de Cotización = Creada.
+  - Opción 2 (si Fase no aparece en Actualización de campo por el
+    Blueprint): función Deluge:
+
+```deluge
+void automation.clonadaAFaseCreada(Int cotId)
+{
+	datos = Map();
+	datos.put("Quote_Stage","Creada");
+	respuesta = zoho.crm.updateRecord("Quotes",cotId,datos);
+	info respuesta;
+}
+```
+    Argumento `cotId` = Cotizaciones → ID de Cotizaciones.
+- El script de clonar se mantiene (sigue dando el permiso de clonar en
+  esa fase); la línea setValue queda sin efecto pero no molesta.
