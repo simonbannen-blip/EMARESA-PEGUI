@@ -1751,3 +1751,11 @@ ver regla de sincronización en `CLAUDE.md`.
   lectura). Alternativa: regla por rol del dueño. No mover jerarquía de
   roles (afecta todos los módulos). Lo aplica Simón desde Configuración;
   no se tocó nada en el CRM.
+
+## 2026-10-27 — Valentina Rodriguez (Rental) no puede clonar COT-REN-5684
+- Sale "Permiso denegado" nativo: perfil Vendedor sin "Crear" en
+  Cotizaciones (y además el Client Script de Clonar solo permite
+  Administrator + MIV). En Rental se clona por el botón "Editar
+  Cotización ▾ → Clonar Cotización" (Cotizador). Detalle en
+  `zoho/config/caso-usuarios-miv-no-pueden-clonar-cotizaciones.md`.
+  No se tocó el CRM.
