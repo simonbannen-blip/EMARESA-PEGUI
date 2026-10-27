@@ -1732,3 +1732,22 @@ ver regla de sincronización en `CLAUDE.md`.
   (permiso de campo) para todos menos Administrador, que es lo más seguro
   si integraciones o flujos los usan.
 - Con el MCP no se pueden editar diseños; lo hace Simón.
+
+## 2026-10-27 — Néstor Mendoza no ve Posibles clientes (Krafter/Luster/Maktotal)
+
+- Néstor (perfil "Responsable de Área", rol "Encargado de Proyectos
+  Digitales") entra a Posibles clientes y "Todos los Posibles clientes"
+  muestra 0 registros. El módulo sí lo tiene habilitado: el problema es de
+  **visibilidad de registros**, no de permiso de módulo.
+- Causa: Posibles clientes es privado en Compartir datos → cada uno ve
+  solo lo suyo + lo de los roles bajo él. Néstor no es dueño de ninguno
+  y su rol no tiene debajo a los dueños.
+- Los leads de las tiendas web llegan con Origen = "Woo Commerce" (~950,
+  repartidos en ~24 dueños: Infraestructura Emaresa 268, vendedores IyF,
+  Construcción, Rental, y el usuario "Maktotal" con rol "Asistente
+  Ecommerce").
+- Recomendado a Simón: **regla de uso compartido por criterio** en
+  Posibles clientes (Origen = Woo Commerce → rol/usuario de Néstor, solo
+  lectura). Alternativa: regla por rol del dueño. No mover jerarquía de
+  roles (afecta todos los módulos). Lo aplica Simón desde Configuración;
+  no se tocó nada en el CRM.
