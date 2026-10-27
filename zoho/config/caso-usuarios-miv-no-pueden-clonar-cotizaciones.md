@@ -140,3 +140,22 @@ validación de permisos: si después aparece un error al usarlo, revisar ahí.
   no en el Cotizador. Si "Clonar Cotización" abre el Cotizador, probablemente no
   sirva para cotizaciones MIV aunque se vea. Para MIV, el "Clonar" nativo del
   menú "…" (ya habilitado vía script) es la vía natural.
+
+## Caso nuevo: Valentina Rodriguez (Rental) — 2026-10-27
+- Usuaria: Valentina Rodriguez · perfil **Vendedor** · rol "Vendedores Rental ZN".
+- Cotización: COT-REN-5684 (UN Rental, dueña Valentina, creada por
+  "Infraestructura Emaresa" = integración del Cotizador, Fase Cotización Aprobada).
+- Síntoma: "…" → Clonar → **"Permiso denegado. No tiene permisos suficientes
+  para realizar esta operación"**. Es el mensaje **nativo** de Zoho (no el del
+  Client Script) → lo más probable: el perfil **Vendedor no tiene "Crear" en
+  Cotizaciones**. Consistente con los datos: desde 01-09 las cotizaciones
+  Rental las crea el Cotizador (Infraestructura Emaresa, 7.358); los
+  vendedores Rental no crean ninguna directo en el CRM.
+- Aunque se le diera "Crear", el Client Script "Deshabilitar clonar
+  cotización" solo deja pasar Administrator + perfiles MIV → igual la bloquearía.
+- Recomendación a Simón: para Rental usar el botón propio **"Editar
+  Cotización ▾ → Clonar Cotización"** (pasa por el Cotizador, flujo oficial).
+  Habilitar el Clonar nativo al perfil Vendedor abriría la creación de
+  cotizaciones directo en el CRM a todos los vendedores, saltándose el
+  Cotizador — no recomendado. Si el botón no le aparece: agregar el perfil
+  "Vendedor" en la visibilidad del botón (Administrar botones).
