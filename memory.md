@@ -1819,3 +1819,8 @@ ver regla de sincronización en `CLAUDE.md`.
   módulos → Simón los crea en Configuración, Claude crea los campos.
   Pendiente: OK de Simón y respuestas a las preguntas abiertas. No se tocó
   el CRM.
+- 28-10: Simón pidió el paso a paso para crear en **Sandbox** el módulo 1
+  "Activos de Clientes" → agregado en la misma propuesta (secciones A–G:
+  entrar al Sandbox, crear módulo, 16 campos en 2 secciones, permisos,
+  listas relacionadas, prueba con ABUS-00012500, deploy posterior).
+  Lo crea Simón a mano (el MCP trabaja contra Producción).
