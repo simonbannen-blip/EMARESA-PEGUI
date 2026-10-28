@@ -1781,3 +1781,6 @@ ver regla de sincronización en `CLAUDE.md`.
   Seguro (pesos vs UF) y el campo "Cuadro digitable" le dan igual (no se
   tocan). Se agregó el paso a paso para Sandbox en
   `zoho/pipeline/propuesta-cuadro-despacho-rental-autocompletado.md`.
+- 28-10: al guardar la función Zoho dio error "The from address can only be
+  either zoho.loginuserid or a verified email address" → se cambió
+  `from :zoho.adminuserid` por `from :zoho.loginuserid` en el código.

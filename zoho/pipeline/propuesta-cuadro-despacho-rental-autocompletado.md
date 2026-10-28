@@ -223,7 +223,7 @@ void automation.enviarCuadroDespachoRental(Int quoteId)
 	cuerpo = cuerpo + tabla;
 	sendmail
 	[
-		from :zoho.adminuserid
+		from :zoho.loginuserid
 		to :cot.get("Owner").get("email")
 		subject :"Cuadro de despacho - " + cot.get("Subject") + " - " + clienteNombre
 		message :cuerpo
