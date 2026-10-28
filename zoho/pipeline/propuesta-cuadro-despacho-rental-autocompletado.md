@@ -221,11 +221,23 @@ void automation.enviarCuadroDespachoRental(Int quoteId)
 	cuerpo = cuerpo + "<p>La cotización <b>" + cot.get("Subject") + "</b> quedó <b>Cerrada Ganada</b>. Este es el cuadro de despacho con los datos que ya están en el CRM.</p>";
 	cuerpo = cuerpo + "<p>Completa las celdas en <span style='background:#fff2b3;'>amarillo</span> y reenvía este correo para coordinar el despacho.</p>";
 	cuerpo = cuerpo + tabla;
+	// ---------- MODO PRUEBA ----------
+	// true  = el correo le llega solo a Simón (para revisar cómo se ve)
+	// false = el correo le llega al vendedor (propietario de la cotización)
+	modoPrueba = true;
+	correoPrueba = "stirapegui@emaresa.cl";
+	destinatario = cot.get("Owner").get("email");
+	asunto = "Cuadro de despacho - " + cot.get("Subject") + " - " + clienteNombre;
+	if(modoPrueba)
+	{
+		asunto = "[PRUEBA - iría a " + destinatario + "] " + asunto;
+		destinatario = correoPrueba;
+	}
 	sendmail
 	[
 		from :zoho.loginuserid
-		to :cot.get("Owner").get("email")
-		subject :"Cuadro de despacho - " + cot.get("Subject") + " - " + clienteNombre
+		to :destinatario
+		subject :asunto
 		message :cuerpo
 	]
 }
@@ -257,7 +269,22 @@ void automation.enviarCuadroDespachoRental(Int quoteId)
    como está en la cotización.
 4. Campo "Cuadro digitable": da igual → no se usa en esta automatización.
 
-## Paso a paso en Sandbox
+## Prueba en Producción (Sandbox no se pudo usar, 28-10-2026)
+
+El código tiene un **modo prueba** (`modoPrueba = true`): el correo le llega
+solo a Simón (stirapegui@emaresa.cl) con el asunto "[PRUEBA - iría a
+<vendedor>] …". No modifica nada en el CRM, solo lee y manda el correo.
+
+1. Guardar la función en Producción con `modoPrueba = true`.
+2. **Ejecutar** la función con el ID de una cotización Rental que **ya
+   esté Cerrada Ganada** (no hay que cerrar nada nuevo). Ej.: COT-REN-5288
+   → `5404724000620714212`.
+3. (Opcional) Activar la regla con `modoPrueba = true` unos días: cada
+   Rental ganada real le llega solo a Simón.
+4. Cuando el correo esté OK → cambiar a `modoPrueba = false` y guardar.
+   Desde ahí le llega al vendedor.
+
+## Paso a paso en Sandbox (descartado)
 
 1. **Función:** Configuración → Desarrollador → Funciones → **+ Nueva
    función** → nombre `enviarCuadroDespachoRental`, categoría
