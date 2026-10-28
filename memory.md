@@ -1787,3 +1787,9 @@ ver regla de sincronización en `CLAUDE.md`.
 - 28-10: Simón guardó la función `enviarCuadroDespachoRental` en Sandbox sin
   errores (con zoho.loginuserid). Siguiente: probar con "Ejecutar" y armar
   la regla "SB Cuadro Despacho Rental".
+- 28-10: Simón no puede probar en Sandbox → se prueba en Producción. Se agregó
+  al código un **modo prueba** (`modoPrueba = true`): el correo le llega solo
+  a Simón (stirapegui@emaresa.cl) con asunto "[PRUEBA - iría a <vendedor>]".
+  Prueba propuesta: "Ejecutar" con una Rental ya ganada (COT-REN-5288,
+  5404724000620714212), sin cerrar nada nuevo. Al quedar OK →
+  `modoPrueba = false`.
