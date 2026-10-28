@@ -109,6 +109,111 @@ mantención tiene su propio informe adjunto y se puede reportar).
 5. Carga inicial: Simón comparte un Excel con los puentes grúa vendidos
    (cliente, producto, serie, sucursal, fecha instalación) y se importa.
 
+## Paso a paso en Sandbox — Módulo 1 "Activos de Clientes"
+
+> Los nombres de menú pueden variar un poco según la versión de la interfaz
+> de Zoho; el orden es el mismo.
+
+### A. Entrar al Sandbox
+
+1. En el CRM: ⚙️ **Configuración** → **Administración de datos** →
+   **Sandbox**.
+2. Antes de entrar, revisar que el Sandbox esté **actualizado con
+   Producción** (botón *Actualizar / Sincronizar*). Si es antiguo, puede
+   que no existan módulos como *Sucursales de Clientes* y no se puedan
+   crear las búsquedas del paso C.
+3. Clic en **Ir a Sandbox** (se abre otra pestaña con la barra de
+   "Sandbox" arriba). Todo lo que sigue se hace ahí.
+
+### B. Crear el módulo
+
+1. ⚙️ **Configuración** → **Personalización** → **Módulos y campos**.
+2. Botón **+ Crear nuevo módulo**.
+3. Arriba a la izquierda, en el nombre del módulo:
+   - Nombre plural: **Activos de Clientes**
+   - Nombre singular: **Activo**
+4. El módulo trae campos por defecto. Hacer clic sobre el campo de nombre
+   (dice "Nombre de Activo" o similar) → **Editar propiedades** →
+   etiqueta: **Nombre del Activo**. Dejarlo obligatorio.
+   Los demás campos por defecto (Propietario, Creado por, Modificado por,
+   Correo electrónico) se pueden dejar; el de **Correo electrónico** se
+   puede quitar (arrastrar a "Campos no utilizados").
+
+### C. Agregar los campos
+
+Desde el panel izquierdo, arrastrar cada tipo de campo al diseño, ponerle
+la etiqueta y configurar lo indicado. Sugerencia: dos secciones —
+**"Información del Activo"** y **"Mantención"** (arrastrar *Nueva sección*).
+
+**Sección "Información del Activo"**
+
+| # | Tipo de campo (panel izquierdo) | Etiqueta | Configuración |
+|---|---|---|---|
+| 1 | Búsqueda | Cliente | Módulo: **Clientes**. Título de lista relacionada: **Activos**. Marcar **Obligatorio** |
+| 2 | Búsqueda | Producto | Módulo: **Productos**. Lista relacionada: **Activos instalados** |
+| 3 | Búsqueda | Sucursal del Cliente | Módulo: **Sucursales de Clientes**. Lista relacionada: **Activos** |
+| 4 | Línea única | N° de Serie | Propiedades → **No permitir valores duplicados** |
+| 5 | Línea única | Marca | |
+| 6 | Línea única | Modelo | |
+| 7 | Línea única | Capacidad | Ej. "5 ton x 12.500 mm" |
+| 8 | Lista de selección | Origen | Valores: Venta Emaresa / Rental / Equipo de terceros. Predeterminado: Venta Emaresa |
+| 9 | Búsqueda | Orden de Venta | Módulo: **Órdenes de venta**. Lista relacionada: **Activos** |
+| 10 | Fecha | Fecha de Instalación | |
+| 11 | Fecha | Fin de Garantía | |
+| 12 | Lista de selección | Estado del Activo | Valores: Operativo / En mantención / Fuera de servicio / Dado de baja. Predeterminado: Operativo |
+
+**Sección "Mantención"**
+
+| # | Tipo de campo | Etiqueta | Configuración |
+|---|---|---|---|
+| 13 | Número | Frecuencia de Mantención (meses) | Ej. 6 = semestral, 12 = anual |
+| 14 | Fecha | Última Mantención | |
+| 15 | Fecha | Próxima Mantención | Por ahora se llena a mano; después lo hará la automatización |
+| 16 | Varias líneas | Observaciones | |
+
+> Tip: en *Lista de selección*, escribir un valor por línea en el cuadro
+> de opciones. En *Búsqueda*, el "Título de lista relacionada" es el nombre
+> con que aparecerá la lista en la ficha del otro módulo (ej. en la ficha
+> del Cliente aparecerá "Activos").
+
+### D. Guardar y dar permisos
+
+1. Clic en **Guardar** (arriba a la derecha).
+2. Zoho pregunta a qué **perfiles** dar acceso al módulo: para la prueba
+   marcar **Administrator** (y, si se quiere probar con un vendedor, su
+   perfil). Lo definitivo se ajusta antes de pasar a Producción.
+3. Si el módulo no aparece en la barra de pestañas: ⚙️ → Personalización
+   → Módulos y campos → verificar que esté **visible**, o buscarlo en
+   "Todos los módulos" / "Más".
+
+### E. Revisar la ficha del Cliente
+
+1. Abrir cualquier cliente en el Sandbox.
+2. Debe aparecer la lista relacionada **Activos** (si no se ve: en la
+   ficha, sección de listas relacionadas → **Administrar listas
+   relacionadas** → activarla).
+3. Lo mismo en un Producto (**Activos instalados**) y en una Sucursal de
+   Cliente.
+
+### F. Prueba
+
+1. Crear un activo de prueba, ej.:
+   - Nombre: "Puente Grúa 5T – Prueba"
+   - Cliente: cualquiera del Sandbox
+   - Producto: SET PUENTE GRUA ELK 5 TON X 12500 MM (`ABUS-00012500`)
+   - N° de Serie: TEST-001, Frecuencia: 6, Última Mantención: hoy
+2. Intentar crear otro con N° de Serie **TEST-001** → Zoho debe
+   rechazarlo (duplicado).
+3. Verificar que el activo aparece en la ficha del Cliente y del Producto.
+4. Avisar a Claude con el resultado (o un pantallazo) → siguiente paso:
+   módulo 2 "Mantenciones" y la automatización de fechas/aviso.
+
+### G. Después (no ahora)
+
+Cuando el módulo esté validado en Sandbox, se pasa a Producción desde
+**Sandbox → Implementar cambios** (deploy), eligiendo el módulo
+"Activos de Clientes" y sus campos, y se ajustan los permisos por perfil.
+
 ## Preguntas abiertas
 
 1. ¿CRM (esta propuesta) o Zoho FSM? ¿Quién ejecuta las mantenciones:
