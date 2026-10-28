@@ -1804,3 +1804,18 @@ ver regla de sincronización en `CLAUDE.md`.
 - 28-10: Simón va a pasar la función a Producción (modo prueba). Pidió un
   texto de correo para mostrar el ejemplo a los equipos y pedir feedback →
   `zoho/pipeline/mail-feedback-cuadro-despacho-rental.md`.
+
+## 2026-10-28 — Propuesta módulo "Activos de Clientes" (Assets)
+
+- Simón pidió un módulo de Activos ligado a los productos que ya tiene el
+  cliente, para seguimiento de mantención (ej. puente grúa). Revisado el
+  CRM: no existe módulo de Activos; los puentes grúa están en Products
+  (ABUS ELK 3,2/5/10 ton, etc., sin categoría cargada). `Equipos_Rental`
+  existe pero el MCP no tiene permiso para leerlo.
+- Propuesta en `zoho/config/propuesta-modulo-activos-clientes.md`: módulo
+  "Activos de Clientes" + módulo "Mantenciones" (historial), función que
+  actualiza Última/Próxima mantención y aviso 30 días antes. Se planteó la
+  alternativa Zoho FSM (incluido en Zoho One). El MCP no puede crear
+  módulos → Simón los crea en Configuración, Claude crea los campos.
+  Pendiente: OK de Simón y respuestas a las preguntas abiertas. No se tocó
+  el CRM.
