@@ -1759,3 +1759,11 @@ ver regla de sincronización en `CLAUDE.md`.
   Cotización ▾ → Clonar Cotización" (Cotizador). Detalle en
   `zoho/config/caso-usuarios-miv-no-pueden-clonar-cotizaciones.md`.
   No se tocó el CRM.
+
+## 2026-10-28 — Permiso Exportar para MIV (Cotizaciones y Oportunidades)
+- Pedido: que usuarios MIV puedan exportar Cotizaciones y Oportunidades.
+- Es permiso de perfil (Vendedor MIV y Responsable de Área MIV y MAK →
+  Permisos de módulo → Exportar). El MCP no edita perfiles → pasos
+  entregados a Simón en `zoho/config/propuesta-permiso-exportar-miv.md`.
+  Advertido que el perfil Responsable de Área MIV y MAK incluye gente MAK
+  y que exportar desde Informes es otro permiso. No se tocó el CRM.
