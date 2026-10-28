@@ -1784,3 +1784,6 @@ ver regla de sincronización en `CLAUDE.md`.
 - 28-10: al guardar la función Zoho dio error "The from address can only be
   either zoho.loginuserid or a verified email address" → se cambió
   `from :zoho.adminuserid` por `from :zoho.loginuserid` en el código.
+- 28-10: Simón guardó la función `enviarCuadroDespachoRental` en Sandbox sin
+  errores (con zoho.loginuserid). Siguiente: probar con "Ejecutar" y armar
+  la regla "SB Cuadro Despacho Rental".
