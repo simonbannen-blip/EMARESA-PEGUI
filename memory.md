@@ -1770,3 +1770,6 @@ ver regla de sincronización en `CLAUDE.md`.
 - Seguimiento: confirmado que "… → Exportar Cotizaciones" (vista de lista)
   es lo que habilita el permiso. En Oportunidades Simón (Administrator) no
   ve la opción → probable vista Kanban; pedido revisar en vista de lista.
+- Resuelto: en vista de lista de Oportunidades sí aparece "… → Exportar
+  Oportunidades" (debajo de "Crear script de cliente"). Queda solo que
+  Simón marque Exportar en los 2 perfiles MIV.
