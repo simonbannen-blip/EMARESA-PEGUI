@@ -40,3 +40,12 @@ herramientas MCP de Zoho no leen ni editan perfiles → lo aplica Simón.
 Entrar con un usuario MIV (o "Iniciar sesión como" si está disponible),
 ir a Cotizaciones → vista de lista → "…" → debe aparecer **Exportar**.
 Repetir en Oportunidades.
+
+## Seguimiento 2026-10-28
+
+- Simón confirmó con captura: en Cotizaciones (vista de lista) el menú "…"
+  muestra **Exportar Cotizaciones** → esa es la opción que habilita el permiso.
+- En Oportunidades no le aparece, aunque Simón es **Administrator** (tiene
+  Exportar en todo). Hipótesis principal: estaba en vista **Kanban** (u otra
+  vista distinta a lista); en esas vistas el "…" no trae Exportar. Pedido:
+  cambiar a vista de lista y revisar; si sigue sin salir, mandar captura.

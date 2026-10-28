@@ -1767,3 +1767,6 @@ ver regla de sincronización en `CLAUDE.md`.
   entregados a Simón en `zoho/config/propuesta-permiso-exportar-miv.md`.
   Advertido que el perfil Responsable de Área MIV y MAK incluye gente MAK
   y que exportar desde Informes es otro permiso. No se tocó el CRM.
+- Seguimiento: confirmado que "… → Exportar Cotizaciones" (vista de lista)
+  es lo que habilita el permiso. En Oportunidades Simón (Administrator) no
+  ve la opción → probable vista Kanban; pedido revisar en vista de lista.
