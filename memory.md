@@ -1801,3 +1801,6 @@ ver regla de sincronización en `CLAUDE.md`.
   Subtotal y Rental Total con IVA son visibles). Solución propuesta: dar
   "Solo lectura" a todos los perfiles en ese campo. Documentado en
   `zoho/config/caso-iva-en-blanco-pdf-cotizacion-inamar.md`.
+- 28-10: Simón va a pasar la función a Producción (modo prueba). Pidió un
+  texto de correo para mostrar el ejemplo a los equipos y pedir feedback →
+  `zoho/pipeline/mail-feedback-cuadro-despacho-rental.md`.
