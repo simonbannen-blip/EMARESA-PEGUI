@@ -208,6 +208,37 @@ la etiqueta y configurar lo indicado. Sugerencia: dos secciones —
 4. Avisar a Claude con el resultado (o un pantallazo) → siguiente paso:
    módulo 2 "Mantenciones" y la automatización de fechas/aviso.
 
+### Ajuste: que "Sucursal del Cliente" muestre solo las del cliente elegido
+
+Problema visto en la prueba (28-10): al buscar sucursal salen **todas**
+las sucursales del CRM, no solo las del cliente del activo.
+
+Solución: **filtro de búsqueda dinámico** en el campo. En `Sucursales de
+Clientes` el campo que apunta al cliente se llama **Cliente** (API
+`Cliente`, búsqueda a Clientes).
+
+1. ⚙️ Configuración → Personalización → Módulos y campos → **Activos de
+   Clientes** → diseño (Standard).
+2. Pasar el mouse sobre el campo **Sucursal del cliente** → ⚙️ / ⋮ →
+   **Editar propiedades**.
+3. Activar **Filtro de búsqueda** ("Filtrar registros de búsqueda" /
+   "Lookup filter").
+4. Condición: **Cliente** (de Sucursales de Clientes) **es** → en el
+   valor, cambiar al modo **campo** (ícono junto al cuadro de valor) y
+   elegir **Activos de Clientes → Cliente**.
+5. Guardar el campo y guardar el diseño.
+6. Probar: elegir primero el Cliente y luego abrir la búsqueda de
+   sucursal → solo deben salir sus sucursales. Si el Cliente está vacío,
+   la lista sale vacía (es lo esperado: siempre llenar Cliente primero).
+
+Si no aparece la opción de valor por campo (solo deja escribir un valor
+fijo), avisar: la alternativa es un *Client Script* de unos pocas líneas.
+
+Otro detalle visto en el pantallazo: **Fecha de instalación** quedó como
+*Fecha/Hora* (muestra 04:00 PM). Lo correcto es tipo **Fecha**; como el
+tipo no se puede cambiar, borrar ese campo y crearlo de nuevo como Fecha
+(en Sandbox no hay datos que perder).
+
 ### G. Después (no ahora)
 
 Cuando el módulo esté validado en Sandbox, se pasa a Producción desde
