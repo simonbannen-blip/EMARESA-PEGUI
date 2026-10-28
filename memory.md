@@ -1824,3 +1824,9 @@ ver regla de sincronización en `CLAUDE.md`.
   entrar al Sandbox, crear módulo, 16 campos en 2 secciones, permisos,
   listas relacionadas, prueba con ABUS-00012500, deploy posterior).
   Lo crea Simón a mano (el MCP trabaja contra Producción).
+- 28-10: Simón creó el módulo en Sandbox. En la prueba, el campo
+  "Sucursal del cliente" mostraba todas las sucursales del CRM → se le dio
+  el paso a paso de **filtro de búsqueda dinámico** (Sucursales de
+  Clientes.Cliente = Activo.Cliente; el lookup en Sucursales_de_Clientes
+  se llama `Cliente`). Además se notó que "Fecha de instalación" quedó
+  como Fecha/Hora → recrearlo como Fecha. Agregado a la propuesta.
