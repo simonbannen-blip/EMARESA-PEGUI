@@ -1773,3 +1773,11 @@ ver regla de sincronización en `CLAUDE.md`.
 - Resuelto: en vista de lista de Oportunidades sí aparece "… → Exportar
   Oportunidades" (debajo de "Crear script de cliente"). Queda solo que
   Simón marque Exportar en los 2 perfiles MIV.
+
+## 2026-10-28 — Cuadro de despacho Rental: decisiones
+
+- Simón definió: el correo con el cuadro le llega **solo al vendedor** al
+  quedar la cotización **Cerrada Ganada**; el vendedor completa y reenvía.
+  Seguro (pesos vs UF) y el campo "Cuadro digitable" le dan igual (no se
+  tocan). Se agregó el paso a paso para Sandbox en
+  `zoho/pipeline/propuesta-cuadro-despacho-rental-autocompletado.md`.
