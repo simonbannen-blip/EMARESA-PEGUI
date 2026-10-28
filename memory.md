@@ -1793,3 +1793,11 @@ ver regla de sincronización en `CLAUDE.md`.
   Prueba propuesta: "Ejecutar" con una Rental ya ganada (COT-REN-5288,
   5404724000620714212), sin cerrar nada nuevo. Al quedar OK →
   `modoPrueba = false`.
+
+- (2026-10-28) Simón: en el PDF "In Iz - Cotización Accesorios"
+  (COT-II10026-2803) un usuario ve la fila IVA (19%) vacía. El registro sí
+  tiene `Rental_IVA` = 36.480; la causa es que el campo `Rental_IVA` está
+  **oculto** para todos los perfiles salvo Administrator (en cambio
+  Subtotal y Rental Total con IVA son visibles). Solución propuesta: dar
+  "Solo lectura" a todos los perfiles en ese campo. Documentado en
+  `zoho/config/caso-iva-en-blanco-pdf-cotizacion-inamar.md`.
