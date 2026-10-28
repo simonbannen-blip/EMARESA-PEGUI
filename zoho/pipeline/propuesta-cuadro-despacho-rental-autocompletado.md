@@ -1,6 +1,6 @@
 # Propuesta: Cuadro "Datos de Despacho / Retiro" autocompletado (Rental)
 
-## Estado: PROPUESTA (16-10-2026) — pendiente OK de Simón y probar en Sandbox
+## Estado: APROBADO POR SIMÓN (28-10-2026) — siguiente paso: armar y probar en Sandbox
 
 ## Para qué
 
@@ -246,16 +246,38 @@ void automation.enviarCuadroDespachoRental(Int quoteId)
 2. Cotización sin Obra → la dirección debe salir de "Calle de Despacho".
 3. Cotización de otra UN → no debe llegar nada.
 
-## Preguntas abiertas para Simón
+## Decisiones de Simón (28-10-2026)
 
-1. **¿A quién se reenvía el cuadro?** (logística / despacho / jefe de zona).
-   Si es siempre el mismo correo, se puede poner en copia directo y el
-   vendedor solo responde a todos con lo completado.
-2. **¿Cuándo debe llegar?** Propuesto: al pasar a Cerrada Ganada. Alternativa:
-   al Confirmar Envío (antes de ganar).
-3. **"CON SEGURO UF"**: en la cotización el seguro está como "Precio Diario
-   Seguro" (en pesos). ¿Sirve ese valor o el cuadro necesita el valor en UF?
-4. En Cotizaciones existe un campo **"Cuadro digitable"** (creado el
-   29-09-2026, casi siempre vacío; en COT-REN-5287 tiene "HOSPITAL OHLA
-   LOTA"). ¿Alguien empezó algo parecido con ese campo? Si no se usa, se
-   podría aprovechar para guardar ahí una copia del cuadro.
+1. **Destinatario:** el correo le llega solo al vendedor (propietario de la
+   cotización). Él completa lo que falta y lo reenvía; no se pone a nadie
+   en copia.
+2. **Momento:** al quedar la cotización **Cerrada Ganada** (como está en la
+   regla).
+3. Seguro en pesos vs UF: da igual → se deja el "Precio Diario Seguro" tal
+   como está en la cotización.
+4. Campo "Cuadro digitable": da igual → no se usa en esta automatización.
+
+## Paso a paso en Sandbox
+
+1. **Función:** Configuración → Desarrollador → Funciones → **+ Nueva
+   función** → nombre `enviarCuadroDespachoRental`, categoría
+   **Automatización**. Pegar el código de arriba.
+   Editar argumentos → `quoteId` (tipo Int / número). Guardar.
+2. **Regla:** Configuración → Automatización → Reglas de flujo de trabajo →
+   **+ Crear regla** → módulo **Cotizaciones**, nombre
+   "SB Cuadro Despacho Rental".
+   - Cuándo: Acción de registro → **Crear o editar**, sin "Repetir".
+   - Condición: **Fase de Cotización es Cerrada Ganada** Y **UN es Rental**.
+   - Acción inmediata: **Función** → elegir `enviarCuadroDespachoRental`
+     → en el argumento `quoteId` poner Cotizaciones → **ID de Cotización**.
+   - Guardar.
+3. **Prueba:** tomar (o crear) una cotización Rental en Sandbox con tu
+   usuario como propietario, con Obra, Contacto, un equipo y una línea
+   "TRASLADO MAQUINARIA", y pasarla a Cerrada Ganada. Revisar que llegue el
+   correo "Cuadro de despacho - COT-REN-…" con los datos llenos y lo demás
+   en amarillo.
+4. **Si no llega:** en la función, botón **Ejecutar** con el ID de la
+   cotización de prueba y mandarme el mensaje de error que salga.
+5. Probar también una cotización de otra UN (no debe llegar nada).
+6. Si todo OK → repetir 1 y 2 en Producción (los IDs no están fijos en el
+   código, así que se pega igual).
