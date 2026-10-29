@@ -297,6 +297,26 @@ Simón aclaró que Activos es **solo para Inamar Izaje**. Cambios:
 4. Origen (lista) y productos: se mantienen; los puentes grúa ABUS son
    productos de Izaje.
 
+### Ajuste: al "Asignar" cotizaciones desde el Activo salen otras UN (29-10)
+
+Problema: desde la ficha del Activo → lista Cotizaciones → **Asignar**,
+Zoho lista **todas** las cotizaciones (cualquier UN y cliente). El filtro
+de búsqueda del campo Activo solo funciona en la dirección contraria
+(desde la cotización elige activos); Zoho no permite filtrar ese
+"Asignar".
+
+Solución recomendada:
+1. **Asociar siempre desde la cotización**: abrir la cotización → campo
+   **Activo** → ahí solo salen los activos del cliente de esa cotización,
+   y el campo solo aparece en cotizaciones Inamar Izaje (regla de diseño).
+2. **Candado — regla de validación** en Cotizaciones, por si alguien usa
+   "Asignar" igual: ⚙️ → Módulos y campos → Cotizaciones → Reglas de
+   validación → Nueva → campo **Activo**: si *Activo no está vacío* y
+   *UN no es Inamar Izaje* → mensaje "Solo cotizaciones Inamar Izaje se
+   pueden asociar a un Activo". Probar en Sandbox si también frena el
+   "Asignar" de la lista relacionada.
+3. Si se usa igual "Asignar": en la ventana buscar por N° de cotización.
+
 ### G. Después (no ahora)
 
 Cuando el módulo esté validado en Sandbox, se pasa a Producción desde

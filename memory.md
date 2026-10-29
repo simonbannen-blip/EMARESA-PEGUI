@@ -1853,3 +1853,7 @@ ver regla de sincronización en `CLAUDE.md`.
   y regla de diseño en Cotizaciones (UN = Inamar Izaje → mostrar campo
   Activo; Quotes tiene campo `UN` lookup a Unidades_de_Negocio y un solo
   layout). Pendiente saber qué perfiles usan los usuarios Izaje.
+- 29-10: al "Asignar" cotizaciones desde el Activo salen las de todas las
+  UN (el filtro de búsqueda solo aplica desde la cotización). Recomendado:
+  asociar desde la cotización + regla de validación (Activo con UN distinta
+  de Inamar Izaje → error). Agregado a la propuesta.
