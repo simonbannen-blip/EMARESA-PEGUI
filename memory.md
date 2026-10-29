@@ -1870,3 +1870,7 @@ ver regla de sincronización en `CLAUDE.md`.
   uso compartido en Cotizaciones (Generalistas → Repuestos 2.0, solo
   lectura) en vez de mover roles. Doc:
   `zoho/config/caso-repuestos-no-ven-cotizaciones-generalistas.md`.
+- 29-10: seguimiento: Simón dice que ya están en Repuestos 2.0 y no ven.
+  Verificado con getUsers (SubordinateRoleUsers): Repuestos 2.0 no tiene
+  ningún usuario debajo; los 8 Generalistas cuelgan de Jefe de Ventas
+  Construcción. Falta crear la regla de uso compartido (o mover rol).
