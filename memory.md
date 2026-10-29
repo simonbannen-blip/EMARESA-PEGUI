@@ -1857,3 +1857,9 @@ ver regla de sincronización en `CLAUDE.md`.
   UN (el filtro de búsqueda solo aplica desde la cotización). Recomendado:
   asociar desde la cotización + regla de validación (Activo con UN distinta
   de Inamar Izaje → error). Agregado a la propuesta.
+- 29-10: Simón quiere asociar cotización↔activo desde ambos lados. La
+  ventana "Asignar" del activo no se puede filtrar → propuesto flujo de
+  trabajo en Cotizaciones (al modificar Activo) + función
+  `validarActivoCotizacion` que desasocia si UN ≠ Inamar Izaje (id UN
+  5404724000032587517) o cliente distinto, y avisa por correo. Código en
+  la propuesta; nombres API a confirmar en Sandbox.

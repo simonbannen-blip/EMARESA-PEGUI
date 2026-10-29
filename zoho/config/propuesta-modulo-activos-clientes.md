@@ -317,6 +317,86 @@ Solución recomendada:
    "Asignar" de la lista relacionada.
 3. Si se usa igual "Asignar": en la ventana buscar por N° de cotización.
 
+### Ajuste: asociar desde los dos lados (cotización y activo) — 29-10
+
+Simón quiere poder asociar **desde la cotización y desde el activo**.
+
+- **Desde la cotización**: campo Activo con filtro (solo activos del
+  cliente) + regla de diseño (solo UN Inamar Izaje). Ya resuelto.
+- **Desde el activo** (lista Cotizaciones → Asignar): Zoho **no permite
+  filtrar** esa ventana; muestra todas las cotizaciones. Se busca por N°
+  de cotización, y un **flujo de trabajo** revisa cada asociación: si la
+  cotización no es de Inamar Izaje o es de otro cliente, **la desasocia
+  sola** y le avisa por correo a quien lo hizo.
+
+Función (Configuración → Automatización → Acciones → Funciones → Nueva,
+categoría Automatización, módulo Cotizaciones). Verificar en Sandbox los
+nombres API: módulo `Activos_de_Clientes`, campo `Activo` en Cotizaciones,
+campo `Cliente` en el activo.
+
+```
+void automation.validarActivoCotizacion(Int cotizacionId)
+{
+	cot = zoho.crm.getRecordById("Quotes",cotizacionId);
+	activo = cot.get("Activo");
+	if(activo == null)
+	{
+		return;
+	}
+	unNombre = "";
+	if(cot.get("UN") != null)
+	{
+		unNombre = ifnull(cot.get("UN").get("name"),"");
+	}
+	clienteCot = "";
+	if(cot.get("Account_Name") != null)
+	{
+		clienteCot = cot.get("Account_Name").get("id");
+	}
+	act = zoho.crm.getRecordById("Activos_de_Clientes",activo.get("id").toLong());
+	clienteAct = "";
+	if(act.get("Cliente") != null)
+	{
+		clienteAct = act.get("Cliente").get("id");
+	}
+	motivo = "";
+	if(unNombre != "Inamar Izaje")
+	{
+		motivo = "la cotización no es de la UN Inamar Izaje";
+	}
+	else if(clienteCot != clienteAct)
+	{
+		motivo = "la cotización es de un cliente distinto al del activo";
+	}
+	if(motivo != "")
+	{
+		upd = Map();
+		upd.put("Activo",null);
+		zoho.crm.updateRecord("Quotes",cotizacionId,upd);
+		sendmail
+		[
+			from :zoho.loginuserid
+			to :zoho.loginuserid
+			subject :"Cotización desasociada del activo " + activo.get("name")
+			message :"La cotización '" + ifnull(cot.get("Subject"),"") + "' se desasoció del activo '" + activo.get("name") + "' porque " + motivo + "."
+		]
+	}
+}
+```
+
+Flujo de trabajo: Configuración → Automatización → Flujos de trabajo →
+Nueva regla → módulo **Cotizaciones**, nombre "Validar Activo en
+Cotización" → *Al crear o editar* → *cuando se modifiquen campos
+específicos*: **Activo** → condición **Activo no está vacío** → acción
+**Función** `validarActivoCotizacion`, argumento `cotizacionId` =
+Cotizaciones → **ID de presupuesto**.
+
+Pruebas en Sandbox:
+1. Desde el activo → Asignar una cotización Izaje del mismo cliente → queda.
+2. Desde el activo → Asignar una cotización de Emaresa → a los segundos
+   desaparece de la lista (refrescar) y llega el correo.
+3. Desde la cotización → elegir activo → queda.
+
 ### G. Después (no ahora)
 
 Cuando el módulo esté validado en Sandbox, se pasa a Producción desde
