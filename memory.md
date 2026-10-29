@@ -1874,3 +1874,6 @@ ver regla de sincronización en `CLAUDE.md`.
   Verificado con getUsers (SubordinateRoleUsers): Repuestos 2.0 no tiene
   ningún usuario debajo; los 8 Generalistas cuelgan de Jefe de Ventas
   Construcción. Falta crear la regla de uso compartido (o mover rol).
+- 29-10 16:19: Simón creó la regla de uso compartido "repuestos ver
+  generalistas" (Cotizaciones, Generalistas → Repuestos 2.0,
+  Lectura/escritura, sin superiores). Zoho la aplica en segundo plano.
