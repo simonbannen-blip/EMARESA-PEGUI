@@ -1830,3 +1830,13 @@ ver regla de sincronización en `CLAUDE.md`.
   Clientes.Cliente = Activo.Cliente; el lookup en Sucursales_de_Clientes
   se llama `Cliente`). Además se notó que "Fecha de instalación" quedó
   como Fecha/Hora → recrearlo como Fecha. Agregado a la propuesta.
+
+## 2026-10-29 — COT-REN-5812 no viaja al ERP (timeout)
+
+- Error "API call is taking too long" (línea 36) en "Enviar Cotización
+  Rental a ERP". Causa: el ERP no respondió dentro de los ~40 s que permite
+  Zoho (cierre 12:48:20 → error 12:49:00). Puntual del lado ERP; las
+  cotizaciones vecinas se enviaron bien. También afectadas: COT-REN-5810,
+  5118, 5115, 4558, 3063. Recomendación: verificar en ERP y reenviar; pedir
+  al proveedor reintento automático. Doc:
+  `zoho/pipeline/caso-cot-ren-5812-timeout-envio-erp.md`. No se tocó el CRM.
