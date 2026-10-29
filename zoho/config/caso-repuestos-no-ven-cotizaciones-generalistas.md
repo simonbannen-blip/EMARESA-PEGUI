@@ -44,3 +44,13 @@ lectura. No recomendada.
 
 > El MCP de Zoho no permite editar roles ni reglas de uso compartido:
 > este cambio se hace a mano desde Configuración.
+
+## Verificación 29-10 (seguimiento)
+Simón confirma que los vendedores ya están en "Repuestos 2.0" y aun así no
+ven. Consulta al CRM (usuarios subordinados por rol):
+- Bajo **Repuestos 2.0** → **0 usuarios** (no tiene a nadie debajo).
+- Bajo **Jefe de Ventas Construcción** → los 8 Vendedores Generalistas.
+
+Confirma la causa: Repuestos 2.0 es una hoja suelta del organigrama, no
+está por encima de Vendedores Generalistas. Estar en ese rol no da
+visibilidad; falta la regla de uso compartido (o mover el rol).
