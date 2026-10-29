@@ -54,3 +54,8 @@ ven. Consulta al CRM (usuarios subordinados por rol):
 Confirma la causa: Repuestos 2.0 es una hoja suelta del organigrama, no
 está por encima de Vendedores Generalistas. Estar en ese rol no da
 visibilidad; falta la regla de uso compartido (o mover el rol).
+
+## Aplicado por Simón 29-10 16:19
+Regla "repuestos ver generalistas" en Cotizaciones: basada en propietario,
+Roles Vendedores Generalistas → Roles Repuestos 2.0, permiso
+**Lectura/escritura** (no solo lectura), superiores no permitidos.
