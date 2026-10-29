@@ -1877,3 +1877,8 @@ ver regla de sincronización en `CLAUDE.md`.
 - 29-10 16:19: Simón creó la regla de uso compartido "repuestos ver
   generalistas" (Cotizaciones, Generalistas → Repuestos 2.0,
   Lectura/escritura, sin superiores). Zoho la aplica en segundo plano.
+- 29-10 16:26: los de Repuestos 2.0 ya ven las cotizaciones de
+  Generalistas, pero no les salen las transiciones (ej. COT-CONST-467-4247,
+  dueño Cristian Silva). Causa: Blueprint "SB Gestión de Cotizaciones",
+  Antes → Quién = solo propietario. Indicado agregar rol Repuestos 2.0 en
+  cada transición y publicar (mismo caso que 07-10).

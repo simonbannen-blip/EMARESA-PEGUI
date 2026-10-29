@@ -59,3 +59,13 @@ visibilidad; falta la regla de uso compartido (o mover el rol).
 Regla "repuestos ver generalistas" en Cotizaciones: basada en propietario,
 Roles Vendedores Generalistas → Roles Repuestos 2.0, permiso
 **Lectura/escritura** (no solo lectura), superiores no permitidos.
+
+## 29-10 16:26 — ya ven, pero no pueden hacer transiciones
+Ejemplo: COT-CONST-467-4247 (id 5404724000626158628), propietario Cristian
+Silva (Generalista), fase "Creada", Válido hasta 28-10 (vencida).
+La regla de uso compartido funciona (el vendedor de repuestos la abre).
+Misma causa que `zoho/pipeline/caso-transiciones-blueprint-no-propietario.md`:
+en el Blueprint "SB Gestión de Cotizaciones" cada transición tiene en
+Antes → Quién = "Propietario del registro". Hay que agregar el rol
+**Repuestos 2.0** en cada transición que deban ejecutar y publicar.
+Revisar también si algún criterio usa "Válido hasta".
