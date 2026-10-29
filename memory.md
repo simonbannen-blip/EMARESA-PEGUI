@@ -1863,3 +1863,10 @@ ver regla de sincronización en `CLAUDE.md`.
   `validarActivoCotizacion` que desasocia si UN ≠ Inamar Izaje (id UN
   5404724000032587517) o cliente distinto, y avisa por correo. Código en
   la propuesta; nombres API a confirmar en Sandbox.
+- 29-10: Simón: vendedores de repuestos no ven cotizaciones de Vendedores
+  Generalistas. Diagnóstico: el rol "Vendedores Repuestos" no tiene usuarios
+  activos; los vendedores reales están en "Repuestos 2.0" (4) y "Vendedor
+  Repuesto Jardín" (1), en otra rama del organigrama. Recomendado: regla de
+  uso compartido en Cotizaciones (Generalistas → Repuestos 2.0, solo
+  lectura) en vez de mover roles. Doc:
+  `zoho/config/caso-repuestos-no-ven-cotizaciones-generalistas.md`.
