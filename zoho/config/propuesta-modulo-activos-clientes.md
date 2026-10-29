@@ -239,6 +239,41 @@ Otro detalle visto en el pantallazo: **Fecha de instalación** quedó como
 tipo no se puede cambiar, borrar ese campo y crearlo de nuevo como Fecha
 (en Sandbox no hay datos que perder).
 
+### Ajuste: Cotizaciones y Oportunidades asociadas a un Activo
+
+Pedido de Simón (29-10): que un activo pueda tener **muchas cotizaciones**
+(y oportunidades), igual que un cliente tiene muchas.
+
+Solución: campo de **Búsqueda "Activo"** dentro de Cotizaciones (y de
+Oportunidades). Cada cotización apunta a un activo; en la ficha del activo
+aparece la lista "Cotizaciones" con todas las que lo nombran.
+(Cotizaciones tiene un solo diseño, "Standard".)
+
+1. ⚙️ → Personalización → Módulos y campos → **Cotizaciones** → Standard.
+2. Arrastrar un campo **Búsqueda** (sección de información de la
+   cotización, cerca de Cliente / Oportunidad).
+   - Rótulo: **Activo**
+   - Módulo de búsqueda: **Activos de Clientes**
+   - Título de lista relacionada: **Cotizaciones**
+   - No obligatorio (no toda cotización es de un equipo).
+3. **Filtrar registros de búsqueda**: **Cliente** (del activo) · **es** ·
+   **Campo** → **Nombre de Cliente** (de la cotización). Marcar *Validar
+   filtro durante la edición*. Así solo salen los activos del cliente.
+4. Fin → Guardar.
+5. Repetir en **Oportunidades** (en cada diseño/pipeline que use la
+   venta de equipos): rótulo **Activo**, lista relacionada
+   **Oportunidades**, mismo filtro con **Nombre de Cliente** de la
+   oportunidad.
+6. En la ficha del activo: ícono de columnas de cada lista para mostrar
+   N° cotización, Asunto, Fase, Total, Propietario (cotizaciones) y
+   Nombre, Fase, Importe, Fecha de cierre (oportunidades).
+
+Nota: con este diseño una cotización queda ligada a **un** activo. Si una
+misma cotización suele cubrir varios equipos (ej. mantención de 3 puentes
+grúa juntos), la alternativa es un campo de **búsqueda de selección
+múltiple**; contra: no admite el filtro por cliente y es más incómodo en
+informes. Recomendación: búsqueda simple.
+
 ### G. Después (no ahora)
 
 Cuando el módulo esté validado en Sandbox, se pasa a Producción desde
