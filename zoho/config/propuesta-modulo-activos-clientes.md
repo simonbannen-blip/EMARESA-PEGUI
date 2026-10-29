@@ -260,7 +260,9 @@ aparece la lista "Cotizaciones" con todas las que lo nombran.
    **Campo** → **Nombre de Cliente** (de la cotización). Marcar *Validar
    filtro durante la edición*. Así solo salen los activos del cliente.
 4. Fin → Guardar.
-5. Repetir en **Oportunidades** (en cada diseño/pipeline que use la
+5. ~~Repetir en **Oportunidades**~~ — **descartado (29-10)**: Simón
+   solo necesita ver las cotizaciones en el activo. Pasos originales:
+   repetir en **Oportunidades** (en cada diseño/pipeline que use la
    venta de equipos): rótulo **Activo**, lista relacionada
    **Oportunidades**, mismo filtro con **Nombre de Cliente** de la
    oportunidad.
