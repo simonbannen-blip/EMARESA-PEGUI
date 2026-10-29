@@ -1845,3 +1845,6 @@ ver regla de sincronización en `CLAUDE.md`.
   Standard) y en Oportunidades, con filtro Activo.Cliente = Nombre de
   Cliente, listas relacionadas en el activo. Alternativa multiselección
   mencionada (no recomendada). Agregado a la propuesta.
+- 29-10: Simón aclaró que solo necesita ver **Cotizaciones** en el activo
+  (no Oportunidades) → se descartó el paso de Oportunidades. Queda solo el
+  campo búsqueda "Activo" en Cotizaciones.
