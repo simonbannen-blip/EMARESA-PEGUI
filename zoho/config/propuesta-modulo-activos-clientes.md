@@ -276,6 +276,27 @@ grúa juntos), la alternativa es un campo de **búsqueda de selección
 múltiple**; contra: no admite el filtro por cliente y es más incómodo en
 informes. Recomendación: búsqueda simple.
 
+### Ajuste: módulo solo para la UN **Inamar Izaje** (29-10)
+
+Simón aclaró que Activos es **solo para Inamar Izaje**. Cambios:
+
+1. **Acceso al módulo por perfil** — ⚙️ → Usuarios y control → Seguridad
+   → Perfiles → en cada perfil: módulo *Activos de Clientes* activado solo
+   en los perfiles de usuarios Izaje (+ Administrator); desactivado en el
+   resto. Así la lista "Activo" tampoco aparece en la ficha del Cliente
+   para los demás.
+   - Si los vendedores Izaje comparten perfil con otras UN, esto no los
+     separa: en ese caso dejar el módulo visible y apoyarse en el punto 2.
+2. **Campo "Activo" en Cotizaciones solo cuando la UN es Inamar Izaje**
+   (Cotizaciones tiene un único diseño Standard y el campo `UN` es búsqueda
+   a Unidades de Negocio):
+   ⚙️ → Módulos y campos → Cotizaciones → **Reglas de diseño** → Nueva
+   regla: *Si* **UN** *es* **Inamar Izaje** → *Mostrar campos*: **Activo**.
+   Para el resto de las UN el campo no aparece.
+3. En el módulo Activos **no hace falta** campo UN (todo es Izaje).
+4. Origen (lista) y productos: se mantienen; los puentes grúa ABUS son
+   productos de Izaje.
+
 ### G. Después (no ahora)
 
 Cuando el módulo esté validado en Sandbox, se pasa a Producción desde

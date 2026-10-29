@@ -1848,3 +1848,8 @@ ver regla de sincronización en `CLAUDE.md`.
 - 29-10: Simón aclaró que solo necesita ver **Cotizaciones** en el activo
   (no Oportunidades) → se descartó el paso de Oportunidades. Queda solo el
   campo búsqueda "Activo" en Cotizaciones.
+- 29-10: Simón aclaró que Activos es **solo para la UN Inamar Izaje** →
+  agregado a la propuesta: acceso al módulo solo en perfiles Izaje (+Admin)
+  y regla de diseño en Cotizaciones (UN = Inamar Izaje → mostrar campo
+  Activo; Quotes tiene campo `UN` lookup a Unidades_de_Negocio y un solo
+  layout). Pendiente saber qué perfiles usan los usuarios Izaje.
