@@ -1840,3 +1840,8 @@ ver regla de sincronización en `CLAUDE.md`.
   5118, 5115, 4558, 3063. Recomendación: verificar en ERP y reenviar; pedir
   al proveedor reintento automático. Doc:
   `zoho/pipeline/caso-cot-ren-5812-timeout-envio-erp.md`. No se tocó el CRM.
+- 29-10: Simón pidió que un activo tenga muchas cotizaciones/oportunidades
+  → propuesto campo búsqueda "Activo" en Cotizaciones (layout único
+  Standard) y en Oportunidades, con filtro Activo.Cliente = Nombre de
+  Cliente, listas relacionadas en el activo. Alternativa multiselección
+  mencionada (no recomendada). Agregado a la propuesta.
