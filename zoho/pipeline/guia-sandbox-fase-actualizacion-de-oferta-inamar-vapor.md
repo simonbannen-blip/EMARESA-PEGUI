@@ -223,3 +223,39 @@ void automation.clonadaAFaseCreada(Int cotId)
     Argumento `cotId` = Cotizaciones → ID de Cotizaciones.
 - El script de clonar se mantiene (sigue dando el permiso de clonar en
   esa fase); la línea setValue queda sin efecto pero no molesta.
+
+## Extensión 2026-11-02: misma fase en Oportunidades
+Pedido de Simón: que "Actualización de oferta" también exista en
+Oportunidades (Inamar Vapor).
+
+Revisado en Producción (solo lectura):
+- Oportunidades: un diseño (Standard) y un pipeline (Standard). Fase
+  (`Stage`) hoy: Creada 0%, Necesita Análisis 20%, Cotización Enviada 75%,
+  Negociación 90%, Cerrada Ganada 100%, Cerrada Perdida 0%, Declinada 0%,
+  Contactado 0%.
+- Blueprint "Gestión de Oportunidades": Creada → Necesita Análisis →
+  Cotización Enviada → Negociación → Cerrada Ganada / Cerrada Perdida /
+  Declinada. Ya tiene transiciones comunes con criterio de UN (ej. "Ganar
+  Oportunidad Ferretek") y "Declinar Oportunidad" desde todas las fases.
+- Oportunidades Inamar Vapor: Cotización Enviada 96, Cerrada Perdida 57,
+  Cerrada Ganada 31, Declinada 28, Creada 20, Negociación 16.
+
+Pasos en Sandbox:
+1. Fase: Configuración → Módulos y campos → Oportunidades → Standard →
+   campo Fase → agregar "Actualización de oferta", probabilidad **75%**
+   (igual que Cotización Enviada), categoría de previsión **Pipeline /
+   Abierto**. Pipeline Standard: agregarla después de Cotización Enviada.
+2. Blueprint "Gestión de Oportunidades": arrastrar la fase; transición
+   común "Actualización de oferta" desde todas menos Cerrada Ganada,
+   Cerrada Perdida y Declinada; Antes → Criterios: UN es Inamar Vapor;
+   Quién igual que "Ganar Oportunidad Ferretek".
+3. Salidas: transiciones normales desde "Actualización de oferta" hacia
+   Cotización Enviada y Negociación (luego sigue el flujo normal).
+   "Declinar Oportunidad" ya es común y la cubre. Para perder directo
+   desde ahí, crear transición a Cerrada Perdida copiando los campos
+   obligatorios de "Perder Oportunidad".
+4. Publicar y probar (Inamar Vapor sí ve el botón, otra UN no).
+
+Pendiente de Simón: ¿la Oportunidad se mueve **sola** cuando la
+Cotización pasa a "Actualización de oferta" (agregar a la lógica de "SB
+Actualizar Fase de Oportunidad según Cotización") o solo a mano?

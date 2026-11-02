@@ -1882,3 +1882,12 @@ ver regla de sincronización en `CLAUDE.md`.
   dueño Cristian Silva). Causa: Blueprint "SB Gestión de Cotizaciones",
   Antes → Quién = solo propietario. Indicado agregar rol Repuestos 2.0 en
   cada transición y publicar (mismo caso que 07-10).
+
+## 2026-11-02 — "Actualización de oferta" también en Oportunidades
+
+- Pedido: la fase también en Oportunidades. Revisado: Deals tiene un
+  diseño/pipeline Standard; Blueprint "Gestión de Oportunidades". Pasos
+  Sandbox (fase 75%, transición común con UN = Inamar Vapor, salidas a
+  Cotización Enviada/Negociación) agregados a
+  `zoho/pipeline/guia-sandbox-fase-actualizacion-de-oferta-inamar-vapor.md`.
+  Pendiente: si la Oportunidad debe moverse sola al cambiar la Cotización.
