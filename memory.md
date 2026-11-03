@@ -1891,3 +1891,14 @@ ver regla de sincronización en `CLAUDE.md`.
   Cotización Enviada/Negociación) agregados a
   `zoho/pipeline/guia-sandbox-fase-actualizacion-de-oferta-inamar-vapor.md`.
   Pendiente: si la Oportunidad debe moverse sola al cambiar la Cotización.
+
+## 2026-11-03 — Activos en Producción no quedó como en Sandbox
+
+- Simón implementó el módulo a Producción: quedó como **Activos** (API
+  `Activos`, CustomModule40), acceso Administrator + Vendedor, 0 registros.
+  Revisado por API: picklist Estado con "Opción 1/Opción 2", listas
+  relacionadas con nombre por defecto, Fecha de instalación es Fecha/Hora,
+  faltan campos de mantención/producto, y **no existe** el campo Activo en
+  Cotizaciones. Detalle en
+  `zoho/config/revision-activos-produccion-2026-11-03.md`. Ofrecido crear
+  los campos faltantes por API; pendiente OK y saber qué difiere de Sandbox.
