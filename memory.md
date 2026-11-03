@@ -1932,3 +1932,22 @@ ver regla de sincronización en `CLAUDE.md`.
   Simón esperaba verlo como lista relacionada en la cotización → explicado
   que con búsqueda simple solo se ve como campo; para lista en ambos lados
   hay que pasar a búsqueda de selección múltiple (pendiente decisión).
+
+## 2026-11-03 — "Tipo de Negocio" desaparece al crear Oportunidad (Construcción)
+
+- Walter Uribe reportó: al editar `261103-OP-CONST-465-004830` (id
+  5404724000628930360) el lookup Tipo de Negocio (`L_nea` → `L_neas_porUN`)
+  da "no cumple con los criterios de búsqueda"; y al crear Oportunidades
+  el campo ya no aparece (le pasa a Simón y a Walter).
+- Verificado por API: campo sigue en layout Standard (create=true, todos
+  los perfiles read_write). "Construcción Repuestos" pertenece a UN
+  Construcción. Cambio Nombre de UN Emakip→Maquinaria fue el 27-08, no
+  es la causa.
+- Timelines: Walter creó por UI la `004784` a las 07:38 con Tipo de
+  Negocio lleno; Ortiz la `004827` a las 15:59 también; Walter la `004830`
+  a las 16:13 quedó vacía. → Algo cambió hoy entre ~16:00 y 16:13 (regla
+  de diseño, client script o filtro del lookup). Layout Standard última
+  modificación 02-11 16:02 (Simón), así que no es el layout en sí.
+- Reglas de diseño / client scripts / criterio del filtro no son legibles
+  por el MCP. Pendiente: Simón revisa qué se tocó hoy ~16:00 (Registro de
+  auditoría) y comparte captura.
