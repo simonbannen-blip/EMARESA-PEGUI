@@ -1902,3 +1902,8 @@ ver regla de sincronización en `CLAUDE.md`.
   Cotizaciones. Detalle en
   `zoho/config/revision-activos-produccion-2026-11-03.md`. Ofrecido crear
   los campos faltantes por API; pendiente OK y saber qué difiere de Sandbox.
+- 03-11: Simón agregó Activos al espacio de equipo (ya se ve OK). Falta en
+  Producción el campo búsqueda **Activo** en Cotizaciones (verificado por
+  API: no existe). Se le dio el paso a paso manual y se ofreció crearlo por
+  API con su OK. Código de `validarActivoCotizacion` corregido al nombre
+  API real del módulo en Producción: `Activos`.

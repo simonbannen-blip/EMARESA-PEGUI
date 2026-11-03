@@ -331,7 +331,7 @@ Simón quiere poder asociar **desde la cotización y desde el activo**.
 
 Función (Configuración → Automatización → Acciones → Funciones → Nueva,
 categoría Automatización, módulo Cotizaciones). Verificar en Sandbox los
-nombres API: módulo `Activos_de_Clientes`, campo `Activo` en Cotizaciones,
+nombres API: módulo `Activos` (así quedó en Producción, 03-11), campo `Activo` en Cotizaciones,
 campo `Cliente` en el activo.
 
 ```
@@ -353,7 +353,7 @@ void automation.validarActivoCotizacion(Int cotizacionId)
 	{
 		clienteCot = cot.get("Account_Name").get("id");
 	}
-	act = zoho.crm.getRecordById("Activos_de_Clientes",activo.get("id").toLong());
+	act = zoho.crm.getRecordById("Activos",activo.get("id").toLong());
 	clienteAct = "";
 	if(act.get("Cliente") != null)
 	{
