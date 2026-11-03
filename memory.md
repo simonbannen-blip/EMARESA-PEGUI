@@ -1951,3 +1951,13 @@ ver regla de sincronización en `CLAUDE.md`.
 - Reglas de diseño / client scripts / criterio del filtro no son legibles
   por el MCP. Pendiente: Simón revisa qué se tocó hoy ~16:00 (Registro de
   auditoría) y comparte captura.
+- 03-11 (cont.): Simón aclaró que el Cotizador también crea Oportunidades
+  y pidió aislar las creadas desde el CRM. Revisado por Timeline (source
+  `crm_ui`), excluyendo UN que no usan el campo (Ferretek, Inamar Izaje) y
+  cargas masivas "Seguimiento…". Vacías creadas desde CRM desde 15-10:
+  000141 AyJ (15-10), 004790 REN (17-10), 004182 CONST (20-10), 005206 REN
+  (28-10), 000474 IND (02-11), 004746 CONST (02-11), 004830 CONST (03-11
+  16:13), 004833 CONST (03-11 16:49). Antes son casos sueltos (1–3 por
+  semana, entre muchas llenas). Hoy: Sanhueza 14:10 y Ortiz 15:59 (crm_ui)
+  con campo lleno → desde 16:13 todas vacías. Ventana del cambio:
+  03-11 entre 16:00 y 16:13.
