@@ -1907,3 +1907,18 @@ ver regla de sincronización en `CLAUDE.md`.
   API: no existe). Se le dio el paso a paso manual y se ofreció crearlo por
   API con su OK. Código de `validarActivoCotizacion` corregido al nombre
   API real del módulo en Producción: `Activos`.
+
+## 2026-11-03 — COT-II10022-2883 sin aprobación al pasar 10 MM editando
+
+- Cotización `20261103-COT-II10022-2883` (id 5404724000629111444, Bekaert,
+  Fabián Rodriguez): creada bajo 10 MM, editada en el Cotizador a
+  CLP 14.286.663; marcas Sobre 10 MM y Descuento Monto Mínimo en verdadero,
+  pero Fase quedó "Creada" (el Cotizador quita `Quote_Stage` al actualizar)
+  y ningún proceso de aprobación entró.
+- Se intentó pasar la Fase a "Pendiente de Aprobación" por API; Simón lo
+  rechazó (no aplicado). La cotización sigue en "Creada".
+- Simón preguntó si se puede hacer que todo el proceso se re-dispare al
+  editar. Propuesta en
+  `zoho/pipeline/propuesta-reevaluar-aprobacion-al-editar-cotizacion.md`:
+  regla de flujo al editar + función que mueve la Fase con
+  `trigger: approval`. Pendiente probar en Sandbox y OK de Simón.
