@@ -1922,3 +1922,6 @@ ver regla de sincronización en `CLAUDE.md`.
   `zoho/pipeline/propuesta-reevaluar-aprobacion-al-editar-cotizacion.md`:
   regla de flujo al editar + función que mueve la Fase con
   `trigger: approval`. Pendiente probar en Sandbox y OK de Simón.
+- 03-11: Simón pidió el paso a paso para probar en Sandbox. Guía en
+  `zoho/pipeline/guia-sandbox-reevaluar-aprobacion-al-editar.md`
+  (función + regla al editar + pruebas A–F). Pendiente resultado.
