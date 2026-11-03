@@ -1925,3 +1925,10 @@ ver regla de sincronización en `CLAUDE.md`.
 - 03-11: Simón pidió el paso a paso para probar en Sandbox. Guía en
   `zoho/pipeline/guia-sandbox-reevaluar-aprobacion-al-editar.md`
   (función + regla al editar + pruebas A–F). Pendiente resultado.
+- 03-11: Simón creó el campo Activo en Cotizaciones en Producción (búsqueda
+  a `Activos`, filtro por cliente, lista relacionada "Cotizaciones").
+  Verificado: COT-II (5404724000628967070) asociada al activo "prueba
+  prueba" (5404724000628967082) y sale en la lista Cotizaciones del activo.
+  Simón esperaba verlo como lista relacionada en la cotización → explicado
+  que con búsqueda simple solo se ve como campo; para lista en ambos lados
+  hay que pasar a búsqueda de selección múltiple (pendiente decisión).
