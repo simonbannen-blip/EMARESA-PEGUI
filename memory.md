@@ -1969,3 +1969,8 @@ ver regla de sincronización en `CLAUDE.md`.
   Construcción llenas; los vacíos ocurren cuando el usuario elige la UN a
   mano en el formulario (dispara el script). Detalle en
   `zoho/config/caso-tipo-de-negocio-oculto-oportunidades-construccion.md`.
+- 04-11 16:41: Corvalán creó por UI `261104-OP-CONST-502-004897` (id
+  5404724000629591379) sin Tipo de Negocio. 16:52: prueba de Simón
+  (`004898`) sí quedó con "Construcción Repuestos" → el cambio del script
+  funciona; la de Corvalán fue antes de que tomara efecto (o con el
+  formulario abierto/caché). Ofrecido completar `004897`, `004830` con OK.
