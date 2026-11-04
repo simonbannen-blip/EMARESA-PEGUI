@@ -1961,3 +1961,11 @@ ver regla de sincronización en `CLAUDE.md`.
   semana, entre muchas llenas). Hoy: Sanhueza 14:10 y Ortiz 15:59 (crm_ui)
   con campo lleno → desde 16:13 todas vacías. Ventana del cambio:
   03-11 entre 16:00 y 16:13.
+- 04-11: Simón encontró el Client Script de Oportunidades (onChange de UN)
+  cuyo `else` final ocultaba `L_nea` para todas las UN salvo Rental/Inamar.
+  Ya aplicó en Producción el cambio "CAMBIO 2026-11-04": Construcción muestra
+  Tipo de Negocio y lo deja obligatorio. **Corrige la hipótesis de la ventana
+  16:00–16:13**: después de esa hora hubo varias Oportunidades de
+  Construcción llenas; los vacíos ocurren cuando el usuario elige la UN a
+  mano en el formulario (dispara el script). Detalle en
+  `zoho/config/caso-tipo-de-negocio-oculto-oportunidades-construccion.md`.
