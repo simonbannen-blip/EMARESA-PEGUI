@@ -67,3 +67,30 @@ Para revertir: dejar solo `setVisibility(false)` / `setMandatory(false)`.
 ## Pendientes
 - `004830` (Walter) sigue sin Tipo de Negocio. `004833` es prueba (cliente
   "Simon Tirapegui").
+
+## Parte 2 — Error al editar: "no cumple con los criterios de búsqueda" (04-11)
+
+Filtro del lookup `L_nea` (captura de Simón):
+- `UN (Tipos de Negocio por UN) ES UN (Oportunidades)`
+- "Validar filtro de búsqueda durante la edición de registros": **desmarcado**.
+
+El filtro es correcto ("Construcción Repuestos" tiene UN = Construcción).
+Hipótesis: al editar, el campo UN de la oportunidad aparece bloqueado (gris en
+la captura de Walter), el formulario no le entrega su valor al filtro, y
+ningún Tipo de Negocio calza. Al crear sí funciona porque la UN se elige en
+el mismo formulario. Sin confirmar.
+
+Propuesta (pendiente OK, probar en Sandbox primero):
+1. Quitar "Filtrar registros de búsqueda" del campo Tipo de Negocio.
+2. Aplicar el mismo filtro por script:
+   - En el script existente (onChange de UN), dentro de `if (value != null)`:
+     `ZDK.Page.getField('L_nea').setCriteria("(UN:equals:" + value["id"] + ")");`
+   - Script nuevo: Oportunidades, página Editar, evento al cargar:
+     ```javascript
+     var un = ZDK.Page.getField('UN').getValue();
+     if (un != null) {
+         ZDK.Page.getField('L_nea').setCriteria("(UN:equals:" + un["id"] + ")");
+     }
+     ```
+Inmediato (con OK): asignar por API "Construcción Repuestos" a `004897`
+(5404724000629591379) y `004830` (5404724000628930360).
