@@ -1,6 +1,6 @@
 # Caso COT-II10011-2949 — queda en "Pendiente de Aprobación" sin aprobador (Juan Marchant)
 
-**Fecha:** 2026-11-09 · **Estado:** diagnóstico listo, propuesta pendiente de OK de Simón.
+**Fecha:** 2026-11-09 · **Estado:** causa confirmada por Simón (captura del proceso). Guía lista para que Simón arme la regla.
 
 ## Cotización
 
@@ -85,3 +85,55 @@ igual que se hizo con 2949. Lo puedo hacer yo con OK de Simón.
 1. Confirmar que Juan Marchant **sí está exento** de la aprobación sobre
    10 MM (y si hay otros exentos), mirando los criterios del proceso.
 2. OK para armar Opción A y para destrabar la 2341.
+
+## Confirmación (2026-11-09)
+
+Simón compartió la captura del proceso "UN Izaje Aprobación sobre 10
+millones". Criterios: (1) Fase = Pendiente de Aprobación **y** (2) UN =
+Inamar Izaje **y** (3) Aprobación Sobre 10 millones = Seleccionado **y**
+(4) **Propietario de Cotización NO ESTÁ Juan Marchant**. Aprobadores en
+secuencia: Sub Gerente de Ventas → Gerente Inamar Izaje. Queda confirmado:
+Juan está exento a propósito. Lo que se quiere: que sus cotizaciones pasen
+directo a **Creada**.
+
+## Guía — armar en el CRM (Simón)
+
+### 1. Regla nueva: devolver a Creada las de Juan
+
+Configuración → Automatización → Reglas de flujo de trabajo → Crear regla.
+
+- Módulo: **Cotizaciones** · Nombre: "Inamar Izaje - Juan Marchant sin aprobación".
+- Cuándo: **Acción en el registro → Crear o editar**, marcando "Repetir
+  cada vez que se edite".
+- Condición (todas):
+  1. UN **es** Inamar Izaje
+  2. Fase de Cotización **es** Pendiente de Aprobación
+  3. Propietario de Cotización **es** Juan Marchant
+- **No** poner "Aprobación Sobre 10 millones" como condición: el Cotizador
+  marca esa casilla en un segundo guardado, un segundo después de crear;
+  con la Fase alcanza.
+- Acción instantánea → **Actualización de campo** → Fase de Cotización =
+  **Creada**.
+- Guardar y activar.
+
+La regla existente "SB Enviar Fase de Cotización a Creator" ya manda la
+Fase nueva al Cotizador (pasó igual cuando Simón la cambió a mano).
+
+### 2. Regla de correo "Notificar Subgerente Inamar Izaje"
+
+Agregarle la condición **Propietario de Cotización no es Juan Marchant**
+(misma excepción que el proceso), para que a Dieter no le lleguen avisos
+de cotizaciones que nunca va a poder aprobar.
+
+### 3. Prueba
+
+Que Juan (o alguien con su usuario como dueño) cree en el Cotizador una
+cotización Inamar Izaje sobre 10 MM. En la Línea de tiempo debería verse:
+creada en Pendiente de Aprobación → la regla nueva la pasa a **Creada** al
+instante → sin mail a Dieter.
+
+### Ojo a futuro
+
+Si se exime a otra persona, hay que agregarla en los **3 lugares**: el
+proceso de aprobación (criterio 4), la regla nueva (condición 3) y la regla
+de correo.
