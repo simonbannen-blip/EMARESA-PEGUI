@@ -1991,3 +1991,11 @@ ver regla de sincronización en `CLAUDE.md`.
 - Propuesta en `zoho/pipeline/caso-cot-ii10011-2949-pendiente-aprobacion-sin-aprobador.md`
   (regla al crear/editar que devuelve a Creada a los exentos + excepción
   en la regla de mail). Pendiente: confirmar exención y OK; destrabar 2341.
+- 09-11 (cont.): Simón confirmó con captura que el proceso tiene el
+  criterio "Propietario NO ESTÁ Juan Marchant" (exento a propósito) y que
+  sus cotizaciones deben quedar directo en Creada. Guía en el mismo doc:
+  regla al crear/editar (UN Inamar Izaje + Fase Pendiente de Aprobación +
+  Propietario Juan → Fase Creada, sin condicionar por la casilla 10 MM
+  porque el Cotizador la marca un segundo después) + excepción en la regla
+  de correo. Workflows no se crean por MCP: lo arma Simón. 2341 sigue
+  esperando OK para pasarla a Creada.
