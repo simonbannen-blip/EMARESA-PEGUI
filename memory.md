@@ -1999,3 +1999,16 @@ ver regla de sincronización en `CLAUDE.md`.
   porque el Cotizador la marca un segundo después) + excepción en la regla
   de correo. Workflows no se crean por MCP: lo arma Simón. 2341 sigue
   esperando OK para pasarla a Creada.
+
+## 2026-11-09 — Sebastián Toro exento de aprobaciones de precio (no de monto)
+
+- Simón pidió que Sebastián Toro (Sub Gerente de Ventas Inamar Izaje) no
+  pase por aprobaciones de **precio**, pero sí por la de monto (> 10 MM).
+- Encontrado: el precio va por el proceso "UN Inamar Izaje - Aprobaciones"
+  (casilla Aprobación Descuento Monto Mínimo, aprobadores Ortiz/Carrillo/
+  Alarcón/Oliva/Pizarro, ej. COT-2920); el monto por "UN Izaje Aprobación
+  sobre 10 millones".
+- Propuesta en `zoho/pipeline/propuesta-sebastian-toro-exento-aprobacion-precio.md`:
+  excluirlo en las reglas de precio + regla al editar que lo devuelve a
+  Creada solo si tiene marca de precio y NO la de 10 MM. Pendiente captura
+  del proceso de precio.
