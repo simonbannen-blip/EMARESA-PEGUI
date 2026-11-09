@@ -1974,3 +1974,20 @@ ver regla de sincronización en `CLAUDE.md`.
   (`004898`) sí quedó con "Construcción Repuestos" → el cambio del script
   funciona; la de Corvalán fue antes de que tomara efecto (o con el
   formulario abierto/caché). Ofrecido completar `004897`, `004830` con OK.
+
+## 2026-11-09 — COT-II10011-2949 queda en "Pendiente de Aprobación" sin aprobador
+
+- Cotización `20261109-COT-II10011-2949` (id 5404724000631604735, Juan
+  Marchant, Codelco, 19 MM). El Cotizador la crea en "Pendiente de
+  Aprobación" y marca Sobre 10 MM, pero el proceso "UN Izaje Aprobación
+  sobre 10 millones" nunca entra (en COT-2943 de Valdés sí entra). Simón
+  la pasó a Creada a mano.
+- Patrón repetido solo con Juan Marchant sobre 10 MM: 2782 (27-10, misma
+  corrección manual), 2341 (21-09, **sigue trabada**), 2228. Causa: el
+  proceso excluye a Juan (dueño o rol PM Equipos) pero el Cotizador y la
+  regla de mail "Notificar Subgerente Inamar Izaje" no.
+- `$approval_state = approved` es el valor por defecto sin proceso, no una
+  aprobación real.
+- Propuesta en `zoho/pipeline/caso-cot-ii10011-2949-pendiente-aprobacion-sin-aprobador.md`
+  (regla al crear/editar que devuelve a Creada a los exentos + excepción
+  en la regla de mail). Pendiente: confirmar exención y OK; destrabar 2341.
