@@ -99,3 +99,19 @@ Product Manager Izaje.
 - **En Producción:** seguir el Paso 1 tal cual (criterio 8, patrón
   original). No copiar a Producción el "Total general > 1.000.000" ni el
   Gerente como 2º aprobador salvo que sea un cambio decidido aparte.
+
+## Contexto del criterio "Total general > 1.000.000" (Simón, 09-11)
+
+Es un cambio que Simón probó tiempo atrás en Sandbox: se decidió pedir
+aprobación de precio solo sobre $1.000.000 y no bajo ese monto, para
+agilizar las ventas chicas. Todavía no está en Producción.
+
+Si se lleva a Producción, ojo con lo mismo que pasó con Juan Marchant: el
+Cotizador igual deja en "Pendiente de Aprobación" las cotizaciones bajo
+1 MM con la casilla de precio, y el proceso no entraría → quedarían
+trabadas sin aprobador. Hace falta una regla de flujo que las devuelva a
+"Creada" (UN Inamar Izaje · Fase Pendiente de Aprobación · Total general
+≤ 1.000.000 · Monto Mínimo o Aprobación Descuento seleccionado → Fase
+Creada). Además definir si la Regla 2 (descuento por ítem) también lleva
+el umbral de 1 MM (hoy en Sandbox solo lo tiene la Regla 1) y si el
+Gerente queda como 2º aprobador.
