@@ -2025,3 +2025,9 @@ ver regla de sincronización en `CLAUDE.md`.
   Izaje - Aprobaciones" (Sandbox: criterio 8 Total general > 1 MM y 2
   aprobadores PM Izaje → Gerente). En Sandbox el criterio de Sebastián va
   como 9. Anotado en la guía.
+- 09-11 (cont.): Simón aclaró que el "Total general > 1 MM" del Sandbox es
+  una decisión tomada (aprobación de precio solo sobre $1 MM, para agilizar
+  ventas chicas), probada antes y no pasada a Producción. Advertido: bajo
+  1 MM quedarían trabadas en Pendiente (mismo caso Juan) → hace falta regla
+  que las devuelva a Creada; definir si Regla 2 también lleva el umbral y
+  si el Gerente queda como 2º aprobador.
