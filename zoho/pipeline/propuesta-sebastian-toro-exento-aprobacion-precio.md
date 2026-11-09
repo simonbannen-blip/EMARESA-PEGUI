@@ -1,7 +1,7 @@
 # Propuesta: Sebastián Toro exento de aprobaciones de **precio** (no de monto)
 
-**Fecha:** 2026-11-09 · **Estado:** propuesta; falta captura del proceso
-"UN Inamar Izaje - Aprobaciones" para cerrar. Nada aplicado en el CRM.
+**Fecha:** 2026-11-09 · **Estado:** guía cerrada con la captura del proceso.
+Nada aplicado en el CRM (lo arma Simón).
 
 ## Datos
 
@@ -67,3 +67,40 @@ el mínimo (debe pedir solo la aprobación de monto).
   precio en un guardado **anterior** al de la casilla de 10 MM, la regla
   alcanzaría a pasarla a Creada antes. En los casos vistos cada marca llega
   en un solo guardado.
+
+## Proceso "UN Inamar Izaje - Aprobaciones" (captura de Simón, 09-11)
+
+**Regla 1** — aprobador Product Manager Izaje (cualquiera); al aprobar,
+función "Ejecución Proceso Aprobacion descuento Minimo".
+1 UN = Inamar Izaje · 2 Aprobación Descuento Monto Mínimo = Seleccionado ·
+3 Fase = Pendiente de Aprobación · 4 Sub Fase = Aprobado por Descuento de
+Item - 1 · 5 Sub Fase está vacío · 6 Aprobación Descuento = No seleccionado
+· 7 Fase = Pendiente de Aprobación.
+Patrón: `(1 y (((2 y 3) y 4) o ((5 y 6) y 7)))`.
+
+**Regla 2** — aprobador Product Manager Izaje; al aprobar, función
+"Ejecución Proceso de Aprobación descuento item 1".
+1 UN = Inamar Izaje · 2 Aprobación Descuento = Seleccionado · 3 Fase =
+Pendiente de Aprobación. Patrón: `((1 y 2) y 3)`.
+
+Las dos son de precio (Regla 2 = descuento por ítem; Regla 1 = precio bajo
+el mínimo, también encadenada después de aprobar la 2).
+
+Observación: en la Regla 1, la rama `(5 y 6) y 7` no exige la casilla de
+Monto Mínimo (criterio 2). Probablemente la intención era
+`1 y 2 y 3 y (4 o (5 y 6))`. No se cambia ahora; queda anotado.
+
+## Guía final
+
+**Regla 1:** agregar criterio 8 = Propietario de Cotización **no está**
+Sebastian Toro. Patrón: `(1 y 8 y (((2 y 3) y 4) o ((5 y 6) y 7)))`.
+
+**Regla 2:** agregar criterio 4 = Propietario de Cotización **no está**
+Sebastian Toro. Patrón: `((1 y 2) y 3) y 4`.
+
+**Regla de flujo nueva** (al editar): condiciones
+1 UN es Inamar Izaje · 2 Fase es Pendiente de Aprobación · 3 Propietario
+es Sebastian Toro · 4 Aprobación Sobre 10 millones no seleccionado ·
+5 Aprobación Descuento Monto Mínimo es Seleccionado · 6 Aprobación
+Descuento es Seleccionado. Patrón: `1 y 2 y 3 y 4 y (5 o 6)`.
+Acción: Fase de Cotización = Creada.
