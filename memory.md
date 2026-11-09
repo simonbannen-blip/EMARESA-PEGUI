@@ -2012,3 +2012,9 @@ ver regla de sincronización en `CLAUDE.md`.
   excluirlo en las reglas de precio + regla al editar que lo devuelve a
   Creada solo si tiene marca de precio y NO la de 10 MM. Pendiente captura
   del proceso de precio.
+- 09-11 (cont.): Simón mandó captura de "UN Inamar Izaje - Aprobaciones":
+  Regla 1 (Monto Mínimo, encadenada tras Descuento Item) y Regla 2
+  (Aprobación Descuento = descuento por ítem), ambas de precio. Guía final:
+  "no está Sebastian Toro" en las dos + regla al editar con patrón
+  `1 y 2 y 3 y 4 y (5 o 6)` (Monto Mínimo o Descuento). Anotado que la rama
+  (5 y 6) y 7 de la Regla 1 no exige la casilla de Monto Mínimo.
