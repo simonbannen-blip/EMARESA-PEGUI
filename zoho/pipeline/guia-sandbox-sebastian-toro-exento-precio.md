@@ -115,3 +115,14 @@ trabadas sin aprobador. Hace falta una regla de flujo que las devuelva a
 Creada). Además definir si la Regla 2 (descuento por ítem) también lleva
 el umbral de 1 MM (hoy en Sandbox solo lo tiene la Regla 1) y si el
 Gerente queda como 2º aprobador.
+
+## Decisión 09-11: dejar Sandbox igual a Producción
+
+Simón decidió **no** llevar el umbral de $1 MM. En Sandbox, antes del
+Paso 1, dejar la Regla 1 igual a Producción:
+- Borrar el criterio 8 "Total general > CLP 1.000.000".
+- Quitar al Gerente Inamar Izaje como 2º aprobador (queda solo Product
+  Manager Izaje, "Cualquier").
+- Luego seguir la guía normal: Sebastián como criterio **8**, patrón
+  `(1 y 8 y (((2 y 3) y 4) o ((5 y 6) y 7)))`.
+La nota de "criterio 9" de más arriba queda sin efecto.

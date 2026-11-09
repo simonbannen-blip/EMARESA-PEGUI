@@ -2031,3 +2031,6 @@ ver regla de sincronización en `CLAUDE.md`.
   1 MM quedarían trabadas en Pendiente (mismo caso Juan) → hace falta regla
   que las devuelva a Creada; definir si Regla 2 también lleva el umbral y
   si el Gerente queda como 2º aprobador.
+- 09-11 (cont.): Simón decidió NO llevar el umbral de 1 MM; Sandbox se
+  deja igual a Producción (quitar criterio Total > 1 MM y Gerente como 2º
+  aprobador en Regla 1) y solo se agrega la exención de Sebastián.
