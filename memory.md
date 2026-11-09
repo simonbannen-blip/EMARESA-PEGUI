@@ -2021,3 +2021,7 @@ ver regla de sincronización en `CLAUDE.md`.
 - 09-11 (cont.): Simón pidió paso a paso para Sandbox → Producción. Guía en
   `zoho/pipeline/guia-sandbox-sebastian-toro-exento-precio.md` (pasos 0–5,
   pruebas A–E). Pendiente resultado de Sandbox.
+- 09-11 (cont.): Sandbox difiere de Producción en la Regla 1 de "UN Inamar
+  Izaje - Aprobaciones" (Sandbox: criterio 8 Total general > 1 MM y 2
+  aprobadores PM Izaje → Gerente). En Sandbox el criterio de Sebastián va
+  como 9. Anotado en la guía.
