@@ -1,0 +1,69 @@
+# Propuesta: Sebastián Toro exento de aprobaciones de **precio** (no de monto)
+
+**Fecha:** 2026-11-09 · **Estado:** propuesta; falta captura del proceso
+"UN Inamar Izaje - Aprobaciones" para cerrar. Nada aplicado en el CRM.
+
+## Datos
+
+- Sebastián Toro (id 5404724000574740001), rol **Sub Gerente de Ventas
+  Inamar Izaje**, código vendedor 10026.
+- Sus aprobaciones de **monto** (> 10 MM) pasan por "UN Izaje Aprobación
+  sobre 10 millones" (ej. COT-2927, 2797, 2677) → **se mantienen**.
+- Sus aprobaciones de **precio** pasan por otro proceso: **"UN Inamar
+  Izaje - Aprobaciones"** (id 5404724000042131058), gatillado por la
+  casilla `Aprobación Descuento Monto Mínimo` ("precio por debajo del
+  mínimo"). Aprobadores (cualquiera): Juan Ortiz, Eduardo Carrillo, Miguel
+  Alarcón, Carlos Oliva, Gerardo Pizarro. Ej.: COT-2920 (05-11), 2858,
+  2803. Al aprobar: Sub Fase "Aprobado por Precio por debajo del mínimo -
+  1" y Fase "Cotización Aprobada".
+
+## Por qué no sirve copiar la receta de Juan Marchant tal cual
+
+Con Juan la regla devuelve a "Creada" toda cotización que llega a
+Pendiente de Aprobación, porque está exento de todo. Sebastián **sí**
+necesita la de monto: si se devuelve a "Creada" sin mirar, se saltaría
+también la aprobación sobre 10 MM.
+
+Además el Cotizador marca las casillas en guardados separados, un segundo
+después de crear (primero crea, luego los productos, luego la casilla). Una
+regla "al crear" vería todas las casillas vacías.
+
+## Propuesta
+
+**Paso 1 — Proceso "UN Inamar Izaje - Aprobaciones":** en cada regla de
+precio (monto mínimo y las que haya de descuento/sobreprecio), agregar el
+criterio **Propietario de Cotización no está Sebastian Toro**, igual que el
+criterio 4 que ya tiene Juan en el proceso de 10 MM.
+**No tocar** "UN Izaje Aprobación sobre 10 millones".
+
+**Paso 2 — Regla de flujo nueva** "In Iz - Sebastián Toro sin aprobación de precio":
+- Cuándo: **al editar** (repetir en cada edición).
+- Condiciones (todas):
+  1. UN es Inamar Izaje
+  2. Fase de Cotización es Pendiente de Aprobación
+  3. Propietario de Cotización es Sebastian Toro
+  4. Aprobación Sobre 10 millones **no** seleccionado
+  5. Aprobación Descuento Monto Mínimo **es** seleccionado
+     (si el proceso tiene otras casillas de precio, agregarlas con "o":
+     patrón `1 y 2 y 3 y 4 y (5 o 6 ...)`)
+- Acción: Fase de Cotización = **Creada**.
+
+Resultado:
+- Solo precio → la regla la deja en Creada, sin aprobación.
+- Precio + sobre 10 MM → la regla no actúa (condición 4), el proceso de
+  precio lo excluye y entra solo el de 10 MM (Dieter/Sebastián → Rodrigo
+  Verdugo).
+- Solo sobre 10 MM → igual que hoy.
+
+**Paso 3 — Prueba:** una cotización de Sebastián con un precio bajo el
+mínimo y bajo 10 MM (debe quedar Creada) y otra sobre 10 MM con precio bajo
+el mínimo (debe pedir solo la aprobación de monto).
+
+## Pendiente
+
+- Captura del proceso "UN Inamar Izaje - Aprobaciones" (todas sus reglas)
+  para saber qué casillas de precio usa además de Monto Mínimo.
+- Riesgo a confirmar en prueba: si el Cotizador marcara la casilla de
+  precio en un guardado **anterior** al de la casilla de 10 MM, la regla
+  alcanzaría a pasarla a Creada antes. En los casos vistos cada marca llega
+  en un solo guardado.
