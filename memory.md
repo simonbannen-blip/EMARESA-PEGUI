@@ -2018,3 +2018,6 @@ ver regla de sincronización en `CLAUDE.md`.
   "no está Sebastian Toro" en las dos + regla al editar con patrón
   `1 y 2 y 3 y 4 y (5 o 6)` (Monto Mínimo o Descuento). Anotado que la rama
   (5 y 6) y 7 de la Regla 1 no exige la casilla de Monto Mínimo.
+- 09-11 (cont.): Simón pidió paso a paso para Sandbox → Producción. Guía en
+  `zoho/pipeline/guia-sandbox-sebastian-toro-exento-precio.md` (pasos 0–5,
+  pruebas A–E). Pendiente resultado de Sandbox.
