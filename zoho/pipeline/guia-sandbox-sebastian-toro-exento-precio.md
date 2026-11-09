@@ -83,3 +83,19 @@ revisar la primera que haga.
   3 lugares: Regla 1, Regla 2 y la regla de flujo.
 - Regla 1: la rama `(5 y 6) y 7` no exige la casilla Monto Mínimo
   (anotado, no se cambia en esta tanda).
+
+## Nota 09-11: la Regla 1 del Sandbox es distinta a la de Producción
+
+Captura de Simón (Sandbox): la Regla 1 tiene un criterio 8 extra
+**Total general > CLP 1.000.000**, patrón `((1 y (((2 y 3) y 4) o ((5 y 6) y 7))) y 8)`,
+y dos aprobadores en orden (Product Manager Izaje → Gerente Inamar Izaje).
+En Producción (captura anterior) no tiene el criterio 8 y aprueba solo
+Product Manager Izaje.
+
+- **En Sandbox:** el criterio de Sebastián va como **9**; patrón
+  `((1 y (((2 y 3) y 4) o ((5 y 6) y 7))) y 8) y 9`.
+- Prueba E en Sandbox: el otro vendedor necesita total > 1.000.000 para
+  que pida aprobación (PM Izaje y después Gerente).
+- **En Producción:** seguir el Paso 1 tal cual (criterio 8, patrón
+  original). No copiar a Producción el "Total general > 1.000.000" ni el
+  Gerente como 2º aprobador salvo que sea un cambio decidido aparte.
