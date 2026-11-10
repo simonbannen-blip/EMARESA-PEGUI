@@ -24,7 +24,7 @@ Hacer primero en **Sandbox**; si las pruebas salen bien, repetir igual en
 ## Paso 2 — Regla 2 del mismo proceso
 1. Regla **2** → criterio 4: **Propietario de Cotización** · **no está** ·
    **Sebastian Toro**.
-2. Patrón: `((1 y 2) y 3) y 4`.
+2. Patrón: `(((1 y 2) y 3) y 4)`.
 3. **Guardar** el proceso (queda activo).
 
 > No tocar "UN Izaje Aprobación sobre 10 millones".
@@ -43,7 +43,7 @@ Hacer primero en **Sandbox**; si las pruebas salen bien, repetir igual en
    4. Aprobación Sobre 10 millones · es · No seleccionado
    5. Aprobación Descuento Monto Mínimo · es · Seleccionado
    6. Aprobación Descuento · es · Seleccionado
-   - Editar patrón: `1 y 2 y 3 y 4 y (5 o 6)`
+   - Editar patrón: `((((1 y 2) y 3) y 4) y (5 o 6))`
 5. **Acción instantánea** → Actualización de campo → Nombre "In Iz -
    Sebastián creada" · Fase de Cotización · Estático · **Creada** →
    Guardar y asociar. (El aviso de "Mostrar Información de pérdida" se
