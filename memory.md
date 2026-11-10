@@ -2059,3 +2059,25 @@ ver regla de sincronización en `CLAUDE.md`.
 - 10-11: Simón avisó "ya están listas las aprobaciones" (Sandbox). Pendiente
   confirmar: regla de flujo por rol creada, resultado de pruebas, y pase a
   Producción. Sigue pendiente OK para pasar COT-II10011-2341 a Creada.
+
+## 2026-11-10 — Re-disparar aprobación al editar cotizaciones (v2: aprobadas y sin aprobar)
+
+- Simón pidió que al **editar** una cotización se dispare la aprobación si
+  cumple criterios, tanto si **ya estaba aprobada** como si **no tenía
+  aprobación** (Creada).
+- Revisado en COT-II10004-2943: al aprobar, Fase → "Cotización Aprobada"
+  (regla "SB In Iz - Actualizar Fase a Cotización Aprobada") y Sub Fase con
+  el último paso; `Aprobado por Sobre 10 millones` quedó en **falso** pese a
+  estar aprobada → las casillas "Aprobado por…" no sirven para decidir.
+  Varias automatizaciones editan la cotización al aprobar (vendedor
+  secundario, cotizacionAprobada, envío a Creator).
+- v2 de `zoho/pipeline/propuesta-reevaluar-aprobacion-al-editar-cotizacion.md`
+  y de la guía Sandbox: regla al editar **solo cuando cambian** Total
+  general, Descuento Total de Productos, Plazo de Pago o alguna de las 8
+  casillas de aprobación (evita re-disparo por automatizaciones); fases
+  Creada/Rechazada/Aprobada/Parcialmente Aprobada; la función limpia Sub
+  Fase + "Aprobado por…" y pasa a Pendiente con `trigger approval,workflow`.
+  Procesos de aprobación deben quedar en "Crear o Editar". Agregada Venta
+  Calzada. Pruebas A–I.
+- Pendiente de Simón: probar en Sandbox; decidir si "Enviada" también
+  re-dispara (hoy no) y confirmar que "Rechazada" sí.
