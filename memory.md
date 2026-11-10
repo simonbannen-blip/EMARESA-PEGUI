@@ -2040,3 +2040,8 @@ ver regla de sincronización en `CLAUDE.md`.
   aprobador, Zoho pidió completar "Mientras espera aprobación – Fase 1"
   (Campos específicos vacío); se indicó copiar Producción o usar "Todos los
   campos". Siguen Regla 2, regla de flujo y pruebas A–E.
+- 10-11: Simón decidió NO tocar la Regla 2 (descuento por ítem): Sebastián
+  exento solo de precio bajo el mínimo. Regla de flujo ajustada: Monto
+  Mínimo seleccionado y (Aprobación Descuento no seleccionado o Sub Fase =
+  Aprobado por Descuento de Item - 1), patrón
+  `(((((1 y 2) y 3) y 4) y 5) y (6 o 7))`. Pruebas B y F actualizadas.

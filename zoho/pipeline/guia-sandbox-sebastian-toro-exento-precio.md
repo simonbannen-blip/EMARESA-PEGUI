@@ -132,3 +132,30 @@ Zoho rechazó `(1 y 8 y (...))` ("Compruebe el patrón en 8"): exige
 paréntesis de a dos elementos. Patrón correcto:
 `((1 y (((2 y 3) y 4) o ((5 y 6) y 7))) y 8)` (mismo formato que generó
 Zoho cuando el 8 era "Total general"). Ya corregido arriba.
+
+## Decisión 10-11: la Regla 2 (descuento por ítem) NO se toca
+
+Sebastián queda exento solo de **precio bajo el mínimo** (Regla 1); el
+descuento por ítem (Regla 2) le sigue pidiendo aprobación.
+
+Por eso cambia la regla de flujo (Paso 3): no debe actuar mientras la
+Regla 2 está pendiente, pero sí después de aprobada (la Regla 2 deja Sub
+Fase "Aprobado por Descuento de Item - 1" y encadena a la Regla 1, que ya
+lo excluye → quedaría trabada en Pendiente).
+
+Condiciones nuevas:
+1. UN es Inamar Izaje
+2. Fase de Cotización es Pendiente de Aprobación
+3. Propietario de Cotización es Sebastian Toro
+4. Aprobación Sobre 10 millones es No seleccionado
+5. Aprobación Descuento Monto Mínimo es Seleccionado
+6. Aprobación Descuento es No seleccionado
+7. Sub Fase de Cotización es Aprobado por Descuento de Item - 1
+
+Patrón: `((((1 y 2) y 3) y 4) y 5) y (6 o 7))` → en formato Zoho:
+`(((((1 y 2) y 3) y 4) y 5) y (6 o 7))`. Acción: Fase = Creada.
+
+Pruebas que cambian: B (solo Aprobación Descuento) → **pide aprobación**
+de Product Manager Izaje como hoy. Nueva F: Monto Mínimo + Aprobación
+Descuento → primero aprobación de descuento por ítem; al aprobarla debe
+quedar en **Creada** (sin la 2ª aprobación de mínimo).
