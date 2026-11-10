@@ -1,135 +1,181 @@
-# Guía Sandbox: re-disparar aprobaciones cuando se edita una cotización
+# Guía Sandbox: re-disparar aprobaciones cuando se edita una cotización (v2)
 
-**Fecha:** 2026-11-03 · **Estado:** para probar en Sandbox. No tocar
-Producción hasta tener el OK de Simón.
-Diseño y motivo: `propuesta-reevaluar-aprobacion-al-editar-cotizacion.md`
-(caso COT-II10022-2883).
+**Fecha:** 2026-11-10 (reemplaza la v1 del 03-11) · **Estado:** para probar
+en Sandbox. No tocar Producción hasta tener el OK de Simón.
+Diseño y motivo: `propuesta-reevaluar-aprobacion-al-editar-cotizacion.md`.
 
-Tiempo estimado: 30–45 min.
+Cubre los dos casos:
+1. Cotización **ya aprobada** que se edita y sigue cumpliendo criterios →
+   vuelve a aprobación.
+2. Cotización **sin aprobación** (Creada) que se edita y ahora cumple
+   criterios → entra a aprobación.
+
+Tiempo estimado: 45–60 min.
+
+> Si en Sandbox ya armaste la v1 (función + regla "Reevaluar aprobación al
+> editar"), **no crees nada nuevo**: reemplaza el código de la función
+> (Paso 2) y edita la regla (Paso 3).
 
 ---
 
 ## Paso 0 — Antes de empezar (5 min)
 
 1. Entrar al **Sandbox** de Zoho CRM.
-2. En Configuración → Personalización → Módulos y campos → **Cotizaciones**,
-   confirmar que existen estos campos (casillas):
-   - Aprobación Sobre 10 millones / Aprobado por Sobre 10 millones
-   - Aprobación Descuento Monto Mínimo / Aprobado por Descuento Monto Mínimo
-   - Aprobación 2da Selección / Aprobado por Segunda Selección
-   - Aprobación Cambio Forma de Pago / Aprobado por Cambio Forma de Pago
-   - Aprobación Venta Rental / Aprobado por Venta Rental
-   - Aprobación Sobreprecio / Aprobado por Sobreprecio
-   - Aprobación Descuento / **¿cuál es su "Aprobado por"?** (supuse
-     "Aprobado por Descuento Item"; si es otro, anotarlo y avisarme).
-3. En Configuración → Automatización → **Procesos de aprobación** →
-   Cotizaciones, confirmar que está activo **"UN Izaje Aprobación sobre 10
-   millones"** con la condición Fase = Pendiente de Aprobación.
+2. Confirmar que estén activas (si ya las armaste): la regla de **Juan
+   Marchant sin aprobación** y la de **exención Sub Gerentes**. Esta nueva
+   regla se apoya en ellas para que las cotizaciones de exentos no queden
+   trabadas en Pendiente.
 
 ---
 
-## Paso 1 — Crear la función (10 min)
+## Paso 1 — Procesos de aprobación: que evalúen al editar (10 min)
 
-1. Configuración → Desarrollador → **Funciones** → **+ Nueva función**.
-2. Nombre: `cotizacion_reevaluarAprobacion` · Nombre visible: "Reevaluar
-   aprobación al editar" · Categoría: **Automatización** · Crear.
-3. En **Editar argumentos**: agregar `quoteId` de tipo **String**
-   (cadena).
-4. Pegar este código y **Guardar**:
+Configuración → Automatización → **Procesos de aprobación** → Cotizaciones.
+Para **cada** proceso activo (UN Izaje Aprobación sobre 10 millones,
+UN Inamar Izaje - Aprobaciones, UN Rental, etc.):
+
+1. Abrir el proceso → sección **"Cuándo ejecutar"** (o "Activar").
+2. Si dice solo **Crear**, cambiar a **Crear o Editar**. Guardar.
+3. Anotar cuáles tuviste que cambiar.
+
+No tocar criterios ni aprobadores.
+
+---
+
+## Paso 2 — Función (10 min)
+
+1. Configuración → Desarrollador → **Funciones**. Si ya existe
+   `cotizacion_reevaluarAprobacion`, abrirla; si no, **+ Nueva función**:
+   nombre `cotizacion_reevaluarAprobacion`, nombre visible "Reevaluar
+   aprobación al editar", categoría **Automatización**, argumento
+   `quoteId` tipo **String**.
+2. Reemplazar todo el código por este y **Guardar**:
 
 ```deluge
-q = zoho.crm.getRecordById("Quotes", quoteId.toLong());
-if(q.get("Quote_Stage") != "Creada")
+// Fases en las que una edición puede mandar a aprobación
+fasesSinAprobar = {"Creada","Cotización Rechazada"};
+fasesAprobadas = {"Cotización Aprobada","Cotizacion Parcialmente Aprobada"};
+q = zoho.crm.getRecordById("Quotes",quoteId.toLong());
+fase = ifnull(q.get("Quote_Stage"),"");
+if(!fasesSinAprobar.contains(fase) && !fasesAprobadas.contains(fase))
 {
 	return;
 }
-pares = {
-	"Aprobaci_n_Sobre_10_millones":"Aprobado_por_Sobre_10_millones",
-	"Aprobaci_n_Descuento_Monto_M_nimo":"Aprobado_por_Descuento_Monto_M_nimo",
-	"Aprobaci_n_2da_Selecci_n":"Aprobado_por_Segunda_Selecci_n",
-	"Aprobaci_n_Cambio_Forma_de_Pago":"Aprobado_por_Cambio_Forma_de_Pago",
-	"Aprobaci_n_Venta_Rental":"Aprobado_por_Venta_Rental",
-	"Aprobaci_n_Sobreprecio":"Aprobado_por_Sobreprecio",
-	"Aprobaci_n_Descuento":"Aprobado_por_Descuento_Item"
-};
-pendiente = false;
-for each marca in pares.keys()
+// ¿Cumple algún criterio de aprobación? (casillas que calcula el Cotizador)
+marcas = {"Aprobaci_n_Sobre_10_millones","Aprobaci_n_Descuento_Monto_M_nimo","Aprobaci_n_Descuento","Aprobaci_n_2da_Selecci_n","Aprobaci_n_Cambio_Forma_de_Pago","Aprobaci_n_Venta_Rental","Aprobaci_n_Sobreprecio","Aprobaci_n_Venta_Calzada"};
+cumple = false;
+for each m in marcas
 {
-	if(q.get(marca) == true && q.get(pares.get(marca)) != true)
+	if(q.get(m) == true)
 	{
-		pendiente = true;
+		cumple = true;
 	}
 }
-if(pendiente)
+if(!cumple)
 {
-	resp = zoho.crm.updateRecord("Quotes", quoteId.toLong(), {"Quote_Stage":"Pendiente de Aprobación"}, {"trigger":["approval","workflow"]});
-	info resp;
+	return;
 }
+// Limpiar la aprobación anterior y mandar a aprobación
+datos = Map();
+datos.put("Sub_Fase_de_Cotizaci_n",null);
+aprobados = {"Aprobado_por_Sobre_10_millones","Aprobado_por_Descuento_Monto_M_nimo","Aprobado_por_Descuento_Item","Aprobado_por_Segunda_Selecci_n","Aprobado_por_Cambio_Forma_de_Pago","Aprobado_por_Venta_Rental","Aprobado_por_Sobreprecio"};
+for each a in aprobados
+{
+	datos.put(a,false);
+}
+datos.put("Quote_Stage","Pendiente de Aprobación");
+resp = zoho.crm.updateRecord("Quotes",quoteId.toLong(),datos,{"trigger":{"approval","workflow"}});
+info resp;
 ```
 
-> Si al guardar marca error en algún nombre de campo, es que en Sandbox el
-> nombre API es distinto: copiar el mensaje y avisarme.
+> Si al guardar marca error en algún nombre de campo, en Sandbox el nombre
+> API es distinto: copiar el mensaje y avisarme.
 
 ---
 
-## Paso 2 — Crear la regla de flujo de trabajo (10 min)
+## Paso 3 — Regla de flujo de trabajo (10 min)
 
-1. Configuración → Automatización → **Reglas de flujo de trabajo** →
-   **+ Crear regla**.
-2. Módulo: **Cotizaciones** · Nombre: "Reevaluar aprobación al editar".
-3. **Cuándo**: "Acción en el registro" → **Editar**.
-   - Marcar **"Repetir esta regla de flujo de trabajo cada vez que se edite
-     un registro"** (si no, solo corre la primera vez).
-   - Dejar "cualquier campo".
-4. **Condición**: "Registros que coinciden con las condiciones":
-   1. Fase de Cotización **es** Creada
-   2. Aprobación Sobre 10 millones **es** Seleccionado
-   3. Aprobación Descuento Monto Mínimo **es** Seleccionado
-   4. Aprobación 2da Selección **es** Seleccionado
-   5. Aprobación Cambio Forma de Pago **es** Seleccionado
-   6. Aprobación Venta Rental **es** Seleccionado
-   7. Aprobación Sobreprecio **es** Seleccionado
-   8. Aprobación Descuento **es** Seleccionado
-   - En **Editar patrón** dejar: `1 and (2 or 3 or 4 or 5 or 6 or 7 or 8)`
-5. **Acción instantánea** → **Función** → elegir
-   `cotizacion_reevaluarAprobacion`.
-   - Mapear el argumento `quoteId` → **Cotizaciones → ID de cotización**.
-6. Guardar y dejar la regla **activa**.
+1. Configuración → Automatización → **Reglas de flujo de trabajo**.
+   Abrir "Reevaluar aprobación al editar" o **+ Crear regla** (módulo
+   **Cotizaciones**, ese nombre).
+2. **Cuándo**: "Acción en el registro" → **Editar** →
+   **"cuando se modifique cualquiera de los campos seleccionados"** y
+   elegir:
+   - Total general
+   - Descuento Total de Productos
+   - Plazo de Pago
+   - Aprobación Sobre 10 millones
+   - Aprobación Descuento Monto Mínimo
+   - Aprobación Descuento
+   - Aprobación 2da Selección
+   - Aprobación Cambio Forma de Pago
+   - Aprobación Venta Rental
+   - Aprobación Sobreprecio
+   - Aprobación Venta Calzada
+
+   Marcar **"Repetir cada vez que se edite"**.
+
+   ⚠️ **No** usar "cualquier campo": las automatizaciones que corren al
+   aprobar (Sub Fase, vendedor secundario, envío a Creator) editan la
+   cotización y la mandarían de vuelta a aprobación sola.
+3. **Condición**: Fase de Cotización **es** Creada, Cotización Rechazada,
+   Cotización Aprobada, Cotizacion Parcialmente Aprobada (una sola
+   condición con varios valores).
+4. **Acción instantánea** → **Función** → `cotizacion_reevaluarAprobacion`,
+   mapeando `quoteId` → **Cotizaciones → ID de cotización**.
+5. Guardar y dejar **activa**.
 
 ---
 
-## Paso 3 — Pruebas (15–20 min)
+## Paso 4 — Pruebas (20 min)
 
-Usar una cotización de **Inamar Izaje** cuyo dueño **no** sea Juan Marchant.
-Ideal: desde el **Cotizador conectado a Sandbox**, porque así se prueba lo
-mismo que pasa en Producción. Si el Cotizador de Sandbox no está conectado
-al CRM Sandbox, usar la versión "a mano" (entre paréntesis).
+Ideal: desde el **Cotizador conectado a Sandbox**. Si no está conectado,
+usar la versión "a mano" (entre paréntesis). Usar un dueño que **no** sea
+Juan Marchant ni Sub Gerente de Ventas Inamar Izaje.
+
+**Caso 2 — sin aprobación:**
 
 | # | Qué hacer | Qué debería pasar |
 |---|-----------|-------------------|
-| A | Crear cotización **bajo 10 MM** | Queda en Fase "Creada", sin aprobación. |
-| B | **Editarla** subiendo el monto **sobre 10 MM** (a mano: marcar la casilla "Aprobación Sobre 10 millones" y guardar) | La Fase pasa sola a **Pendiente de Aprobación** y aparece el aprobador (botones Aprobar/Rechazar para el aprobador). |
-| C | Aprobarla y luego **editar** cualquier cosa | **No** vuelve a aprobación (ya está aprobada / Fase distinta de Creada). |
-| D | Otra cotización: llevarla a aprobación (como en B) y **rechazarla**. Anotar en qué Fase queda. Editarla. | Anotar qué pasa. Si queda en "Creada" y vuelve a aprobación al editar, decidir si es lo deseado. |
-| E | Cotización bajo 10 MM, editar **sin** activar ninguna marca | No pasa nada, sigue en "Creada". |
-| F | Repetir B con **monto mínimo** (marca "Aprobación Descuento Monto Mínimo") | Igual que B, entra el proceso de monto mínimo. |
+| A | Crear cotización Inamar Izaje **bajo 10 MM** | Queda en "Creada", sin aprobación. |
+| B | Editarla subiendo el monto **sobre 10 MM** (a mano: marcar "Aprobación Sobre 10 millones" y guardar) | Pasa sola a **Pendiente de Aprobación** y aparece el aprobador. |
+| C | Editar cualquier cosa **sin** que cumpla criterios (ej. sigue bajo 10 MM) | No pasa nada, sigue en "Creada". |
+
+**Caso 1 — ya aprobada:**
+
+| # | Qué hacer | Qué debería pasar |
+|---|-----------|-------------------|
+| D | Aprobar la de la prueba B hasta el final | Queda en **Cotización Aprobada** con Sub Fase "Aprobado por precio sobre 10 millones". **No** debe volver sola a Pendiente (si vuelve, avisarme: la regla está tomando un campo de más). |
+| E | Editar la aprobada **cambiando el monto** (sigue sobre 10 MM) (a mano: cambiar cantidad o precio de un ítem) | Vuelve a **Pendiente de Aprobación**, Sub Fase vacía, y entra de nuevo el aprobador desde el primer paso. |
+| F | Otra aprobada: editar **solo observaciones** (sin tocar montos) | Sigue en Cotización Aprobada (no re-dispara). |
+| G | Aprobada con precio bajo mínimo (marca "Aprobación Descuento Monto Mínimo"): bajar más el precio | Vuelve a Pendiente y entra "UN Inamar Izaje - Aprobaciones". |
+
+**Rechazo y exentos:**
+
+| # | Qué hacer | Qué debería pasar |
+|---|-----------|-------------------|
+| H | Llevar una a aprobación y **rechazarla**. Editarla cambiando el monto | Vuelve a Pendiente de Aprobación. |
+| I | Cotización de **Juan Marchant** sobre 10 MM: editar el monto | Puede pasar un instante por Pendiente y vuelve sola a **Creada** (regla de Juan). No debe quedar trabada. |
 
 **Dónde mirar si algo no funciona:**
-- En la cotización, pestaña **Historial / Línea de tiempo**: debe aparecer
-  la regla "Reevaluar aprobación al editar" y el envío a aprobación.
-- Si la regla aparece pero la Fase no cambia: en Funciones →
+- En la cotización → **Línea de tiempo**: debe aparecer la regla
+  "Reevaluar aprobación al editar" y luego "enviado a aprobación".
+- Si la regla aparece pero la Fase no cambia: Funciones →
   `cotizacion_reevaluarAprobacion` → **Registros de ejecución**, copiar el
-  mensaje de `resp`. Lo más probable es que el **Blueprint "SB Gestión de
-  Cotizaciones"** no deje cambiar la Fase así; avisarme con el texto.
-- Si la regla **no aparece** en el historial cuando se edita desde el
-  Cotizador (pero sí cuando se edita a mano): el Cotizador actualiza sin
-  disparar reglas, y entonces el arreglo tiene que hacerlo el proveedor en
-  el Cotizador.
+  texto de `resp`. Lo más probable: el **Blueprint "SB Gestión de
+  Cotizaciones"** no deja mover la Fase así, o la Sub Fase no acepta
+  `null` (probar cambiando `null` por `""`).
+- Si la Fase cambia a Pendiente pero **no aparece aprobador**: ese proceso
+  quedó en "Crear" (Paso 1).
+- Si la regla **no aparece** cuando se edita desde el Cotizador (pero sí a
+  mano): el Cotizador actualiza sin disparar reglas → el arreglo lo tiene
+  que hacer el proveedor.
 
 ---
 
-## Paso 4 — Resultado
+## Paso 5 — Resultado
 
-Mandarme lo que pasó en cada prueba (A–F), especialmente B, D y lo del
-Cotizador. Con eso dejo listo el paso a Producción. Para deshacer en
-Sandbox: desactivar la regla.
+Mandarme lo que pasó en cada prueba (A–I), especialmente D, E e I, y las
+respuestas a las decisiones pendientes de la propuesta (¿incluir
+"Enviada"? ¿"Rechazada" sí?). Con eso dejo listo el paso a Producción.
+Para deshacer en Sandbox: desactivar la regla.
