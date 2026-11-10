@@ -2103,3 +2103,14 @@ ver regla de sincronización en `CLAUDE.md`.
   format": hay que envolver el código en
   `void automation.reevaluar_aprobacion_al_editar(String quoteId) { … }`
   (nombre API que creó Simón). Nota agregada en la guía, Paso 2.
+
+## 2026-11-10 — Clonar cotización a otro RUT no guarda
+
+- Consulta: al clonar una cotización y cambiar el cliente (otro RUT), al
+  guardar "bota" y no guarda. ¿Falla o restricción?
+- Revisada metadata de Cotizaciones: no hay restricción por cliente. Contacto,
+  Sucursal del Cliente, Obra Rental y Activo tienen filtros de búsqueda
+  (Activo revalida al editar) y la Oportunidad queda del cliente original →
+  causa más probable. Indicado cambiar todos esos campos antes de guardar.
+  Pendiente: captura del mensaje, N° de cotización y usuario si sigue fallando.
+  Detalle en `zoho/config/caso-clonar-cotizacion-a-otro-cliente.md`.
