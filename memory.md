@@ -2052,3 +2052,7 @@ ver regla de sincronización en `CLAUDE.md`.
   revés: el proceso quedaría solo para Sub Gerentes) y también tocó la
   Regla 2. Indicado: cambiar a "no pertenece a rol" y definir si la Regla 2
   va o no (si va, la regla de flujo vuelve a la versión (5 o 6)).
+- 10-11: Final Sandbox: Reglas 1 y 2 con "NO PERTENECE A ROL Sub Gerente de
+  Ventas Inamar Izaje" (exentos Sebastián y Dieter de toda aprobación de
+  precio; monto se mantiene). Regla de flujo por rol, versión (5 o 6).
+  Falta crear la regla de flujo y probar.
