@@ -2114,3 +2114,10 @@ ver regla de sincronización en `CLAUDE.md`.
   causa más probable. Indicado cambiar todos esos campos antes de guardar.
   Pendiente: captura del mensaje, N° de cotización y usuario si sigue fallando.
   Detalle en `zoho/config/caso-clonar-cotizacion-a-otro-cliente.md`.
+- 10-11 (cont.): Simón pregunta si los vendedores pueden clonar y cambiar
+  ellos mismos esos campos. Sí: Cliente, Contacto, Sucursal y Oportunidad
+  son editables para todos los perfiles en la pantalla de clonar. Propuesta
+  de mejora (pendiente OK): 2 Client Scripts en página Clonar — onChange de
+  Cliente vacía Contacto/Sucursal/Oportunidad/Obra Rental y avisa; onSave no
+  deja guardar sin esos datos. Ver
+  `zoho/config/propuesta-client-script-clonar-a-otro-cliente.md`.
