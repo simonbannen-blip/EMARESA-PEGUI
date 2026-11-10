@@ -2056,3 +2056,6 @@ ver regla de sincronización en `CLAUDE.md`.
   Ventas Inamar Izaje" (exentos Sebastián y Dieter de toda aprobación de
   precio; monto se mantiene). Regla de flujo por rol, versión (5 o 6).
   Falta crear la regla de flujo y probar.
+- 10-11: Simón avisó "ya están listas las aprobaciones" (Sandbox). Pendiente
+  confirmar: regla de flujo por rol creada, resultado de pruebas, y pase a
+  Producción. Sigue pendiente OK para pasar COT-II10011-2341 a Creada.
