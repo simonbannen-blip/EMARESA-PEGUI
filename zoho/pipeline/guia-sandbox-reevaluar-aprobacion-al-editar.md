@@ -93,6 +93,11 @@ resp = zoho.crm.updateRecord("Quotes",quoteId.toLong(),datos,{"trigger":{"approv
 info resp;
 ```
 
+> **Editor nuevo de Zoho** (10-11): si al guardar sale "Improper code
+> format", el código debe ir envuelto en el encabezado:
+> `void automation.reevaluar_aprobacion_al_editar(String quoteId) { …código… }`
+> (el argumento se declara ahí, no en un panel aparte).
+>
 > Si al guardar marca error en algún nombre de campo, en Sandbox el nombre
 > API es distinto: copiar el mensaje y avisarme.
 
