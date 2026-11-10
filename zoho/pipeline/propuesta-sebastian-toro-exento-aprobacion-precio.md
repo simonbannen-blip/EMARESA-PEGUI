@@ -93,7 +93,7 @@ Monto Mínimo (criterio 2). Probablemente la intención era
 ## Guía final
 
 **Regla 1:** agregar criterio 8 = Propietario de Cotización **no está**
-Sebastian Toro. Patrón: `(1 y 8 y (((2 y 3) y 4) o ((5 y 6) y 7)))`.
+Sebastian Toro. Patrón: `((1 y (((2 y 3) y 4) o ((5 y 6) y 7))) y 8)`.
 
 **Regla 2:** agregar criterio 4 = Propietario de Cotización **no está**
 Sebastian Toro. Patrón: `((1 y 2) y 3) y 4`.
