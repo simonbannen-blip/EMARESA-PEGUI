@@ -2035,3 +2035,8 @@ ver regla de sincronización en `CLAUDE.md`.
   deja igual a Producción (quitar criterio Total > 1 MM y Gerente como 2º
   aprobador en Regla 1) y solo se agrega la exención de Sebastián.
 - 10-11: patrón Regla 1 corregido a `((1 y (((2 y 3) y 4) o ((5 y 6) y 7))) y 8)` (Zoho exige paréntesis de a dos).
+- 10-11: Sandbox — Simón guardó la Regla 1 de "UN Inamar Izaje -
+  Aprobaciones" (igual a Producción + Sebastián excluido). Al quitar el 2º
+  aprobador, Zoho pidió completar "Mientras espera aprobación – Fase 1"
+  (Campos específicos vacío); se indicó copiar Producción o usar "Todos los
+  campos". Siguen Regla 2, regla de flujo y pruebas A–E.
