@@ -2045,3 +2045,10 @@ ver regla de sincronización en `CLAUDE.md`.
   Mínimo seleccionado y (Aprobación Descuento no seleccionado o Sub Fase =
   Aprobado por Descuento de Item - 1), patrón
   `(((((1 y 2) y 3) y 4) y 5) y (6 o 7))`. Pruebas B y F actualizadas.
+- 10-11: Se evaluó exención por perfil/rol. Perfil "Responsable de Área" =
+  38 usuarios (incluye aprobadores PM Izaje) → descartado. Rol "Sub Gerente
+  de Ventas Inamar Izaje" = Sebastián Toro + Dieter Steinmeyer. Simón lo
+  armó por rol en Sandbox pero con operador **"pertenece a rol"** (al
+  revés: el proceso quedaría solo para Sub Gerentes) y también tocó la
+  Regla 2. Indicado: cambiar a "no pertenece a rol" y definir si la Regla 2
+  va o no (si va, la regla de flujo vuelve a la versión (5 o 6)).
