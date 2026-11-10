@@ -2099,3 +2099,7 @@ ver regla de sincronización en `CLAUDE.md`.
   Aprobada" y "Cotización Rechazada" a la condición (Parcialmente Aprobada
   queda bloqueada). Rama "Pendiente de Aprobación" del botón es
   inalcanzable (cosmético). Falta validar que el Cotizador deje guardar.
+- 10-11 (cont.): En Sandbox, el editor nuevo de funciones dio "Improper code
+  format": hay que envolver el código en
+  `void automation.reevaluar_aprobacion_al_editar(String quoteId) { … }`
+  (nombre API que creó Simón). Nota agregada en la guía, Paso 2.
