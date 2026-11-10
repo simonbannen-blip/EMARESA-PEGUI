@@ -96,11 +96,11 @@ Monto Mínimo (criterio 2). Probablemente la intención era
 Sebastian Toro. Patrón: `((1 y (((2 y 3) y 4) o ((5 y 6) y 7))) y 8)`.
 
 **Regla 2:** agregar criterio 4 = Propietario de Cotización **no está**
-Sebastian Toro. Patrón: `((1 y 2) y 3) y 4`.
+Sebastian Toro. Patrón: `(((1 y 2) y 3) y 4)`.
 
 **Regla de flujo nueva** (al editar): condiciones
 1 UN es Inamar Izaje · 2 Fase es Pendiente de Aprobación · 3 Propietario
 es Sebastian Toro · 4 Aprobación Sobre 10 millones no seleccionado ·
 5 Aprobación Descuento Monto Mínimo es Seleccionado · 6 Aprobación
-Descuento es Seleccionado. Patrón: `1 y 2 y 3 y 4 y (5 o 6)`.
+Descuento es Seleccionado. Patrón: `((((1 y 2) y 3) y 4) y (5 o 6))`.
 Acción: Fase de Cotización = Creada.
