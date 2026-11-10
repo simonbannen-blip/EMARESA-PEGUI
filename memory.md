@@ -2081,3 +2081,10 @@ ver regla de sincronización en `CLAUDE.md`.
   Calzada. Pruebas A–I.
 - Pendiente de Simón: probar en Sandbox; decidir si "Enviada" también
   re-dispara (hoy no) y confirmar que "Rechazada" sí.
+- 10-11 (cont.): Simón mandó captura de "UN Izaje Aprobación sobre 10
+  millones": ya está en **Crear o editar**; criterios Fase = Pendiente +
+  UN Inamar Izaje + casilla 10 MM + no Juan; al aprobar solo escribe Sub
+  Fase; al rechazar Fase = Cotización Rechazada. Preguntó por qué la 2883
+  (sigue en Creada, 14,3 MM, casillas 10 MM y Monto Mínimo en verdadero) no
+  entró: falla el criterio Fase = Pendiente → exactamente lo que resuelve la
+  v2. Ofrecido pasar la 2883 a Pendiente con su OK (no aplicado).
