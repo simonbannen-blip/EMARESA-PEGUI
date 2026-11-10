@@ -40,6 +40,11 @@ UN Inamar Izaje - Aprobaciones, UN Rental, etc.):
 
 No tocar criterios ni aprobadores.
 
+> Ya confirmado (captura 10-11): **UN Izaje Aprobación sobre 10 millones**
+> ya está en "Crear o editar" en Producción. Aun así no entra al editar
+> porque su criterio 1 exige Fase = Pendiente de Aprobación y la Fase queda
+> en Creada — eso es lo que arregla la función.
+
 ---
 
 ## Paso 2 — Función (10 min)
