@@ -159,3 +159,22 @@ Pruebas que cambian: B (solo Aprobación Descuento) → **pide aprobación**
 de Product Manager Izaje como hoy. Nueva F: Monto Mínimo + Aprobación
 Descuento → primero aprobación de descuento por ítem; al aprobarla debe
 quedar en **Creada** (sin la 2ª aprobación de mínimo).
+
+## Estado final en Sandbox (10-11) — exención por ROL, Reglas 1 y 2
+
+Simón dejó el proceso "UN Inamar Izaje - Aprobaciones" así (verificado
+por captura):
+- Regla 1: criterio 8 = Propietario **NO PERTENECE A ROL** Sub Gerente de
+  Ventas Inamar Izaje · patrón `((1 y (((2 y 3) y 4) o ((5 y 6) y 7))) y 8)`
+  · aprobador solo Product Manager Izaje.
+- Regla 2: criterio 4 = mismo · patrón `(((1 y 2) y 3) y 4)`.
+Exentos: Sebastián Toro y Dieter Steinmeyer (todo el rol). Reemplaza la
+decisión anterior de no tocar la Regla 2.
+
+Regla de flujo (vigente):
+1 UN es Inamar Izaje · 2 Fase es Pendiente de Aprobación · 3 Propietario
+**pertenece a rol** Sub Gerente de Ventas Inamar Izaje · 4 Aprobación Sobre
+10 millones es No seleccionado · 5 Aprobación Descuento Monto Mínimo es
+Seleccionado · 6 Aprobación Descuento es Seleccionado.
+Patrón `((((1 y 2) y 3) y 4) y (5 o 6))` → Fase = Creada.
+Pruebas A–E originales (B vuelve a "Creada"); sumar una con dueño Dieter.
