@@ -98,6 +98,39 @@ info resp;
 
 ---
 
+## Paso 2b — Botón "Editar Cotización": permitir editar aprobadas (5 min)
+
+Hallazgo 10-11: la función del botón `button.EditarCotizacion(idCreator,
+id, fase)` solo abre el Cotizador si la Fase es Creada, Pendiente de
+revisión o Sin Stock suficiente (o Enviada con producto ficticio). Con
+"Cotización Aprobada" o "Cotización Rechazada" responde "No es posible
+Editar esta cotización!" → sin este cambio, el caso 1 (editar una aprobada)
+no se puede ni intentar.
+
+En Funciones → `EditarCotizacion` (copiar antes el código original),
+cambiar solo esta línea:
+
+```deluge
+if(fase != "Creada" && fase != "Pendiente de revisión" && fase != "Sin Stock suficiente")
+```
+
+por:
+
+```deluge
+if(fase != "Creada" && fase != "Pendiente de revisión" && fase != "Sin Stock suficiente" && fase != "Cotización Aprobada" && fase != "Cotización Rechazada")
+```
+
+- "Cotizacion Parcialmente Aprobada" queda bloqueada a propósito
+  (aprobación en curso).
+- Si no se quiere editar rechazadas, quitar `&& fase != "Cotización Rechazada"`.
+- Ojo: el `else if(fase == "Pendiente de Aprobación")` nunca se alcanza
+  (el primer `if` lo atrapa con el mensaje genérico). No afecta; se puede
+  ordenar después.
+- En la prueba E confirmar que el **Cotizador** también deja guardar una
+  aprobada; si la bloquea por su lado, eso es del proveedor.
+
+---
+
 ## Paso 3 — Regla de flujo de trabajo (10 min)
 
 1. Configuración → Automatización → **Reglas de flujo de trabajo**.
