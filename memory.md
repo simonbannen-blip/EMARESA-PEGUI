@@ -2088,3 +2088,7 @@ ver regla de sincronización en `CLAUDE.md`.
   (sigue en Creada, 14,3 MM, casillas 10 MM y Monto Mínimo en verdadero) no
   entró: falla el criterio Fase = Pendiente → exactamente lo que resuelve la
   v2. Ofrecido pasar la 2883 a Pendiente con su OK (no aplicado).
+- 10-11 (cont.): Explicado a Simón que el proceso de aprobación no mueve la
+  Fase (la exige como criterio); al editar, el Cotizador no la manda.
+  Simón decidió probar primero la v2 en Sandbox antes de pedir el arreglo
+  al proveedor del Cotizador. Pendiente: resultados pruebas A–I.
