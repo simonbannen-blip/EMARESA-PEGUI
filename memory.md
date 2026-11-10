@@ -2034,3 +2034,4 @@ ver regla de sincronización en `CLAUDE.md`.
 - 09-11 (cont.): Simón decidió NO llevar el umbral de 1 MM; Sandbox se
   deja igual a Producción (quitar criterio Total > 1 MM y Gerente como 2º
   aprobador en Regla 1) y solo se agrega la exención de Sebastián.
+- 10-11: patrón Regla 1 corregido a `((1 y (((2 y 3) y 4) o ((5 y 6) y 7))) y 8)` (Zoho exige paréntesis de a dos).

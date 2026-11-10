@@ -18,7 +18,7 @@ Hacer primero en **Sandbox**; si las pruebas salen bien, repetir igual en
    Cotizaciones → **UN Inamar Izaje - Aprobaciones** → Editar.
 2. Regla **1** → editar criterios → **+** al final → criterio 8:
    **Propietario de Cotización** · **no está** · **Sebastian Toro**.
-3. **Editar patrón** → `(1 y 8 y (((2 y 3) y 4) o ((5 y 6) y 7)))`.
+3. **Editar patrón** → `((1 y (((2 y 3) y 4) o ((5 y 6) y 7))) y 8)`.
 4. No tocar aprobadores ni acciones.
 
 ## Paso 2 — Regla 2 del mismo proceso
@@ -124,5 +124,11 @@ Paso 1, dejar la Regla 1 igual a Producción:
 - Quitar al Gerente Inamar Izaje como 2º aprobador (queda solo Product
   Manager Izaje, "Cualquier").
 - Luego seguir la guía normal: Sebastián como criterio **8**, patrón
-  `(1 y 8 y (((2 y 3) y 4) o ((5 y 6) y 7)))`.
+  `((1 y (((2 y 3) y 4) o ((5 y 6) y 7))) y 8)`.
 La nota de "criterio 9" de más arriba queda sin efecto.
+
+## Corrección 10-11: patrón de la Regla 1
+Zoho rechazó `(1 y 8 y (...))` ("Compruebe el patrón en 8"): exige
+paréntesis de a dos elementos. Patrón correcto:
+`((1 y (((2 y 3) y 4) o ((5 y 6) y 7))) y 8)` (mismo formato que generó
+Zoho cuando el 8 era "Total general"). Ya corregido arriba.
