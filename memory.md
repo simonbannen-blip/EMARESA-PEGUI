@@ -2092,3 +2092,10 @@ ver regla de sincronización en `CLAUDE.md`.
   Fase (la exige como criterio); al editar, el Cotizador no la manda.
   Simón decidió probar primero la v2 en Sandbox antes de pedir el arreglo
   al proveedor del Cotizador. Pendiente: resultados pruebas A–I.
+- 10-11 (cont.): Simón encontró `button.EditarCotizacion(idCreator,id,fase)`:
+  el botón solo abre el Cotizador en Creada / Pendiente de revisión / Sin
+  Stock suficiente (o Enviada con producto ficticio) → hoy **no se puede
+  editar una aprobada**. Agregado Paso 2b en la guía: sumar "Cotización
+  Aprobada" y "Cotización Rechazada" a la condición (Parcialmente Aprobada
+  queda bloqueada). Rama "Pendiente de Aprobación" del botón es
+  inalcanzable (cosmético). Falta validar que el Cotizador deje guardar.
