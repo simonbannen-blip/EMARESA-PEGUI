@@ -38,3 +38,28 @@ Si con eso sigue fallando: pedir **captura del mensaje**, número de la
 cotización y usuario (perfil/UN) para ubicar la regla exacta. Ojo: en
 Rental el clonado oficial es por "Editar Cotización ▾ → Clonar Cotización"
 (Cotizador), no por el Clonar nativo.
+
+## Actualización 2026-11-10 — el clonado es en el Cotizador (Creator)
+Simón aclara: el botón de clonar abre el **Cotizador (Creator)**, no el
+Clonar nativo del CRM. Por eso la propuesta de Client Script queda
+descartada (no actúa en Creator) y la falla al guardar ocurre en el
+Cotizador o al enviar la cotización al CRM. El MCP no ve Creator.
+
+Datos del CRM (campo `ID Cotizac. Original`): de las 200 cotizaciones
+clonadas más recientes, se cruzaron 52 con su original → **1 fue clonada a
+otro cliente y se guardó bien**:
+- **COT-CONST-null-3916** (Construcción, 19-10-2026, creada por usuario
+  "Emaresa"), clonada de una cotización de GESTA SERVICIOS A LA MINERÍA SPA
+  a **SERVICIOS ALTA SPA**. Contacto (Jeison Rico), Sucursal (ANTOFAGASTA)
+  y Oportunidad (261019-OP-CONST-159-004069, creada minutos antes de la
+  cotización) son todos del cliente nuevo. Hoy está Cerrada Ganada.
+
+Conclusión: el Cotizador **sí permite** clonar a otro RUT; no es una
+restricción de diseño. Lo más probable es que falle cuando el cliente nuevo
+no tiene sus propios datos listos (sobre todo **una Oportunidad propia**, y
+también contacto/sucursal) o le falta algo que exige el Cotizador.
+
+Pendiente: captura del error en el Cotizador, N° de la cotización original,
+RUT nuevo y usuario. Con eso se revisa en el CRM si al cliente nuevo le
+falta oportunidad/contacto/sucursal; si todo está, es caso para el
+proveedor del Cotizador.

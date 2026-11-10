@@ -2121,3 +2121,11 @@ ver regla de sincronización en `CLAUDE.md`.
   Cliente vacía Contacto/Sucursal/Oportunidad/Obra Rental y avisa; onSave no
   deja guardar sin esos datos. Ver
   `zoho/config/propuesta-client-script-clonar-a-otro-cliente.md`.
+- 10-11 (cont.): Simón aclara que el clonado se hace en el **Cotizador
+  (Creator)**, no en el Clonar nativo → propuesta de Client Script
+  descartada. Cruce de datos: de 52 clones recientes, 1 se clonó a otro
+  cliente y funcionó (COT-CONST-null-3916, GESTA → SERVICIOS ALTA, con
+  oportunidad, contacto y sucursal del cliente nuevo; la oportunidad se creó
+  justo antes). Conclusión: no está bloqueado; probable que falle si el
+  cliente nuevo no tiene oportunidad/contacto/sucursal. Pedido a Simón:
+  captura del error, N° cotización, RUT nuevo y usuario.

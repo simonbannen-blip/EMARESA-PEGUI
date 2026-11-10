@@ -1,6 +1,8 @@
 # Propuesta: que al clonar a otro cliente el sistema limpie los datos del cliente anterior
 
-Fecha: 2026-11-10 · Estado: **propuesta, pendiente OK de Simón** (Client Script;
+Fecha: 2026-11-10 · Estado: **DESCARTADA** — el clonado se hace en el Cotizador (Creator), no en el Clonar nativo del CRM; un Client Script del CRM no actúa ahí. Ver `caso-clonar-cotizacion-a-otro-cliente.md`.
+
+Estado original: propuesta, pendiente OK de Simón (Client Script;
 lo aplica Simón en Zoho, el MCP no edita Client Scripts). Probar primero en Sandbox.
 
 Contexto: `caso-clonar-cotizacion-a-otro-cliente.md`.
