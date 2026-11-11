@@ -2129,3 +2129,11 @@ ver regla de sincronización en `CLAUDE.md`.
   justo antes). Conclusión: no está bloqueado; probable que falle si el
   cliente nuevo no tiene oportunidad/contacto/sucursal. Pedido a Simón:
   captura del error, N° cotización, RUT nuevo y usuario.
+
+## 2026-11-11 — Dayana Nossa: ver todo Ferretek bajo el Subgerente
+- Dayana (rol Gestor Comercial) ya cuelga de Sub Gerente (Omar Arriagada),
+  pero no tiene a nadie debajo → solo ve lo suyo. Bajo Sub Gerente están los
+  8 usuarios Ferretek; las 1.025 oportunidades UN Ferretek son todas de ese
+  equipo. Recomendado: reglas de uso compartido por módulo (Roles y
+  subordinados Sub Gerente → Rol Gestor Comercial). No se tocó el CRM; lo
+  aplica Simón. Doc: `zoho/config/propuesta-dayana-nossa-ver-todo-ferretek.md`.
