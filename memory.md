@@ -2137,3 +2137,11 @@ ver regla de sincronización en `CLAUDE.md`.
   equipo. Recomendado: reglas de uso compartido por módulo (Roles y
   subordinados Sub Gerente → Rol Gestor Comercial). No se tocó el CRM; lo
   aplica Simón. Doc: `zoho/config/propuesta-dayana-nossa-ver-todo-ferretek.md`.
+
+## 2026-11-12 — Mail al proveedor del Cotizador (re-aprobación al editar)
+
+- Simón pidió texto breve para el proveedor. Guardado en
+  `zoho/pipeline/mail-proveedor-reaprobacion-al-editar.md`: al editar, si
+  hay casilla de aprobación, enviar Fase "Pendiente de Aprobación" y Sub
+  Fase vacía (ej. COT-2883); permitir editar Aprobadas/Rechazadas en el
+  Cotizador. Sigue en paralelo la prueba en Sandbox de la v2.
