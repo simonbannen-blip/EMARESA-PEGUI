@@ -5,24 +5,17 @@ Estado: texto entregado a Simón para enviar. Contexto en
 
 ---
 
-**Asunto:** Cotizador – enviar a aprobación al editar una cotización
+**Asunto:** Cotizador – aprobación al editar
 
 Hola,
 
-Necesitamos un ajuste en el Cotizador al **editar** cotizaciones:
+Al editar una cotización en el Cotizador, si queda con alguna casilla de
+aprobación marcada, necesitamos que envíe a CRM la Fase "Pendiente de
+Aprobación" (y Sub Fase vacía), igual que al crear. Hoy queda en "Creada" y
+no pasa a aprobación (ej.: COT-II10022-2883). Aplica también a cotizaciones
+Aprobadas y Rechazadas.
 
-1. **Al guardar una edición** (`EnviarCotizacionACRM`), si la cotización
-   queda con alguna casilla de aprobación en verdadero, enviar a CRM
-   `Quote_Stage = "Pendiente de Aprobación"` y `Sub_Fase_de_Cotizaci_n`
-   vacía, igual que al crear. Hoy al editar no se envía la Fase, queda en
-   "Creada" y el proceso de aprobación no se activa.
-   Ejemplo: COT-II10022-2883 se editó a $14,3 MM, quedó con las casillas
-   Sobre 10 millones y Monto Mínimo marcadas, pero siguió en "Creada" sin
-   aprobación.
-2. **Permitir editar** cotizaciones en Fase "Cotización Aprobada" y
-   "Cotización Rechazada", aplicando la misma regla del punto 1.
-
-¿Nos pueden indicar plazo estimado?
+¿Plazo estimado?
 
 Saludos,
-Simón Bannen
+Simón
