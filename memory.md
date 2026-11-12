@@ -2145,3 +2145,4 @@ ver regla de sincronización en `CLAUDE.md`.
   hay casilla de aprobación, enviar Fase "Pendiente de Aprobación" y Sub
   Fase vacía (ej. COT-2883); permitir editar Aprobadas/Rechazadas en el
   Cotizador. Sigue en paralelo la prueba en Sandbox de la v2.
+- 12-11: Simón pidió el mail más corto; versión breve guardada en el mismo archivo.
