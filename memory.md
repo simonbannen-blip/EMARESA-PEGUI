@@ -2146,3 +2146,22 @@ ver regla de sincronización en `CLAUDE.md`.
   Fase vacía (ej. COT-2883); permitir editar Aprobadas/Rechazadas en el
   Cotizador. Sigue en paralelo la prueba en Sandbox de la v2.
 - 12-11: Simón pidió el mail más corto; versión breve guardada en el mismo archivo.
+
+## 2026-11-13 — Probabilidad por fase en Oportunidades (para Sandbox)
+
+- Llegó correo con tabla de probabilidades (9 opciones): Creada 5, Necesita
+  Análisis 10; Cotización Enviada según tipo (Estimativa/Budget o A Firme)
+  y preferencia (15/20/35/70); Negociación según preferencia (90/60/10).
+  Objetivo: clasificar los ~6.500 MM en Cotización Enviada.
+- Diseño: 2 listas nuevas en Oportunidades (`Tipo de Cotización`,
+  `Preferencia del Cliente`), probabilidad por defecto de fases cambiada al
+  valor conservador (5/10/15/60, porque la fase Cotización Enviada la pone
+  una regla de Cotizaciones y eso no dispara otras reglas), y regla
+  "SB Calcular Probabilidad" (crear o editar, repetir) con función Deluge
+  `calcularProbabilidad`. Pruebas A–L.
+- Riesgos anotados: alerta KAM puede usar "Probabilidad = 75"; cambiar
+  defaults no recalcula Oportunidades existentes (ofrecido recálculo por
+  API con OK). Dudas al solicitante: "Indiferente" en Cotización Enviada
+  (tratado como competencia), UNs a las que aplica, quién clasifica.
+- No se tocó el CRM (MCP de Zoho no conectó en esta sesión). Guía:
+  `zoho/pipeline/guia-sandbox-probabilidad-por-fase.md`.
