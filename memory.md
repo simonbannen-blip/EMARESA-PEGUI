@@ -2170,3 +2170,12 @@ ver regla de sincronización en `CLAUDE.md`.
   sin cambiar probabilidades de fase ni el campo estándar → no afecta el
   aviso al KAM. Guía reescrita (campo, pruebas, informe por opción, vista
   sin clasificar; opcional dependencia con Fase y obligatorio en Blueprint).
+
+## 2026-11-13 — Límite de 50 caracteres en Nombre de Cliente
+
+- Simón preguntó si se puede dejar "Nombre de Cliente" en máx. 50 caracteres.
+- CRM: `Accounts.Account_Name` es estándar, largo 200, no editable. 93.658 clientes.
+- Propuesta: regla de validación por función Deluge (error si > 50).
+  Riesgos: clientes existentes con nombre largo quedarían obligados a
+  acortarlo al editar; integraciones por API pueden no pasar por la regla.
+  No aplicado. Doc: `zoho/config/propuesta-limite-50-caracteres-nombre-cliente.md`.
