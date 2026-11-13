@@ -2165,3 +2165,8 @@ ver regla de sincronización en `CLAUDE.md`.
   (tratado como competencia), UNs a las que aplica, quién clasifica.
 - No se tocó el CRM (MCP de Zoho no conectó en esta sesión). Guía:
   `zoho/pipeline/guia-sandbox-probabilidad-por-fase.md`.
+- 13-11 (cont.): Simón simplificó: **un solo campo de lista** "Probabilidad
+  de Cierre" en Oportunidades con las 9 opciones (texto + %). Sin función,
+  sin cambiar probabilidades de fase ni el campo estándar → no afecta el
+  aviso al KAM. Guía reescrita (campo, pruebas, informe por opción, vista
+  sin clasificar; opcional dependencia con Fase y obligatorio en Blueprint).
