@@ -20,6 +20,27 @@ Que el **Nombre de Cliente** (módulo Clientes / `Accounts`) acepte como máximo
 puede en campos custom). Por eso el límite se hace con una **Regla de
 Validación**, que muestra un error y no deja guardar si el nombre pasa de 50.
 
+## Paso a paso (pantallas reales de Zoho)
+
+1. Engranaje ⚙️ (arriba a la derecha) → **Personalización** → **Módulos y campos** → **Clientes**.
+2. Pestaña **Reglas de validación** → **+ Nueva regla de validación**.
+3. Ventana "Crear regla de validación":
+   - Campo: **Nombre de Cliente**
+   - Tipo: **Usando la función**
+   - Validar el: **Verificar y guardar campo**
+   - **Siguiente**.
+4. **Nueva función** (o "Crear función"). Ventana "Crear función":
+   - Nombre de visualización: `Validar largo Nombre de Cliente`
+   - Nombre de la función: `validarLargoNombreCliente`
+   - Descripción: `Impide guardar si el Nombre de Cliente supera 50 caracteres.`
+   - Idioma: **Deluge** → **Crear**.
+5. En el editor: borrar todo y pegar el código de abajo → **Guardar**
+   (si pregunta por argumentos, `crmAPIRequest` ya viene incluido; no agregar nada).
+6. Volver a la regla → **Guardar**. Revisar que quede **activa**.
+7. Probar (50 caracteres guarda / 51 da error / editar un cliente con nombre largo da error).
+   Texto de prueba de 50: `ABCDEFGHIJKLMNOPQRSTUVWXYZ ABCDEFGHIJKLMNOPQRSTUVW` · de 51: el mismo + `X`.
+8. Si algo falla: desactivar la regla desde la misma pestaña (interruptor) y avisar.
+
 ## Cómo aplicarlo
 
 Configuración → Personalización → Módulos y campos → **Clientes** →
