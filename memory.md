@@ -2179,3 +2179,6 @@ ver regla de sincronización en `CLAUDE.md`.
   Riesgos: clientes existentes con nombre largo quedarían obligados a
   acortarlo al editar; integraciones por API pueden no pasar por la regla.
   No aplicado. Doc: `zoho/config/propuesta-limite-50-caracteres-nombre-cliente.md`.
+- 16-11: Simón está creando la regla él mismo en Zoho; se agregó paso a
+  paso con las pantallas reales (tipo "Usando la función", "Verificar y
+  guardar campo", nombre de función `validarLargoNombreCliente`) al mismo doc.
