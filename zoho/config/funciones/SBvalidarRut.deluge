@@ -1,0 +1,141 @@
+map validation_rule.SBvalidarRut(String crmAPIRequest)
+{
+/* The snippet below shows you how to get a list of fields, their values from a MAP object. The fields’ values can be obtained from the same MAP object.                                                  */
+entityMap = crmAPIRequest.toMap().get("record");
+/* ===== Largo máximo de Nombre de Cliente: 50 caracteres (agregado 16-11-2026) ===== */
+nombreCliente = ifnull(entityMap.get("Account_Name"),"").toString().trim();
+if(nombreCliente.length() > 50)
+{
+	responseNombre = Map();
+	responseNombre.put('status','error');
+	responseNombre.put('message','El Nombre de Cliente no puede superar 50 caracteres (tiene ' + nombreCliente.length() + ').');
+	return responseNombre;
+}
+/* ===== Fin chequeo Nombre de Cliente ===== */
+/* The example below demonstrates how a field’s value (email) can be obtained from a MAP object. Here, entityMap - Map Object, Email - Field's API name
+Sample entityMap= {'Email': 'xxx@xxx.com', 'Last_Name': 'xxx'};                                   */
+rut = entityMap.get("RUT");
+Extranjero = false;
+var_rut = rut.upper();
+var_rut = var_rut.trim();
+var_rut = var_rut.toString();
+var_rut = var_rut.remove(".");
+var_rut = var_rut.remove(",");
+var_rut = var_rut.remove("_");
+var_rut = var_rut.remove(" ");
+resp = var_rut.contains("-");
+if(!resp)
+{
+	rut_ok = "no";
+}
+// 	info var_rut ;
+if(var_rut.matches("(\d{6,8}-[\dkK])"))
+{
+	//
+	//
+	//
+	var_rut = var_rut.remove("-");
+	largoRUT = var_rut.length();
+	//se elimina el digito verificador dejando solo la parte numerica
+	Rut_matlab = var_rut.subString(0,largoRUT - 1).toLong();
+	//
+	//
+	//
+	a = floor(Rut_matlab / 10.power(7));
+	b = floor(Rut_matlab / 10.power(6)) - 10 * a;
+	c = floor(Rut_matlab / 10.power(5)) - (100 * a + 10 * b);
+	d = floor(Rut_matlab / 10.power(4)) - (1000 * a + 100 * b + 10 * c);
+	e = floor(Rut_matlab / 10.power(3)) - (10000 * a + 1000 * b + 100 * c + 10 * d);
+	f = floor(Rut_matlab / 10.power(2)) - (100000 * a + 10000 * b + 1000 * c + 100 * d + 10 * e);
+	g = floor(Rut_matlab / 10.power(1)) - (1000000 * a + 100000 * b + 10000 * c + 1000 * d + 100 * e + 10 * f);
+	h = floor(Rut_matlab / 10.power(0)) - (10000000 * a + 1000000 * b + 100000 * c + 10000 * d + 1000 * e + 100 * f + 10 * g);
+	sum = h * 2 + g * 3 + f * 4 + e * 5 + d * 6 + c * 7 + b * 2 + a * 3;
+	resto = sum - floor(sum / 11) * 11;
+	digito_calculado_parcial = 11 - resto;
+	//
+	//
+	//
+	if(digito_calculado_parcial == 10)
+	{
+		digito_calculado_final = "K";
+	}
+	else if(digito_calculado_parcial == 11)
+	{
+		digito_calculado_final = "0";
+	}
+	else
+	{
+		digito_calculado_final = digito_calculado_parcial;
+	}
+	//
+	//
+	// 
+	dvRutEntrada = var_rut.subString(largoRUT - 1,largoRUT);
+	if(digito_calculado_final != dvRutEntrada)
+	{
+		// 		alert "EL Rut ingresado en invalido";
+		rut_ok = "no";
+		info "rut malo";
+	}
+	else
+	{
+		// 		alert "Rut valido dentro del if";
+		rut_ok = "si";
+	}
+	//
+	//
+	//
+	/*
+		info "digito verificador: " + dvRutEntrada;
+		info "var_rut: " + Rut;
+		info "digito_calculado_final: " + digito_calculado_final;
+		info ":::::::::::::::::::::::::::::::::::::::::::";+*/
+	// 	16908074-7
+	// 	8626659-8
+}
+else
+{
+	// 		alert "EL Rut ingresado no comple con formato";
+	rut_ok = "no";
+	info "rut malo";
+}
+if(rut.length() > 0)
+{
+	if(rut.notContains("-"))
+	{
+		rut_ok = "no";
+	}
+	else if(rut.contains(".") || rut.contains(",") || rut.contains("_"))
+	{
+		rut_ok = "no";
+	}
+}
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+/////////////////////////////////////////////
+response = Map();
+if(Extranjero == false && rut_ok == "si" || rut == "" || rut == null)
+{
+	response.put('status','success');
+	response.put('message','Rut Correcto');
+}
+else if(rut_ok == "si")
+{
+	response.put('status','success');
+	response.put('message','Rut Correcto');
+}
+else
+{
+	response.put('status','error');
+	response.put('message','Rut Invalido, debe ser sin puntos y con guión (Ej: 19424935-7)');
+}
+if(Extranjero == true && rut.toString() != "")
+{
+	response.put('status','error');
+	response.put('message','Ingrese un único tipo de identifación');
+}
+/* ---------------------------------------------------------------------------------------------- */
+return response;
+}

@@ -104,3 +104,12 @@ if (nombre.length > 50) {
 
 - **C:** liberar un cupo desactivando una regla por función que ya no se use.
 - "Basado en criterios" no sirve: no tiene condición de largo de texto.
+
+## Decisión 16-11: opción A — dentro de "SB Validar RUT"
+
+Las 3 reglas por función de Clientes son RUT, Teléfono y Celular. Se agrega el
+chequeo al inicio de la función `SBvalidarRut` (regla del campo RUT, "Solo
+guardar"). Resto del código sin cambios. Código completo (antes de pegar,
+este es el que va): `zoho/config/funciones/SBvalidarRut.deluge`.
+Si hay que volver atrás: borrar el bloque entre "Largo máximo de Nombre de
+Cliente" y "Fin chequeo Nombre de Cliente".
