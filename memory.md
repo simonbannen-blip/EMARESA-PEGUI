@@ -2189,3 +2189,6 @@ ver regla de sincronización en `CLAUDE.md`.
 - 16-11 (cont.): Las 3 reglas por función de Clientes son RUT, Teléfono y
   Celular. Se eligió sumar el chequeo al inicio de `SBvalidarRut` (regla RUT).
   Código guardado en `zoho/config/funciones/SBvalidarRut.deluge` (Simón lo pega en Zoho).
+- 16-11 (cont.): Al guardar en Sandbox, error en línea del mensaje: en Deluge
+  las comillas simples son fecha/hora, no texto → no se puede concatenar.
+  Corregido a comillas dobles en `zoho/config/funciones/SBvalidarRut.deluge`.

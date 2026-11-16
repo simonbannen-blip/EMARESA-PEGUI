@@ -7,8 +7,8 @@ nombreCliente = ifnull(entityMap.get("Account_Name"),"").toString().trim();
 if(nombreCliente.length() > 50)
 {
 	responseNombre = Map();
-	responseNombre.put('status','error');
-	responseNombre.put('message','El Nombre de Cliente no puede superar 50 caracteres (tiene ' + nombreCliente.length() + ').');
+	responseNombre.put("status","error");
+	responseNombre.put("message","El Nombre de Cliente no puede superar 50 caracteres (tiene " + nombreCliente.length() + ").");
 	return responseNombre;
 }
 /* ===== Fin chequeo Nombre de Cliente ===== */
