@@ -2186,3 +2186,6 @@ ver regla de sincronización en `CLAUDE.md`.
   reglas de validación por función, ya usadas. Alternativas documentadas:
   sumar el chequeo a una regla por función existente en Clientes, Client
   Script onSave (Crear/Editar), o liberar un cupo.
+- 16-11 (cont.): Las 3 reglas por función de Clientes son RUT, Teléfono y
+  Celular. Se eligió sumar el chequeo al inicio de `SBvalidarRut` (regla RUT).
+  Código guardado en `zoho/config/funciones/SBvalidarRut.deluge` (Simón lo pega en Zoho).
