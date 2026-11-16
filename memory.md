@@ -2192,3 +2192,13 @@ ver regla de sincronización en `CLAUDE.md`.
 - 16-11 (cont.): Al guardar en Sandbox, error en línea del mensaje: en Deluge
   las comillas simples son fecha/hora, no texto → no se puede concatenar.
   Corregido a comillas dobles en `zoho/config/funciones/SBvalidarRut.deluge`.
+
+## 2026-11-16 — Celular del vendedor vacío en plantilla de cotización Inamar
+
+- Simón: en la plantilla `«Usuarios.Teléfono»` sale vacío.
+- Causa: `Usuarios.*` = usuario que genera el documento, no el propietario.
+  Lo generó Simon Tirapegui (sin teléfono) → también salió su correo en vez
+  del de Luis Castañeda. Luis tiene el número en Móvil, no en Teléfono.
+- Propuesta (no aplicada): campos `Celular Vendedor` / `Correo Vendedor`
+  en Cotizaciones llenados por workflow desde el Owner. Doc:
+  `zoho/config/caso-celular-vendedor-vacio-plantilla-cotizacion-inamar.md`.
