@@ -2182,3 +2182,7 @@ ver regla de sincronización en `CLAUDE.md`.
 - 16-11: Simón está creando la regla él mismo en Zoho; se agregó paso a
   paso con las pantallas reales (tipo "Usando la función", "Verificar y
   guardar campo", nombre de función `validarLargoNombreCliente`) al mismo doc.
+- 16-11 (cont.): Zoho no deja crear la regla por función: límite del plan = 3
+  reglas de validación por función, ya usadas. Alternativas documentadas:
+  sumar el chequeo a una regla por función existente en Clientes, Client
+  Script onSave (Crear/Editar), o liberar un cupo.

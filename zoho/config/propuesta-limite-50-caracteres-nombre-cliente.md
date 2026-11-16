@@ -82,3 +82,25 @@ Probar primero en **Sandbox**:
    integración también corte o rechace nombres largos.
 3. Alternativa más suave: un **Client Script** que avise mientras se
    escribe (sin bloquear). Se puede preparar si se prefiere aviso en vez de bloqueo.
+
+## Actualización 16-11: límite de licencia
+
+Al crear la regla, Zoho bloqueó "Usando la función": **el plan permite máximo
+3 reglas de validación por función y ya están usadas**. Alternativas:
+
+- **A (preferida si existe):** agregar el chequeo de largo dentro de una
+  regla por función que **ya exista en Clientes** (la función recibe el
+  registro completo). Requiere ver ese código antes de tocarlo.
+- **B:** **Client Script** en Clientes, página Crear y página Editar, evento
+  `onSave` (Configuración → Herramientas para desarrolladores → Client Script):
+
+```javascript
+var nombre = (ZDK.Page.getField('Account_Name').getValue() || '').trim();
+if (nombre.length > 50) {
+    ZDK.Client.showAlert('El Nombre de Cliente no puede superar 50 caracteres (tiene ' + nombre.length + ').');
+    return false;
+}
+```
+
+- **C:** liberar un cupo desactivando una regla por función que ya no se use.
+- "Basado en criterios" no sirve: no tiene condición de largo de texto.
