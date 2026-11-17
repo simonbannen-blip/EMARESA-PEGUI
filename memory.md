@@ -2202,3 +2202,16 @@ ver regla de sincronización en `CLAUDE.md`.
 - Propuesta (no aplicada): campos `Celular Vendedor` / `Correo Vendedor`
   en Cotizaciones llenados por workflow desde el Owner. Doc:
   `zoho/config/caso-celular-vendedor-vacio-plantilla-cotizacion-inamar.md`.
+
+## 2026-11-17 — ¿Quién ve el módulo Activos?
+
+- Acceso al módulo (Producción): perfiles **Administrator** (5 usuarios) y
+  **Vendedor** (41) = 46 usuarios activos de 161. El perfil Vendedor es
+  mayoritariamente Rental/zonas; de Izaje solo Eduardo Carillo (PM Izaje) y
+  Vanessa Ponce. **No lo ven**: Rodrigo Verdugo (Gerente Inamar Izaje,
+  perfil Gerente), PM Izaje Miguel Alarcon, Juan Ortiz, Carlos Oliva,
+  Gerardo Pizarro, Subgerentes Dieter Steinmeyer y Sebastian Toro, Jessica
+  Valverde (todos perfil Responsable de Área). Los perfiles son compartidos
+  entre UN → no se puede aislar Izaje solo por perfil. Opciones dadas:
+  agregar perfiles Gerente/Responsable de Área (más gente ve), o crear
+  perfil propio Izaje.
