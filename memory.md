@@ -2254,3 +2254,14 @@ ver regla de sincronización en `CLAUDE.md`.
   "Estado Inicial", 47% de pérdidas por "Precio y condiciones", y fases de
   Cotización duplicadas con/sin tilde. 13 ideas priorizadas en
   `zoho/pipeline/ideas-mejora-crm-2026-11-17.md`. No se tocó el CRM.
+
+## 2026-11-17 — Recordatorio de vencimiento para todas las UN (Opps + Cotizaciones)
+- Simón creía que "Recordatorio Oportunidades" no funcionaba (panel de
+  estadísticas en 0). Verificado en historial de oportunidades: SÍ funciona,
+  última ejecución 2026-11-17 13:00. El panel no cuenta estos correos.
+- Regla: basada en Fecha de cierre, solo UN Inamar Izaje, correo diario al
+  propietario desde el día siguiente al cierre.
+- Simón pidió extenderla a todas las UN y crear una igual para Cotizaciones,
+  paso a paso. Paso 1 (diagnóstico + volumen por UN + fases de Cotización)
+  en `zoho/pipeline/propuesta-recordatorio-oportunidades-y-cotizaciones-todas-un.md`.
+  No se tocó el CRM.
