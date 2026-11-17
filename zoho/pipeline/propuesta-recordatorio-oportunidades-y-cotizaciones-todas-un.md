@@ -112,3 +112,21 @@ B. Regla: Configuración → Automatización → Reglas de flujo de trabajo → 
      → destinatario **Propietario de Cotización**.
    - Acciones programadas: la misma notificación a **1, 2, 3, 4 y 5 días** después de la hora de activación.
    - Guardar.
+
+## Avisos "por vencer" existentes (antes del vencimiento) — revisado 2026-11-17
+
+Hay 19 notificaciones de correo con plantilla "Oportunidad próxima a vencer" (pantallazo de Simón).
+Verificado en historial de oportunidades (muestra, no exhaustivo):
+
+| Regla | Notificación | Estado |
+|---|---|---|
+| SB Construcción - Notificar Oportunidad por vencer | Notificar Oport por vencer Const Fuerza | ✅ envía (12-nov y 02-sep, 08:00, ~4 días antes del cierre) |
+| SB Inamar Izaje - Notificar Oportunidad por vencer | Notificar Izaje ZC (otra plantilla) | ✅ envía (12-nov) |
+| SB Vapor - Notificar Oportunidad por vencer | Notificar Vapor Caldedería (otra plantilla) | ✅ envió en junio |
+| Ferretek (OP-FERR cierre 11-nov) | — | ❌ no recibió aviso |
+| Rental (OP-REN cierre 20-nov) | — | ❌ sin aviso a la fecha |
+| Maquinaria OP-CONST-466 (cierre 17-nov) | — | ❌ sin aviso (otra línea, no cubierta) |
+
+Las demás notificaciones de la lista (Generalista, Maktotal, ZS/ZC/ZN, Encargado Forestal, Canal Ferretero,
+Repuestos Jardín, Grandes Superficies, Subgerente, Aseo, Repuesto, Fuerza, Metalmecánica, Vapor GLP,
+Const Repuestos/Geosintéticos/Equipos) no se pudieron confirmar: no aparecieron en la muestra.
