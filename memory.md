@@ -2246,3 +2246,11 @@ ver regla de sincronización en `CLAUDE.md`.
   → "Registro no accesible". Propuesta PENDIENTE DE OK: regla de uso
   compartido en Tareas entre el rol IyF - Sub Gerente de Ventas (opción
   acotada) o "Compartir datos con pares" en el rol (más amplia).
+
+## 2026-11-17 — Ideas de mejora del CRM (con datos reales)
+- Simón pidió ideas nuevas para mejorar el CRM. Consulté datos (solo lectura):
+  8.402 oportunidades abiertas con cierre vencido, 1.861 sin monto, ~9.400
+  cotizaciones abiertas sin movimiento 2+ meses, 99,6% de leads 2026 en
+  "Estado Inicial", 47% de pérdidas por "Precio y condiciones", y fases de
+  Cotización duplicadas con/sin tilde. 13 ideas priorizadas en
+  `zoho/pipeline/ideas-mejora-crm-2026-11-17.md`. No se tocó el CRM.
