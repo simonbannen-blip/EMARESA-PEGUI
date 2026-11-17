@@ -2239,3 +2239,10 @@ ver regla de sincronización en `CLAUDE.md`.
   no del perfil. Documentado en
   `zoho/config/caso-responsable-area-registro-no-accesible-tareas.md`.
   Pendiente: qué usuario y qué acción hizo.
+- Actualización: el usuario es **Gonzalo Sanhueza** (rol IyF - Sub Gerente
+  de Ventas). Causa encontrada: creó una tarea hoy y la asignó a **Carlos
+  Charlin** (mismo rol = par, no subordinado); la tarea se crea bien, pero
+  al guardar Zoho lo lleva al detalle y él no puede ver registros de un par
+  → "Registro no accesible". Propuesta PENDIENTE DE OK: regla de uso
+  compartido en Tareas entre el rol IyF - Sub Gerente de Ventas (opción
+  acotada) o "Compartir datos con pares" en el rol (más amplia).
