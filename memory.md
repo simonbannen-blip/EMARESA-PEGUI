@@ -2215,3 +2215,16 @@ ver regla de sincronización en `CLAUDE.md`.
   entre UN → no se puede aislar Izaje solo por perfil. Opciones dadas:
   agregar perfiles Gerente/Responsable de Área (más gente ve), o crear
   perfil propio Izaje.
+
+## 2026-11-17 — Notas privadas por UN (Clientes y Oportunidades)
+
+- Simón pidió que las notas no las vean usuarios de otras UN (en Clientes y
+  Oportunidades). En Zoho las notas heredan la visibilidad del registro
+  padre; no hay nota privada.
+- Oportunidades: se resuelve con Uso compartido de datos en Privado + roles
+  por UN, sin reglas cruzadas.
+- Clientes: se comparten entre UN → permisos no alcanzan. Propuesto módulo
+  privado "Notas por UN" (Cliente, UN, Oportunidad, Nota) con reglas de uso
+  compartido por UN, como lista relacionada en Clientes.
+- El MCP no tiene permiso para leer Notas (NO_PERMISSION en COQL). No se
+  tocó el CRM. Doc: `zoho/config/propuesta-notas-privadas-por-un.md`.
