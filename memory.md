@@ -2228,3 +2228,14 @@ ver regla de sincronización en `CLAUDE.md`.
   compartido por UN, como lista relacionada en Clientes.
 - El MCP no tiene permiso para leer Notas (NO_PERMISSION en COQL). No se
   tocó el CRM. Doc: `zoho/config/propuesta-notas-privadas-por-un.md`.
+
+## 2026-11-17 — Responsable de Área: "Registro no accesible" en Tareas
+- Simón reportó que un Responsable de Área "no tiene permisos para hacer
+  tareas" (captura con "El Registro(s) no accesible(s)...").
+- Revisé (solo lectura): el perfil Responsable de Área tiene acceso a Tareas
+  y varios usuarios de ese perfil crean tareas normalmente (Rebolledo 60,
+  Charlin 28, Taha 9 en el último mes). El error es de **visibilidad de una
+  tarea puntual** (de otro propietario fuera de su jerarquía, o eliminada),
+  no del perfil. Documentado en
+  `zoho/config/caso-responsable-area-registro-no-accesible-tareas.md`.
+  Pendiente: qué usuario y qué acción hizo.
