@@ -84,3 +84,31 @@ regla no es retroactiva, no van a recibir correos).
    Debe quedar solo: **Fase no está Cerrada Ganada, Cerrada Perdida**.
 4. No tocar "Cuándo" ni las acciones. Guardar.
 5. Opcional: cambiar el nombre a "Recordatorio Oportunidades - Todas las UN".
+
+## Configuración confirmada de la regla actual (pantallazo de Simón)
+
+- Cuándo: **1 día después de la Fecha de cierre, a las 01:00 PM**, repetir: Única.
+- Acciones instantáneas: correo "Oportunidad".
+- Acciones programadas: correo "Oportunidad" a los 1, 2, 3, 4 y 5 días después de la activación.
+- Total: 6 correos por oportunidad (días +1 a +6 desde el cierre) mientras siga abierta.
+
+## Paso 5 — Regla nueva "Recordatorio Cotizaciones" (lo hace Simón en Zoho)
+
+A. Plantilla de correo (Configuración → Personalización → Plantillas → Correo electrónico → Nueva, módulo **Cotizaciones**):
+   - Nombre: `Recordatorio Cotización vencida`
+   - Asunto: `Cotización vencida: ${Cotizaciones.Asunto}`
+   - Cuerpo sugerido:
+     > Hola ${Cotizaciones.Propietario de Cotización},
+     > La cotización **${Cotizaciones.Asunto}** del cliente ${Cotizaciones.Nombre de Cuenta}
+     > venció el ${Cotizaciones.Válido hasta} y sigue en fase ${Cotizaciones.Fase de Cotización}.
+     > Por favor haz seguimiento con el cliente o actualiza su fase en el CRM.
+
+B. Regla: Configuración → Automatización → Reglas de flujo de trabajo → Crear regla.
+   - Módulo: **Cotizaciones**. Nombre: `Recordatorio Cotizaciones - Todas las UN`.
+   - Cuándo: **Basado en fecha** → campo **Válido hasta** → **1 día después** → hora **01:00 PM** → repetir **Única**.
+   - Condición: **Fase de Cotización no está**: Cerrada Ganada, Cerrada Perdida, Ganada,
+     Cotización Rechazada, Cotizacion Rechazada, Recotizada.
+   - Acción instantánea: Notificación por correo → plantilla `Recordatorio Cotización vencida`
+     → destinatario **Propietario de Cotización**.
+   - Acciones programadas: la misma notificación a **1, 2, 3, 4 y 5 días** después de la hora de activación.
+   - Guardar.
