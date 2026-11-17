@@ -2265,3 +2265,6 @@ ver regla de sincronización en `CLAUDE.md`.
   paso a paso. Paso 1 (diagnóstico + volumen por UN + fases de Cotización)
   en `zoho/pipeline/propuesta-recordatorio-oportunidades-y-cotizaciones-todas-un.md`.
   No se tocó el CRM.
+- Revisados los avisos "por vencer" (antes del vencimiento): funcionan los de
+  Construcción, Inamar Izaje y Vapor; Ferretek, Rental y parte de Maquinaria no
+  reciben aviso. Detalle en la misma propuesta.
