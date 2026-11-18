@@ -149,6 +149,104 @@ del clon.
 
 ---
 
+## 3-bis. Desde qué fases se puede clonar (agregado 18-11)
+
+### Hoy: se clona desde cualquier fase
+No hay ninguna restricción por fase (el único control es por **perfil**, en el
+Client Script de MIV). Fase actual de las originales en una muestra de **150
+clones** (ago–nov 2026):
+
+| Fase de la original | Cant. | % |
+|---|---|---|
+| Creada | 56 | 37% |
+| Cerrada Ganada | 40 | 27% |
+| Cerrada Perdida | 22 | 15% |
+| Cotización Aprobada | 13 | 9% |
+| Enviada | 11 | 7% |
+| Lista para Clonar | 6 | 4% |
+| Cotización Rechazada | 2 | 1% |
+
+Hallazgos:
+- **Clonar una Cerrada Ganada ya se hace hoy (27%)**, sobre todo en
+  Construcción y Rental, para repetir el mismo negocio otro mes. Varias
+  estaban ganadas semanas antes de clonarse (ej. Rental ganada el 11-09 y
+  clonada el 26-10).
+- **Inamar Izaje clona y luego marca la original como Cerrada Perdida a
+  mano** (minutos después: 17:54 → 17:59, 12:38 → 12:46, 13:57 → 14:02…).
+  O sea, esas "perdidas" **no son negocios perdidos**, son versiones
+  reemplazadas → el % de pérdida de Inamar Izaje está inflado. Esto es justo
+  lo que resolvería la fase "Recotizada".
+- 56 originales siguen en "Creada": borradores que quedaron olvidados.
+
+### Propuesta: matriz de fases
+
+| Fase de la original | ¿Se puede clonar? | Motivos permitidos | Qué pasa con la original |
+|---|---|---|---|
+| Creada | Sí | Nueva versión / Otro cliente | Nueva versión → Recotizada |
+| Pendiente de Aprobación, Parcialmente Aprobada | **No** | — | Esperar la aprobación (si no, se duplica o salta la aprobación) |
+| Cotización Aprobada | Sí | Las 3 | Nueva versión → Recotizada |
+| Cotización Rechazada | Sí | Nueva versión / Otro cliente | Nueva versión → Recotizada |
+| Enviada / Actualización de oferta / Lista para Clonar | Sí | Las 3 | Nueva versión → Recotizada |
+| Lista para Confirmar, Direc. de Facturación/Despacho validada, Sin Stock suficiente, Pendiente aprobación despacho sin factura | **No** | — | Está en proceso de pasar a Orden de Venta / ERP |
+| **Cerrada Ganada** | **Sí** | **Repetir venta** / Otro cliente | **No se toca** (sigue Ganada) |
+| Cerrada Perdida | Sí | Repetir venta ("retomar negocio") / Otro cliente | No se toca (sigue Perdida) |
+| Recotizada | **No** | — | Clonar la versión vigente, no una reemplazada |
+| Pendiente de revisión | A definir con Simón | | |
+
+### Clonar desde Cerrada Ganada = "Repetir venta (nuevo período)"
+Mismo negocio, otro mes. Cómo debería quedar:
+1. Motivo **Repetir venta** (en una Ganada no se ofrece "Nueva versión").
+2. **Oportunidad nueva** del mismo cliente, con fecha de cierre del mes nuevo
+   (la oportunidad ganada no se reabre, así cada mes cuenta su venta).
+3. Clon en **Creada**, con **fecha de validez nueva** y **sin aprobaciones
+   heredadas**: si cambiaron precios de lista, descuentos o crédito del
+   cliente, se vuelven a evaluar.
+4. Precios: definir si se copian los del mes anterior o se **recalculan con
+   la lista vigente** (recomendado recalcular; si se copian, que pase por
+   aprobación si quedan bajo el mínimo).
+5. La original **queda Cerrada Ganada**; el clon guarda el link a ella
+   (ID Cotizac. Original) → se puede ver la "serie" mensual del cliente.
+6. Ojo Rental: si lo que se repite es la **extensión de un arriendo vigente**,
+   confirmar con Rental si debe ser cotización nueva o una extensión del
+   contrato.
+
+### Cómo aplicar la restricción por fase
+- **Cotizador (Construcción, Rental, Inamar)**: el botón "Clonar Cotización"
+  no se puede ocultar por fase en Zoho (solo por perfil). Opciones: que el
+  **proveedor** valide la fase al abrir el Cotizador y muestre un mensaje, o
+  que el botón llame primero a una función del CRM que revise la fase.
+- **Clonar nativo (MIV)**: agregar la validación de fase al Client Script
+  "Deshabilitar clonar cotización" (código abajo).
+
+Client Script — versión con perfiles + fases (MIV, página Clonar, onLoad o
+onSave según como esté hoy). Probar en Sandbox:
+```js
+var user = ZDK.Apps.CRM.Users.fetchById($Crm.user.id);
+var perfilesPermitidos = ['Administrator', 'Responsable de Área MIV y MAK', 'Vendedor MIV'];
+// Fases desde las que NO se puede clonar
+var fasesBloqueadas = [
+    'Pendiente de Aprobación', 'Pendiente de Aprobacion',
+    'Cotizacion Parcialmente Aprobada',
+    'Lista para Confirmar', 'Direc. de Facturación Validada',
+    'Direc. de Despacho validada', 'Sin Stock suficiente',
+    'pendiente aprobación despacho sin factura', 'Recotizada'
+];
+if (perfilesPermitidos.indexOf(user.profile.name) === -1) {
+    ZDK.Client.showAlert('Hola ' + user.first_name + ' ' + user.last_name + ', usted no tiene permisos para clonar cotización!');
+    return false;
+}
+// En la página Clonar los campos vienen copiados de la original
+var faseOriginal = ZDK.Page.getField('Quote_Stage').getValue();
+if (fasesBloqueadas.indexOf(faseOriginal) !== -1) {
+    ZDK.Client.showAlert('No se puede clonar una cotización en fase "' + faseOriginal + '". Espere a que termine ese proceso o clone la versión vigente.');
+    return false;
+}
+```
+> Validar en Sandbox que en la página Clonar `Quote_Stage` traiga la fase de
+> la original (en la prueba de "Actualización de oferta" sí venía copiada).
+
+---
+
 ## 4. Función Deluge propuesta (Fase 4) — probar en Sandbox
 
 Regla de flujo: módulo **Cotizaciones** · al **Crear** · condición
@@ -245,7 +343,12 @@ de re-aprobación (`void automation.<nombre>(String quoteId) { … }`).
     especiales / descuentos del cliente nuevo) en vez de copiar los del
     cliente original — pedido al proveedor del Cotizador.
 
+11. **Inamar Izaje: dejar de cerrar como Perdida las versiones reemplazadas**
+    (usar Recotizada) y corregir el histórico para que el % de pérdida sea real.
+
 ## Pendientes / preguntas para Simón
+- ¿La matriz de fases (3-bis) está bien? En especial "Pendiente de revisión".
+- Repetir venta desde Ganada: ¿precios copiados o recalculados con la lista vigente?
 - ¿Los dobles "Cerrada Ganada" con igual monto (BITUMIX, BELLAVISTA, MC
   LIMITADA) son recompras reales o la misma venta contada dos veces?
 - ¿En Construcción la oportunidad nueva la crea el Cotizador sí o sí, o el
