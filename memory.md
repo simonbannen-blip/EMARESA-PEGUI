@@ -2313,3 +2313,11 @@ ver regla de sincronización en `CLAUDE.md`.
   validación al inicio de esa función (bloque Deluge en el doc). Pedido a
   Simón el código actual de la función. Vapor: Simón elige camino (b),
   Clonar nativo + Client Script con validación de fase.
+- 18-11 (cont.): Simón pide incluir **Editar** además de Clonar. Agregada
+  sección 3-ter: regla "si el cliente no la ha recibido → Editar; si ya la
+  recibió o está cerrada → Clonar", matriz combinada por fase, bloques de
+  validación para las funciones de los botones Clonar y Editar, Client
+  Script de Editar para Vapor y tabla de pruebas. Resuelve la decisión #1
+  de la re-aprobación (Enviada no se edita). Pendiente: captura del botón
+  "Editar Cotización", código de las funciones, bloquear vs avisar al
+  clonar en Creada/Aprobada/Rechazada, Vapor en Actualización de oferta.

@@ -337,6 +337,142 @@ if (fasesBloqueadas.indexOf(faseOriginal) !== -1) {
 
 ---
 
+## 3-ter. Editar vs Clonar — regla única (agregado 18-11)
+
+Pedido de Simón: no todo se resuelve clonando; hay casos en que basta con
+**editar**. Se define una sola regla para los dos botones ("Editar
+Cotización" y "Clonar Cotización", ambos llevan al Cotizador).
+
+### Regla simple para el vendedor
+> **Si el cliente todavía no la ha recibido → EDITAR.**
+> **Si el cliente ya la recibió o está cerrada → CLONAR.**
+
+Motivo: una cotización enviada es un documento que el cliente tiene; si se
+edita, se pierde lo que se le mandó. Clonarla deja la versión enviada como
+"Recotizada" (con trazabilidad) y la nueva sigue su curso. Mientras no se ha
+enviado, clonar solo genera duplicados (el "guardar como" de Construcción).
+
+### Matriz combinada por fase (reemplaza a la de 3-bis)
+
+| Fase actual | Editar | Clonar | Qué pasa |
+|---|---|---|---|
+| **Creada** | ✅ **Sí** (lo normal) | Solo Otro cliente / Repetir venta | Al editar, si cumple criterios → va a aprobación (propuesta re-aprobación v2) |
+| **Pendiente de Aprobación / Parcialmente Aprobada** | ❌ No | ❌ No | Esperar resultado; si hay que cambiar algo, que el aprobador rechace |
+| **Cotización Aprobada** (aún no enviada) | ✅ Sí | Solo Otro cliente / Repetir venta | Al editar montos/descuentos/plazo → **vuelve a aprobación** |
+| **Cotización Rechazada** | ✅ Sí (corregir) | Solo Otro cliente | Al editar → vuelve a aprobación si cumple criterios |
+| **Enviada / Actualización de oferta** | ❌ No | ✅ **Sí** (Nueva versión) | Original → **Recotizada**; el clon parte en Creada |
+| **Lista para Clonar** | ❌ No | ✅ Sí | Original → Recotizada (o se elimina la fase, ver idea 8) |
+| **Lista para Confirmar, Direc. validadas, Sin Stock, Despacho sin factura** | ❌ No | ❌ No | En proceso de Orden de Venta / ERP |
+| **Cerrada Ganada** | ❌ No | ✅ Repetir venta / Otro cliente | Original sigue Ganada |
+| **Cerrada Perdida** | ❌ No | ✅ Retomar / Otro cliente | Original sigue Perdida |
+| **Recotizada** | ❌ No | ❌ No | Trabajar sobre la versión vigente |
+| Pendiente de revisión | A definir | A definir | |
+
+Con esto:
+- Se **cierra la decisión pendiente #1** de la propuesta de re-aprobación
+  (`propuesta-reevaluar-aprobacion-al-editar-cotizacion.md`): **Enviada no
+  se edita**, se clona → no hace falta agregar "Enviada" a la función de
+  re-aprobación.
+- Se cortan las cadenas de clones en Creada de Construcción (se edita).
+- Inamar Izaje deja de cerrar como Perdida: clona desde Enviada y el
+  sistema pasa la original a Recotizada.
+
+### Cómo se implementa
+
+**1. Botón "Clonar Cotización" → función "SB Clonar Cotizacion"**
+Bloque de validación al inicio (reemplaza al de 3-bis):
+```deluge
+// --- Validación de fase antes de CLONAR ---
+cotOrig = zoho.crm.getRecordById("Quotes", quoteId.toLong());
+faseOrig = ifnull(cotOrig.get("Quote_Stage"), "");
+// Fases donde NO se clona
+fasesNoClonar = {"Pendiente de Aprobación","Pendiente de Aprobacion","Cotizacion Parcialmente Aprobada","Lista para Confirmar","Direc. de Facturación Validada","Direc. de Despacho validada","Sin Stock suficiente","pendiente aprobación despacho sin factura","Recotizada"};
+// Fases donde lo correcto es EDITAR (mientras no exista el campo Motivo,
+// se bloquea el clon y se indica editar)
+fasesEditar = {"Creada","Cotización Aprobada","Cotizacion Aprobada","Cotización Rechazada","Cotizacion Rechazada"};
+if(fasesNoClonar.contains(faseOrig))
+{
+    return "No se puede clonar una cotización en fase \"" + faseOrig + "\".";
+}
+if(fasesEditar.contains(faseOrig))
+{
+    return "Esta cotización aún no se envía al cliente: use \"Editar Cotización\" en vez de clonar. (Si es para otro cliente o para repetir la venta, consulte con su jefatura.)";
+}
+// --- fin validación; sigue el código actual ---
+```
+> Decisión para Simón: ¿bloquear el clon en Creada/Aprobada/Rechazada desde
+> ya (corta los duplicados de Construcción, pero impide clonar a otro
+> cliente desde ahí hasta que el Cotizador tenga el campo Motivo), o solo
+> mostrar el aviso sin bloquear?
+
+**2. Botón "Editar Cotización"** — falta la captura de su configuración
+(Administrar botones → "Editar Cotización"). Si también es **Función**, se
+agrega al inicio:
+```deluge
+// --- Validación de fase antes de EDITAR ---
+cot = zoho.crm.getRecordById("Quotes", quoteId.toLong());
+fase = ifnull(cot.get("Quote_Stage"), "");
+fasesEditables = {"Creada","Cotización Aprobada","Cotizacion Aprobada","Cotización Rechazada","Cotizacion Rechazada"};
+fasesClonar = {"Enviada","Actualización de oferta","Lista para Clonar","Cerrada Ganada","Cerrada Perdida"};
+if(fasesClonar.contains(fase))
+{
+    return "Esta cotización ya fue enviada o está cerrada (fase \"" + fase + "\"): no se edita, use \"Clonar Cotización\" para crear una nueva versión.";
+}
+if(!fasesEditables.contains(fase))
+{
+    return "No se puede editar una cotización en fase \"" + fase + "\".";
+}
+// --- fin validación; sigue el código actual ---
+```
+Si es "Abrir URL" (va directo al Cotizador sin función), hay dos caminos:
+cambiarlo a Función que valide y luego abra el Cotizador, o pedir al
+proveedor que valide la fase al abrir.
+
+**3. Re-aprobación al editar** — se mantiene la propuesta v2
+(regla + función `cotizacion_reevaluarAprobacion`) para Creada, Aprobada,
+Parcialmente Aprobada y Rechazada. Sin Enviada.
+
+**4. Inamar Vapor (camino b, nativo)** — Client Scripts:
+- Página **Clonar**: el de 3-bis, con la misma lista `fasesNoClonar` +
+  aviso de "use Editar" en Creada/Aprobada/Rechazada.
+- Página **Editar** (onLoad), nuevo:
+```js
+// Inamar Vapor: no editar cotizaciones ya enviadas o cerradas
+var fase = ZDK.Page.getField('Quote_Stage').getValue();
+var fasesClonar = ['Enviada', 'Actualización de oferta', 'Lista para Clonar', 'Cerrada Ganada', 'Cerrada Perdida'];
+var fasesBloqueadas = ['Pendiente de Aprobación', 'Pendiente de Aprobacion', 'Cotizacion Parcialmente Aprobada',
+    'Lista para Confirmar', 'Direc. de Facturación Validada', 'Direc. de Despacho validada',
+    'Sin Stock suficiente', 'pendiente aprobación despacho sin factura', 'Recotizada'];
+if (fasesClonar.indexOf(fase) !== -1) {
+    ZDK.Client.showAlert('Esta cotización ya fue enviada o está cerrada: no se edita. Use Clonar para crear una nueva versión (_R).');
+    return false;
+}
+if (fasesBloqueadas.indexOf(fase) !== -1) {
+    ZDK.Client.showAlert('No se puede editar una cotización en fase "' + fase + '".');
+    return false;
+}
+```
+> Validar en Sandbox que `return false` en onLoad de Editar impida la
+> edición; si no, usar onSave (bloquea al guardar). Ojo: el Blueprint y
+> funciones automáticas editan por API, no por esta página → no los afecta.
+> Vapor usa Blueprint "Actualización de oferta": confirmar con Simón si en
+> esa fase Vapor **edita** o **clona** (hoy se dejó clonando).
+
+### A probar en Sandbox (Editar + Clonar)
+| Prueba | Esperado |
+|---|---|
+| Creada → Editar | Abre Cotizador; si sube monto y cumple criterio → Pendiente de Aprobación |
+| Creada → Clonar | Mensaje "use Editar" |
+| Aprobada → Editar con más descuento | Vuelve a Pendiente de Aprobación |
+| Pendiente de Aprobación → Editar / Clonar | Mensaje, no abre Cotizador |
+| Enviada → Editar | Mensaje "use Clonar" |
+| Enviada → Clonar | Abre Cotizador; al guardar el clon, original → Recotizada |
+| Cerrada Ganada → Clonar | Abre Cotizador (Repetir venta); original sigue Ganada |
+| Recotizada → Editar / Clonar | Mensaje, no abre |
+| Vapor: Enviada → Editar nativo | Alerta del Client Script |
+
+---
+
 ## 4. Función Deluge propuesta (Fase 4) — probar en Sandbox
 
 Regla de flujo: módulo **Cotizaciones** · al **Crear** · condición
@@ -437,6 +573,10 @@ de re-aprobación (`void automation.<nombre>(String quoteId) { … }`).
     (usar Recotizada) y corregir el histórico para que el % de pérdida sea real.
 
 ## Pendientes / preguntas para Simón
+- Captura de la configuración del botón **"Editar Cotización"** y código de
+  las funciones "SB Clonar Cotizacion" (y de Editar, si es función).
+- Clonar en Creada/Aprobada/Rechazada: ¿bloquear o solo avisar? (3-ter).
+- Vapor en "Actualización de oferta": ¿edita o clona?
 - ¿La matriz de fases (3-bis) está bien? En especial "Pendiente de revisión".
 - Repetir venta desde Ganada: ¿precios copiados o recalculados con la lista vigente?
 - ¿Los dobles "Cerrada Ganada" con igual monto (BITUMIX, BELLAVISTA, MC

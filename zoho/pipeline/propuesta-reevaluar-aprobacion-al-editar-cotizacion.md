@@ -146,7 +146,8 @@ Cambios respecto de v1:
 
 ## Decisiones pendientes de Simón
 
-1. **Enviada**: si una cotización ya aprobada y **enviada al cliente** se
+1. ~~**Enviada**~~ → **Resuelto 18-11**: las cotizaciones Enviadas **no se editan, se clonan** (regla Editar vs Clonar en `propuesta-nuevo-flujo-clonacion-cotizacion.md`, sección 3-ter). No se agrega Enviada a la función.
+   Texto original: si una cotización ya aprobada y **enviada al cliente** se
    edita, ¿también vuelve a aprobación? Hoy **no** está incluida (habría que
    agregar "Enviada" a `fasesAprobadas` y a la condición de la regla, y
    validar que el Blueprint lo permita). Recomendación: sí incluirla si en
