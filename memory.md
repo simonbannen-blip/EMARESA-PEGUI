@@ -2337,3 +2337,13 @@ ver regla de sincronización en `CLAUDE.md`.
   Mínimo no dispara aprobación (cientos marcadas sin aprobar) → probar con
   Rental o Inamar Izaje. Guía: zoho/pipeline/guia-sandbox-clonar-cerrada-ganada.md
   (ojo: el clon queda en la oportunidad ya ganada).
+- 18-11 (cont.): Simón define que el clon debe tener **oportunidad nueva**
+  (puede ser para otro cliente) y un aviso de que el cliente nuevo necesita
+  contacto, sucursal/obra y forma de pago. Hecho: función
+  `cotizacion_clonCrearOportunidad` (regla al crear con ID Cotizac. Original;
+  crea opp nueva si la del clon está cerrada, es de otro cliente, no existe
+  o es la misma de una original Ganada/Perdida; deja nota) y mensaje
+  informativo en `SBclonarCotizacion.deluge`. Guía Sandbox ampliada con
+  configuración y Prueba C (otro cliente). Dato: opps de Rental/Izaje las
+  crea el vendedor a mano; las de Construcción, el Cotizador. Validar si
+  existe regla que numere oportunidades (nombre provisorio "CLON COT-…").

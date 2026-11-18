@@ -28,7 +28,9 @@ if(fasesClonar.contains(fase) || (permitirClonarEnFasesDeEdicion && fasesEditar.
 	{
 		openUrl("https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones?Clonar_Cot=" + idCreator,"parent window");
 	}
-	return "";
+	// Mensaje informativo (se muestra en el CRM mientras se abre el Cotizador).
+	// Validar en Sandbox que se vean ambos; si el mensaje no aparece, volver a return "".
+	return "Recuerde: si clona para OTRO cliente, ese cliente debe tener creados su Contacto, Sucursal del Cliente (y Obra en Rental) y su Plazo/Forma de Pago; si falta alguno, el Cotizador no dejará guardar. Al clonar una cotización cerrada o para otro cliente, el CRM crea una oportunidad nueva automáticamente.";
 }
 if(fasesEditar.contains(fase))
 {
