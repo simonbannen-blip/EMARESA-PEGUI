@@ -2268,3 +2268,20 @@ ver regla de sincronización en `CLAUDE.md`.
 - Revisados los avisos "por vencer" (antes del vencimiento): funcionan los de
   Construcción, Inamar Izaje y Vapor; Ferretek, Rental y parte de Maquinaria no
   reciben aviso. Detalle en la misma propuesta.
+
+## 2026-11-18 — Nuevo flujo de clonación de cotizaciones (diagnóstico + propuesta)
+
+- Simón pidió cómo funciona hoy la clonación, en qué fases, e ideas para un
+  flujo nuevo. Revisado en el CRM (solo lectura):
+  - Dos caminos: Cotizador/Creator (Construcción, Rental, Inamar) y Clonar
+    nativo (MIV). 594 clones desde 01-05 (Const 321, Rental 105, II 94, IV 74).
+  - La original nunca se cierra (versiones vivas en paralelo; "Recotizada"
+    existe pero 0 usos en 2026). Construcción crea oportunidad nueva en la
+    mayoría de los clones → oportunidades duplicadas abiertas (TECHINT,
+    DUAL, SODIMAC, RITTER, VILICIC). Posibles dobles ganadas con mismo monto.
+  - ID Cotizac. Original es texto (id CRM en Cotizador, código RQ en MIV).
+- Propuesta: campo "Motivo de Clonación" (Nueva versión / Repetir venta /
+  Otro cliente), función Deluge que pasa la original a Recotizada al crear
+  el clon en la misma oportunidad, lookup de Cotización Original + N° de
+  versión, y 10 ideas. No se tocó el CRM. Doc:
+  `zoho/pipeline/propuesta-nuevo-flujo-clonacion-cotizacion.md`.
