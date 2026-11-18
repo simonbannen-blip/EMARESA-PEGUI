@@ -1,0 +1,132 @@
+// PROPUESTA 2026-11-18 — Oportunidad nueva para cotizaciones clonadas.
+// Regla de flujo: Cotizaciones · al CREAR · condición "ID Cotizac. Original" no está vacío
+// Acción: esta función, argumento quoteId = Id de la Cotización.
+//
+// Crea una oportunidad NUEVA para el clon cuando la que quedó asociada no sirve:
+//   - el clon no tiene oportunidad, o
+//   - la oportunidad está cerrada (Cerrada Ganada / Cerrada Perdida / Declinada), o
+//   - la oportunidad es de OTRO cliente (se clonó a otro RUT), o
+//   - la original estaba Cerrada Ganada/Perdida y el clon quedó en su misma oportunidad
+//     (repetir venta otro mes = venta nueva).
+// Si el clon ya tiene una oportunidad válida (ej. Construcción, donde el Cotizador
+// ya crea una, o una nueva versión de una cotización en curso) NO hace nada.
+// Probar primero en Sandbox.
+void automation.cotizacion_clonCrearOportunidad(String quoteId)
+{
+	clon = zoho.crm.getRecordById("Quotes",quoteId.toLong());
+	idOriginal = ifnull(clon.get("ID_Cotizac_Original"),"");
+	// Solo clones del Cotizador (id del CRM). Vapor usa códigos ERP "RQ..." → no aplica.
+	if(idOriginal == "" || !idOriginal.isNumber())
+	{
+		return;
+	}
+	original = zoho.crm.getRecordById("Quotes",idOriginal.toLong());
+	if(original.get("id") == null)
+	{
+		return;
+	}
+	fasesCotCerradas = {"Cerrada Ganada","Cerrada Perdida"};
+	fasesOppCerradas = {"Cerrada Ganada","Cerrada Perdida","Declinada"};
+	cuentaClon = ifnull(clon.get("Account_Name"),Map()).get("id");
+	faseOrig = ifnull(original.get("Quote_Stage"),"");
+	dealOrigId = ifnull(original.get("Deal_Name"),Map()).get("id");
+	dealClonId = ifnull(clon.get("Deal_Name"),Map()).get("id");
+	faseDeal = "";
+	cuentaDeal = null;
+	if(dealClonId != null)
+	{
+		dealClon = zoho.crm.getRecordById("Deals",dealClonId.toLong());
+		faseDeal = ifnull(dealClon.get("Stage"),"");
+		cuentaDeal = ifnull(dealClon.get("Account_Name"),Map()).get("id");
+	}
+	necesitaNueva = false;
+	motivo = "";
+	if(dealClonId == null)
+	{
+		necesitaNueva = true;
+		motivo = "el clon no tenía oportunidad";
+	}
+	else if(fasesOppCerradas.contains(faseDeal))
+	{
+		necesitaNueva = true;
+		motivo = "la oportunidad asociada estaba " + faseDeal;
+	}
+	else if(cuentaDeal != cuentaClon)
+	{
+		necesitaNueva = true;
+		motivo = "la cotización se clonó a otro cliente";
+	}
+	else if(fasesCotCerradas.contains(faseOrig) && dealClonId == dealOrigId)
+	{
+		necesitaNueva = true;
+		motivo = "se clonó una cotización " + faseOrig + " (venta nueva)";
+	}
+	if(!necesitaNueva)
+	{
+		return;
+	}
+	// ---- Armar la oportunidad nueva ----
+	nueva = Map();
+	// Nombre provisorio: si existe una regla que numera las oportunidades
+	// (formato AAMMDD-OP-UN-...), la reemplaza al crear. Validar en Sandbox.
+	nueva.put("Deal_Name","CLON " + clon.get("Subject"));
+	nueva.put("Account_Name",cuentaClon);
+	contacto = ifnull(clon.get("Contact_Name"),Map()).get("id");
+	if(contacto != null)
+	{
+		nueva.put("Contact_Name",contacto);
+	}
+	nueva.put("Owner",clon.get("Owner").get("id"));
+	nueva.put("Amount",clon.get("Grand_Total"));
+	nueva.put("Closing_Date",zoho.currentdate.addDay(30).toString("yyyy-MM-dd"));
+	nueva.put("Stage","Creada");
+	un = ifnull(clon.get("UN"),Map()).get("id");
+	if(un != null)
+	{
+		nueva.put("UN",un);
+	}
+	obra = ifnull(clon.get("Obra_Rental"),Map()).get("id");
+	if(obra != null)
+	{
+		nueva.put("Obra_Rental",obra);
+	}
+	// Datos comerciales copiados de la oportunidad de la original (misma UN)
+	if(dealOrigId != null)
+	{
+		dealOrig = zoho.crm.getRecordById("Deals",dealOrigId.toLong());
+		sucursal = ifnull(dealOrig.get("Sucursal"),Map()).get("id");
+		if(sucursal != null)
+		{
+			nueva.put("Sucursal",sucursal);
+		}
+		linea = ifnull(dealOrig.get("L_nea"),Map()).get("id");
+		if(linea != null)
+		{
+			nueva.put("L_nea",linea);
+		}
+		canal = dealOrig.get("Canal_de_Venta");
+		if(canal != null)
+		{
+			nueva.put("Canal_de_Venta",canal);
+		}
+	}
+	resp = zoho.crm.createRecord("Deals",nueva);
+	info resp;
+	nota = Map();
+	nota.put("se_module","Quotes");
+	nota.put("Parent_Id",quoteId);
+	if(resp.get("id") != null)
+	{
+		upd = Map();
+		upd.put("Deal_Name",resp.get("id"));
+		zoho.crm.updateRecord("Quotes",quoteId.toLong(),upd);
+		nota.put("Note_Title","Oportunidad nueva por clonación");
+		nota.put("Note_Content","Se creó una oportunidad nueva para este clon porque " + motivo + ". Clonada de " + original.get("Subject") + ".");
+	}
+	else
+	{
+		nota.put("Note_Title","No se pudo crear la oportunidad del clon");
+		nota.put("Note_Content","Motivo para crearla: " + motivo + ". Error: " + resp.toString() + ". Crear la oportunidad a mano y asociarla.");
+	}
+	zoho.crm.createRecord("Notes",nota);
+}
