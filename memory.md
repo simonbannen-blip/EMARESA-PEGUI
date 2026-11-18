@@ -2285,3 +2285,11 @@ ver regla de sincronización en `CLAUDE.md`.
   el clon en la misma oportunidad, lookup de Cotización Original + N° de
   versión, y 10 ideas. No se tocó el CRM. Doc:
   `zoho/pipeline/propuesta-nuevo-flujo-clonacion-cotizacion.md`.
+- 18-11 (cont.): Simón pide permitir clonar desde Cerrada Ganada (mismo
+  negocio, otro mes) y definir en qué fases se puede clonar. Muestra de 150
+  clones: hoy se clona desde cualquier fase (Creada 37%, Ganada 27%, Perdida
+  15%, Aprobada 9%, Enviada 7%…). Hallazgo: Inamar Izaje clona y marca la
+  original como Cerrada Perdida minutos después → % de pérdida inflado.
+  Agregada al doc la matriz de fases (bloquear Pendiente de Aprobación,
+  fases de paso a OV/ERP y Recotizada), el flujo "Repetir venta (nuevo
+  período)" desde Ganada y Client Script MIV con perfiles + fases.
