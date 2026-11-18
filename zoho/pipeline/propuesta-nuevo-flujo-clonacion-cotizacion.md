@@ -273,14 +273,42 @@ Para definir la primera fila hace falta ver **cómo está configurado el botón
 desplegable "Editar Cotización" → Administrar botones → "Clonar Cotización"
 → captura de la acción.
 
-- **Inamar Vapor (MIV)**: según los datos, sus clones **no pasan por el
-  Cotizador** (creados por el propio usuario, sin ID Creator, origen CRM).
-  Hay que decidir: (a) que Vapor use también el botón → Creator (confirmar
-  con el proveedor que el Cotizador soporte Vapor), o (b) mantener el clonar
-  nativo solo para MIV con la validación de fase en el Client Script
-  "Deshabilitar clonar cotización" (código abajo).
+#### Configuración real del botón (captura de Simón, 18-11)
+- Nombre: **Clonar Cotización** · Acción: **Función** → **"SB Clonar Cotizacion"**
+  · Página: En registro · Posición: Detalles · Diseño: Estándar.
+- Perfiles: Administrador, Estándar, Vendedor, Responsable de Área, Vendedor
+  MIV, Gerente, Asistente, Gerente de UN, Vendedor Distribución Repuestos
+  jardín y m…, (y más en la lista).
 
-Client Script — solo si se elige la opción (b) para Vapor. Versión con perfiles + fases (MIV, página Clonar, onLoad o
+**Conclusión: el bloqueo por fase se puede hacer en el CRM, sin el
+proveedor.** Como el botón ejecuta una función del CRM antes de ir al
+Cotizador, basta agregar al **inicio** de "SB Clonar Cotizacion" una
+validación que corte si la fase no está permitida. Lo que retorna la función
+es el mensaje que ve el usuario.
+
+Bloque a pegar al inicio de la función (ajustar `quoteId` al nombre real del
+argumento de la función; falta ver su código):
+```deluge
+// --- Validación de fase antes de clonar (nuevo flujo) ---
+cotOrig = zoho.crm.getRecordById("Quotes", quoteId.toLong());
+faseOrig = ifnull(cotOrig.get("Quote_Stage"), "");
+fasesBloqueadas = {"Pendiente de Aprobación","Pendiente de Aprobacion","Cotizacion Parcialmente Aprobada","Lista para Confirmar","Direc. de Facturación Validada","Direc. de Despacho validada","Sin Stock suficiente","pendiente aprobación despacho sin factura","Recotizada"};
+if(fasesBloqueadas.contains(faseOrig))
+{
+    return "No se puede clonar una cotización en fase \"" + faseOrig + "\". Espere a que termine ese proceso o clone la versión vigente.";
+}
+// --- fin validación; sigue el código actual de la función ---
+```
+Pendiente: que Simón pegue el código actual de "SB Clonar Cotizacion"
+(Editar → copiar) para ver el nombre del argumento, cómo abre el Cotizador y
+si ya pasa algún dato (ej. motivo) que sirva para el resto del flujo.
+
+- **Inamar Vapor (MIV)**: sus clones **no pasan por el Cotizador** (creados
+  por el propio usuario, sin ID Creator). **Decisión de Simón (18-11):
+  camino (b)** → Vapor sigue con el Clonar nativo, agregando la validación de
+  fase al Client Script "Deshabilitar clonar cotización" (código abajo).
+
+Client Script para Vapor (camino b, elegido). Versión con perfiles + fases (MIV, página Clonar, onLoad o
 onSave según como esté hoy). Probar en Sandbox:
 ```js
 var user = ZDK.Apps.CRM.Users.fetchById($Crm.user.id);

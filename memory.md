@@ -2307,3 +2307,9 @@ ver regla de sincronización en `CLAUDE.md`.
   el Cotizador, Recotizada, informes). Pendiente: captura de la config del
   botón y decidir si Vapor (hoy clona nativo, sin ID Creator) pasa al
   Cotizador o mantiene el nativo con validación de fase.
+- 18-11 (cont.): Captura del botón "Clonar Cotización": acción = Función
+  "SB Clonar Cotizacion" (En registro, Detalles, diseño Estándar, varios
+  perfiles). → El bloqueo por fase se puede hacer en el CRM agregando una
+  validación al inicio de esa función (bloque Deluge en el doc). Pedido a
+  Simón el código actual de la función. Vapor: Simón elige camino (b),
+  Clonar nativo + Client Script con validación de fase.
