@@ -2321,3 +2321,19 @@ ver regla de sincronización en `CLAUDE.md`.
   de la re-aprobación (Enviada no se edita). Pendiente: captura del botón
   "Editar Cotización", código de las funciones, bloquear vs avisar al
   clonar en Creada/Aprobada/Rechazada, Vapor en Actualización de oferta.
+- 18-11 (cont.): Simón entregó el código real de los botones. "Editar
+  Cotización" = función EditarCotizacion (edita solo Creada, Pendiente de
+  revisión, Sin Stock; Enviada solo con producto ficticio; mensaje de
+  Pendiente de Aprobación nunca se mostraba). "Clonar Cotización" = función
+  SBclonarCotizacion (permite Creada, Aprobada, Rechazada, Enviada, Ganada,
+  Perdida, Lista para Clonar). Respaldos *.actual.deluge y propuestas
+  EditarCotizacion.deluge / SBclonarCotizacion.deluge en
+  zoho/config/funciones/ (con interruptores permitirEditarAprobadas y
+  permitirClonarEnFasesDeEdicion). Fases sin tilde = solo Ferretek (ERP).
+- 18-11 (cont.): Simón quiere probar primero clonar una Cerrada Ganada → clon
+  en Creada y aprobación si cumple. Revisado: el botón ya lo permite y la
+  aprobación ya se dispara al crear el clon (COT-REN-6359 entró solo a "UN
+  Rental - Aprobación Venta"). En Construcción la casilla Descuento Monto
+  Mínimo no dispara aprobación (cientos marcadas sin aprobar) → probar con
+  Rental o Inamar Izaje. Guía: zoho/pipeline/guia-sandbox-clonar-cerrada-ganada.md
+  (ojo: el clon queda en la oportunidad ya ganada).

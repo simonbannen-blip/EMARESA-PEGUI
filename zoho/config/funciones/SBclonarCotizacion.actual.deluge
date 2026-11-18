@@ -1,0 +1,35 @@
+// RESPALDO — versión vigente en Producción al 2026-11-18 (copiada por Simón).
+// Botón "Clonar Cotización" → función "SB Clonar Cotizacion".
+// No modificar: sirve para volver atrás. La propuesta está en SBclonarCotizacion.deluge
+string button.SBclonarCotizacion(String idCreator,String fase)
+{
+// 	cotizacion = zoho.crm.getRecordById("Quotes",id);
+// return "ID: " + id;
+// if(cotizacion.get("Aprobado_Cartera_Cliente") == false && cotizacion.get("Aprobado_por_Cambio_Forma_de_Pago") == false && cotizacion.get("Aprobado_por_Descuento_Item") == false && cotizacion.get("Aprobado_por_Descuento_Monto_M_nimo") == false && cotizacion.get("Aprobado_por_Segunda_Selecci_n") == false && cotizacion.get("Aprobado_por_Sobreprecio") == false)
+ambiente = standalone.SBvalidarAmbiente();
+// if(fase == "Cotización Aprobada")
+// {
+// 	if(ambiente == "Sandbox")
+// 	{
+// 		openUrl("https://creatorapp.zoho.com/emaresa/environment/development/cotizador#Form:Generar_Cotizaciones?recLinkID=" + idCreator + "&viewLinkName=Reporte_de_cotizaciones","parent window");
+// 	}
+// 	else
+// 	{
+// 		openUrl("https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones?recLinkID=" + idCreator + "&viewLinkName=Reporte_de_cotizaciones","parent window");
+// 	}
+// 	return "La Cotización está Aprobada, ya es posible Editarla";
+// }
+if(fase == "Creada" || fase == "Cotización Aprobada" || fase == "Cotización Rechazada" || fase == "Enviada" || fase == "Cerrada Ganada" || fase == "Cerrada Perdida" || fase == "Lista para Clonar")
+{
+	if(ambiente == "Sandbox")
+	{
+		openUrl("https://creatorapp.zoho.com/emaresa/environment/development/cotizador#Form:Generar_Cotizaciones?Clonar_Cot=" + idCreator,"parent window");
+	}
+	else
+	{
+		openUrl("https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones?Clonar_Cot=" + idCreator,"parent window");
+	}
+	return "";
+}
+return "La cotización esta en fase \"" + fase + "\" que no se permite clonar!";
+}
