@@ -2293,3 +2293,10 @@ ver regla de sincronización en `CLAUDE.md`.
   Agregada al doc la matriz de fases (bloquear Pendiente de Aprobación,
   fases de paso a OV/ERP y Recotizada), el flujo "Repetir venta (nuevo
   período)" desde Ganada y Client Script MIV con perfiles + fases.
+- 18-11 (cont.): Simón pidió el punto de partida por UN. Agregada sección
+  1-bis al doc: Construcción 321 clones (Cotizador, oportunidad nueva,
+  cadenas "guardar como", 46% clones en Creada); Rental 105 (misma opp,
+  varias versiones aprobadas a la vez); Inamar Izaje 94 (misma opp, cierra
+  original como Perdida a mano); Inamar Vapor 74 = 41% de sus cotizaciones
+  (Clonar nativo, ID original con código ERP, 93% Enviada); Ferretek,
+  Agroforestal, I&F y Maktotal no clonan.

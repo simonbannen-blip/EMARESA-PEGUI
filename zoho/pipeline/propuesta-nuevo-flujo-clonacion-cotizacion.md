@@ -65,6 +65,45 @@ para Clonar 5, otras 3.
 
 ---
 
+## 1-bis. Punto de partida por UN (18-11, datos desde 01-05-2026)
+
+| UN | Cotizaciones | Clones | % clonado | Cómo clona | Quién crea el clon | Oportunidad del clon | Fase de la original (muestra) | Estado de los clones |
+|---|---|---|---|---|---|---|---|---|
+| **Construcción** | 4.312 | 321 | 7% | Cotizador (Creator) | Integración "Emaresa" | **Nueva casi siempre** (17 de 24) | Creada 51% · Ganada 30% · Perdida 12% · Lista para Clonar 7% (n=84) | Creada 149 (46%) · Ganada 134 · Perdida 29 · otros 9 |
+| **Rental** | 6.227 | 105 | 2% | Cotizador (Creator) | Integración "Emaresa" | **Misma** (20 de 20) | Creada 32% · Ganada 29% · Aprobada 29% · otras 10% (n=41) | Ganada 39 · Perdida 25 · Creada 22 · Aprobada 10 · otros 9 |
+| **Inamar Izaje** | 2.269 | 94 | 4% | Cotizador (Creator) | Integración "Emaresa" | **Misma** (9 de 9) | **Perdida 42%** · Enviada 38% · Ganada 15% (n=26) | Ganada 47 · Perdida 24 · Enviada 14 · Creada 6 · otros 3 |
+| **Inamar Vapor (MIV)** | 182 | 74 | **41%** | Clonar nativo CRM ("…") | Responsables MIV (Lledo 32, Ancao 30, Alarcon 12) | Misma (muestra chica) | No medible: ID original = código ERP ("RQ14234_R9", "2026-1831M") | **Enviada 69 (93%)** · Creada 4 · Perdida 1 |
+| Ferretek | 17.301 | 0 | 0% | No clona: todas vienen del ERP (Origen = ERP) | — | — | — | — |
+| Agroforestal y Jardines | 40 | 0 | 0% | No clona (Cotizador) | — | — | — | — |
+| Industria y Ferretería | 61 | 0 | 0% | No clona | — | — | — | — |
+| Maktotal | 139 | 0 | 0% | No clona | — | — | — | — |
+
+### Lectura por UN
+- **Construcción**: es la que más clona (321). El clon funciona como
+  "guardar como": hay cadenas de 3–4 clones en 15 minutos (ej. 09-10
+  15:38 → 15:49 → 15:54) y la mitad de las originales queda en Creada.
+  El Cotizador **crea una oportunidad nueva** por cada clon → oportunidades
+  duplicadas abiertas. 46% de los clones también queda en Creada.
+  Usa la fase "Lista para Clonar" como marca previa (única UN que la usa).
+  Clona Ganadas para repetir venta (30%).
+- **Rental**: reutiliza la oportunidad (bien), pero **conviven varias
+  versiones aprobadas** (MIS RAICES 3, CONSORCIO 3). Clona Ganadas (29%)
+  → repetir arriendos. Algunos clones quedan en Pendiente de revisión/aprobación.
+- **Inamar Izaje**: reutiliza la oportunidad y **cierra la original a mano
+  como Cerrada Perdida** minutos después de clonar (42% de las originales)
+  → pérdidas que en realidad son versiones reemplazadas. Las que no cierra
+  quedan en Enviada en paralelo con el clon.
+- **Inamar Vapor (MIV)**: clona en el CRM nativo, casi 1 de cada 2
+  cotizaciones es un clon (revisiones: asunto con sufijo `_R1`), y el clon
+  se envía casi siempre (93% Enviada). El campo ID Cotizac. Original lleva
+  el código del ERP escrito a mano → no se puede rastrear la original en el
+  CRM. Bloqueo por perfil vía Client Script "Deshabilitar clonar cotización".
+- **Ferretek, Agroforestal, Industria y Ferretería, Maktotal**: no usan
+  clonación (Ferretek recibe todo desde el ERP). Quedan fuera del flujo nuevo
+  salvo que lo pidan.
+
+---
+
 ## 2. Problemas encontrados (muestra de los 60 clones más recientes)
 
 1. **La original nunca se cierra.** Queda viva en el pipeline junto al clon.
