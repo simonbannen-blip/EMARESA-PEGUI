@@ -250,14 +250,37 @@ Mismo negocio, otro mes. Cómo debería quedar:
    contrato.
 
 ### Cómo aplicar la restricción por fase
-- **Cotizador (Construcción, Rental, Inamar)**: el botón "Clonar Cotización"
-  no se puede ocultar por fase en Zoho (solo por perfil). Opciones: que el
-  **proveedor** valide la fase al abrir el Cotizador y muestre un mensaje, o
-  que el botón llame primero a una función del CRM que revise la fase.
-- **Clonar nativo (MIV)**: agregar la validación de fase al Client Script
+> **Aclaración de Simón (18-11):** el clonado oficial es el botón propio
+> **"Clonar Cotización"**, que lleva al **Cotizador (Creator)**. El "Clonar"
+> nativo de Zoho (menú "…") **no** es el flujo de clonación; está bloqueado
+> por el Client Script salvo Administrator y perfiles MIV.
+> Por eso el flujo nuevo se diseña sobre el botón → Creator.
+
+Dónde vive cada parte del flujo nuevo:
+
+| Parte | Dónde se hace | Quién |
+|---|---|---|
+| Bloquear por fase (matriz 3-bis) | **Antes de abrir el Cotizador**: el botón primero revisa la fase en el CRM (Client Script del botón o función) y solo si está permitida abre el Cotizador; o la valida el Cotizador al abrir | Simón (CRM) o proveedor |
+| Elegir motivo (Nueva versión / Repetir venta / Otro cliente) | Pantalla de clonar del **Cotizador** | Proveedor |
+| Oportunidad misma o nueva según motivo (hoy Construcción crea nueva siempre) | **Cotizador** | Proveedor |
+| Sin aprobaciones heredadas, fecha de validez nueva, precios vigentes | **Cotizador** | Proveedor |
+| Llenar ID Cotizac. Original (ya lo hace) + motivo | **Cotizador** → CRM | Proveedor |
+| Original → Recotizada + nota (función de la sección 4) | **CRM**, regla al crear | Simón |
+| Informes de duplicados / limpieza histórica | **CRM** | Simón / yo por API |
+
+Para definir la primera fila hace falta ver **cómo está configurado el botón
+"Clonar Cotización"** (si es "Abrir URL" o "Función"): Cotizaciones →
+desplegable "Editar Cotización" → Administrar botones → "Clonar Cotización"
+→ captura de la acción.
+
+- **Inamar Vapor (MIV)**: según los datos, sus clones **no pasan por el
+  Cotizador** (creados por el propio usuario, sin ID Creator, origen CRM).
+  Hay que decidir: (a) que Vapor use también el botón → Creator (confirmar
+  con el proveedor que el Cotizador soporte Vapor), o (b) mantener el clonar
+  nativo solo para MIV con la validación de fase en el Client Script
   "Deshabilitar clonar cotización" (código abajo).
 
-Client Script — versión con perfiles + fases (MIV, página Clonar, onLoad o
+Client Script — solo si se elige la opción (b) para Vapor. Versión con perfiles + fases (MIV, página Clonar, onLoad o
 onSave según como esté hoy). Probar en Sandbox:
 ```js
 var user = ZDK.Apps.CRM.Users.fetchById($Crm.user.id);
