@@ -2300,3 +2300,10 @@ ver regla de sincronización en `CLAUDE.md`.
   original como Perdida a mano); Inamar Vapor 74 = 41% de sus cotizaciones
   (Clonar nativo, ID original con código ERP, 93% Enviada); Ferretek,
   Agroforestal, I&F y Maktotal no clonan.
+- 18-11 (cont.): Simón aclara que el clonado oficial es el botón "Clonar
+  Cotización" → Cotizador (Creator), no el Clonar nativo. Doc ajustado:
+  tabla de qué parte va en el Cotizador (proveedor: motivo, oportunidad,
+  aprobaciones, precios) y qué en el CRM (bloqueo por fase antes de abrir
+  el Cotizador, Recotizada, informes). Pendiente: captura de la config del
+  botón y decidir si Vapor (hoy clona nativo, sin ID Creator) pasa al
+  Cotizador o mantiene el nativo con validación de fase.
