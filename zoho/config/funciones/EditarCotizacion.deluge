@@ -1,0 +1,66 @@
+// PROPUESTA 2026-11-18 — Botón "Editar Cotización" (función EditarCotizacion).
+// Regla: si el cliente aún no recibe la cotización → se EDITA;
+//        si ya la recibió o está cerrada → se CLONA (mensaje que lo indica).
+// Respaldo de la versión vigente: EditarCotizacion.actual.deluge
+// Misma firma que la actual (idCreator, id, fase) → el botón no se reconfigura.
+// Probar primero en Sandbox.
+string button.EditarCotizacion(String idCreator,String id,String fase)
+{
+// ---------------- AJUSTES (cambiar solo aquí) ----------------
+// Cambiar a true SOLO cuando la re-aprobación al editar esté funcionando
+// (propuesta-reevaluar-aprobacion-al-editar-cotizacion.md) y el Cotizador
+// deje editar Aprobadas/Rechazadas. Si se activa antes, una aprobación
+// antigua quedaría valiendo para una oferta distinta.
+permitirEditarAprobadas = false;
+// Fases donde se edita (el cliente aún no la recibe)
+fasesEditables = {"Creada","Pendiente de revisión","Sin Stock suficiente"};
+if(permitirEditarAprobadas)
+{
+	fasesEditables.add("Cotización Aprobada");
+	fasesEditables.add("Cotización Rechazada");
+}
+// Fases en aprobación: no se edita ni se clona
+fasesEnAprobacion = {"Pendiente de Aprobación","Cotizacion Parcialmente Aprobada"};
+// Fases donde corresponde clonar (ya enviada o cerrada)
+fasesClonar = {"Enviada","Actualización de oferta","Lista para Clonar","Cerrada Ganada","Cerrada Perdida"};
+// --------------------------------------------------------------
+cotizacion = zoho.crm.getRecordById("Quotes",id);
+productoFicticio = false;
+for each  prod in cotizacion.get("Product_Details")
+{
+	producto = zoho.crm.getRecordById("Products",prod.get("product").get("id"));
+	if(producto.get("Producto_Ficticio"))
+	{
+		productoFicticio = true;
+	}
+}
+info productoFicticio;
+info fase;
+ambiente = standalone.SBvalidarAmbiente();
+if(fasesEnAprobacion.contains(fase))
+{
+	return "La Cotización se encuentra en aprobación (" + fase + "), no es posible Editarla. Espere la respuesta del aprobador.";
+}
+if(fase == "Enviada" && productoFicticio == true)
+{
+	// Excepción vigente: enviada con producto ficticio se puede editar
+	info "Cotiz enviada contiene producto ficticio";
+}
+else if(fasesClonar.contains(fase))
+{
+	return "Esta cotización ya fue enviada o está cerrada (fase \"" + fase + "\"). No se edita: use \"Clonar Cotización\" para crear una nueva versión.";
+}
+else if(!fasesEditables.contains(fase))
+{
+	return "No es posible Editar una cotización en fase \"" + fase + "\".";
+}
+if(ambiente == "Sandbox")
+{
+	openUrl("https://creatorapp.zoho.com/emaresa/environment/development/cotizador#Form:Generar_Cotizaciones?recLinkID=" + idCreator + "&viewLinkName=Reporte_de_cotizaciones","parent window");
+}
+else
+{
+	openUrl("https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones?recLinkID=" + idCreator + "&viewLinkName=Reporte_de_cotizaciones","parent window");
+}
+return "";
+}

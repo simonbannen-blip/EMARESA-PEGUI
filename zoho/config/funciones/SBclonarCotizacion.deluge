@@ -1,0 +1,38 @@
+// PROPUESTA 2026-11-18 — Botón "Clonar Cotización" (función SB Clonar Cotizacion).
+// Regla: se CLONA lo que el cliente ya recibió o lo cerrado;
+//        lo que aún no se envía se EDITA (mensaje que lo indica).
+// Respaldo de la versión vigente: SBclonarCotizacion.actual.deluge
+// Misma firma que la actual (idCreator, fase) → el botón no se reconfigura.
+// Probar primero en Sandbox.
+string button.SBclonarCotizacion(String idCreator,String fase)
+{
+// ---------------- AJUSTES (cambiar solo aquí) ----------------
+// Fases desde las que se clona
+fasesClonar = {"Enviada","Actualización de oferta","Lista para Clonar","Cerrada Ganada","Cerrada Perdida"};
+// Fases donde corresponde EDITAR en vez de clonar
+fasesEditar = {"Creada","Pendiente de revisión","Sin Stock suficiente","Cotización Aprobada","Cotización Rechazada"};
+// false = en esas fases NO se deja clonar (corta los clones en cadena de Construcción).
+// true  = se sigue dejando clonar como hoy (útil mientras el Cotizador no pida
+//         el motivo "otro cliente"). Hoy el botón SÍ deja clonar en Creada,
+//         Aprobada y Rechazada.
+permitirClonarEnFasesDeEdicion = false;
+// --------------------------------------------------------------
+ambiente = standalone.SBvalidarAmbiente();
+if(fasesClonar.contains(fase) || (permitirClonarEnFasesDeEdicion && fasesEditar.contains(fase)))
+{
+	if(ambiente == "Sandbox")
+	{
+		openUrl("https://creatorapp.zoho.com/emaresa/environment/development/cotizador#Form:Generar_Cotizaciones?Clonar_Cot=" + idCreator,"parent window");
+	}
+	else
+	{
+		openUrl("https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones?Clonar_Cot=" + idCreator,"parent window");
+	}
+	return "";
+}
+if(fasesEditar.contains(fase))
+{
+	return "Esta cotización aún no se envía al cliente (fase \"" + fase + "\"): use \"Editar Cotización\" en vez de clonar. Si necesita cotizarla a otro cliente, consulte con su jefatura.";
+}
+return "La cotización esta en fase \"" + fase + "\" que no se permite clonar!";
+}

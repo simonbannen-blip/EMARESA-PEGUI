@@ -377,9 +377,65 @@ Con esto:
 - Inamar Izaje deja de cerrar como Perdida: clona desde Enviada y el
   sistema pasa la original a Recotizada.
 
+### Código real de los botones (entregado por Simón 18-11) — antes / después
+
+Respaldos de lo vigente y propuestas completas, listas para pegar:
+- `zoho/config/funciones/EditarCotizacion.actual.deluge` → `EditarCotizacion.deluge`
+- `zoho/config/funciones/SBclonarCotizacion.actual.deluge` → `SBclonarCotizacion.deluge`
+
+Ambas mantienen la **misma firma** (argumentos), así que el botón no se
+reconfigura: solo se reemplaza el código de la función.
+
+> Corrección: en la sección 3-bis se dijo que "hoy no hay restricción por
+> fase". Para el botón del Cotizador **sí hay**: "SB Clonar Cotizacion" ya
+> trae una lista de fases permitidas. Lo que no existía era la regla
+> Editar vs Clonar ni el cierre de la original.
+
+| Fase | Editar HOY | Editar PROPUESTO | Clonar HOY | Clonar PROPUESTO |
+|---|---|---|---|---|
+| Creada | ✅ | ✅ | ✅ | ❌ → "use Editar" (*) |
+| Pendiente de revisión | ✅ | ✅ | ❌ | ❌ → "use Editar" |
+| Sin Stock suficiente | ✅ | ✅ | ❌ | ❌ → "use Editar" |
+| Pendiente de Aprobación | ❌ (mensaje genérico; el mensaje específico nunca salía) | ❌ con mensaje claro | ❌ | ❌ |
+| Parcialmente Aprobada | ❌ | ❌ con mensaje claro | ❌ | ❌ |
+| Cotización Aprobada | ❌ | ✅ **cuando esté la re-aprobación** (interruptor) | ✅ | ❌ → "use Editar" (*) |
+| Cotización Rechazada | ❌ | ✅ **cuando esté la re-aprobación** (interruptor) | ✅ | ❌ → "use Editar" (*) |
+| Enviada | Solo con producto ficticio | Igual (excepción se mantiene) | ✅ | ✅ |
+| Actualización de oferta | ❌ | ❌ → "use Clonar" | ❌ | ✅ |
+| Lista para Clonar | ❌ | ❌ → "use Clonar" | ✅ | ✅ |
+| Cerrada Ganada / Perdida | ❌ | ❌ → "use Clonar" | ✅ | ✅ |
+| Recotizada, Lista para Confirmar, Direc. validadas, Despacho sin factura | ❌ | ❌ | ❌ | ❌ |
+
+(*) Interruptor `permitirClonarEnFasesDeEdicion` en la función de clonar:
+`false` = bloquea (propuesto), `true` = deja clonar como hoy.
+
+Hallazgos del código:
+- **Editar**: el mensaje "La Cotización se encuentra Pendiente de
+  Aprobación…" **nunca se muestra** (la condición anterior ya la atrapa y
+  responde "No es posible Editar esta cotización!"). Corregido.
+- **Editar**: hoy **no deja editar Aprobadas ni Rechazadas** → por eso el
+  vendedor clona para corregirlas (Rental: varias aprobadas vivas). Se
+  habilitan con el interruptor `permitirEditarAprobadas`, que se pone en
+  `true` **solo cuando la re-aprobación al editar esté funcionando** (si no,
+  la aprobación vieja vale para una oferta distinta) y el Cotizador lo
+  permita (ya pedido al proveedor en el mail del 12-11).
+- **Clonar**: hoy deja clonar Creadas → origen de los clones en cadena de
+  Construcción (51% de las originales en Creada).
+- Fases sin tilde ("Cotizacion Aprobada", "Pendiente de Aprobacion",
+  "Cotizacion Rechazada") son **solo de Ferretek** (vienen del ERP, no usan
+  estos botones) → no se consideran.
+- La función de clonar **no recibe el id de la cotización del CRM**, solo
+  idCreator y fase. No hace falta para esta etapa; si más adelante se
+  necesita (ej. motivo de clonación), se agrega el argumento en el botón.
+- Los botones están visibles para el perfil **Vendedor MIV**, pero las
+  cotizaciones de Vapor no tienen ID Creator → el botón abriría el
+  Cotizador vacío. Vapor sigue con el camino (b) nativo.
+
 ### Cómo se implementa
 
 **1. Botón "Clonar Cotización" → función "SB Clonar Cotizacion"**
+> Reemplazado por la función completa `zoho/config/funciones/SBclonarCotizacion.deluge`.
+> El bloque de abajo queda como referencia del diseño.
 Bloque de validación al inicio (reemplaza al de 3-bis):
 ```deluge
 // --- Validación de fase antes de CLONAR ---
@@ -405,9 +461,9 @@ if(fasesEditar.contains(faseOrig))
 > cliente desde ahí hasta que el Cotizador tenga el campo Motivo), o solo
 > mostrar el aviso sin bloquear?
 
-**2. Botón "Editar Cotización"** — falta la captura de su configuración
-(Administrar botones → "Editar Cotización"). Si también es **Función**, se
-agrega al inicio:
+**2. Botón "Editar Cotización"** — es **Función** ("EditarCotizacion",
+captura 18-11). Reemplazado por la función completa
+`zoho/config/funciones/EditarCotizacion.deluge`. Bloque de referencia:
 ```deluge
 // --- Validación de fase antes de EDITAR ---
 cot = zoho.crm.getRecordById("Quotes", quoteId.toLong());
@@ -463,7 +519,9 @@ if (fasesBloqueadas.indexOf(fase) !== -1) {
 |---|---|
 | Creada → Editar | Abre Cotizador; si sube monto y cumple criterio → Pendiente de Aprobación |
 | Creada → Clonar | Mensaje "use Editar" |
-| Aprobada → Editar con más descuento | Vuelve a Pendiente de Aprobación |
+| Aprobada → Editar (interruptor en false) | Mensaje "No es posible Editar…" |
+| Enviada con producto ficticio → Editar | Abre Cotizador (excepción vigente) |
+| Aprobada → Editar con más descuento (interruptor en true) | Vuelve a Pendiente de Aprobación |
 | Pendiente de Aprobación → Editar / Clonar | Mensaje, no abre Cotizador |
 | Enviada → Editar | Mensaje "use Clonar" |
 | Enviada → Clonar | Abre Cotizador; al guardar el clon, original → Recotizada |
@@ -573,9 +631,12 @@ de re-aprobación (`void automation.<nombre>(String quoteId) { … }`).
     (usar Recotizada) y corregir el histórico para que el % de pérdida sea real.
 
 ## Pendientes / preguntas para Simón
-- Captura de la configuración del botón **"Editar Cotización"** y código de
-  las funciones "SB Clonar Cotizacion" (y de Editar, si es función).
-- Clonar en Creada/Aprobada/Rechazada: ¿bloquear o solo avisar? (3-ter).
+- ~~Captura del botón Editar y código de funciones~~ → recibido 18-11.
+- Clonar en Creada/Aprobada/Rechazada: ¿bloquear (`false`, propuesto) o
+  dejar como hoy (`true`)? Interruptor en `SBclonarCotizacion.deluge`.
+- Orden de puesta en marcha: (1) funciones de botones con
+  `permitirEditarAprobadas = false`; (2) regla "Original → Recotizada";
+  (3) re-aprobación al editar; (4) recién ahí `permitirEditarAprobadas = true`.
 - Vapor en "Actualización de oferta": ¿edita o clona?
 - ¿La matriz de fases (3-bis) está bien? En especial "Pendiente de revisión".
 - Repetir venta desde Ganada: ¿precios copiados o recalculados con la lista vigente?

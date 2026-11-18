@@ -1,0 +1,54 @@
+// RESPALDO — versión vigente en Producción al 2026-11-18 (copiada por Simón).
+// Botón "Editar Cotización" (Cotizaciones · En registro · Detalles · Función).
+// No modificar: sirve para volver atrás. La propuesta está en EditarCotizacion.deluge
+string button.EditarCotizacion(String idCreator,String id,String fase)
+{
+cotizacion = zoho.crm.getRecordById("Quotes",id);
+// info cotizacion;
+productoFicticio = false;
+for each  prod in cotizacion.get("Product_Details")
+{
+	producto = zoho.crm.getRecordById("Products",prod.get("product").get("id"));
+	if(producto.get("Producto_Ficticio"))
+	{
+		productoFicticio = true;
+	}
+}
+// return "ID: " + id;
+// if(cotizacion.get("Aprobado_Cartera_Cliente") == false && cotizacion.get("Aprobado_por_Cambio_Forma_de_Pago") == false && cotizacion.get("Aprobado_por_Descuento_Item") == false && cotizacion.get("Aprobado_por_Descuento_Monto_M_nimo") == false && cotizacion.get("Aprobado_por_Segunda_Selecci_n") == false && cotizacion.get("Aprobado_por_Sobreprecio") == false)
+info productoFicticio;
+info fase;
+ambiente = standalone.SBvalidarAmbiente();
+if(fase != "Creada" && fase != "Pendiente de revisión" && fase != "Sin Stock suficiente")
+{
+	if(fase == "Enviada" && productoFicticio == true)
+	{
+		info "Cotiz enviada contiene producto ficticio";
+	}
+	else
+	{
+		return "No es posible Editar esta cotización!";
+	}
+	// 	if(ambiente == "Sandbox")
+	// 	{
+	// 		openUrl("https://creatorapp.zoho.com/emaresa/environment/development/cotizador#Form:Generar_Cotizaciones?recLinkID=" + idCreator + "&viewLinkName=Reporte_de_cotizaciones","parent window");
+	// 	}
+	// 	else
+	// 	{
+	// 		openUrl("https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones?recLinkID=" + idCreator + "&viewLinkName=Reporte_de_cotizaciones","parent window");
+	// 	}
+}
+else if(fase == "Pendiente de Aprobación")
+{
+	return "La Cotización se encuentra Pendiente de Aprobación, no es posible Editarla";
+}
+if(ambiente == "Sandbox")
+{
+	openUrl("https://creatorapp.zoho.com/emaresa/environment/development/cotizador#Form:Generar_Cotizaciones?recLinkID=" + idCreator + "&viewLinkName=Reporte_de_cotizaciones","parent window");
+}
+else
+{
+	openUrl("https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones?recLinkID=" + idCreator + "&viewLinkName=Reporte_de_cotizaciones","parent window");
+}
+return "";
+}
