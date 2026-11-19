@@ -2358,3 +2358,7 @@ ver regla de sincronización en `CLAUDE.md`.
   (mismo cliente con/sin aprobación, otro cliente con/sin datos) y cómo
   volver atrás: `zoho/pipeline/guia-sandbox-clonar-cerrada-ganada.md`.
   Editar, Recotizada, bloqueos por fase y Vapor quedan para después.
+- 19-11 (cont.): En Sandbox el aviso del botón Clonar duraba segundos sin
+  dejar pulsar Aceptar (openUrl "parent window" reemplaza la página). v2 de
+  `SBclonarCotizacion.paso1.deluge`: en Cerrada Ganada abre el Cotizador en
+  pestaña nueva ("new window") y el aviso queda en el CRM; demás fases igual.

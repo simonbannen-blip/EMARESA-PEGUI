@@ -117,8 +117,10 @@ Notas:
   que numere oportunidades → avisar y se ajusta al formato AAMMDD-OP-….
 - Si en **B** el clon queda en Creada aunque cumpla criterios → anotar el
   número (es el mismo problema del Cotizador al editar).
-- Si el **aviso no aparece** pero sí se abre el Cotizador → avisar; se
-  quita el aviso del botón y se pide al proveedor dentro del Cotizador.
+- **19-11:** con la v1 el aviso duraba segundos (el Cotizador reemplazaba la
+  página). v2: en Cerrada Ganada el Cotizador se abre en **pestaña nueva** y
+  el aviso queda en el CRM con su botón Aceptar. Si el navegador bloquea la
+  pestaña nueva, permitir ventanas emergentes para crm.zoho.com.
 - Si en **C** el Cotizador obliga a elegir una oportunidad del cliente nuevo
   antes de guardar → anotarlo (la función no duplica: si el clon ya trae una
   oportunidad abierta del cliente correcto, no crea otra).
