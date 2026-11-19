@@ -1,3 +1,6 @@
+// DESCARTADO 2026-11-19: el Client Script de esta org NO tiene 'Evento de botón'
+// (solo página, campo, subformulario, blueprint, notas, campos obligatorios, etiqueta).
+// Se reemplaza por aviso fijo onLoad en Página de detalles (ver guía del Paso 1).
 // PROPUESTA 2026-11-19 — SOLO SANDBOX. Botón "Clonar Cotización" con disclaimer (Sí/No) antes del Cotizador.
 // Requiere que Zoho permita Client Script como acción/evento de botón personalizado
 // (a confirmar por Simón: Developer Hub → Client Script → evento de botón, o

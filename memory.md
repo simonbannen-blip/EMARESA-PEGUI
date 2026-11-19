@@ -2372,3 +2372,7 @@ ver regla de sincronización en `CLAUDE.md`.
   (`zoho/config/funciones/ClonarCotizacion.clientscript.paso1.js`), a validar.
   Pendiente: captura de Simón para ver si su Zoho permite Client Script en
   botones. Fallback: showAlert al abrir Ganada + aviso post-clic.
+- 19-11 (cont.): Captura de Simón: Client Script NO tiene "Evento de botón"
+  → disclaimer Sí/No en el botón descartado. Se usa aviso fijo (showAlert)
+  onLoad en Página de detalles de Cotizaciones cuando la fase es Cerrada
+  Ganada. Alternativa de doble clic anotada pero no recomendada.
