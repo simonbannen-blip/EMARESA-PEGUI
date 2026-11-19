@@ -2383,3 +2383,9 @@ ver regla de sincronización en `CLAUDE.md`.
   Sí/No y abre el Cotizador (desarrollo) en pestaña nueva; replica las fases
   permitidas de SB Clonar Cotizacion. Perfil solo Administrador para pruebas.
   Pendiente: confirmar que "Definir acción" ofrece Widget.
+- 19-11 (cont.): Simón creó el botón "Clonar Cotización (prueba)" con
+  "Abrir un widget" (opción existe). Al pulsarlo: "Page Not Found" → la
+  Página de índice no coincide con el archivo. Entregado
+  `clonar-cotizacion-prueba-v2.zip` (página como widget.html, index.html,
+  app/widget.html, app/index.html). Pendiente: reemplazar el archivo en el
+  widget y revisar la Página de índice.
