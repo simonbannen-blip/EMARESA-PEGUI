@@ -2362,3 +2362,7 @@ ver regla de sincronización en `CLAUDE.md`.
   dejar pulsar Aceptar (openUrl "parent window" reemplaza la página). v2 de
   `SBclonarCotizacion.paso1.deluge`: en Cerrada Ganada abre el Cotizador en
   pestaña nueva ("new window") y el aviso queda en el CRM; demás fases igual.
+- 19-11 (cont.): Simón quiere el aviso ANTES de pulsar Clonar. Propuesto:
+  Client Script onLoad en página de detalle de Cotizaciones que muestra el
+  aviso si la fase es Cerrada Ganada (showMessage; showAlert si debe quedar
+  fijo) + opcional descripción del botón. Agregado a la guía del Paso 1.

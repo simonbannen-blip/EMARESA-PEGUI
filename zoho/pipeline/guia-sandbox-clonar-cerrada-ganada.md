@@ -136,3 +136,29 @@ Notas:
 ## Volver atrás
 - Botón: pegar `SBclonarCotizacion.actual.deluge`.
 - Desactivar la regla "Clon - Crear oportunidad nueva".
+
+## Aviso ANTES de pulsar el botón (agregado 19-11)
+Pedido de Simón: que el mensaje salga antes de apretar Clonar.
+
+**Opción 1 (recomendada) — Client Script en la página de detalle**
+Configuración → Developer Hub → Client Script → Nuevo script ·
+Módulo Cotizaciones · Página de detalles · Diseño Estándar · Evento de página onLoad:
+```js
+// Aviso previo: se muestra al abrir una cotización Cerrada Ganada
+var fase = ZDK.Page.getField('Quote_Stage').getValue();
+if (fase === 'Cerrada Ganada') {
+    ZDK.Client.showMessage(
+        'Si va a clonar esta cotización (Editar Cotización ▾ → Clonar Cotización): ' +
+        'se creará una oportunidad nueva. Puede usar el mismo cliente u otro; ' +
+        'el cliente debe tener Contacto, Sucursal del Cliente (y Obra en Rental) ' +
+        'y Plazo/Forma de Pago, o el Cotizador no dejará guardar.',
+        { type: 'info' }
+    );
+}
+```
+- `showMessage` = aviso arriba que se va solo. Para que quede fijo hasta
+  cerrarlo: `ZDK.Client.showAlert('…')` (sale cada vez que se abre una Ganada).
+
+**Opción 2 — Descripción del botón**: en Administrar botones → Clonar
+Cotización → "Agregar descripción". Validar si Zoho la muestra (el botón está
+dentro del desplegable "Editar Cotización ▾").
