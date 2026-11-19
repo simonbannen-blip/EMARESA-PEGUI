@@ -1,148 +1,136 @@
-# Guía Sandbox: clonar una cotización Cerrada Ganada → clon en Creada y aprobación si corresponde
+# Guía Sandbox — PASO 1: clonar una cotización Cerrada Ganada (mismo cliente u otro)
 
-Fecha: 2026-11-18 · Estado: **lista para probar** (primer paso del nuevo
-flujo Editar/Clonar, ver `propuesta-nuevo-flujo-clonacion-cotizacion.md`).
+Fecha: 2026-11-18 · Actualizada 2026-11-19 · Estado: **lista para probar en Sandbox**.
+Solo Sandbox. No se toca Producción.
 
-## Objetivo de la prueba
-Clonar una cotización **Cerrada Ganada** (mismo negocio, otro mes) y verificar:
-1. El clon nace como cotización nueva, **no** como Ganada.
-2. Si **no** cumple criterios de aprobación → queda en **Creada**.
-3. Si **sí** cumple (monto, descuento, precio, venta rental…) → entra sola a
-   **Pendiente de Aprobación** y le llega al aprobador.
-4. La original **sigue Cerrada Ganada** (no se toca).
-5. No hereda aprobaciones de la original (Sub Fase vacía, "Aprobado por…" en falso).
-6. Se crea una **oportunidad nueva** para el clon (también si es para otro cliente).
-7. Al clonar aparece un **aviso** de que el cliente nuevo debe tener contacto, sucursal/obra y forma de pago.
+## Alcance del Paso 1 (decisión de Simón 19-11)
+Solo esto:
+- Clonar una cotización **Cerrada Ganada** para hacer otra cotización al
+  **mismo cliente** o a un **cliente distinto**.
+- El clon tiene **oportunidad nueva** (no se cuelga de la oportunidad ganada).
+- El clon nace en **Creada** y, si cumple criterios, pasa solo a **aprobación**.
+- La original **sigue Cerrada Ganada**.
+- Aviso al vendedor de los datos que debe tener el cliente.
 
-## Lo que ya revisé en Producción (solo lectura)
-- **El botón ya permite clonar Cerrada Ganada**: la función "SB Clonar
-  Cotizacion" tiene Cerrada Ganada en su lista de fases permitidas.
-  → Para esta prueba **no hay que cambiar código**.
-- **La aprobación ya se dispara al crear el clon** (ej. **COT-REN-6359**, 11-11):
-  1. 09:35:41 el Cotizador crea el clon.
-  2. 09:35:43 el Cotizador recalcula la casilla "Aprobación Venta Rental"
-     (falso → verdadero).
-  3. 09:35:43 entra solo al proceso **"UN Rental - Aprobación Venta"**
-     (aprobador Mauro Monje), fase Pendiente de Aprobación.
-  4. 09:41 aprobado → Sub Fase "Aprobado por Venta Rental" → Cotización Aprobada.
-  → O sea: si cumple criterios, el clon **no se queda en Creada**, pasa
-  directo a Pendiente de Aprobación. Si no cumple, queda en Creada (ej.
-  COT-REN-6256, clon de una Ganada, sin casillas → Creada).
-- **Ojo Construcción**: la casilla "Aprobación Descuento Monto Mínimo" viene
-  marcada en cientos de cotizaciones de Construcción (clones y no clones) y
-  **ninguna pasa a aprobación** → en Construcción esa casilla no tiene
-  proceso de aprobación asociado. **No usar Construcción para esta prueba**
-  (o confirmar antes qué aprobaciones tiene Construcción).
+**Fuera del Paso 1** (queda igual que hoy): botón Editar, clonar desde otras
+fases, pasar la original a Recotizada, bloqueos por fase, Vapor.
 
-## Qué UN usar
-**Rental** (recomendado: todo clon de venta rental marca "Aprobación Venta
-Rental") o **Inamar Izaje** (forzar "Sobre 10 millones" o descuento alto).
+## Qué se configura (2 cosas)
+| # | Qué | Archivo |
+|---|---|---|
+| 1 | Reemplazar el código de la función del botón **Clonar Cotización** | `zoho/config/funciones/SBclonarCotizacion.paso1.deluge` |
+| 2 | Función + regla para crear la **oportunidad nueva** del clon | `zoho/config/funciones/cotizacion_clonCrearOportunidad.deluge` |
+
+Respaldo para volver atrás: `zoho/config/funciones/SBclonarCotizacion.actual.deluge`.
+
+### Por qué tan poco
+- El botón **ya permite** clonar Cerrada Ganada hoy → el cambio 1 solo agrega
+  el aviso (las demás fases quedan idénticas).
+- La **aprobación ya se dispara sola** al crear el clon (revisado en
+  Producción, COT-REN-6359: el Cotizador marca la casilla y en el mismo
+  segundo entra a "UN Rental - Aprobación Venta").
+- Lo que falta es la **oportunidad nueva**: hoy en Rental/Izaje el clon queda
+  en la oportunidad ganada de la original (esas oportunidades las crea el
+  vendedor a mano; en Construcción las crea el Cotizador).
 
 ---
 
-## Paso a paso en Sandbox
+## Configuración en Sandbox
 
-### Preparación
-1. Entrar al **Sandbox** (Configuración → Sandbox → Abrir).
-2. Confirmar que en el Sandbox existan los botones "Editar Cotización" y
-   "Clonar Cotización" con las mismas funciones que Producción (si el
-   Sandbox es antiguo, refrescarlo). La función ya detecta el ambiente
-   (`SBvalidarAmbiente`) y abre el **Cotizador de desarrollo**.
-3. Buscar (o crear) una cotización **Rental** o **Inamar Izaje** en
-   **Cerrada Ganada** que tenga **ID Creator** (si no tiene, el Cotizador no
-   la puede abrir). Anotar: número, monto, oportunidad y su fase.
+### 0. Preparar
+1. Configuración → **Sandbox** → abrir el Sandbox (refrescar si es antiguo,
+   para que tenga los botones y el Blueprint actuales).
+2. Ubicar una cotización **Rental** o **Inamar Izaje** en **Cerrada Ganada**
+   con **ID Creator** lleno. Anotar número, cliente, monto y oportunidad.
+   > No usar Construcción para probar aprobación: allí la casilla
+   > "Aprobación Descuento Monto Mínimo" no dispara ningún proceso.
+3. Tener a mano un **segundo cliente** con Contacto, Sucursal del Cliente
+   (y Obra si es Rental) y Forma de Pago, y un **tercer cliente sin
+   contacto o sin sucursal** (para la prueba de error).
 
-### Prueba A — Clon sin cambios que requieran aprobación
-1. Abrir la cotización Ganada → **Editar Cotización ▾ → Clonar Cotización**.
-2. En el Cotizador, cambiar algo que **no** dispare aprobación (ej. solo la
-   fecha de validez) → Guardar.
-3. Revisar en el CRM el clon nuevo.
+### 1. Botón Clonar Cotización
+1. Cotizaciones → desplegable **Editar Cotización** → Administrar botones →
+   **Clonar Cotización** → junto a "SB Clonar Cotizacion" pulsar **Editar**.
+2. Borrar el código y pegar el de `SBclonarCotizacion.paso1.deluge`.
+3. **Guardar**. (No cambiar argumentos ni perfiles.)
 
-### Prueba B — Clon que sí requiere aprobación
-1. Volver a clonar la misma Ganada.
-2. En el Cotizador forzar un criterio:
-   - Rental: cualquier venta rental (marca "Aprobación Venta Rental"), o
-   - Inamar Izaje: subir cantidades para pasar **10 millones**, o poner un
-     descuento sobre el permitido.
-3. Guardar y revisar el clon en el CRM.
+### 2. Oportunidad nueva para el clon
+1. Configuración → Automatización → Acciones → **Funciones** → **Nueva función**.
+   - Nombre: `cotizacion_clonCrearOportunidad` · Categoría: Automatización.
+   - Argumento: `quoteId` (tipo Cadena).
+   - Pegar el código de `cotizacion_clonCrearOportunidad.deluge` → **Guardar**.
+   - Si da "Improper code format", dejar solo el contenido entre las llaves
+     `{ … }` o respetar la primera línea que propone Zoho con el nombre que
+     generó (como pasó con la función de re-aprobación).
+2. Configuración → Automatización → **Reglas de flujo de trabajo** → **Crear regla**.
+   - Módulo: **Cotizaciones** · Nombre: `Clon - Crear oportunidad nueva`.
+   - Cuándo: **Creación del registro**.
+   - Condición: **ID Cotizac. Original** *no está vacío*.
+   - Acción instantánea → **Función** → `cotizacion_clonCrearOportunidad`
+     → `quoteId` = Cotizaciones → **Id de cotización**.
+   - **Guardar**.
 
-### Qué revisar en cada clon
-| Revisar | Prueba A esperado | Prueba B esperado |
-|---|---|---|
-| Fase del clon | **Creada** | **Pendiente de Aprobación** |
-| Casillas de aprobación | Todas en falso | La que corresponde en verdadero |
-| Sub Fase | Vacía | Vacía hasta que apruebe; luego "Aprobado por …" |
-| Aprobador | No recibe nada | Recibe la solicitud (en Sandbox, ver "Solicitudes de aprobación") |
-| ID Cotizac. Original | Id de la Ganada | Id de la Ganada |
-| Original | Sigue **Cerrada Ganada** | Sigue **Cerrada Ganada** |
-| Oportunidad del clon | **Anotar cuál quedó** (ver ojo abajo) | Igual |
-| Línea de tiempo del clon | "Ingresado al proceso: Creada" del Blueprint | "Enviado para aprobación" |
+La función (con `soloDesdeGanada = true`) **solo actúa si la original está
+Cerrada Ganada**. Crea la oportunidad con: cliente, contacto, propietario,
+UN, obra y monto del clon; fase Creada; cierre a 30 días; sucursal, tipo de
+negocio y canal copiados de la oportunidad anterior. La asocia al clon y
+deja una **nota** en el clon. Si Zoho no deja crearla (campo obligatorio
+faltante), deja una nota con el error.
 
-Si el clon queda en Creada **aunque cumpla criterios** (Prueba B), el
-problema es el mismo de la re-aprobación al editar (el Cotizador no manda
-"Pendiente de Aprobación"): anotar el número y lo revisamos.
+---
 
-### Oportunidad nueva para el clon (decisión de Simón 18-11)
-Al clonar una Ganada (o para otro cliente) se debe **crear una oportunidad
-nueva**. Hoy en Rental e Inamar el clon queda en la oportunidad de la
-original, que ya está ganada (las oportunidades de Rental/Izaje las crea el
-vendedor a mano; las de Construcción las crea el Cotizador).
+## Pruebas
 
-Solución en el CRM (sin proveedor): regla de flujo + función
-`zoho/config/funciones/cotizacion_clonCrearOportunidad.deluge`.
+### Prueba A — Mismo cliente, sin aprobación
+1. Abrir la Ganada → Editar Cotización ▾ → **Clonar Cotización**.
+2. Ver el **aviso** en el CRM y que se abra el Cotizador.
+3. En el Cotizador, cambiar algo menor (ej. fecha/cantidad baja) → Guardar.
 
-**Configurar en Sandbox (antes de las pruebas A y B):**
-1. Configuración → Automatización → Acciones → **Funciones** → Nueva función
-   → Categoría "Automatización", nombre `cotizacion_clonCrearOportunidad`,
-   argumento `quoteId` (Cadena) → pegar el código → Guardar.
-2. Configuración → Automatización → **Reglas de flujo de trabajo** → Nueva
-   regla → Módulo **Cotizaciones**, nombre "Clon - Crear oportunidad nueva".
-3. Cuándo: **al crear el registro**.
-4. Condición: **ID Cotizac. Original** *no está vacío*.
-5. Acción instantánea → Función → `cotizacion_clonCrearOportunidad`,
-   asignar `quoteId` = Cotizaciones → **Id de cotización** → Guardar.
+### Prueba B — Mismo cliente, con aprobación
+1. Clonar la misma Ganada.
+2. Forzar un criterio: Rental (venta rental) o Izaje (> 10 millones o
+   descuento alto) → Guardar.
 
-Qué hace la función:
-- Si el clon quedó en una oportunidad **cerrada**, de **otro cliente**, sin
-  oportunidad, o en la misma oportunidad de una original **Ganada/Perdida**
-  → crea una oportunidad nueva (cliente, contacto, propietario, UN, obra,
-  monto del clon, cierre a 30 días, fase Creada; sucursal, tipo de negocio
-  y canal copiados de la oportunidad anterior) y se la asocia al clon.
-- Deja una **nota** en el clon explicando por qué. Si Zoho no deja crear la
-  oportunidad (falta un campo obligatorio), deja una nota con el error.
-- Si el clon ya tiene una oportunidad válida (Construcción, o nueva versión
-  de una cotización en curso), **no hace nada** → no duplica.
+### Prueba C — Otro cliente (con datos completos)
+1. Clonar la Ganada → en el Cotizador cambiar el **cliente** por el segundo
+   cliente, y elegir su contacto/sucursal(/obra) → Guardar.
 
-**Revisar además en las pruebas A y B:**
-| Revisar | Esperado |
-|---|---|
-| Oportunidad del clon | **Nueva**, distinta a la de la original |
-| Oportunidad de la original | Sigue **Cerrada Ganada**, mismo monto |
-| Nombre de la oportunidad nueva | Si queda "CLON COT-…", **no existe regla de numeración** → avisar para ajustar el nombre al formato AAMMDD-OP-… |
-| Nota en el clon | "Oportunidad nueva por clonación" con el motivo |
-| Fase de la oportunidad nueva | Creada → luego la mueve la regla "SB Actualizar Fase de Oportunidad según Cotización" |
+### Prueba D — Otro cliente sin datos
+1. Clonar la Ganada → cambiar al cliente **sin contacto o sucursal**.
+2. Esperado: el Cotizador **no deja guardar**. Anotar el mensaje exacto.
 
-### Prueba C — Clonar para otro cliente
-1. Clonar la Ganada y en el Cotizador cambiar el **cliente** por uno que
-   tenga contacto, sucursal (y obra en Rental) → Guardar.
-2. Esperado: clon con el cliente nuevo y **oportunidad nueva de ese cliente**.
-3. Repetir con un cliente **sin** contacto o sucursal → el Cotizador no debe
-   dejar guardar (confirmar el mensaje que muestra y anotarlo).
+### Qué revisar
+| Revisar | A | B | C | D |
+|---|---|---|---|---|
+| Aviso al pulsar Clonar + Cotizador abierto | ✔ | ✔ | ✔ | ✔ |
+| Fase del clon | Creada | **Pendiente de Aprobación** | Creada o Pendiente según valores | No se crea |
+| Aprobador recibe solicitud | No | **Sí** | Según valores | — |
+| Cliente del clon | Mismo | Mismo | **Nuevo** | — |
+| Oportunidad del clon | **Nueva** | **Nueva** | **Nueva, del cliente nuevo** | — |
+| Nota en el clon "Oportunidad nueva por clonación" | ✔ | ✔ | ✔ | — |
+| Original | Sigue Cerrada Ganada | Igual | Igual | Igual |
+| Oportunidad de la original | Sigue Ganada, mismo monto | Igual | Igual | Igual |
+| Nombre de la oportunidad nueva | Anotar | Anotar | Anotar | — |
 
-### Mensaje informativo al clonar
-La función del botón (`SBclonarCotizacion.deluge`) ahora muestra, al abrir el
-Cotizador: *"Recuerde: si clona para OTRO cliente, ese cliente debe tener
-creados su Contacto, Sucursal del Cliente (y Obra en Rental) y su
-Plazo/Forma de Pago; si falta alguno, el Cotizador no dejará guardar. Al
-clonar una cotización cerrada o para otro cliente, el CRM crea una
-oportunidad nueva automáticamente."*
-Validar que se vea el mensaje **y** se abra el Cotizador. Si el mensaje no
-aparece, se deja `return "";` y el aviso se pide al proveedor dentro del
-Cotizador.
+Notas:
+- Si la oportunidad nueva queda con nombre **"CLON COT-…"**, no hay regla
+  que numere oportunidades → avisar y se ajusta al formato AAMMDD-OP-….
+- Si en **B** el clon queda en Creada aunque cumpla criterios → anotar el
+  número (es el mismo problema del Cotizador al editar).
+- Si el **aviso no aparece** pero sí se abre el Cotizador → avisar; se
+  quita el aviso del botón y se pide al proveedor dentro del Cotizador.
+- Si en **C** el Cotizador obliga a elegir una oportunidad del cliente nuevo
+  antes de guardar → anotarlo (la función no duplica: si el clon ya trae una
+  oportunidad abierta del cliente correcto, no crea otra).
 
-## Resultado de la prueba (llenar)
-| Prueba | Cotización original | Clon | Fase del clon | ¿Aprobación? | Original | Oportunidad | OK |
-|---|---|---|---|---|---|---|---|
-| A | | | | | | | |
-| B | | | | | | | |
-| C | | | | | | | |
+## Resultado (llenar)
+| Prueba | Original | Clon | Fase del clon | ¿Aprobación? | Oportunidad del clon | Original sigue Ganada | Aviso visible | OK |
+|---|---|---|---|---|---|---|---|---|
+| A | | | | | | | | |
+| B | | | | | | | | |
+| C | | | | | | | | |
+| D | | | | | | | | |
+
+## Volver atrás
+- Botón: pegar `SBclonarCotizacion.actual.deluge`.
+- Desactivar la regla "Clon - Crear oportunidad nueva".

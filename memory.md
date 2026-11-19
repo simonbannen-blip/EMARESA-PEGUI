@@ -2347,3 +2347,14 @@ ver regla de sincronización en `CLAUDE.md`.
   configuración y Prueba C (otro cliente). Dato: opps de Rental/Izaje las
   crea el vendedor a mano; las de Construcción, el Cotizador. Validar si
   existe regla que numere oportunidades (nombre provisorio "CLON COT-…").
+
+## 2026-11-19 — Paso 1 en Sandbox: clonar Cerrada Ganada (mismo cliente u otro)
+
+- Simón acota: primero solo en Sandbox, solo clonar desde Cerrada Ganada
+  (mismo cliente u otro nuevo). Hecho: `SBclonarCotizacion.paso1.deluge`
+  (idéntica a la vigente + aviso solo en Cerrada Ganada) y
+  `cotizacion_clonCrearOportunidad` con `soloDesdeGanada = true` (solo actúa
+  si la original es Ganada). Guía reescrita para el Paso 1 con pruebas A–D
+  (mismo cliente con/sin aprobación, otro cliente con/sin datos) y cómo
+  volver atrás: `zoho/pipeline/guia-sandbox-clonar-cerrada-ganada.md`.
+  Editar, Recotizada, bloqueos por fase y Vapor quedan para después.

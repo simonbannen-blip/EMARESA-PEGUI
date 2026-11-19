@@ -1,0 +1,26 @@
+// PASO 1 — SOLO SANDBOX (2026-11-19). Botón "Clonar Cotización" → función "SB Clonar Cotizacion".
+// Igual a la versión vigente (SBclonarCotizacion.actual.deluge): mismas fases permitidas,
+// misma firma, mismo Cotizador. ÚNICO cambio: cuando la cotización está
+// Cerrada Ganada, además de abrir el Cotizador muestra un aviso sobre los
+// datos que debe tener el cliente (mismo o nuevo).
+string button.SBclonarCotizacion(String idCreator,String fase)
+{
+ambiente = standalone.SBvalidarAmbiente();
+if(fase == "Creada" || fase == "Cotización Aprobada" || fase == "Cotización Rechazada" || fase == "Enviada" || fase == "Cerrada Ganada" || fase == "Cerrada Perdida" || fase == "Lista para Clonar")
+{
+	if(ambiente == "Sandbox")
+	{
+		openUrl("https://creatorapp.zoho.com/emaresa/environment/development/cotizador#Form:Generar_Cotizaciones?Clonar_Cot=" + idCreator,"parent window");
+	}
+	else
+	{
+		openUrl("https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones?Clonar_Cot=" + idCreator,"parent window");
+	}
+	if(fase == "Cerrada Ganada")
+	{
+		return "Clonando una cotización Cerrada Ganada: se creará una oportunidad nueva. Puede dejar el mismo cliente o cambiarlo por otro; el cliente debe tener Contacto, Sucursal del Cliente (y Obra en Rental) y Plazo/Forma de Pago, o el Cotizador no dejará guardar.";
+	}
+	return "";
+}
+return "La cotización esta en fase \"" + fase + "\" que no se permite clonar!";
+}
