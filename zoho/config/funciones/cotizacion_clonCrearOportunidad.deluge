@@ -25,6 +25,13 @@ void automation.cotizacion_clonCrearOportunidad(String quoteId)
 	{
 		return;
 	}
+	// PASO 1 (Sandbox): solo actúa cuando la original está Cerrada Ganada.
+	// Para extenderlo después (Perdida, otro cliente desde cualquier fase), cambiar a false.
+	soloDesdeGanada = true;
+	if(soloDesdeGanada && ifnull(original.get("Quote_Stage"),"") != "Cerrada Ganada")
+	{
+		return;
+	}
 	fasesCotCerradas = {"Cerrada Ganada","Cerrada Perdida"};
 	fasesOppCerradas = {"Cerrada Ganada","Cerrada Perdida","Declinada"};
 	cuentaClon = ifnull(clon.get("Account_Name"),Map()).get("id");
