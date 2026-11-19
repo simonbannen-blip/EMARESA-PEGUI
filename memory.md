@@ -2392,3 +2392,10 @@ ver regla de sincronización en `CLAUDE.md`.
 - 19-11 (cont.): Widget v2 funcionando en Sandbox: el botón de prueba muestra
   el disclaimer Sí/No en COT-CONST-999999-0164 (Cerrada Ganada). Entregada
   lista de 24 pruebas: `zoho/pipeline/checklist-pruebas-clonar-ganada-sandbox.md`.
+- 19-11 (cont.): La oportunidad del clon quedó "CLON COT-CONST-999999-0165".
+  Causa: el correlativo lo pone la regla "SB Completar Nro Oportunidad" al
+  crear (renombra cualquier nombre inicial, ej. "OP-REN" o "-5351", a
+  AAMMDD-OP-UN-...-NNNNNN y llena Nro_de_Oportunidad), pero createRecord en
+  Deluge no dispara reglas por defecto. Arreglo: createRecord con
+  {"trigger":{"workflow"}} y nombre inicial "OP". Ojo: también correrán los
+  demás avisos de creación de oportunidades (ej. "Aviso oportunidad RENTAL").

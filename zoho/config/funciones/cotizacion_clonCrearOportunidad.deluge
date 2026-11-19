@@ -74,9 +74,9 @@ void automation.cotizacion_clonCrearOportunidad(String quoteId)
 	}
 	// ---- Armar la oportunidad nueva ----
 	nueva = Map();
-	// Nombre provisorio: si existe una regla que numera las oportunidades
-	// (formato AAMMDD-OP-UN-...), la reemplaza al crear. Validar en Sandbox.
-	nueva.put("Deal_Name","CLON " + clon.get("Subject"));
+	// Nombre provisorio: la regla "SB Completar Nro Oportunidad" lo reemplaza al
+	// crear por el correlativo (AAMMDD-OP-UN-...-NNNNNN). Requiere trigger workflow (abajo).
+	nueva.put("Deal_Name","OP");
 	nueva.put("Account_Name",cuentaClon);
 	contacto = ifnull(clon.get("Contact_Name"),Map()).get("id");
 	if(contacto != null)
@@ -117,7 +117,9 @@ void automation.cotizacion_clonCrearOportunidad(String quoteId)
 			nueva.put("Canal_de_Venta",canal);
 		}
 	}
-	resp = zoho.crm.createRecord("Deals",nueva);
+	// trigger workflow: para que corran las reglas de creación de oportunidades
+	// (SB Completar Nro Oportunidad = correlativo, avisos, etc.), igual que si la creara un vendedor.
+	resp = zoho.crm.createRecord("Deals",nueva,{"trigger":{"workflow"}});
 	info resp;
 	nota = Map();
 	nota.put("se_module","Quotes");
