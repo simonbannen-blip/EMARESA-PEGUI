@@ -4,7 +4,9 @@ Fecha: 2026-11-19 · Estado: **para probar en Sandbox**. No toca el botón actua
 
 Archivos:
 - `app/widget.html` — el widget (código fuente).
-- `clonar-cotizacion-prueba.zip` — lo que se sube a Zoho (contiene `widget.html`).
+- `clonar-cotizacion-prueba-v2.zip` — lo que se sube a Zoho. Trae la misma página como
+  `widget.html`, `index.html`, `app/widget.html` y `app/index.html` (19-11: la v1 dio
+  "Page Not Found" por no coincidir con la Página de índice configurada).
 
 Qué hace (botón nuevo, en la página de detalle de Cotizaciones):
 | Fase | Qué ve el usuario |
@@ -27,7 +29,7 @@ acción**: debe aparecer **Widget**. Si no aparece, parar y avisar.
 ### 1. Subir el widget
 1. Configuración → **Developer Hub** → **Widgets** → **Crear nuevo widget**.
 2. Nombre: `Clonar Cotización prueba` · Tipo: **Botón** (o "Button").
-3. Alojamiento (Hosting): **Zoho** (interno) → subir `clonar-cotizacion-prueba.zip`.
+3. Alojamiento (Hosting): **Zoho** (interno) → subir `clonar-cotizacion-prueba-v2.zip`.
 4. Página de índice (Index page): `/widget.html`.
 5. **Guardar**.
 
