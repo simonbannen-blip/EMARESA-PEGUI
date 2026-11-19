@@ -162,3 +162,16 @@ if (fase === 'Cerrada Ganada') {
 **Opción 2 — Descripción del botón**: en Administrar botones → Clonar
 Cotización → "Agregar descripción". Validar si Zoho la muestra (el botón está
 dentro del desplegable "Editar Cotización ▾").
+
+## Disclaimer con Sí/No antes del Cotizador (agregado 19-11)
+- La función de botón (Deluge) **no puede** pedir confirmación Sí/No (solo
+  mensaje u openUrl). Es un pedido conocido en la comunidad de Zoho.
+- Con **Client Script** sí: `ZDK.Client.showConfirmation(...)` y, si acepta,
+  abrir el Cotizador. Código: `zoho/config/funciones/ClonarCotizacion.clientscript.paso1.js`.
+- **Pendiente de Simón:** confirmar si su Zoho ofrece Client Script para el
+  botón (Developer Hub → Client Script → Página de detalles → tipo de
+  evento de botón; o "Definir acción" del botón → Client Script).
+- Validar en Sandbox: `showConfirmation`, `$Client.openURL` y lectura de
+  `ID_Creator` en la página de detalle.
+- Si no existe la opción: usar aviso al abrir la Ganada (`showAlert`) + aviso
+  post-clic con Cotizador en pestaña nueva.
