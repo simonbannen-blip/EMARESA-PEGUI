@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Clonar Cotización (prueba)</title>
+<!--
+  Widget de PRUEBA (Sandbox) — 2026-11-19
+  Botón nuevo "Clonar Cotización (prueba)" → acción Widget → este archivo.
+  No reemplaza al botón actual "Clonar Cotización" (función SB Clonar Cotizacion).
+  - Cerrada Ganada: muestra disclaimer con "Sí, continuar" / "Cancelar".
+  - Otras fases permitidas: botón "Continuar al Cotizador".
+  - Fases no permitidas: mensaje, no abre nada.
+  Al pasar a Producción: cambiar AMBIENTE a 'produccion'.
+-->
+<script src="https://live.zwidgets.com/js-sdk/1.2/ZohoEmbededAppSDK.min.js"></script>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 20px; color: #222; background: #fff; }
+  h2 { font-size: 18px; margin: 0 0 12px; }
+  p { font-size: 14px; line-height: 1.5; margin: 0 0 10px; }
+  ul { font-size: 14px; line-height: 1.5; margin: 0 0 14px; padding-left: 20px; }
+  .aviso { background: #fff7e0; border: 1px solid #f0c36d; border-radius: 6px; padding: 12px 14px; margin-bottom: 16px; }
+  .error { background: #fdecea; border: 1px solid #f5a19a; border-radius: 6px; padding: 12px 14px; }
+  .botones { display: flex; gap: 10px; justify-content: flex-end; }
+  button { font-size: 14px; padding: 8px 16px; border-radius: 4px; border: 1px solid #999; background: #f4f4f4; cursor: pointer; }
+  button.principal { background: #1f6fd1; border-color: #1f6fd1; color: #fff; }
+</style>
+</head>
+<body>
+<div id="contenido"><p>Cargando cotización…</p></div>
+
+<script>
+  // ---------------- AJUSTES ----------------
+  var AMBIENTE = 'sandbox'; // 'sandbox' o 'produccion'
+  var URL_SANDBOX = 'https://creatorapp.zoho.com/emaresa/environment/development/cotizador#Form:Generar_Cotizaciones?Clonar_Cot=';
+  var URL_PRODUCCION = 'https://creatorapp.zoho.com/emaresa/cotizador#Form:Generar_Cotizaciones?Clonar_Cot=';
+  // Mismas fases que permite hoy la función "SB Clonar Cotizacion"
+  var FASES_PERMITIDAS = ['Creada', 'Cotización Aprobada', 'Cotización Rechazada', 'Enviada',
+                          'Cerrada Ganada', 'Cerrada Perdida', 'Lista para Clonar'];
+  // -----------------------------------------
+
+  var contenido = document.getElementById('contenido');
+
+  function cerrar() {
+    ZOHO.CRM.UI.Popup.close();
+  }
+
+  function abrirCotizador(idCreator) {
+    var base = AMBIENTE === 'produccion' ? URL_PRODUCCION : URL_SANDBOX;
+    window.open(base + encodeURIComponent(idCreator), '_blank');
+    cerrar();
+  }
+
+  function mostrarError(texto) {
+    contenido.innerHTML = '';
+    var caja = document.createElement('div');
+    caja.className = 'error';
+    var p = document.createElement('p');
+    p.textContent = texto;
+    caja.appendChild(p);
+    contenido.appendChild(caja);
+    var botones = document.createElement('div');
+    botones.className = 'botones';
+    botones.innerHTML = '<button type="button" id="btnCerrar">Cerrar</button>';
+    contenido.appendChild(botones);
+    document.getElementById('btnCerrar').onclick = cerrar;
+  }
+
+  function mostrarDisclaimerGanada(numero, idCreator) {
+    contenido.innerHTML =
+      '<h2>Clonar cotización Cerrada Ganada</h2>' +
+      '<div class="aviso">' +
+        '<p>Va a crear una cotización nueva a partir de <b id="numCot"></b>.</p>' +
+        '<ul>' +
+          '<li>Se creará una <b>oportunidad nueva</b>.</li>' +
+          '<li>Puede dejar el <b>mismo cliente</b> o cambiarlo por <b>otro</b>.</li>' +
+          '<li>El cliente debe tener <b>Contacto</b>, <b>Sucursal del Cliente</b> (y <b>Obra</b> en Rental) ' +
+              'y <b>Plazo/Forma de Pago</b>. Si falta alguno, el Cotizador no dejará guardar.</li>' +
+          '<li>La cotización original seguirá Cerrada Ganada.</li>' +
+        '</ul>' +
+        '<p>¿Desea continuar?</p>' +
+      '</div>' +
+      '<div class="botones">' +
+        '<button type="button" id="btnCancelar">Cancelar</button>' +
+        '<button type="button" class="principal" id="btnSi">Sí, continuar</button>' +
+      '</div>';
+    document.getElementById('numCot').textContent = numero || 'esta cotización';
+    document.getElementById('btnCancelar').onclick = cerrar;
+    document.getElementById('btnSi').onclick = function () { abrirCotizador(idCreator); };
+  }
+
+  function mostrarContinuar(fase, idCreator) {
+    contenido.innerHTML =
+      '<h2>Clonar cotización</h2>' +
+      '<p>Fase actual: <b id="faseCot"></b>.</p>' +
+      '<p>Se abrirá el Cotizador en una pestaña nueva para clonar esta cotización.</p>' +
+      '<div class="botones">' +
+        '<button type="button" id="btnCancelar">Cancelar</button>' +
+        '<button type="button" class="principal" id="btnSi">Continuar al Cotizador</button>' +
+      '</div>';
+    document.getElementById('faseCot').textContent = fase;
+    document.getElementById('btnCancelar').onclick = cerrar;
+    document.getElementById('btnSi').onclick = function () { abrirCotizador(idCreator); };
+  }
+
+  ZOHO.embeddedApp.on('PageLoad', function (data) {
+    var id = Array.isArray(data.EntityId) ? data.EntityId[0] : data.EntityId;
+    ZOHO.CRM.API.getRecord({ Entity: data.Entity || 'Quotes', RecordID: id })
+      .then(function (resp) {
+        var cot = resp && resp.data && resp.data[0];
+        if (!cot) {
+          mostrarError('No se pudo leer la cotización. Cierre y vuelva a intentarlo.');
+          return;
+        }
+        var fase = cot.Quote_Stage || '';
+        var idCreator = cot.ID_Creator || '';
+        if (FASES_PERMITIDAS.indexOf(fase) === -1) {
+          mostrarError('La cotización está en fase "' + fase + '" que no se permite clonar.');
+          return;
+        }
+        if (!idCreator) {
+          mostrarError('Esta cotización no tiene ID Creator (no se hizo en el Cotizador), por eso no se puede clonar desde este botón.');
+          return;
+        }
+        if (fase === 'Cerrada Ganada') {
+          mostrarDisclaimerGanada(cot.Subject, idCreator);
+        } else {
+          mostrarContinuar(fase, idCreator);
+        }
+      })
+      .catch(function (err) {
+        mostrarError('Error al leer la cotización: ' + JSON.stringify(err));
+      });
+  });
+
+  ZOHO.embeddedApp.init();
+</script>
+</body>
+</html>

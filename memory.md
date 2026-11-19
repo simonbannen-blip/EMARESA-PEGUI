@@ -2376,3 +2376,10 @@ ver regla de sincronización en `CLAUDE.md`.
   → disclaimer Sí/No en el botón descartado. Se usa aviso fijo (showAlert)
   onLoad en Página de detalles de Cotizaciones cuando la fase es Cerrada
   Ganada. Alternativa de doble clic anotada pero no recomendada.
+- 19-11 (cont.): Simón prefiere un botón NUEVO de prueba sin tocar el
+  actual. Armado widget `zoho/config/widgets/clonar-cotizacion-prueba/`
+  (widget.html + .zip + LEEME con paso a paso): botón "Clonar Cotización
+  (prueba)" → acción Widget; en Cerrada Ganada muestra disclaimer con
+  Sí/No y abre el Cotizador (desarrollo) en pestaña nueva; replica las fases
+  permitidas de SB Clonar Cotizacion. Perfil solo Administrador para pruebas.
+  Pendiente: confirmar que "Definir acción" ofrece Widget.
