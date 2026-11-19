@@ -2366,3 +2366,9 @@ ver regla de sincronización en `CLAUDE.md`.
   Client Script onLoad en página de detalle de Cotizaciones que muestra el
   aviso si la fase es Cerrada Ganada (showMessage; showAlert si debe quedar
   fijo) + opcional descripción del botón. Agregado a la guía del Paso 1.
+- 19-11 (cont.): Simón pide disclaimer Sí/No antes de ir al Cotizador. La
+  función Deluge del botón no puede confirmar; propuesto Client Script de
+  botón con showConfirmation + $Client.openURL
+  (`zoho/config/funciones/ClonarCotizacion.clientscript.paso1.js`), a validar.
+  Pendiente: captura de Simón para ver si su Zoho permite Client Script en
+  botones. Fallback: showAlert al abrir Ganada + aviso post-clic.
