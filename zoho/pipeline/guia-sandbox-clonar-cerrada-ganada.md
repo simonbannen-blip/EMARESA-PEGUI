@@ -175,3 +175,27 @@ dentro del desplegable "Editar Cotización ▾").
   `ID_Creator` en la página de detalle.
 - Si no existe la opción: usar aviso al abrir la Ganada (`showAlert`) + aviso
   post-clic con Cotizador en pestaña nueva.
+
+### Resultado 19-11: no hay "Evento de botón"
+Tipos de evento disponibles en Client Script (captura de Simón): Evento de
+página, de campo, de subformulario, de blueprint, Notas del evento, Evento
+de formulario de campos obligatorios, Evento de etiqueta. **No hay evento de
+botón** → el disclaimer Sí/No en el botón no es posible.
+
+**Se usa:** Client Script · Página de detalles (Standard) · Cotizaciones ·
+Estándar · Evento de página **onLoad**, nombre "Disclaimer clonar Cerrada Ganada":
+```js
+// Disclaimer al abrir una cotización Cerrada Ganada (antes de clonar)
+var fase = ZDK.Page.getField('Quote_Stage').getValue();
+if (fase === 'Cerrada Ganada') {
+    ZDK.Client.showAlert(
+        'Cotización Cerrada Ganada. Si necesita hacer otra cotización a partir de esta, use ' +
+        'Editar Cotización ▾ → Clonar Cotización. Se creará una oportunidad nueva. ' +
+        'Puede usar el mismo cliente u otro; el cliente debe tener Contacto, Sucursal del Cliente ' +
+        '(y Obra en Rental) y Plazo/Forma de Pago, o el Cotizador no dejará guardar.'
+    );
+}
+```
+Contra: sale cada vez que se abre una Ganada (si molesta → `showMessage`).
+Alternativa descartada por ahora: "doble clic" guardando un dato en la
+cotización (dispara automatizaciones de edición sobre una Ganada).
