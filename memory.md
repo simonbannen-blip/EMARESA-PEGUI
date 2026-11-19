@@ -2389,3 +2389,6 @@ ver regla de sincronización en `CLAUDE.md`.
   `clonar-cotizacion-prueba-v2.zip` (página como widget.html, index.html,
   app/widget.html, app/index.html). Pendiente: reemplazar el archivo en el
   widget y revisar la Página de índice.
+- 19-11 (cont.): Widget v2 funcionando en Sandbox: el botón de prueba muestra
+  el disclaimer Sí/No en COT-CONST-999999-0164 (Cerrada Ganada). Entregada
+  lista de 24 pruebas: `zoho/pipeline/checklist-pruebas-clonar-ganada-sandbox.md`.
