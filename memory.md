@@ -2399,3 +2399,10 @@ ver regla de sincronización en `CLAUDE.md`.
   Deluge no dispara reglas por defecto. Arreglo: createRecord con
   {"trigger":{"workflow"}} y nombre inicial "OP". Ojo: también correrán los
   demás avisos de creación de oportunidades (ej. "Aviso oportunidad RENTAL").
+- 20-11: Al clonar cotizaciones Rental en Sandbox, el Cotizador de desarrollo
+  falla: "Error in executing On Add - On Load script — Comparison of non
+  numeric expression is not supported Line:(445)". Repetido con 2 Rental;
+  Construcción funcionó. Es código del Cotizador (proveedor), no del botón.
+  Borrador de mail: `zoho/pipeline/mail-proveedor-error-clonar-rental-sandbox.md`.
+  Pendiente: confirmar si el botón original da el mismo error; seguir pruebas
+  de aprobación con Inamar Izaje.
