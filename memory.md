@@ -2410,3 +2410,10 @@ ver regla de sincronización en `CLAUDE.md`.
   Ganada entró solo a aprobación (prueba 17 OK). Pendiente que Simón confirme
   oportunidad nueva con correlativo, nota, original sigue Ganada, y N° de clon.
   Prueba 14 (Rental) bloqueada por el error del Cotizador.
+- 20-11 (cont.): Simón pasó el código del flujo Creator "Cargar Datos
+  Clonación" (Generar Cotizaciones, On Add - On Load). Causa del error Rental:
+  en el bloque Rental `productoRental.Desc_Adicional=...` está comentada y luego
+  se compara `Desc_Adicional > 0` (nulo) → falla cuando cambió el precio de
+  lista. Fix propuesto con ifnull en 2 líneas (Desc_Adicional y Descuento).
+  Observado: el clon recalcula precios a lista vigente; en Rental el importe
+  no considera Cant_D_as. Mail al proveedor actualizado con diagnóstico.
