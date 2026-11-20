@@ -29,10 +29,10 @@ regla "Clon - Crear oportunidad nueva". Ver
 ## C. Aprobación (Rental / Inamar Izaje, no Construcción)
 | # | Prueba | Esperado | Resultado |
 |---|---|---|---|
-| 14 | Clonar Ganada Rental | Pendiente de Aprobación | |
+| 14 | Clonar Ganada Rental | Pendiente de Aprobación | ⛔ Bloqueada: Cotizador desarrollo falla al clonar Rental (On Load línea 445) |
 | 15 | Aprobador | Recibe solicitud | |
 | 16 | Aprobar | Cotización Aprobada | |
-| 17 | Clonar Ganada Izaje > 10 MM o descuento alto | Pendiente de Aprobación | |
+| 17 | Clonar Ganada Izaje > 10 MM o descuento alto | Pendiente de Aprobación | ✅ 20-11 (saltó aprobación; falta N° de clon) |
 
 ## D. Ganada → otro cliente
 | # | Prueba | Esperado | Resultado |

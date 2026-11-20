@@ -2406,3 +2406,7 @@ ver regla de sincronización en `CLAUDE.md`.
   Borrador de mail: `zoho/pipeline/mail-proveedor-error-clonar-rental-sandbox.md`.
   Pendiente: confirmar si el botón original da el mismo error; seguir pruebas
   de aprobación con Inamar Izaje.
+- 20-11 (cont.): Prueba Sandbox con Inamar Izaje: el clon de una Cerrada
+  Ganada entró solo a aprobación (prueba 17 OK). Pendiente que Simón confirme
+  oportunidad nueva con correlativo, nota, original sigue Ganada, y N° de clon.
+  Prueba 14 (Rental) bloqueada por el error del Cotizador.
