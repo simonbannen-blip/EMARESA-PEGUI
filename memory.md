@@ -2472,3 +2472,11 @@ ver regla de sincronización en `CLAUDE.md`.
   sobre 5% marca "Aprobación Descuento"; sobre 15% marca "Rental - superó
   Porcentaje Descuento" (aviso al Gerente). Pendiente confirmar el 5% con un
   caso entre 0 y 5%.
+- Simón pidió nueva escala Rental: 0-5% vendedor, 5-10% jefe zonal, 11-15%
+  subgerente ventas, 16%+ gerente unidad. Verificado con 60 COT-REN: el %
+  del Cotizador = Descuento Total de Productos ÷ Subtotal sin descuento
+  (>5% marca Aprobación, >15% marca Superó; 5% y 15% exactos no cruzan).
+  Propuesta: campo fórmula "% Descuento Cotización" para el corte 10% +
+  nueva regla Subgerente en el proceso "UN Rental - Arriendo". Documento:
+  `zoho/pipeline/propuesta-rental-aprobacion-descuento-4-tramos.md`.
+  Pendiente: directo vs escalonado, nombres Subgerente/Gerente Unidad, OK.
