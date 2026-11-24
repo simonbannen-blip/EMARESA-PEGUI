@@ -10,8 +10,17 @@ Simón lo arma él mismo en Sandbox (24-11-2026). Propuesta base:
 | > 10% y ≤ 15% | Mauricio Correa |
 | > 15% | Andrés Salah |
 
-El Cotizador sigue marcando como hoy: `Aprobación Descuento` (>5%) y
-`Rental - superó Porcentaje Descuento` (>15%) — config IDFUNC-59, no se toca.
+**Versión 2 (24-11-2026):** no se encontró en el Cotizador dónde marca
+"superó 15%", así que los tramos se arman **solo con el campo fórmula**.
+`Aprobación Descuento` (que marca el Cotizador por línea, >5%) queda como
+puerta de entrada; "Rental - superó Porcentaje Descuento" ya no se usa en
+las reglas. Config IDFUNC-59 no se toca.
+
+Criterios (todas las reglas llevan además Aprobación Descuento = Seleccionado):
+- Jefe Zonal (por zona): % Descuento Cotización **≤ 10** (sin piso, para que
+  ninguna cotización quede sin aprobador si el Cotizador marcó por un ítem).
+- Mauricio Correa: % **> 10 y ≤ 15**.
+- Andrés Salah: % **> 15**.
 
 ## Paso 1 — Campo fórmula en Cotizaciones
 
@@ -35,11 +44,13 @@ Configuración → Automatización → Procesos de aprobación → Cotizaciones.
    **% Descuento Cotización ≤ 10**. Aprobador: el jefe de la zona.
 2. **Regla nueva "Subgerente"** (sin zona): UN = Rental · Fase = Pendiente
    de Aprobación · Tipo de Negocio = Arriendo · Aprobación Descuento =
-   Seleccionado · Rental - superó Porcentaje Descuento = No seleccionado ·
-   **% Descuento Cotización > 10**. Aprobador: **Mauricio Correa**.
+   Seleccionado · **% Descuento Cotización > 10** · **% Descuento
+   Cotización ≤ 15**. Aprobador: **Mauricio Correa**.
    Acciones al aprobar/rechazar: copiar las de las reglas de jefe zonal.
-3. Regla Gerente (superó = Seleccionado): aprobador único **Andrés Salah**
-   (sin jefe zonal antes: cada tramo aprueba solo).
+3. Regla Gerente: reemplazar el criterio "superó = Seleccionado" por
+   **% Descuento Cotización > 15** (más Aprobación Descuento = Seleccionado);
+   aprobador único **Andrés Salah** (cada tramo aprueba solo).
+   En las reglas de Jefe Zonal, quitar "superó = No seleccionado".
 4. Orden: Jefes zonales → Subgerente → Gerente.
 
 ## Paso 3 — Correos de aviso (Reglas de flujo, Cotizaciones)
@@ -47,11 +58,12 @@ Configuración → Automatización → Procesos de aprobación → Cotizaciones.
 1. "Notificar jefe zona Norte/Centro/Sur Rental": agregar
    **% Descuento Cotización ≤ 10**.
 2. **Nueva "Notificar Subgerente Rental"** (clonar la de zona Norte):
-   quitar Zona, Superó = No seleccionado, **% Descuento Cotización > 10**.
+   quitar Zona y "superó", **% > 10 y ≤ 15**.
    Correo: clonar plantilla "Aprobación Rental Zona norte" → Para: Mauricio
    Correa.
-3. "Notificar Gerente Rental": condición **Superó = Seleccionado** (en agosto
-   estaba "No seleccionado"), Para: Andrés Salah.
+3. "Notificar Gerente Rental": reemplazar la condición de "superó" por
+   **% Descuento Cotización > 15**, Para: Andrés Salah.
+4. En los avisos de jefe de zona, quitar "superó" y dejar **% ≤ 10**.
 
 ## Paso 4 — Pruebas
 
