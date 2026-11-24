@@ -2455,3 +2455,11 @@ ver regla de sincronización en `CLAUDE.md`.
   layout Standard → no se ven en la ficha. Se pueden ver con una vista/filtro
   de lista o un informe de Cotizaciones. Consulta de solo lectura: muchas
   COT-REN tienen ambas marcadas (todas las zonas).
+- Seguimiento: ¿qué función las marca? Historial de COT-REN-6893 (solo
+  lectura): ninguna función ni regla del CRM. Ambas vienen del Cotizador
+  (app Creator) vía API, usuario "Infraestructura Emaresa": "Rental - superó
+  Porcentaje Descuento" llega ya marcada al crear la cotización, y
+  "Aprobación Descuento" pasa de false a true por API 1 segundo después
+  (fuente crm_api, sin regla asociada). Con eso se dispara el proceso de
+  aprobación "UN Rental - Arriendo - 1° Aprobación Dto por Item" (jefe de
+  zona). El cálculo está en el código del Cotizador (Creator), no en el CRM.
