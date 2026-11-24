@@ -2446,3 +2446,12 @@ ver regla de sincronización en `CLAUDE.md`.
   que no está asociada a ninguna regla. La regla existente "Enviar Notificación
   SSTT" es solo el paso 2 (correo a Gerardo Pizarro al marcarse la casilla);
   falta la regla que llama a la función. Código v2 propuesto (null-safe).
+
+## 2026-11-24 — Dónde ver "Aprobación Descuento" y "Rental - superó Porcentaje Descuento"
+
+- Simón preguntó cómo ver esas dos condiciones (de una regla Rental, Zona Sur).
+  Son casillas de Cotizaciones (`Aprobaci_n_Descuento`,
+  `Rental_super_Porcentaje_Descuento`) que están en la sección "Ocultar" del
+  layout Standard → no se ven en la ficha. Se pueden ver con una vista/filtro
+  de lista o un informe de Cotizaciones. Consulta de solo lectura: muchas
+  COT-REN tienen ambas marcadas (todas las zonas).
