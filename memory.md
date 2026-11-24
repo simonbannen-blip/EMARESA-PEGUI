@@ -2495,3 +2495,5 @@ ver regla de sincronización en `CLAUDE.md`.
   registro IDFUNC-59 (Rental, 5% / 15%), y se sincroniza a Creator al
   guardar. Cambiar 5/15 = editar ese registro en el CRM. El corte 10%
   igual necesita al proveedor (campo nuevo + lectura en código Creator).
+- Simón eligió hacerlo él mismo primero en Sandbox (opción solo CRM). Guía
+  paso a paso: `zoho/pipeline/guia-sandbox-descuento-rental-4-tramos.md`.
