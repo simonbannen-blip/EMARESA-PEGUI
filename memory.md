@@ -2490,3 +2490,8 @@ ver regla de sincronización en `CLAUDE.md`.
   Gerente Unidad = Andrés Salah (Gerente Rental); correo de aviso por tramo.
   Propuesta actualizada con aprobadores y reglas de aviso, y correo al
   proveedor en `zoho/pipeline/mail-proveedor-corte-10-descuento-rental.md`.
+- Simón no tiene permisos de edición en Creator. Hallazgo: la configuración
+  del Cotizador se administra en el CRM, módulo "Func Cotizador por UN",
+  registro IDFUNC-59 (Rental, 5% / 15%), y se sincroniza a Creator al
+  guardar. Cambiar 5/15 = editar ese registro en el CRM. El corte 10%
+  igual necesita al proveedor (campo nuevo + lectura en código Creator).

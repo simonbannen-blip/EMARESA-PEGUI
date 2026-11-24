@@ -82,6 +82,31 @@ Revisar las reglas de notificación "Notificar jefe zona … Rental" y
 "Notificar Gerente Rental": agregar el corte ≤10 / >10 y crear una para el
 Subgerente.
 
+## Hallazgo: la configuración del Cotizador se maneja desde el CRM
+
+En Creator Simón no tiene permiso de edición, pero la configuración vive
+en el **CRM** y se sincroniza a Creator:
+
+- Módulo CRM **"Func Cotizador por UN"** (`Func_Cotizador_por_UN`),
+  registro **IDFUNC-59** (id 5404724000033414745): UN Rental, Funcionalidad
+  "Requiere Aprobación de Descuento", Porcentaje Descuento inicial = 5,
+  Porcentaje Descuento = 15, Activo. Al guardarlo se envía a Creator
+  (campo `Respuesta_Creator`: "Data Updated Successfully", última vez
+  23-07-2026).
+- Catálogo de funcionalidades: módulo **"Funcionalidades Cotizador"**
+  (registro 5404724000033414698, "Requiere Aprobación de Descuento a nivel
+  Item").
+- Campos del módulo: UN, Funcionalidad, Activo, Tipo de Negocio,
+  Porcentaje Descuento inicial, Porcentaje Descuento, Cantidad de Días,
+  Cant Días, Sobreprecio Requiere Aprobación, Comentarios, ID Creator,
+  Reproceso Creator, Respuesta Creator.
+- El campo Comentarios está desactualizado ("vendedor puede 20%…").
+
+Consecuencia: cambiar 5 / 15 se hace editando IDFUNC-59 en el CRM. Para
+el corte del 10% habría que agregar un campo (p.ej. "Porcentaje Descuento
+Subgerente") a este módulo, **y** que la sincronización y el código del
+Cotizador lo lean → igual requiere al proveedor.
+
 ## Opción B (elegida por Simón): hacer el corte del 10% en el Cotizador
 
 Lo que hay que hacer:
