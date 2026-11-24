@@ -2433,3 +2433,12 @@ ver regla de sincronización en `CLAUDE.md`.
 - Simón pidió las cotizaciones que tienen el código 0MANO-OBRA en Artículos
   presupuestados. Consulta al CRM (solo lectura): 48 cotizaciones, 72 líneas.
   Reporte en `zoho/reportes/cotizaciones-con-0MANO-OBRA-2026-11-24.md`.
+
+## 2026-11-24 — Aviso SSTT no se activa con MANO DE OBRA
+
+- Simón preguntó por qué la función SBvalidarCierreCotizacionSSTT no avisa
+  cuando se cotiza 0MANO-OBRA. El producto sí tiene Línea "SSTT FICTICIA"
+  (cumple la condición), pero ninguna cotización tiene Notificar_SSTT = true
+  y en el historial de la COT-II10029-3110 la función nunca aparece → ninguna
+  regla activa la llama. Diagnóstico y propuesta en
+  `zoho/config/caso-aviso-sstt-mano-de-obra-no-se-activa.md` (pendiente OK).
