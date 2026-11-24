@@ -2463,3 +2463,12 @@ ver regla de sincronización en `CLAUDE.md`.
   (fuente crm_api, sin regla asociada). Con eso se dispara el proceso de
   aprobación "UN Rental - Arriendo - 1° Aprobación Dto por Item" (jefe de
   zona). El cálculo está en el código del Cotizador (Creator), no en el CRM.
+- Simón encontró en el Cotizador (Creator) un registro de configuración
+  "Funcionalidades Cotizador" = "Requiere Aprobación de Descuento", UN Rental,
+  Activo, ID CRM 5404724000033414745, Porcentaje Descuento 15, Porcentaje
+  Descuento inicial 5, Cant. días 0. Lectura: los umbrales NO están fijos en
+  código, se cambian editando ese registro. Hipótesis (calza con casos
+  reales: COT-REN-3001 ~10% → solo jefe de zona; COT-REN-3005 ~25% → superó):
+  sobre 5% marca "Aprobación Descuento"; sobre 15% marca "Rental - superó
+  Porcentaje Descuento" (aviso al Gerente). Pendiente confirmar el 5% con un
+  caso entre 0 y 5%.
