@@ -2480,3 +2480,8 @@ ver regla de sincronización en `CLAUDE.md`.
   nueva regla Subgerente en el proceso "UN Rental - Arriendo". Documento:
   `zoho/pipeline/propuesta-rental-aprobacion-descuento-4-tramos.md`.
   Pendiente: directo vs escalonado, nombres Subgerente/Gerente Unidad, OK.
+- Simón confirmó tramos 6-10 Jefe Zonal, 11-15 Subgerente, 16+ Gerente
+  Unidad, y prefiere hacer el corte del 10% en el Cotizador (opción B en la
+  propuesta): nuevo % en la config de Creator + casilla nueva en CRM +
+  cambio en el código del Cotizador + reglas del proceso en CRM. Pendiente:
+  código del Cotizador donde marca Rental_super_Porcentaje_Descuento.
