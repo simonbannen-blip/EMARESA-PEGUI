@@ -101,10 +101,35 @@ Lo que hay que hacer:
 
 El proceso de aprobación vive en el CRM: se ajusta igual en ambas opciones.
 
+## Definiciones confirmadas por Simón (24-11-2026)
+
+- **Cada tramo aprueba solo** (sin escalamiento).
+- Aprobadores (usuarios CRM):
+
+| Tramo | Aprobador | Usuario CRM |
+|---|---|---|
+| 6–10% Norte | Jaime Zúñiga | jzuniga@emaresa.cl (5404724000491824023) |
+| 6–10% Centro | Jaime Rojas Pérez | jrojas@emaresa.cl (5404724000491808001) |
+| 6–10% Sur | Eduardo Roldán | eroldan@emaresa.cl (5404724000491822001) |
+| 11–15% | **Mauricio Correa** (Subgerente) | mcorrea@emaresa.cl (5404724000568634001) — rol en CRM hoy: "Coordinador Rental" |
+| 16%+ | **Andrés Salah** (Gerente Unidad) | asalah@emaresa.cl (5404724000500223001) — rol "Gerente Rental" |
+
+(Jefes zonales a confirmar: son los usuarios con rol "Jefe Ventas Zona …".)
+
+## Correos de aviso (reglas de flujo en Cotizaciones)
+
+Uno por tramo, al mismo que aprueba:
+
+| Regla | Condición clave | Para |
+|---|---|---|
+| Notificar jefe zona Norte/Centro/Sur Rental (existen) | agregar: superó 10% = **No** | Jefe Zonal de la zona |
+| **Notificar Subgerente Rental (nueva)** | Aprobación Descuento = Sí · superó 10% = Sí · superó 15% = No | Mauricio Correa |
+| Notificar Gerente Rental (existe) | superó 15% = **Sí** (revisar: en agosto tenía "No seleccionado" por error) | Andrés Salah |
+
 ## Pendiente
 
-1. ¿Aprobación directa por tramo, o escalonada (Jefe Zonal → Subgerente →
-   Gerente)?
-2. Usuarios: ¿quién es el Subgerente de Ventas y quién el Gerente de Unidad
-   (¿el mismo Gerente Rental de hoy?)?
-3. OK para crear el campo fórmula (cambio en el CRM real; primero Sandbox).
+1. Ubicar el código del Cotizador que marca `Rental_super_Porcentaje_Descuento`
+   (Simón no lo encuentra → correo al proveedor:
+   `mail-proveedor-corte-10-descuento-rental.md`).
+2. OK de Simón para los cambios en el CRM (casilla nueva, reglas del
+   proceso, correos). Primero Sandbox.

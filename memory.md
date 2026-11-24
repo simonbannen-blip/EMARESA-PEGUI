@@ -2485,3 +2485,8 @@ ver regla de sincronización en `CLAUDE.md`.
   propuesta): nuevo % en la config de Creator + casilla nueva en CRM +
   cambio en el código del Cotizador + reglas del proceso en CRM. Pendiente:
   código del Cotizador donde marca Rental_super_Porcentaje_Descuento.
+- Simón no encuentra el código del Cotizador. Confirmó: cada tramo aprueba
+  solo; Subgerente = Mauricio Correa (rol CRM "Coordinador Rental"),
+  Gerente Unidad = Andrés Salah (Gerente Rental); correo de aviso por tramo.
+  Propuesta actualizada con aprobadores y reglas de aviso, y correo al
+  proveedor en `zoho/pipeline/mail-proveedor-corte-10-descuento-rental.md`.
