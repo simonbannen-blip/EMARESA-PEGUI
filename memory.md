@@ -2442,3 +2442,5 @@ ver regla de sincronización en `CLAUDE.md`.
   y en el historial de la COT-II10029-3110 la función nunca aparece → ninguna
   regla activa la llama. Diagnóstico y propuesta en
   `zoho/config/caso-aviso-sstt-mano-de-obra-no-se-activa.md` (pendiente OK).
+  Captura de Simón: el argumento id de la función está sin asignar → confirma
+  que no está asociada a ninguna regla.
