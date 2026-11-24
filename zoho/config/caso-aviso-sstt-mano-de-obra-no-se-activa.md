@@ -50,3 +50,12 @@ Además, como la casilla nunca se marcó, la regla que envía el aviso
    - Proteger productos sin Línea de Negocio: hoy `.get("L_nea_de_Negocio").get("name")`
      falla si viene vacío y corta la función. Usar `ifnull(...)`.
    - El `return;` dentro del if no es necesario (no hace daño).
+
+## Actualización 24-11 — captura de "Detalles de la función"
+Simón mandó la ficha de "SB Validar cierre de cotizacion SSTT": el argumento
+`id` aparece **sin valor asignado** (`id = ` vacío). Cuando una función está
+asociada a una regla, ahí se ve el mapeo (p. ej. `id = Cotizaciones - ID de
+Cotización`). Junto con que la función no aparece en ningún historial, se
+confirma: **no está asociada a ninguna regla** (o lo está sin el argumento
+mapeado). Solución: asociarla a una regla de Cotizaciones (al Crear o editar)
+y mapear `id` → ID de Cotización.
