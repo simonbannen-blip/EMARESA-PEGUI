@@ -1,6 +1,8 @@
 # Propuesta: aprobación de descuento Rental en 4 tramos
 
-## Estado: PROPUESTA — falta OK de Simón y 2 datos (ver "Pendiente")
+## Estado: PROPUESTA — Simón confirmó tramos (6-10 Jefe Zonal, 11-15
+Subgerente, 16+ Gerente Unidad) y prefiere hacer el corte en el Cotizador
+(opción B). Falta el código del Cotizador y los nombres de aprobadores.
 
 ## Qué se pidió (correo, 24-11-2026)
 
@@ -80,11 +82,24 @@ Revisar las reglas de notificación "Notificar jefe zona … Rental" y
 "Notificar Gerente Rental": agregar el corte ≤10 / >10 y crear una para el
 Subgerente.
 
-## Alternativa (no recomendada)
+## Opción B (elegida por Simón): hacer el corte del 10% en el Cotizador
 
-Pedir al proveedor un tercer porcentaje en la configuración del Cotizador y
-una casilla nueva. Depende del proveedor y no aporta más que el campo
-fórmula.
+Lo que hay que hacer:
+
+1. **Creator – configuración "Requiere Aprobación de Descuento"**: agregar
+   un campo nuevo al formulario de configuración, p.ej. "Porcentaje
+   Descuento Subgerente" = 10 (los otros quedan: inicial 5, tope 15).
+2. **CRM – Cotizaciones**: casilla nueva "Rental - superó 10% Descuento"
+   (`Rental_super_10_Descuento`), en la sección "Ocultar" como las otras.
+3. **Creator – código** que hoy marca `Rental_super_Porcentaje_Descuento`:
+   agregar al lado la misma lógica con el nuevo % y mandar la casilla nueva
+   al CRM. Falta ver ese código (Simón lo busca).
+4. **CRM – proceso "UN Rental - Arriendo"**: igual que la tabla de arriba,
+   pero usando la casilla nueva en vez del campo fórmula:
+   Jefe Zonal = Aprobación Sí · superó 10% No; Subgerente = superó 10% Sí ·
+   superó 15% No; Gerente Unidad = superó 15% Sí.
+
+El proceso de aprobación vive en el CRM: se ajusta igual en ambas opciones.
 
 ## Pendiente
 
