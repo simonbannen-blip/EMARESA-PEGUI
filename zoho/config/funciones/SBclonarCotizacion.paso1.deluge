@@ -1,10 +1,11 @@
-// PASO 1 — SOLO SANDBOX (2026-11-19). Botón "Clonar Cotización" → función "SB Clonar Cotizacion".
-// Igual a la versión vigente (SBclonarCotizacion.actual.deluge): mismas fases permitidas,
-// misma firma, mismo Cotizador. ÚNICO cambio: cuando la cotización está
-// Cerrada Ganada, abre el Cotizador en una PESTAÑA NUEVA y deja en el CRM un
-// aviso sobre los datos que debe tener el cliente (mismo o nuevo).
-// v2 (19-11): con "parent window" el aviso duraba segundos porque la página se
-// reemplazaba por el Cotizador → en Cerrada Ganada se usa "new window".
+// PASO 1 — SOLO SANDBOX. Botón ORIGINAL "Clonar Cotización" → función "SB Clonar Cotizacion".
+// Igual a la versión vigente (SBclonarCotizacion.actual.deluge): misma firma, mismo
+// Cotizador, mismas fases. ÚNICO cambio:
+//   v3 (24-11): en Cerrada Ganada el botón original YA NO abre el Cotizador; avisa
+//   que no se puede clonar desde aquí. Las Ganadas se clonan solo con el botón nuevo
+//   "Clonar Cotización (prueba)" (widget con aviso Sí/No).
+//   (v2 del 19-11 abría el Cotizador en pestaña nueva en Ganada: reemplazada.)
+// Volver atrás: pegar SBclonarCotizacion.actual.deluge.
 string button.SBclonarCotizacion(String idCreator,String fase)
 {
 ambiente = standalone.SBvalidarAmbiente();
@@ -18,9 +19,8 @@ else
 }
 if(fase == "Cerrada Ganada")
 {
-	// Pestaña nueva: el CRM queda abierto mostrando el aviso con su botón Aceptar
-	openUrl(urlClonar,"new window");
-	return "Se abrió el Cotizador en una pestaña nueva para clonar esta cotización Cerrada Ganada. Se creará una oportunidad nueva. Puede dejar el mismo cliente o cambiarlo por otro; el cliente debe tener Contacto, Sucursal del Cliente (y Obra en Rental) y Plazo/Forma de Pago, o el Cotizador no dejará guardar.";
+	// No abre el Cotizador: las Ganadas pasan por el botón nuevo con aviso
+	return "No se puede clonar una cotización Cerrada Ganada con este botón. Use el botón \"Clonar Cotización (prueba)\".";
 }
 if(fase == "Creada" || fase == "Cotización Aprobada" || fase == "Cotización Rechazada" || fase == "Enviada" || fase == "Cerrada Perdida" || fase == "Lista para Clonar")
 {
