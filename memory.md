@@ -2417,3 +2417,13 @@ ver regla de sincronización en `CLAUDE.md`.
   lista. Fix propuesto con ifnull en 2 líneas (Desc_Adicional y Descuento).
   Observado: el clon recalcula precios a lista vigente; en Rental el importe
   no considera Cant_D_as. Mail al proveedor actualizado con diagnóstico.
+
+## 2026-11-24 — Botón original "Clonar Cotización" abre el Cotizador en Ganada
+
+- En Sandbox, el botón original abre el Cotizador al clonar una Cerrada
+  Ganada; Simón espera que diga "no se puede clonar" (las Ganadas solo por el
+  botón nuevo con aviso Sí/No). Causa: la función SB Clonar Cotizacion
+  (vigente y Paso 1 v2) incluye Cerrada Ganada en las fases permitidas.
+- v3 de `zoho/config/funciones/SBclonarCotizacion.paso1.deluge`: en Cerrada
+  Ganada no abre el Cotizador y avisa que use "Clonar Cotización (prueba)";
+  demás fases sin cambio. Pendiente: Simón la pega en Sandbox y prueba.
