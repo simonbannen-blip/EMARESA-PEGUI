@@ -59,3 +59,11 @@ Cotización`). Junto con que la función no aparece en ningún historial, se
 confirma: **no está asociada a ninguna regla** (o lo está sin el argumento
 mapeado). Solución: asociarla a una regla de Cotizaciones (al Crear o editar)
 y mapear `id` → ID de Cotización.
+
+## Actualización 24-11 (2) — capturas de la regla existente
+La regla que existe es **"Enviar Notificación SSTT"** (activa): cuando
+Notificar SSTT cambia a seleccionado → correo "Notificación de Cierre
+Cotización SSTT" a Gerardo Pizarro. Ese es el **paso 2** y está bien.
+Falta el **paso 1**: una regla que llame a la función y marque la casilla.
+La función no está asociada a ninguna regla (argumento `id` sin asignar).
+Código v2 propuesto en `zoho/config/funciones/SBvalidarCierreCotizacionSSTT.v2.deluge`.

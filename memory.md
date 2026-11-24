@@ -2443,4 +2443,6 @@ ver regla de sincronización en `CLAUDE.md`.
   regla activa la llama. Diagnóstico y propuesta en
   `zoho/config/caso-aviso-sstt-mano-de-obra-no-se-activa.md` (pendiente OK).
   Captura de Simón: el argumento id de la función está sin asignar → confirma
-  que no está asociada a ninguna regla.
+  que no está asociada a ninguna regla. La regla existente "Enviar Notificación
+  SSTT" es solo el paso 2 (correo a Gerardo Pizarro al marcarse la casilla);
+  falta la regla que llama a la función. Código v2 propuesto (null-safe).

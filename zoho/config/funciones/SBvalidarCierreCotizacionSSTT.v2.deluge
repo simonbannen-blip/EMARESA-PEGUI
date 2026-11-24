@@ -1,0 +1,33 @@
+// SB Validar cierre de cotizacion SSTT — v2 (propuesta 24-11-2026)
+// Cambios vs. vigente: no se cae si un producto no tiene Línea de Negocio,
+// y no vuelve a marcar la casilla si ya está marcada.
+void automation.SBvalidarCierreCotizacionSSTT(Int id)
+{
+	cotizacion = invokeurl
+	[
+		url :"https://www.zohoapis.com/crm/v8/Quotes/" + id
+		type :GET
+		connection:"zoho_crm"
+	];
+	cotizacion = cotizacion.get("data").get(0);
+	if(cotizacion.get("Notificar_SSTT") == true)
+	{
+		info "Ya estaba marcada, no se vuelve a avisar";
+		return;
+	}
+	productoSstt = false;
+	for each  productos in cotizacion.get("Quoted_Items")
+	{
+		producto = zoho.crm.getRecordById("Products",productos.get("Product_Name").get("id"));
+		linea = producto.get("L_nea_de_Negocio");
+		if(linea != null && ifnull(linea.get("name"),"").contains("SSTT"))
+		{
+			productoSstt = true;
+		}
+	}
+	if(productoSstt)
+	{
+		info "Hay productos SSTT Ficticio";
+		info zoho.crm.updateRecord("Quotes",id,{"Notificar_SSTT":true},{"trigger":{"workflow"}});
+	}
+}
