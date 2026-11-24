@@ -2497,3 +2497,9 @@ ver regla de sincronización en `CLAUDE.md`.
   igual necesita al proveedor (campo nuevo + lectura en código Creator).
 - Simón eligió hacerlo él mismo primero en Sandbox (opción solo CRM). Guía
   paso a paso: `zoho/pipeline/guia-sandbox-descuento-rental-4-tramos.md`.
+- Simón tiene admin en el Creator de Sandbox y encontró el script por línea
+  del subformulario (Descuento del ítem): marca Aprobaci_n_Descuento si el
+  descuento DEL ÍTEM > Porcentaje_Descuento_inicial (solo Arriendo). Cada
+  línea pisa la casilla (manda la última editada). La marca del 15% no está
+  ahí; falta encontrarla. Guardado en
+  `zoho/config/creator/cotizador-subform-descuento-on-user-input.deluge`.

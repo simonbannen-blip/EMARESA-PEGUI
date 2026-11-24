@@ -1,0 +1,57 @@
+// Cotizador (Creator, Sandbox) — script por línea del subformulario de
+// Generar Cotizaciones, al ingresar/cambiar el Descuento de un ítem.
+// Pegado por Simón 24-11-2026. Marca Aprobaci_n_Descuento si el descuento
+// DEL ÍTEM supera Porcentaje_Descuento_inicial (5%) — solo para Arriendo.
+// Ojo: cada línea pisa la casilla; manda la última línea editada.
+// NO contiene la marca de Rental_super_Porcentaje_Descuento (15%).
+importe = row.Importe;
+if(importe == 0 || importe == null)
+{
+	return;
+}
+if(row.Descuento > 0)
+{
+	descuento = row.Descuento / 100;
+	subtotal = importe - importe * descuento + ifnull(row.Valor_Total_Seguro,0);
+	total = subtotal + (subtotal * input.IVA_Interno) / 100;
+	row.IVA=subtotal * input.IVA_Interno / 100;
+	row.Subtotal=subtotal;
+	row.Total=total;
+	if(Tipo_de_Negocio.Nombre_de_Tipo_de_Negocio_por_UN == "Arriendo")
+	{
+		func = Funcionalidades_por_Unidad[Unidades_de_Negocio == input.Unidad_de_Negocio && Activo == true && Funcionalidades_Cotizador.Funcionalidad == "Requiere Aprobación de Descuento"];
+		if(row.Descuento > func.Porcentaje_Descuento_inicial)
+		{
+			input.Aprobaci_n_Descuento = true;
+		}
+		else
+		{
+			input.Aprobaci_n_Descuento = false;
+		}
+	}
+	else
+	{
+		input.Aprobaci_n_Descuento = true;
+	}
+}
+else
+{
+	if(row.Descuento == null)
+	{
+		row.Descuento=0;
+	}
+	total = importe + (importe * input.IVA_Interno) / 100;
+	row.IVA=importe * input.IVA_Interno / 100;
+	row.Subtotal=importe + ifnull(row.Valor_Total_Seguro,0);
+	row.Total=total + ifnull(row.Valor_Total_Seguro,0);
+	input.Aprobaci_n_Descuento = false;
+}
+if(input.Moneda_de_Cotizaci_n == "CLP")
+{
+	row.Precio_Lista=row.Precio_Lista.round(0);
+	row.Importe=row.Importe.round(0);
+	row.Subtotal=row.Subtotal.round(0);
+	row.IVA=row.IVA.round(0);
+	row.Total=row.Total.round(0);
+}
+input.calcular = true;
