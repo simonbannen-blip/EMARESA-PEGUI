@@ -2507,3 +2507,5 @@ ver regla de sincronización en `CLAUDE.md`.
   el CRM Sandbox → guía v2: los 3 tramos con el campo fórmula "% Descuento
   Cotización" (≤10 / >10 y ≤15 / >15), Aprobación Descuento como puerta de
   entrada, sin usar la casilla "superó".
+- Guía Sandbox v3 detallada (paso a paso con rutas de menú, respaldo previo,
+  pruebas y paso a Producción) a pedido de Simón.
