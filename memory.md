@@ -2503,3 +2503,7 @@ ver regla de sincronización en `CLAUDE.md`.
   línea pisa la casilla (manda la última editada). La marca del 15% no está
   ahí; falta encontrarla. Guardado en
   `zoho/config/creator/cotizador-subform-descuento-on-user-input.deluge`.
+- No se encontró en Creator dónde marca "superó 15%". Simón pidió hacerlo en
+  el CRM Sandbox → guía v2: los 3 tramos con el campo fórmula "% Descuento
+  Cotización" (≤10 / >10 y ≤15 / >15), Aprobación Descuento como puerta de
+  entrada, sin usar la casilla "superó".
