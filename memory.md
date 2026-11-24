@@ -2427,3 +2427,9 @@ ver regla de sincronización en `CLAUDE.md`.
 - v3 de `zoho/config/funciones/SBclonarCotizacion.paso1.deluge`: en Cerrada
   Ganada no abre el Cotizador y avisa que use "Clonar Cotización (prueba)";
   demás fases sin cambio. Pendiente: Simón la pega en Sandbox y prueba.
+
+## 2026-11-24 — Listado de cotizaciones con mano de obra (0MANO-OBRA)
+
+- Simón pidió las cotizaciones que tienen el código 0MANO-OBRA en Artículos
+  presupuestados. Consulta al CRM (solo lectura): 48 cotizaciones, 72 líneas.
+  Reporte en `zoho/reportes/cotizaciones-con-0MANO-OBRA-2026-11-24.md`.
