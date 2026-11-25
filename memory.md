@@ -2518,3 +2518,9 @@ ver regla de sincronización en `CLAUDE.md`.
   Caso y opciones (proceso de aprobación Construcción + candado en
   Blueprint) en zoho/pipeline/caso-cot-const-5017-precio-minimo-sin-aprobacion.md.
   Sin cambios en el CRM, pendiente de OK.
+- 25-11: Simón preguntó por qué la reunión de prueba de David (24-11) llegó
+  a Outlook y la suya no. Comparadas: la de David tenía participante
+  (Simón, con correo) e invitación enviada; la de Simón ("Prueba") no tenía
+  participantes ni invitación → el CRM no mandó nada. Ambas con Teams
+  generado desde la misma cuenta Microsoft. Caso y solución en
+  zoho/config/caso-reunion-crm-no-llega-a-outlook.md. Sin cambios en el CRM.
