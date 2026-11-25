@@ -52,8 +52,10 @@ llegarle a David a su Outlook. Pendiente confirmar con David.
 
 Lo hace cada usuario en su propia sesión (no se puede por API).
 
-1. CRM → ícono de engranaje (Configuración) → Configuración personal →
-   **Calendario** (o desde el módulo Calendario → engranaje → Sincronización).
+1. Ruta confirmada con captura del menú de Configuración de Emaresa (25-11):
+   NO está bajo "Configuración personal". Está en **Configuración →
+   Marketplace → Microsoft** (opción Office 365 / Calendario). Alternativa:
+   módulo **Calendario** → engranaje del calendario → Sincronización.
 2. Sección **Sincronización de calendario** → **Microsoft / Office 365**
    → Sincronizar / Conectar.
 3. Iniciar sesión con la cuenta @emaresa.cl y aceptar permisos.
