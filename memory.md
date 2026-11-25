@@ -2547,3 +2547,7 @@ ver regla de sincronización en `CLAUDE.md`.
   de David → descartada la hipótesis de la cuenta Teams. Conclusión: David
   tiene activa la sincronización de calendario en su usuario y Simón no.
   Siguiente: que David muestre su ruta en el menú.
+- 25-11 (cont.): Simón encontró y activó la sincronización: Configuración →
+  Marketplace → Microsoft → Office 365 → Reuniones. Bidireccional, calendario
+  "Zoho CRM Calendar - Emaresa" (calendario aparte en Outlook, no el
+  principal). Guía actualizada con la ruta real.

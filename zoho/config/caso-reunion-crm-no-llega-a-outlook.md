@@ -99,3 +99,24 @@ crea porque **David tiene activa la sincronización de calendario CRM ↔
 Office 365 en su usuario**; Simón no. Mismo perfil → Simón debería poder
 activarla igual. Siguiente paso: que David muestre dónde la tiene (su
 ruta exacta en el menú) y Simón repite lo mismo con su cuenta.
+
+## Resuelto: ruta confirmada y sincronización activa (25-11)
+
+Ruta real: **Configuración → Marketplace → Microsoft → pestaña Office 365
+→ Reuniones → "Sincronice el calendario de Zoho CRM con Office 365
+Calendar"**.
+
+Simón la activó: cuenta stirapegui@emaresa.cl, calendario **"Zoho CRM
+Calendar - Emaresa"**, sincronización bidireccional, estado Activo.
+("Reservar tiempo automáticamente" queda inactivo; es opcional.)
+
+Ojo: las reuniones NO caen en el calendario principal de Outlook, sino en
+un calendario aparte llamado "Zoho CRM Calendar - Emaresa". En Outlook hay
+que tenerlo marcado/visible en "Mis calendarios".
+
+Para reuniones creadas antes de activar: editarlas (p. ej. cambiar la
+hora y guardar) suele forzar el envío; si no aparece, crear una nueva.
+
+Pasos para cualquier vendedor: misma ruta, botón Habilitar en Reuniones,
+iniciar sesión con su cuenta @emaresa.cl, elegir sincronización
+bidireccional.
