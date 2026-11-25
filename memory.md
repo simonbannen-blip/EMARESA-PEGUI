@@ -2524,3 +2524,6 @@ ver regla de sincronización en `CLAUDE.md`.
   participantes ni invitación → el CRM no mandó nada. Ambas con Teams
   generado desde la misma cuenta Microsoft. Caso y solución en
   zoho/config/caso-reunion-crm-no-llega-a-outlook.md. Sin cambios en el CRM.
+- 25-11 (cont.): Segunda prueba de Simón (reunión 5404724000639541232) ya
+  tiene a David como participante e invitación enviada, igual que la de
+  David. Pendiente confirmar que le llegó a David a Outlook.

@@ -39,3 +39,11 @@ Fecha: 2026-11-25 (pruebas del 24-11)
    en la configuración de usuario de Simón y David.
 
 Sin cambios en el CRM.
+
+## Segunda prueba (25-11)
+
+Reunión 5404724000639541232 "Prueba", creada por Simón el 25-11 16:22,
+para 25-11 17:00–18:00, con Teams. Ahora sí tiene participante (David
+Carrasco, dcarrascog@emaresa.cl) e invitación enviada ($send_notification
+= Sí). Quedó configurada igual que la de David → la invitación debería
+llegarle a David a su Outlook. Pendiente confirmar con David.
