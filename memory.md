@@ -2530,3 +2530,6 @@ ver regla de sincronización en `CLAUDE.md`.
 - 25-11 (cont.): Simón quiere que las reuniones le aparezcan en su Outlook
   como dueño → guía de sincronización de calendario CRM↔Office 365 agregada
   al caso. Se activa por usuario desde su sesión (no por API).
+- 25-11 (cont.): Captura de Simón: en Configuración no hay "Calendario" en
+  Configuración personal. Guía corregida → Configuración → Marketplace →
+  Microsoft (o módulo Calendario → engranaje → Sincronización).
