@@ -2509,3 +2509,12 @@ ver regla de sincronización en `CLAUDE.md`.
   entrada, sin usar la casilla "superó".
 - Guía Sandbox v3 detallada (paso a paso con rutas de menú, respaldo previo,
   pruebas y paso a Producción) a pedido de Simón.
+- 25-11: Simón preguntó por qué COT-CONST-5017 (VEOLIA, Construcción,
+  geomembrana a USD 1,10 vs lista CLP 2.534) no pasó por precio mínimo.
+  Revisado historial: la casilla Aprobación Descuento Monto Mínimo SÍ se
+  marcó al crear, pero no existe proceso de aprobación para UN Construcción
+  y el Blueprint no lo exige → pasó directo a Cerrada Ganada. Desde 01-09:
+  118 ganadas de Construcción con la marca sin aprobar (683 creadas).
+  Caso y opciones (proceso de aprobación Construcción + candado en
+  Blueprint) en zoho/pipeline/caso-cot-const-5017-precio-minimo-sin-aprobacion.md.
+  Sin cambios en el CRM, pendiente de OK.
