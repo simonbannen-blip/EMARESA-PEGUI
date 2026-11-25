@@ -2533,3 +2533,7 @@ ver regla de sincronización en `CLAUDE.md`.
 - 25-11 (cont.): Captura de Simón: en Configuración no hay "Calendario" en
   Configuración personal. Guía corregida → Configuración → Marketplace →
   Microsoft (o módulo Calendario → engranaje → Sincronización).
+- 25-11 (cont.): Simón no tiene módulo Calendario visible. Siguiente intento:
+  ícono de calendario en la barra superior / vista Calendario dentro de
+  Actividades/Reuniones, o Configuración → Marketplace → Microsoft.
+  Pendiente captura de Marketplace → Microsoft.
