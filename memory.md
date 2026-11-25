@@ -2537,3 +2537,9 @@ ver regla de sincronización en `CLAUDE.md`.
   ícono de calendario en la barra superior / vista Calendario dentro de
   Actividades/Reuniones, o Configuración → Marketplace → Microsoft.
   Pendiente captura de Marketplace → Microsoft.
+- 25-11 (cont.): David y Simón tienen el mismo perfil, rol y zona horaria.
+  Hipótesis: la integración Teams del CRM está conectada con la cuenta
+  Microsoft de David (todas las reuniones tienen el mismo organizador Oid
+  4f2d1210…), por eso a David le aparecen siempre en Outlook. Prueba: ver
+  si la "Prueba" de Simón del 24-11 (sin participantes) aparece en el Outlook
+  de David.
