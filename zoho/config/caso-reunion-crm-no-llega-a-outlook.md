@@ -120,3 +120,12 @@ hora y guardar) suele forzar el envío; si no aparece, crear una nueva.
 Pasos para cualquier vendedor: misma ruta, botón Habilitar en Reuniones,
 iniciar sesión con su cuenta @emaresa.cl, elegir sincronización
 bidireccional.
+
+### Verificado en Outlook (25-11)
+
+Simón cambió la "Prueba" a 26-11 13:00–13:30 y apareció en Outlook en el
+calendario "Zoho CRM Calendar - Emaresa" → **editar la hora sí fuerza la
+sincronización**. Outlook lo mostraba en vista dividida (dos columnas);
+para verlos juntos: Outlook nuevo/web → pestaña Vista → desactivar "Vista
+dividida"; Outlook clásico → flecha en la pestaña del calendario ("Ver en
+modo superpuesto").
