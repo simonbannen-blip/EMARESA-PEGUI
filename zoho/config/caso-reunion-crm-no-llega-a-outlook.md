@@ -65,3 +65,25 @@ Lo hace cada usuario en su propia sesión (no se puede por API).
    sentidos**; módulos = Reuniones. Guardar.
 5. Probar: crear reunión en CRM sin participantes → debe aparecer en
    Outlook en unos minutos.
+
+## ¿Por qué a David sí le aparece como host? (25-11)
+
+Usuarios comparados por API: David y Simón tienen **mismo perfil
+(Administrator), mismo rol (CEO), misma zona horaria**. No hay diferencia
+de permisos.
+
+Hipótesis principal: todas las reuniones Teams creadas desde el CRM (las de
+David y las de Simón) tienen el **mismo organizador Microsoft**
+(Oid 4f2d1210-93bb-4614-9c6b-4d2792f106e0). La integración de Teams está
+conectada con UNA sola cuenta Microsoft para toda la org. Si esa cuenta es
+la de David, Microsoft crea la reunión en el calendario Outlook de David
+→ por eso a él le aparece siempre, y a Simón nunca (aunque sea el dueño
+en el CRM).
+
+Prueba para confirmar: preguntar a David si en su Outlook aparece la
+reunión "Prueba" de Simón del 24-11 12:00 (sin participantes). Si
+aparece → confirmado.
+
+Si se confirma: cada usuario necesita su propia sincronización de
+calendario con Office 365, o agregarse como participante. La conexión de
+Teams es de la org y no se puede tener por usuario desde la API.
