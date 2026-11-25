@@ -2543,3 +2543,7 @@ ver regla de sincronización en `CLAUDE.md`.
   4f2d1210…), por eso a David le aparecen siempre en Outlook. Prueba: ver
   si la "Prueba" de Simón del 24-11 (sin participantes) aparece en el Outlook
   de David.
+- 25-11 (cont.): Prueba negativa: la reunión de Simón no aparece en Outlook
+  de David → descartada la hipótesis de la cuenta Teams. Conclusión: David
+  tiene activa la sincronización de calendario en su usuario y Simón no.
+  Siguiente: que David muestre su ruta en el menú.
