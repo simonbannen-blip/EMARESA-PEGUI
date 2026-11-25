@@ -2527,3 +2527,6 @@ ver regla de sincronización en `CLAUDE.md`.
 - 25-11 (cont.): Segunda prueba de Simón (reunión 5404724000639541232) ya
   tiene a David como participante e invitación enviada, igual que la de
   David. Pendiente confirmar que le llegó a David a Outlook.
+- 25-11 (cont.): Simón quiere que las reuniones le aparezcan en su Outlook
+  como dueño → guía de sincronización de calendario CRM↔Office 365 agregada
+  al caso. Se activa por usuario desde su sesión (no por API).

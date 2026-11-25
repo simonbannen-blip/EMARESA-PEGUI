@@ -47,3 +47,19 @@ para 25-11 17:00–18:00, con Teams. Ahora sí tiene participante (David
 Carrasco, dcarrascog@emaresa.cl) e invitación enviada ($send_notification
 = Sí). Quedó configurada igual que la de David → la invitación debería
 llegarle a David a su Outlook. Pendiente confirmar con David.
+
+## Guía: activar sincronización de calendario CRM ↔ Outlook (por usuario)
+
+Lo hace cada usuario en su propia sesión (no se puede por API).
+
+1. CRM → ícono de engranaje (Configuración) → Configuración personal →
+   **Calendario** (o desde el módulo Calendario → engranaje → Sincronización).
+2. Sección **Sincronización de calendario** → **Microsoft / Office 365**
+   → Sincronizar / Conectar.
+3. Iniciar sesión con la cuenta @emaresa.cl y aceptar permisos.
+   Si pide "aprobación del administrador", lo debe aprobar TI
+   (Infraestructura) en Microsoft 365.
+4. Elegir: calendario de Outlook = el principal; dirección = **ambos
+   sentidos**; módulos = Reuniones. Guardar.
+5. Probar: crear reunión en CRM sin participantes → debe aparecer en
+   Outlook en unos minutos.
