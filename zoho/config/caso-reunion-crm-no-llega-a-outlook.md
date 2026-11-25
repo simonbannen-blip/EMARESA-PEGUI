@@ -87,3 +87,15 @@ aparece → confirmado.
 Si se confirma: cada usuario necesita su propia sincronización de
 calendario con Office 365, o agregarse como participante. La conexión de
 Teams es de la org y no se puede tener por usuario desde la API.
+
+### Resultado de la prueba (25-11)
+
+La "Prueba" de Simón del 24-11 NO aparece en el Outlook de David →
+hipótesis de la cuenta Teams **descartada** (el link de Teams se genera con
+esa cuenta, pero no crea evento en su calendario).
+
+Nueva conclusión: a David le aparecen en Outlook las reuniones que él
+crea porque **David tiene activa la sincronización de calendario CRM ↔
+Office 365 en su usuario**; Simón no. Mismo perfil → Simón debería poder
+activarla igual. Siguiente paso: que David muestre dónde la tiene (su
+ruta exacta en el menú) y Simón repite lo mismo con su cuenta.
