@@ -2551,3 +2551,6 @@ ver regla de sincronización en `CLAUDE.md`.
   Marketplace → Microsoft → Office 365 → Reuniones. Bidireccional, calendario
   "Zoho CRM Calendar - Emaresa" (calendario aparte en Outlook, no el
   principal). Guía actualizada con la ruta real.
+- 25-11 (cont.): Funcionó: la Prueba de Simón (editada a 26-11 13:00)
+  apareció en su Outlook. Preguntó cómo ver los dos calendarios en uno →
+  desactivar "Vista dividida" / modo superpuesto.
