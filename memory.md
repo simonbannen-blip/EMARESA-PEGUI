@@ -2576,3 +2576,11 @@ ver regla de sincronización en `CLAUDE.md`.
   Cerradas ni CLP, sincroniza Exchange_Rate, trigger workflow para importe de
   Oportunidad). Guía en zoho/pipeline/guia-sandbox-recalcular-precios-usd-cotizaciones.md.
   Reemplaza la función anterior. Pendiente: Simón crea el campo y prueba en Sandbox.
+- 26-11: Simón prueba función nueva de **expedidos** y no se dispara con la
+  transición "Marcar Sin Stock". Historial: la transición corrió 3 veces pero
+  la fase "sigue sin modificar" (la cotización ya estaba en Sin Stock
+  suficiente; transición común que incluye su propio destino como origen) y
+  no aparece ninguna llamada a función desde Blueprint. Causa probable:
+  función colgada de regla por cambio de fase (no corre si la fase no cambia)
+  o no conectada a "Después" de la transición. Doc:
+  zoho/pipeline/caso-expedidos-marcar-sin-stock-no-dispara.md.
