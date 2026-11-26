@@ -74,3 +74,18 @@ tiene campos "Durante" visibles. Revisar en este orden:
    validadas). Hoy solo sale desde Sin Stock, por eso la fase nunca cambia.
 4. **Publicar** el Blueprint y probar con una cotización que no esté en Sin
    Stock.
+
+## Cotización de prueba COT-CONST-999999-0174 (26-11, Sandbox)
+- UN Construcción, ya en **Sin Stock suficiente**, puesta por el sistema
+  (Detalle Revisión: "La cotización contiene productos sin stock disponible -
+  SKU 1650000785070 - (0)…").
+- Botones visibles: Perder Cotización y **Marcar Sin Stock** → el botón sí
+  aparece; al pulsarlo se ejecuta directo porque "Durante" está vacío.
+- **Corrección al paso 3 anterior**: como el sistema ya deja la cotización en
+  Sin Stock, el bucle de "Marcar Sin Stock" puede quedar así (sirve para
+  pedir las opciones de expedido sin mover la fase). Lo que falta es:
+  1. Campos de expedido en **Durante**.
+  2. La función de expedidos en **Después** de la transición (no en una
+     regla por cambio de fase, que no corre porque la fase no cambia).
+  3. Opcional: renombrar el botón (p. ej. "Solicitar Expedido") y decidir si
+     después debe pasar a otra fase en vez de quedarse en Sin Stock.
