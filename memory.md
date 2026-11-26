@@ -2563,3 +2563,9 @@ ver regla de sincronización en `CLAUDE.md`.
   precios USD (sin confirmar, sin permiso a listas de precios). Caso y
   propuesta en zoho/pipeline/caso-cot-const-4857-tipo-cambio-usd-desfasado.md.
   Sin cambios en el CRM, pendiente de OK.
+- 26-11: Simón preguntó cómo hacer que al cambiar la tasa se actualice solo el
+  total. Propuse función Deluge + regla de flujo en Cotizaciones (crear/editar,
+  Moneda ≠ CLP) que pone Exchange_Rate = 1/Cotización de Moneda. Código en
+  zoho/config/funciones/SBactualizarTasaCambioCotizacion.deluge y guía en
+  zoho/pipeline/guia-sandbox-tasa-cambio-automatica-cotizaciones.md.
+  Pendiente: Simón la prueba en Sandbox.

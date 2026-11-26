@@ -1,0 +1,21 @@
+// SB Actualizar Tasa de Cambio Cotización
+// Mantiene la "Tasa de cambio" estándar de Zoho (Exchange_Rate) igual al dólar
+// que usó el Cotizador ("Cotización de Moneda"), para que el total en CLP
+// siempre calce. Ver zoho/pipeline/caso-cot-const-4857-tipo-cambio-usd-desfasado.md
+// Argumento: idCotizacion = Cotizaciones > Id. de cotización
+void automation.SBactualizarTasaCambioCotizacion(String idCotizacion)
+{
+	cot = zoho.crm.getRecordById("Quotes",idCotizacion.toLong());
+	moneda = cot.get("Currency");
+	tc = cot.get("Cotizaci_n_de_Moneda");
+	if(moneda != null && moneda != "CLP" && tc != null && tc.toDecimal() > 0)
+	{
+		nuevaTasa = (1 / tc.toDecimal()).round(9);
+		actual = cot.get("Exchange_Rate");
+		if(actual == null || (actual.toDecimal() - nuevaTasa).abs() > 0.000000001)
+		{
+			resp = zoho.crm.updateRecord("Quotes",idCotizacion.toLong(),{"Exchange_Rate":nuevaTasa});
+			info resp;
+		}
+	}
+}
