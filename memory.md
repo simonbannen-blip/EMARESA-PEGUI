@@ -2589,3 +2589,8 @@ ver regla de sincronización en `CLAUDE.md`.
   expedido en Cotizaciones de producción → se arma en Sandbox. Checklist
   agregado al doc del caso: Blueprint publicado, campos en el diseño,
   permisos de campo, transición correcta, condicionales.
+- 26-11 (cont.): Capturas del Blueprint en Sandbox: la pestaña **Durante de
+  "Marcar Sin Stock" está vacía** (causa de que no salgan las opciones de
+  expedido) y la transición es un bucle sobre Sin Stock suficiente (por eso
+  la fase no cambia). Pasos agregados al doc del caso. Pendiente: definir con
+  Simón qué campos/opciones de expedido van en la ventana.

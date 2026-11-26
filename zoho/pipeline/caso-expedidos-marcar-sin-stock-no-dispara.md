@@ -55,3 +55,22 @@ tiene campos "Durante" visibles. Revisar en este orden:
    Blueprint "SB Gestión de Cotizaciones" (la común, marca C) y no otra.
 5. **Campos condicionales**: si se agregaron como condicionales, la condición
    tiene que cumplirse.
+
+## Capturas de la configuración (26-11, Sandbox)
+- Lienzo: "Marcar Sin Stock" (común, C) aparece como **bucle sobre "Sin Stock
+  suficiente"**: sale y vuelve a la misma fase. A Sin Stock se llega por las
+  transiciones "No En…" / "Enviar …" desde Lista para Confirmar.
+- Antes: propietarios = Infraestructura Em…; sin criterios.
+- **Durante: vacío** (solo el botón "+ Agregar"). → Causa confirmada: la
+  ventana no aparece porque no hay ningún campo agregado.
+
+## Pasos para dejarlo funcionando
+1. Crear en Cotizaciones (Sandbox) los campos de expedido si no existen y
+   ponerlos en el diseño que se usa en la prueba.
+2. Transición "Marcar Sin Stock" → **Durante → + Agregar → Campos** → elegir
+   los campos de expedido (marcar obligatorios los que correspondan).
+3. Definir desde qué fases se puede marcar (link "Incluir todos los estados"
+   o elegir fases puntuales, p. ej. Lista para Confirmar / Direcciones
+   validadas). Hoy solo sale desde Sin Stock, por eso la fase nunca cambia.
+4. **Publicar** el Blueprint y probar con una cotización que no esté en Sin
+   Stock.
