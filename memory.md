@@ -2554,3 +2554,12 @@ ver regla de sincronización en `CLAUDE.md`.
 - 25-11 (cont.): Funcionó: la Prueba de Simón (editada a 26-11 13:00)
   apareció en su Outlook. Preguntó cómo ver los dos calendarios en uno →
   desactivar "Vista dividida" / modo superpuesto.
+- 26-11: Simón preguntó por qué COT-CONST-384-4857 (USD) tiene valores errados
+  en la conversión. Causa: `Exchange_Rate` (tasa Zoho, usada para convertir a
+  CLP) quedó congelada en 996,68 del día de creación (18-11), mientras el
+  Cotizador re-editó el 26-11 con `Cotización de Moneda` 1.044,08 → CRM
+  subvalora en CLP ~4,5 % ($587.094 vs $615.015). 17 cotizaciones USD
+  desfasadas desde 01-10 (7 Cerradas Ganadas). Posible redondeo a entero de
+  precios USD (sin confirmar, sin permiso a listas de precios). Caso y
+  propuesta en zoho/pipeline/caso-cot-const-4857-tipo-cambio-usd-desfasado.md.
+  Sin cambios en el CRM, pendiente de OK.
