@@ -2569,3 +2569,10 @@ ver regla de sincronización en `CLAUDE.md`.
   zoho/config/funciones/SBactualizarTasaCambioCotizacion.deluge y guía en
   zoho/pipeline/guia-sandbox-tasa-cambio-automatica-cotizaciones.md.
   Pendiente: Simón la prueba en Sandbox.
+- 26-11: Simón eligió que al cambiar el dólar se **recalculen los precios USD**.
+  Propuesta: campo nuevo "Tasa Usada en Precios" + función
+  SBrecalcularPreciosUSDCotizacion (escala montos de líneas por dólar viejo ÷
+  nuevo, solo si el cambio no viene del Cotizador/Infraestructura, no toca
+  Cerradas ni CLP, sincroniza Exchange_Rate, trigger workflow para importe de
+  Oportunidad). Guía en zoho/pipeline/guia-sandbox-recalcular-precios-usd-cotizaciones.md.
+  Reemplaza la función anterior. Pendiente: Simón crea el campo y prueba en Sandbox.

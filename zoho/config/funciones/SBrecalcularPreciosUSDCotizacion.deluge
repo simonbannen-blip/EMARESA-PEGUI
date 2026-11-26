@@ -1,0 +1,95 @@
+// SB Recalcular Precios USD Cotización
+// Cuando cambia "Cotización de Moneda" (dólar) en una cotización en USD,
+// recalcula todos los montos de las líneas con el dólar nuevo, manteniendo el
+// mismo valor en pesos:  monto_nuevo = monto_viejo × dólar_viejo ÷ dólar_nuevo
+// y sincroniza la "Tasa de cambio" de Zoho (Exchange_Rate = 1 / dólar).
+//
+// Requiere campo nuevo en Cotizaciones: "Tasa Usada en Precios"
+//   (Decimal, 2 decimales, API Tasa_Usada_en_Precios) = dólar con el que están
+//   calculados los precios actuales.
+// Argumento: idCotizacion = Cotizaciones > Id. de cotización
+// Guía: zoho/pipeline/guia-sandbox-recalcular-precios-usd-cotizaciones.md
+void automation.SBrecalcularPreciosUSDCotizacion(String idCotizacion)
+{
+	id = idCotizacion.toLong();
+	cot = zoho.crm.getRecordById("Quotes",id);
+	moneda = ifnull(cot.get("Currency"),"CLP");
+	if(moneda == "CLP")
+	{
+		return;
+	}
+	fase = ifnull(cot.get("Quote_Stage"),"");
+	if(fase.startsWith("Cerrada"))
+	{
+		return;
+	}
+	if(cot.get("Cotizaci_n_de_Moneda") == null || cot.get("Cotizaci_n_de_Moneda").toDecimal() <= 0)
+	{
+		return;
+	}
+	tcNueva = cot.get("Cotizaci_n_de_Moneda").toDecimal();
+	tasaZoho = (1 / tcNueva).round(9);
+	editor = "";
+	if(cot.get("Modified_By") != null)
+	{
+		editor = cot.get("Modified_By").get("name");
+	}
+	tcUsada = cot.get("Tasa_Usada_en_Precios");
+	actualizar = Map();
+	// Caso A: primera vez, o el guardado lo hizo el Cotizador (precios ya
+	// vienen calculados con el dólar nuevo) -> solo registrar el dólar.
+	if(tcUsada == null || editor == "Infraestructura Emaresa")
+	{
+		if(tcUsada == null || tcUsada.toDecimal() != tcNueva)
+		{
+			actualizar.put("Tasa_Usada_en_Precios",tcNueva);
+		}
+	}
+	// Caso B: alguien cambió el dólar en el CRM -> recalcular montos.
+	else if(tcUsada.toDecimal() != tcNueva)
+	{
+		factor = tcUsada.toDecimal() / tcNueva;
+		camposMonto = {"List_Price","Discount","Tax","Subtotal","Importe_Rental","Total_Rental","Precio_Diario_Seguro","Valor_Total_Seguro"};
+		lineas = List();
+		for each l in cot.get("Quoted_Items")
+		{
+			m = Map();
+			m.put("id",l.get("id"));
+			m.put("Product_Name",{"id":l.get("Product_Name").get("id")});
+			m.put("Quantity",l.get("Quantity"));
+			for each campo in camposMonto
+			{
+				v = l.get(campo);
+				if(v != null)
+				{
+					m.put(campo,(v.toDecimal() * factor).round(2));
+				}
+			}
+			lineas.add(m);
+		}
+		actualizar.put("Quoted_Items",lineas);
+		if(cot.get("Discount") != null)
+		{
+			actualizar.put("Discount",(cot.get("Discount").toDecimal() * factor).round(2));
+		}
+		if(cot.get("Adjustment") != null)
+		{
+			actualizar.put("Adjustment",(cot.get("Adjustment").toDecimal() * factor).round(2));
+		}
+		actualizar.put("Tasa_Usada_en_Precios",tcNueva);
+	}
+	// Siempre: Tasa de cambio de Zoho igual al dólar del Cotizador
+	if(cot.get("Exchange_Rate") == null || cot.get("Exchange_Rate").toDecimal() != tasaZoho)
+	{
+		actualizar.put("Exchange_Rate",tasaZoho);
+	}
+	if(actualizar.isEmpty())
+	{
+		return;
+	}
+	// trigger workflow: para que "SB Guardar importe de la cotización" pase el
+	// monto nuevo a la Oportunidad. Esta misma regla vuelve a correr una vez,
+	// pero ya no encuentra nada que cambiar y termina (sin bucle).
+	resp = zoho.crm.updateRecord("Quotes",id,actualizar,{"trigger":{"workflow"}});
+	info resp;
+}
