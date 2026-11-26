@@ -2594,3 +2594,7 @@ ver regla de sincronización en `CLAUDE.md`.
   expedido) y la transición es un bucle sobre Sin Stock suficiente (por eso
   la fase no cambia). Pasos agregados al doc del caso. Pendiente: definir con
   Simón qué campos/opciones de expedido van en la ventana.
+- 26-11 (cont.): Prueba COT-CONST-999999-0174: el sistema la deja en Sin
+  Stock y el botón "Marcar Sin Stock" sí aparece, pero corre directo (Durante
+  vacío). Se corrige la recomendación: el bucle puede quedar; falta poner
+  campos en Durante y la función de expedidos en Después.
