@@ -35,3 +35,23 @@ nueva de expedidos nunca aparece.
 ## Pendiente
 - Confirmar con Simón dónde está conectada la función de expedidos
   (transición vs. regla de flujo) y su condición.
+
+## Aclaración de Simón (26-11)
+Lo esperado es que **al ejecutar "Marcar Sin Stock" aparezca la ventana con
+las opciones de expedido** (campos en la pestaña "Durante" de la transición).
+En producción no existe aún ningún campo de expedido en Cotizaciones (solo
+el check "Sin Stock suficiente"), así que se está armando en Sandbox.
+
+La transición se ejecuta sin mostrar ventana → para el CRM la transición no
+tiene campos "Durante" visibles. Revisar en este orden:
+1. **Blueprint publicado**: tras editar la transición hay que pulsar
+   *Publicar*; si quedó como borrador, sigue corriendo la versión anterior.
+2. **Campos en el diseño**: los campos de expedido deben estar en el diseño
+   (layout) de la cotización de prueba (p. ej. Construcción). Si no están en
+   ese diseño, el Blueprint no los muestra.
+3. **Permisos de campo**: si para el perfil del usuario están ocultos o solo
+   lectura, no aparecen en la ventana.
+4. **Transición correcta**: confirmar que se editó "Marcar Sin Stock" del
+   Blueprint "SB Gestión de Cotizaciones" (la común, marca C) y no otra.
+5. **Campos condicionales**: si se agregaron como condicionales, la condición
+   tiene que cumplirse.

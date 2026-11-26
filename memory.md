@@ -2584,3 +2584,8 @@ ver regla de sincronización en `CLAUDE.md`.
   función colgada de regla por cambio de fase (no corre si la fase no cambia)
   o no conectada a "Después" de la transición. Doc:
   zoho/pipeline/caso-expedidos-marcar-sin-stock-no-dispara.md.
+- 26-11 (cont.): Simón aclara que espera ver las **opciones de expedido en la
+  ventana de "Marcar Sin Stock"** (campos "Durante"). No hay campos de
+  expedido en Cotizaciones de producción → se arma en Sandbox. Checklist
+  agregado al doc del caso: Blueprint publicado, campos en el diseño,
+  permisos de campo, transición correcta, condicionales.
