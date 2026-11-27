@@ -2598,3 +2598,16 @@ ver regla de sincronización en `CLAUDE.md`.
   Stock y el botón "Marcar Sin Stock" sí aparece, pero corre directo (Durante
   vacío). Se corrige la recomendación: el bucle puede quedar; falta poner
   campos en Durante y la función de expedidos en Después.
+
+## 2026-11-27 — Néstor Mendoza solo ve Posibles clientes de Maktotal (quiere todo IyF)
+- Néstor tiene ahora rol **Jefe de Ecommerce**; bajo él cuelga Asistente
+  Ecommerce (usuario Maktotal) → por jerarquía solo ve esos 146 leads.
+  Posibles clientes es privado: el rol no le da los de otras ramas.
+- Leads con UN = Industria y Ferretería: 632 (León 162, Maktotal 146,
+  Cartagena 69, García 54, Lagos 44, Villalobos 43, Infraestructura 34,
+  Torres 32, Vergara 28, Castillo 20).
+- Recomendado: regla de uso compartido **por criterio** en Posibles clientes
+  (UN = Industria y Ferretería → rol Jefe de Ecommerce o grupo solo-Néstor,
+  ya que Teobaldo Díaz tiene el mismo rol). Doc:
+  zoho/config/propuesta-nestor-ver-posibles-clientes-iyf.md. Lo aplica Simón;
+  no se tocó el CRM.
